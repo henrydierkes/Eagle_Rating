@@ -1,0 +1,12 @@
+# 
+.javac
+.o
+.class
+.pyc
+
+# Text editors
+.vscode
+.idea
+
+# OS file
+.DS_Store
