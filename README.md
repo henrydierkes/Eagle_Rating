@@ -1,4 +1,4 @@
-This is the README file for the Jot Down! project. 
-This is our personal finance app. 
+This is the README file for the Eagle Rating project. 
+This is our Emory rating app. 
 
 wow
