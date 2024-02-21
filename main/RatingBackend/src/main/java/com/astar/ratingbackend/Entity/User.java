@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Document("user")
+@Document("User")
 public class User implements Serializable {
     @Field("_id")
     private ObjectId id;

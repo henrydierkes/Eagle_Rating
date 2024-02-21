@@ -29,7 +29,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-@Document("place")
+@Document("Places")
 public class Place implements Serializable {
     @Field("_locId")
     private ObjectId locId;

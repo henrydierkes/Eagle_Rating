@@ -29,7 +29,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Document(collection = "comments") // Specify the collection name
+@Document(collection = "Comments") // Specify the collection name
 public class Comment implements Serializable {
 
     @Id // This annotation is used to specify the primary key

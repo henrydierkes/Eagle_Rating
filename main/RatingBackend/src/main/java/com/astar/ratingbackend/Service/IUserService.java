@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public interface IUserService {
-    void insertUser(User user);s
+    void insertUser(User user);
 
     void updateUsername(String userId, String newName);
 

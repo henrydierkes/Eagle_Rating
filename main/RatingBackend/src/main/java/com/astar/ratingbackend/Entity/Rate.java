@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@Document(collection = "ratings")
+@Document(collection = "Ratings")
 public class Rate implements Serializable {
 
     @Id
