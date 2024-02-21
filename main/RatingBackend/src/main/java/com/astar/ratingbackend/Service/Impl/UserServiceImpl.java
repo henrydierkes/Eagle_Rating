@@ -19,7 +19,7 @@ public class UserServiceImpl implements IUserService {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public void insertUser(User user) {
+    public void addUser(User user) {
         mongoTemplate.insert(user);
     }
 
@@ -57,4 +57,5 @@ public class UserServiceImpl implements IUserService {
         return mongoTemplate.findAll(User.class);
 
     }
+
 }

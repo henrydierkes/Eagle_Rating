@@ -6,7 +6,6 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public interface IUserService {
-    void insertUser(User user);
 
     void updateUsername(String userId, String newName);
 
@@ -19,4 +18,5 @@ public interface IUserService {
     void deleteUser(ObjectId userId);
     List<User> getAllUser();
 
+    void addUser(User user);
 }
