@@ -1,1 +1,76 @@
+/**
+Au
+**/
+Team: A*
+Project Name: Eagle Rating
 
+
+Overview
+This is the backend ReadMe
+
+Features
+List the features of your project.
+
+Feature 1: Description
+Feature 2: Description
+Feature 3: Description
+Tech Stack
+Mention the technologies, frameworks, databases, etc., used in the project.
+
+Node.js
+Express
+MongoDB
+Getting Started
+Prerequisites
+List the prerequisites needed to run your project. For example:
+
+Node.js (version X or above)
+npm (version X or above)
+MongoDB (version X or above)
+Installation
+Step by step guide on how to get a development environment running.
+
+Clone the repo
+bash
+Copy code
+git clone https://github.com/henrydierkes/Eagle_Rating
+Install NPM packages
+Copy code
+npm install
+Create a .env file and update it with your settings. For example:
+bash
+Copy code
+DATABASE_URL=mongodb://localhost:27017/yourdatabase
+PORT=4000
+Running the application
+Explain how to run the application. For example:
+
+sql
+Copy code
+npm start
+Usage
+Provide examples of how to use your project. Include code blocks or command line instructions where applicable.
+
+API Reference
+If your project exposes an API, provide a reference to the available endpoints, methods, request examples, and response examples.
+
+Contributing
+Guidelines for how to contribute to the project. You can include:
+
+Fork the project
+Create your feature branch (git checkout -b feature/AmazingFeature)
+Commit your changes (git commit -m 'Add some AmazingFeature')
+Push to the branch (git push origin feature/AmazingFeature)
+Open a Pull Request
+License
+State the license for the project. For example:
+
+go
+Copy code
+Distributed under the MIT License. See `LICENSE` for more information.
+Contact
+Your Name - email@example.com
+
+Project Link: https://github.com/yourusername/yourprojectname
+
+This template is just a starting point. Customize it according to the specifics of your backend project, including adding or removing sections to better match what your project does and how it is structured.
