@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IUserService {
 
+    List<User> getUserById(ObjectId userId);
+
     void updateUsername(String userId, String newName);
 
     void updateUserEmail(String userId, String newEmail);

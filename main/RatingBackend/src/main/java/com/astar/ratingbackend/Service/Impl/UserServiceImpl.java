@@ -22,6 +22,11 @@ public class UserServiceImpl implements IUserService {
     public void addUser(User user) {
         mongoTemplate.insert(user);
     }
+    @Override
+    public List<User> getUserById(ObjectId userId){
+        mongoTemplate.findById(userId, User.class);
+        return null;
+    }
 
     @Override
     public void updateUsername(String userId, String newName) {

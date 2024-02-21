@@ -2,6 +2,7 @@ package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Service.IUserService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,13 @@ public class UserController {
     private IUserService userService;
 
 
-    @GetMapping("/get")
+    @GetMapping("/getAll")
     public List<User> getUser(){
         return userService.getAllUser();
+    }
+    @GetMapping("/get")
+    public List<User> getUserById(@RequestBody ObjectId userID){
+        return userService.getUserById(userID);
     }
     @PostMapping("/add")
     public ResponseEntity<String> addUser(@RequestBody User user) {
@@ -34,4 +39,32 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add user");
         }
     }
+    @PostMapping("/register")
+    public ResponseEntity<String> userRegister(@RequestBody User user) {
+        try {
+
+            // Call the service method to add the user
+            userService.addUser(user);
+
+            // Return a success response
+            return ResponseEntity.status(HttpStatus.OK).body("User registered successfully");
+        } catch (Exception e) {
+            // If any exception occurs during user addition, return a failure response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add user");
+        }
+    }
+//    @PostMapping("/login")
+//    public ResponseEntity<String> userLogin(@RequestParam("email")String email, @RequestParam("password")String password) {
+//        try {
+//
+//            // Call the service method to add the user
+//            userService.
+//
+//            // Return a success response
+//            return ResponseEntity.status(HttpStatus.OK).body("User registered successfully");
+//        } catch (Exception e) {
+//            // If any exception occurs during user addition, return a failure response
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add user");
+//        }
+//    }
 }
