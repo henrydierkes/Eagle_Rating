@@ -36,7 +36,6 @@ class RatingBackendApplicationTests {
         user.setPassword("123456");
         user.setCreatedAt(new Date());
         userRepository.save(user);
-
     }
 
     @Test
