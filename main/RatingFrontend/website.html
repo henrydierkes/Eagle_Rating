@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eagle Rating</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-    <h1>Welcome to Eagle Rating</h1>
-    <p>Welcome</p>
+    <div class="title">
+        <h1>EagleRating</h1>
+    </div>
+    <div class="container">
+        <form action="/search" method="get"> <!--this is the search bar-->
+            <label for="search"></label>
+            <input type="text" id="search" name="q" placeholder="Places in Emory University" class="search-bar">
+            <button type="submit">Search</button>
+        </form>
+        <a href="/login">Login</a>
+    </div>
 </body>
 </html>
