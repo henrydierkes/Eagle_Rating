@@ -4,6 +4,7 @@ import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,9 @@ public class UserController {
     @GetMapping("/get")
     public List<User> getUser(){
         return userService.getAllUser();
+    }
+    @PostMapping("/add")
+    public void addUser(){
+
     }
 }
