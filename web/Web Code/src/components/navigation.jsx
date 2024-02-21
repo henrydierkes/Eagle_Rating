@@ -21,10 +21,17 @@ export const Navigation = (props) => {
           </a>
         </div>
 
-        <div
-          className="collapse navbar-collapse"
-          id="bs-example-navbar-collapse-1"
-        >
+        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          {/* Inline Search Bar */}
+          <ul className="nav navbar-nav">
+            <li>
+              <form className="navbar-form" role="search">
+                <div className="form-group">
+                  <input type="text" className="form-control" placeholder="Search" />
+                </div>
+              </form>
+            </li>
+          </ul>
           <ul className="nav navbar-nav navbar-right">
             <li>
               <a href="#about" className="page-scroll">
