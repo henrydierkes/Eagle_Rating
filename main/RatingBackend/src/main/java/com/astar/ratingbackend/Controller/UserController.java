@@ -18,6 +18,6 @@ public class UserController {
 
     @GetMapping("/get")
     public List<User> getUser(){
-        return userService
+        return userService.getAllUser();
     }
 }
