@@ -19,10 +19,9 @@
 
 package com.astar.ratingbackend.Controller;
 
-import com.astar.ratingbackend.Entity.Comment; // Assuming you have a Comment entity
-import com.astar.ratingbackend.Service.CommentService; // Assuming there's a CommentService
+import com.astar.ratingbackend.Entity.Comment;
+import com.astar.ratingbackend.Service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +34,6 @@ public class CommentController {
     @Autowired
     private CommentService commentService; // Changed from UserService to CommentService
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
 
     @GetMapping("/get")
     public List<Comment> getComments(){ // Method and return type changed to reflect comments

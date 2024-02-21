@@ -23,11 +23,14 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
     // Example custom query method
     List<Place> findByCategory(String category);
+
+    Optional<Place> findById(ObjectId id);
 
     // Additional custom methods to facilitate specific queries, for example:
     // - Find places by tags

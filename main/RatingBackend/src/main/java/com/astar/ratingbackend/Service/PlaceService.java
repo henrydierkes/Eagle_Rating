@@ -19,6 +19,7 @@ package com.astar.ratingbackend.Service;
 
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Repository.PlaceRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,12 +46,12 @@ public class PlaceService {
     }
 
     // Method to find a place by ID
-    public Optional<Place> getPlaceById(String id) {
+    public Optional<Place> getPlaceById(ObjectId id) {
         return placeRepository.findById(id);
     }
 
     // Method to update an existing place
-    public Place updatePlace(String id, Place placeDetails) {
+    public Place updatePlace(ObjectId id, Place placeDetails) {
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
         place.setLocName(placeDetails.getLocName());
@@ -65,7 +66,7 @@ public class PlaceService {
     }
 
     // Method to delete a place by ID
-    public void deletePlace(String id) {
+    public void deletePlace(ObjectId id) {
         placeRepository.deleteById(id);
     }
 }

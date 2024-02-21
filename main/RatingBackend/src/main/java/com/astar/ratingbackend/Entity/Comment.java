@@ -18,8 +18,9 @@
 
 package com.astar.ratingbackend.Entity;
 
+
 import lombok.Data;
-import org.bson.types.ObjectId; // Ensure correct ObjectId import
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -36,7 +37,7 @@ public class Comment implements Serializable {
     private ObjectId commentId; // Changed to commentId
 
     @Field("userId")
-    private ObjectId userId; // Added for linking the comment to a user
+    private String userId; // Added for linking the comment to a user
 
     @Field("text")
     private String text; // The actual comment text

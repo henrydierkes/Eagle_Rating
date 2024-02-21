@@ -19,6 +19,7 @@ package com.astar.ratingbackend.Service;
 
 import com.astar.ratingbackend.Entity.Comment;
 import com.astar.ratingbackend.Repository.CommentRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,12 +46,12 @@ public class CommentService {
     }
 
     // Find a comment by ID
-    public Optional<Comment> getCommentById(String id) {
+    public Optional<Comment> getCommentById(ObjectId id) {
         return commentRepository.findById(id);
     }
 
     // Update an existing comment
-    public Comment updateComment(String id, Comment commentDetails) {
+    public Comment updateComment(ObjectId id, Comment commentDetails) {
         Comment existingComment = commentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
         existingComment.setText(commentDetails.getText());
@@ -60,7 +61,7 @@ public class CommentService {
     }
 
     // Delete a comment by its ID
-    public void deleteComment(String id) {
+    public void deleteComment(ObjectId id) {
         commentRepository.deleteById(id);
     }
 }

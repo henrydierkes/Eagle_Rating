@@ -19,6 +19,7 @@ package com.astar.ratingbackend.Service;
 
 import com.astar.ratingbackend.Entity.Rate;
 import com.astar.ratingbackend.Repository.RateRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,12 +46,12 @@ public class RateService {
     }
 
     // Find a rate by ID
-    public Optional<Rate> getRateById(String id) {
+    public Optional<Rate> getRateById(ObjectId id) {
         return rateRepository.findById(id);
     }
 
     // Update an existing rate
-    public Rate updateRate(String id, Rate rateDetails) {
+    public Rate updateRate(ObjectId id, Rate rateDetails) {
         Rate existingRate = rateRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Rate not found with id: " + id));
         existingRate.setUserId(rateDetails.getUserId());
@@ -65,7 +66,7 @@ public class RateService {
     }
 
     // Delete a rate by its ID
-    public void deleteRate(String id) {
+    public void deleteRate(ObjectId id) {
         rateRepository.deleteById(id);
     }
 }

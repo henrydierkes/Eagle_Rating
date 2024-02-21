@@ -18,13 +18,15 @@
 
 package com.astar.ratingbackend.Entity;
 
-import com.sun.corba.se.spi.ior.ObjectId;
+
 import lombok.Data;
+import org.bson.types.Binary;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 @Data
 @Document("place")

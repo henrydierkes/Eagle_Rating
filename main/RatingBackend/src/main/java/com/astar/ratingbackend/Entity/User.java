@@ -1,7 +1,8 @@
 package com.astar.ratingbackend.Entity;
 
-import com.sun.corba.se.spi.ior.ObjectId;
+
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -12,7 +13,7 @@ import java.util.Date;
 @Document("user")
 public class User implements Serializable {
     @Field("_id")
-    private String id;
+    private ObjectId id;
     @Field("username")
     private String username;
     @Field("email")
@@ -29,7 +30,5 @@ public class User implements Serializable {
     private ObjectId[] ratings;
     @Field("places_added")
     private ObjectId[] placesAdded;
-
-
 
 }
