@@ -24,11 +24,5 @@ Change the data in the ```data.json``` file as well as add any images to ```publ
 You can also change styles by modifying the ```public/css``` files.
 If you need the contact form to work, you also need to create an EmailJS account, and modify the ```src/components/contact.jsx``` file to replace your own service ID, template ID and Public Key
 
-## Like this project?
-<a href="https://www.buymeacoffee.com/issaaf">Buy my a coffee ☕️</a>
 
-## Credits
-##### Free CSS 
-<a href="https://www.free-css.com/assets/files/free-css-templates/preview/page234/interact/">Free-CSS.com </a>
 
-##### Issaaf kattan
