@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -14,6 +15,8 @@ class RatingBackendApplicationTests {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Test
@@ -31,6 +34,8 @@ class RatingBackendApplicationTests {
         user.setName("Tuan");
         user.setEmail("tt123@emory.edu");
         user.setPassword("123456");
+        user.setCreatedAt(new Date());
+        userRepository.save(user);
 
     }
 
