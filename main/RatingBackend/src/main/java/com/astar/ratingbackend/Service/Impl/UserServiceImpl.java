@@ -27,4 +27,8 @@ public class UserServiceImpl implements IUserService {
     public void deleteUser(ObjectId userId) {
 
     }
+    @Override
+    public void getAllUser(){
+
+    }
 }
