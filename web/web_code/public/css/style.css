@@ -559,48 +559,5 @@ label {
 #contact .contact-item i.fa {
   margin-right: 10px;
 }
-#contact .social {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding-top: 50px;
-  margin-top: 50px;
-  text-align: center;
-}
-#contact .social ul li {
-  display: inline-block;
-  margin: 0 20px;
-}
-#contact .social i.fa {
-  font-size: 22px;
-  width: 48px;
-  height: 48px;
-  padding: 12px 0;
-  border: 2px solid #fff;
-  color: #fff;
-  border-radius: 50%;
-  transition: all 0.3s;
-}
-#contact .social i.fa:hover {
-  color: #608dfd;
-  background: #fff;
-}
-/* Footer Section*/
-#footer {
-  background: #f6f6f6;
-  padding: 30px 0;
-}
-#footer p {
-  color: #888;
-  font-size: 14px;
-}
-#footer a {
-  color: #608dfd;
-}
-#footer a:hover {
-  border-bottom: 2px solid #608dfd;
-}
 
-@media (max-width: 768px) {
-  #about img {
-    margin: 50px 0;
-  }
 }
