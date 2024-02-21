@@ -1,6 +1,7 @@
 package com.astar.ratingbackend;
 
 import com.astar.ratingbackend.Entity.User;
+import com.astar.ratingbackend.Model.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ class RatingBackendApplicationTests {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+    private UserRepository userRepository;
 
     @Test
     public void test1() {
@@ -23,6 +25,15 @@ class RatingBackendApplicationTests {
             });
         }
     }
+    @Test
+    void testInsert(){
+        User user= new User();
+        user.setName("Tuan");
+        user.setEmail("tt123@emory.edu");
+        user.setPassword("123456");
+
+    }
+
     @Test
     void contextLoads() {
     }
