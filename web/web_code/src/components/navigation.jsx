@@ -3,7 +3,8 @@ import React from "react";
 export const Navigation = (props) => {
   return (
     <nav id="menu" className="navbar navbar-default navbar-fixed-top">
-      <div className="container">
+    
+      <div className="container-fluid">
         <div className="navbar-header">
           <button
             type="button"
@@ -22,7 +23,6 @@ export const Navigation = (props) => {
         </div>
 
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          {/* Inline Search Bar */}
           <ul className="nav navbar-nav">
             <li>
               <form className="navbar-form" role="search">
