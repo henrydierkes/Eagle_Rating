@@ -80,14 +80,19 @@ hr {
   border-color: rgba(231, 231, 231, 0);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
+#menu.container-fluid{
+  display: flex;
+}
 #menu a.navbar-brand {
   font-family: "Raleway", sans-serif;
+  display: flex;
   font-size: 24px;
   font-weight: 700;
   color: #333;
   text-transform: uppercase;
 }
 #menu.navbar-default .navbar-nav > li > a {
+
   font-family: "Lato", sans-serif;
   text-transform: uppercase;
   color: #555;
@@ -97,6 +102,8 @@ hr {
   border-radius: 0;
   margin: 9px 20px 0;
 }
+
+
 #menu.navbar-default .navbar-nav > li > a:after {
   display: block;
   position: absolute;

@@ -3,7 +3,6 @@ import React from "react";
 export const Navigation = (props) => {
   return (
     <nav id="menu" className="navbar navbar-default navbar-fixed-top">
-    
       <div className="container-fluid">
         <div className="navbar-header">
           <button
@@ -21,16 +20,21 @@ export const Navigation = (props) => {
             Eagle Rating
           </a>
         </div>
-
-        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div
+          className="collapse navbar-collapse"
+          id="bs-example-navbar-collapse-1"
+        >
+          <form className="navbar-form" role="search">
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search"
+              />
+            </div>
+          </form>
           <ul className="nav navbar-nav">
-            <li>
-              <form className="navbar-form" role="search">
-                <div className="form-group">
-                  <input type="text" className="form-control" placeholder="Search" />
-                </div>
-              </form>
-            </li>
+            <li></li>
           </ul>
           <ul className="nav navbar-nav navbar-right">
             <li>
