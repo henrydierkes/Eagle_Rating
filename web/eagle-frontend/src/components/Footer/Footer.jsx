@@ -43,45 +43,50 @@ const Footer = () => {
       <div className="footer-section contact-form">
         <h4>Get In Touch</h4>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={handleChange}
-            placeholder="Your Name"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            placeholder="Your Email"
-            required
-          />
-          <textarea
-            name="message"
-            value={message}
-            onChange={handleChange}
-            placeholder="Your Message"
-            required
-          />
+          <div classname="input-group">
+            <div classname="name">
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                required
+              />
+            </div>
+            <div classname="email">
+              <input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handleChange}
+                placeholder="Your Email"
+                required
+              />
+            </div>
+          </div>
+          <div classname="message">
+            <textarea
+              name="message"
+              value={message}
+              rows={20}
+              onChange={handleChange}
+              placeholder="Your Message"
+              required
+            />
+          </div>
           <button type="submit">Send Message</button>
         </form>
       </div>
       <div className="footer-section">
         <h4>About Us</h4>
         <p>This project was created by a group in CS 370 Spring 2024</p>
-      </div>
-      <div className="footer-section">
         <h4>Learn More</h4>
         <p>Github and Documentation</p>
-      </div>
-      <div className="footer-section">
         <h4>Help Center</h4>
         <p>The project is currently maintained by Tuan Vinh (tvinh@emory.edu)</p>
       </div>
-      {/* You can add more footer-sections here for additional content */}
+      {/* Add more footer-sections here for additional content */}
     </footer>
   );
 }

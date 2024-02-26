@@ -1,31 +1,52 @@
 .footer {
-    background-color: #333;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    font-size: 14px;
-  }
+  background-color: #333;
+   color: white;
+   display: flex;
+   justify-content: space-between;
+   padding: 20px;
+   font-size: 14px;
+}
   
+.footer-section {
+  flex: 1; /* Each section takes equal width */
+  padding: 0 15px; /* Spacing between sections */
+}
+  
+.footer-section h4 {
+   display: flex;
+   flex-direction: column;
+   margin-bottom: 10px; /* Spacing between title and content */
+   font-size: 16px; /* Larger text for titles */
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 40%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  resize: none;
+  font-family: Arial, sans-serif;
+}
+
+.contact-form textarea {
+  width: 95%; 
+}
+
+.contact-form input {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Add responsiveness to window changes */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
   .footer-section {
-    flex: 1; /* Each section takes equal width */
-    padding: 0 10px; /* Spacing between sections */
+    margin-bottom: 20px; /* Add space at the bottom of sections when stacked */
   }
-  
-  .footer-section h4 {
-    margin-bottom: 10px; /* Spacing between title and content */
-    font-size: 16px; /* Larger text for titles */
-  }
-  
-  /* Add responsiveness */
-  @media (max-width: 768px) {
-    .footer {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .footer-section {
-      margin-bottom: 20px; /* Add space at the bottom of sections when stacked */
-    }
-  }
-  
+}
