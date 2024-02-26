@@ -6,4 +6,6 @@
   height: 10%;
   z-index: 1000;
   background-color: gray;
+  display: flex;
+  flex-direction: row;
 }
