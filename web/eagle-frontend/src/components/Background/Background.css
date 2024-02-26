@@ -13,9 +13,9 @@
   content: '';
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0; /* Full cover */
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)), url('/images/campus_background.jpeg') no-repeat center center; /* Dark overlay */
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)), url('/images/campus_background.jpeg') no-repeat center center; /* Dark overlay */
   background-size: cover;
-  filter: blur(1px); /* The value can be adjusted to increase or decrease the blur effect */
+  filter: blur(0px); /* The value can be adjusted to increase or decrease the blur effect */
   z-index: -1; /* Place the pseudo-element behind the content */
 }
 
@@ -49,12 +49,15 @@
 }
 
 .choose-campus-btn:hover::after {
-  opacity: 1; /* Show the overlay on hover */
+  opacity: 2; /* Show the overlay on hover */
 }
 
-
-.university-address {
+/* .university-address {
   position: absolute;
-  bottom: 2rem; /* Positioned at the bottom */
+  bottom: 2rem; 
   font-size: 1rem;
-}
+  padding: 0.5rem; 
+  background-color: rgba(0, 0, 0, 0.3); 
+  color: white; 
+} */
+
