@@ -2,3 +2,9 @@
   display: flex;
   flex-direction: column;
 }
+.Category .title {
+  margin-left: 20px;
+}
+.Category .title h1 {
+  color: gray;
+}
