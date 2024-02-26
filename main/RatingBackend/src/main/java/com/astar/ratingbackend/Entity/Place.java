@@ -27,6 +27,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Document("Places")
@@ -58,7 +59,11 @@ public class Place implements Serializable {
     @Field("images")
     private List<Image> images;
 
+    @Field("totalRatings")
+    private TotalRating totalRatings;
+
     // Nested class for Image documents within the "images" array
+    @Data
     public static class Image implements Serializable {
         @Field("imageId")
         private ObjectId imageId;
@@ -92,5 +97,23 @@ public class Place implements Serializable {
         public void setDescription(String description) {
             this.description = description;
         }
+    }
+
+    @Data
+    public static class TotalRating implements Serializable {
+        private double overall;
+        private double rating1;
+        private double rating2;
+        private double rating3;
+        private Map<String, String> ratingName; // Map rating1, rating2, rating3 to specific names
+
+        public TotalRating(double overall, double rating1, double rating2, double rating3, Map<String, String> ratingName) {
+            this.overall = overall;
+            this.rating1 = rating1;
+            this.rating2 = rating2;
+            this.rating3 = rating3;
+            this.ratingName = ratingName;
+        }
+
     }
 }

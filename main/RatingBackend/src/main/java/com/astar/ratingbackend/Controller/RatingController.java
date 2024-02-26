@@ -17,27 +17,70 @@
 
 package com.astar.ratingbackend.Controller;
 
-import com.astar.ratingbackend.Entity.Rating; // Assuming you have a Rate entity
-import com.astar.ratingbackend.Service.Impl.RatingServiceImpl; // Assuming there's a RateService
+import com.astar.ratingbackend.Entity.Rating;
+import com.astar.ratingbackend.Service.Impl.RatingServiceImpl;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/rate") // Changed from /api/place to /api/rate
 public class RatingController {
     @Autowired
-    private RatingServiceImpl rateService; // Changed from PlaceService to RateService
+    private RatingServiceImpl ratingService; // Changed from PlaceService to RateService
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @GetMapping("/get")
-    public List<Rating> getRates(){ // Method and return type changed to reflect rates
-        return rateService.getAllRates(); // Assuming a method getAllRates() in RateService
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Rating>> getAllRating(){
+        try {
+            List<Rating> ratings = ratingService.getAllRatings();
+            if (ratings.isEmpty()) {
+                return ResponseEntity.noContent().build(); // No ratings found
+            }
+            return ResponseEntity.ok(ratings); // Return list of ratings
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Server error
+        }
+    }
+    @PostMapping("/get")
+    public ResponseEntity<Rating> getRatingById(@RequestParam String ratingId){
+        try {
+            ObjectId objectId = new ObjectId(ratingId);
+            Optional<Rating> rating = ratingService.getRateById(objectId);
+            return rating.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build(); // Invalid ObjectId format
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Other errors
+        }
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteRatingById(@RequestParam String ratingId) {
+        try {
+            ObjectId objectId = new ObjectId(ratingId);
+            ratingService.deleteRate(objectId);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build(); // Invalid ObjectId format
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Other errors
+        }
+    }
+    @PostMapping("/add")
+    public ResponseEntity<Rating> addRating(@RequestBody Rating rating) {
+        try {
+            Rating savedRating = ratingService.saveRate(rating);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedRating);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

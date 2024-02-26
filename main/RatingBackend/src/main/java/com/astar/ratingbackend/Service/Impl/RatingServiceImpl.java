@@ -23,6 +23,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,18 +32,42 @@ import java.util.Optional;
 public class RatingServiceImpl {
     private final RateRepository rateRepository;
 
+
+
     @Autowired
     public RatingServiceImpl(RateRepository rateRepository) {
         this.rateRepository = rateRepository;
     }
 
     // Save a new rate
-    public Rating saveRate(Rating rate) {
-        return rateRepository.save(rate);
+    public Rating saveRate(Rating rating) {
+        if(rating.getRatingId()==null){
+
+        }
+        if (rating.getTags() == null) {
+            rating.setTags(Collections.emptyList()); // Empty list as default value
+        }
+        if (rating.getComment() == null) {
+            rating.setComment(""); // Empty string as default value
+        }if (rating.getDate() == null) {
+            rating.setDate(new Date()); // Current date as default value
+        }
+        if (rating.getLikes() == null) {
+            rating.setLikes(0); // 0 as default value
+        }
+        if (rating.getDislikes() == null) {
+            rating.setDislikes(0); // 0 as default value
+        }
+        if (rating.getComments() == null) {
+            rating.setComments(Collections.emptyList()); // Empty list as default value
+        }
+
+        return rateRepository.save(rating);
     }
 
+
     // Retrieve all rates
-    public List<Rating> getAllRates() {
+    public List<Rating> getAllRatings() {
         return rateRepository.findAll();
     }
 
@@ -64,6 +90,7 @@ public class RatingServiceImpl {
         // Additional fields to be updated if needed
         return rateRepository.save(existingRate);
     }
+
 
     // Delete a rate by its ID
     public void deleteRate(ObjectId id) {
