@@ -10,7 +10,7 @@ const NavBar = () => {
       <div className="nav-links">
         <button className="login-btn">Login</button>
         <div className="separator"></div>
-        <button className="signup-btn">SignUp</button>
+        <button className="signup-btn">Sign Up</button>
       </div>
     </div>
   );
