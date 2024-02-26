@@ -1,0 +1,4 @@
+.TrendPlaces {
+  display: flex;
+  flex-direction: row;
+}
