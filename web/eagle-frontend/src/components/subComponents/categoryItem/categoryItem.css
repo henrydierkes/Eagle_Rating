@@ -1,29 +1,23 @@
-.TrendPlace {
+.categoryItem {
   width: 20vw;
   height: 20vw;
   background-color: whitesmoke;
   margin-right: 20px; /* Add margin to create space between TrendPlace components */
   position: relative;
 }
-.TrendPlace .RateBar{
-  position: absolute;
-  top:0;
-  left:0;
-  width: 40%;
-  height: 20%;
-  background-color: green;
-}
-.TrendPlace .Name{
+.categoryItem .Name {
   width: 100%;
   height: 20%;
-  position:absolute;
-  bottom: 5%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: flex;
   justify-content: center; /* Center its children horizontally */
   align-items: center; /* Center its children vertically */
   background-color: darkgray;
+  transform: translate(-50%, -50%);
 }
-.TrendPlace .Name h2{
+.categoryItem .Name h2 {
   color: white;
   text-align: center;
 }
