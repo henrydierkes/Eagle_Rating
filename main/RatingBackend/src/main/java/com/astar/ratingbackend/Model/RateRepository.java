@@ -17,7 +17,7 @@
 
 package com.astar.ratingbackend.Repository;
 
-import com.astar.ratingbackend.Entity.Rate;
+import com.astar.ratingbackend.Entity.Rating;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RateRepository extends MongoRepository<Rate, ObjectId> {
+public interface RateRepository extends MongoRepository<Rating, ObjectId> {
     // Example custom query method
-    List<Rate> findByUserId(ObjectId userId);
+    List<Rating> findByUserId(ObjectId userId);
 
     // You can add more custom methods here to handle specific queries, e.g., find by tags, date range, etc.
 }

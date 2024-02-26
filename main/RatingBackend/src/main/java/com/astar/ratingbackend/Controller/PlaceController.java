@@ -19,11 +19,9 @@
 package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.Place;
-import com.astar.ratingbackend.Service.PlaceService;
+import com.astar.ratingbackend.Service.Impl.PlaceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,11 +29,15 @@ import java.util.List;
 @RequestMapping("/api/place")
 public class PlaceController {
     @Autowired
-    private PlaceService placeService;
+    private PlaceServiceImpl placeService;
 
 
     @GetMapping("/get")
     public List<Place> getPlace(){
         return placeService.getAllPlaces();
+    }
+    @PostMapping("/add")
+    public void addPlace(@RequestBody Place place){
+
     }
 }
