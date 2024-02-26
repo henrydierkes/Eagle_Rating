@@ -1,13 +1,22 @@
 .background-container {
   position: relative;
-  background: url('/images/campus_background.jpeg') no-repeat center center;
-  background-size: cover;
   height: 400px; /* Adjust based on your design */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #fff; /* For white text color */
+  overflow: hidden; /* Hide the overflow caused by the pseudo-element */
+}
+
+.background-container::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0; /* Full cover */
+  background: url('/images/campus_background.jpeg') no-repeat center center;
+  background-size: cover;
+  filter: blur(1px); /* The value can be adjusted to increase or decrease the blur effect */
+  z-index: -1; /* Place the pseudo-element behind the content */
 }
 
 .university-title {
