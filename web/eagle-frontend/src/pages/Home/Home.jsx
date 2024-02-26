@@ -1,12 +1,21 @@
 import React from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import HomeContent from "../Home/HomeContent/HomeContent";
+import Background from "../../components/Background/Background";
+import Category from "../../components/Category/Category";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import TopComments from "../../components/TopComments/TopComments";
+
 import "./Home.css";
 function Home() {
   return (
     <div className="Home">
       <NavBar />
-      <HomeContent />
+      <Background />
+      <Trending />
+      <Category />
+      <TopComments />
+      <Footer />
+
     </div>
   );
 }
