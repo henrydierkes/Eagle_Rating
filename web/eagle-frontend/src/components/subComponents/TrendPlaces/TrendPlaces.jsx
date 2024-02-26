@@ -4,7 +4,8 @@ import TrendPlace from "../TrendPlace/TrendPlace";
 function TrendPlaces() {
   return (
     <div className="TrendPlaces">
-      <div id="slide">
+      <div className="slide">
+        <TrendPlace />
         <TrendPlace />
         <TrendPlace />
         <TrendPlace />

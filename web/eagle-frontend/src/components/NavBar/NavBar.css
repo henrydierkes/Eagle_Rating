@@ -8,14 +8,13 @@
 
 .logo {
   font-size: 24px;
-  font
 }
 
 .nav-links {
   display: flex;
   white-space: nowrap; /* Prevents wrapping of child elements */
 }
-@media (max-width: 768px) { /* Adjust the max-width as needed for your design. */
+@media (max-width: 768px) { /* Adjust the max-width */
   .nav-links {
     flex-wrap: nowrap; /* Ensures buttons don't wrap on smaller screens */
   }
