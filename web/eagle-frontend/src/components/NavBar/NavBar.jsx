@@ -9,7 +9,7 @@ const NavBar = () => {
       <SearchBar />
       <div className="nav-links">
         <button className="login-btn">Login</button>
-        <button className="signup-btn">SignUp</button>
+        <button className="signup-btn">Sign Up</button>
       </div>
     </div>
   );
