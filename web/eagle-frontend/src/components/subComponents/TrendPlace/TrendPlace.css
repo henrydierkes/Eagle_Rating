@@ -1,5 +1,5 @@
-.TrendingPlace {
-  width: 20%;
-  height: 20vw;
-  background-color: black;
+.TrendPlace {
+  width: 20vw;
+  height: 10vh;
+  background-color: whitesmoke;
 }

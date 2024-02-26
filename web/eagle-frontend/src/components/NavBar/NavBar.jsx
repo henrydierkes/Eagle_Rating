@@ -1,14 +1,18 @@
-import React from "react";
-import "./NavBar.css";
-import SearchBar from "../SearchBar/SearchBar";
-function NavBar() {
+import React from 'react';
+import SearchBar from '../SearchBar/SearchBar';
+import './NavBar.css';
+
+const NavBar = () => {
   return (
-    <div className="NavBar">
-      <div className="icon" />
+    <div className="nav-bar">
+      <h1 className="logo">EagleRating</h1>
       <SearchBar />
-      <div className="userinfo"></div>
+      <div className="nav-links">
+        <button className="login-btn">Login</button>
+        <button className="signup-btn">SignUp</button>
+      </div>
     </div>
   );
-}
+};
 
 export default NavBar;
