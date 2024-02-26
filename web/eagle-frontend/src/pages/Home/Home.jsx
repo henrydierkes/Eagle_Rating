@@ -15,7 +15,6 @@ function Home() {
       <Category />
       <TopComments />
       <Footer />
-
     </div>
   );
 }
