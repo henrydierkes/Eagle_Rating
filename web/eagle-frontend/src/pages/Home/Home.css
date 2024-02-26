@@ -2,3 +2,6 @@
   display: flex;
   flex-direction: column;
 }
+body {
+  font-family: 'Helvetica';
+}
