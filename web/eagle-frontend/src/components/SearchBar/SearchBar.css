@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between; /* Adjusts the space distribution */
   width: 70%;
+  margin-right: 10px;
   padding: 0.5em 1em;
   border-radius: 20px;
   border: 1px solid #ccc;
