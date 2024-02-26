@@ -1,0 +1,31 @@
+.footer {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    font-size: 14px;
+  }
+  
+  .footer-section {
+    flex: 1; /* Each section takes equal width */
+    padding: 0 10px; /* Spacing between sections */
+  }
+  
+  .footer-section h4 {
+    margin-bottom: 10px; /* Spacing between title and content */
+    font-size: 16px; /* Larger text for titles */
+  }
+  
+  /* Add responsiveness */
+  @media (max-width: 768px) {
+    .footer {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .footer-section {
+      margin-bottom: 20px; /* Add space at the bottom of sections when stacked */
+    }
+  }
+  
