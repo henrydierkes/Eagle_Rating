@@ -9,6 +9,7 @@ const NavBar = () => {
       <SearchBar />
       <div className="nav-links">
         <button className="login-btn">Login</button>
+        <div className="separator"></div>
         <button className="signup-btn">SignUp</button>
       </div>
     </div>
