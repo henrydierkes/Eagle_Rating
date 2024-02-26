@@ -1,0 +1,12 @@
+.Trending {
+  display: flex;
+  flex-direction: column;
+}
+.Trending .Title {
+  width: 20px;
+  height: 40px;
+  background-color: black;
+}
+.Trending .title h1 {
+  color: gray;
+}
