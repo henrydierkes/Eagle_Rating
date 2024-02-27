@@ -1,5 +1,5 @@
 .footer {
-    background: linear-gradient(to right, #5ea5fc, #6379fe); /* Gradient from dark gray to light gray */
+    background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
     color: white;
     display: flex;
     justify-content: space-between;
@@ -11,7 +11,7 @@
     flex: 1; /* Each section takes equal width */
     padding: 0 15px; /* Spacing between sections */
   }
-    
+  
   .footer-section h4 {
     display: flex;
     flex-direction: column;
@@ -39,6 +39,25 @@
     flex-wrap: wrap;
   }
   
+  /* Stylize the Send Message button */
+  .contact-form button,
+  .contact-form input[type="submit"] {
+    background-image: linear-gradient(to right, #5ea5fc, #6379fe); /* Green background */
+    color: #fff; /* White text */
+    padding: 14px 20px; /* Bigger padding */
+    margin: 8px 0; /* Margin to separate from other elements */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 18px; /* Larger font size */
+  }
+  
+  /* Add some hover effect for the button */
+  .contact-form button:hover,
+  .contact-form input[type="submit"]:hover {
+    background-color: #637afe4d; /* Darker shade of green for hover effect */
+  }
+  
   /* Add responsiveness to window changes */
   @media (max-width: 768px) {
     .footer {
@@ -48,6 +67,12 @@
   
     .footer-section {
       margin-bottom: 20px; /* Add space at the bottom of sections when stacked */
+    }
+  
+    /* Adjustments for smaller screens */
+    .contact-form input,
+    .contact-form textarea {
+      width: 80%; /* Increase width for better fit on smaller screens */
     }
   }
   
