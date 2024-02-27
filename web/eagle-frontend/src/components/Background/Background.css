@@ -1,6 +1,6 @@
 .background-container {
   position: relative;
-  height: 400px; /* Adjust based on your design */
+  height: 500px; /* Adjust based on your design */
   display: flex;
   flex-direction: column;
   justify-content: center;
