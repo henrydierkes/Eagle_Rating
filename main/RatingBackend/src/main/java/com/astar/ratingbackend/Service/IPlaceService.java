@@ -20,4 +20,6 @@ public interface IPlaceService {
     public void removeRating(ObjectId id, Rating rating);
 
     Optional<Place> findById(ObjectId id);
+    List<Place> searchPlacesByName(String name);
+    List<Place> searchPlacesByNameAndCategory(String name, String category);
 }
