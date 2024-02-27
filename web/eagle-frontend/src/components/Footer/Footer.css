@@ -1,78 +1,66 @@
 .footer {
-    background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    font-size: 14px;
-  }
-  
-  .footer-section {
-    flex: 1; /* Each section takes equal width */
-    padding: 0 15px; /* Spacing between sections */
-  }
-  
-  .footer-section h4 {
-    display: flex;
+  background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px; /* Reduced padding */
+  font-size: 12px; /* Reduced font size */
+}
+
+.footer-section {
+  flex: 1; /* Each section takes equal width */
+  padding: 0 10px; /* Reduced spacing between sections */
+}
+
+.footer-section h4 {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px; /* Reduced spacing between title and content */
+  font-size: 14px; /* Smaller text for titles */
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 90%; /* Adjusted width */
+  padding: 8px; /* Reduced padding */
+  margin-bottom: 10px; /* Reduced margin bottom */
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  resize: none;
+  font-family: Arial, sans-serif;
+}
+
+.contact-form textarea {
+  width: 90%; /* Adjusted width for better alignment */
+}
+
+/* Adjust the Send Message button and input[type="submit"] for a smaller appearance */
+.contact-form button,
+.contact-form input[type="submit"] {
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe);
+  color: #fff; /* White text */
+  padding: 10px 15px; /* Reduced padding */
+  margin: 5px 0; /* Reduced margin */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Smaller font size */
+}
+
+/* Add responsiveness to window changes */
+@media (max-width: 768px) {
+  .footer {
     flex-direction: column;
-    margin-bottom: 10px; /* Spacing between title and content */
-    font-size: 16px; /* Larger text for titles */
+    text-align: center;
   }
-  
+
+  .footer-section {
+    margin-bottom: 15px; /* Adjusted space at the bottom of sections when stacked */
+  }
+
+  /* Adjustments for input and textarea sizes on smaller screens */
   .contact-form input,
   .contact-form textarea {
-    width: 40%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    resize: none;
-    font-family: Arial, sans-serif;
+    width: 75%; /* Adjusted width for better fit on smaller screens */
   }
-  
-  .contact-form textarea {
-    width: 95%; 
-  }
-  
-  .contact-form input {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  /* Stylize the Send Message button */
-  .contact-form button,
-  .contact-form input[type="submit"] {
-    background-image: linear-gradient(to right, #5ea5fc, #6379fe); /* Green background */
-    color: #fff; /* White text */
-    padding: 14px 20px; /* Bigger padding */
-    margin: 8px 0; /* Margin to separate from other elements */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 18px; /* Larger font size */
-  }
-  
-  /* Add some hover effect for the button */
-  .contact-form button:hover,
-  .contact-form input[type="submit"]:hover {
-    background-color: #637afe4d; /* Darker shade of green for hover effect */
-  }
-  
-  /* Add responsiveness to window changes */
-  @media (max-width: 768px) {
-    .footer {
-      flex-direction: column;
-      text-align: center;
-    }
-  
-    .footer-section {
-      margin-bottom: 20px; /* Add space at the bottom of sections when stacked */
-    }
-  
-    /* Adjustments for smaller screens */
-    .contact-form input,
-    .contact-form textarea {
-      width: 80%; /* Increase width for better fit on smaller screens */
-    }
-  }
-  
+}
