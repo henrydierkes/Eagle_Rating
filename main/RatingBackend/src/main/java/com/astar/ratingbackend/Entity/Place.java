@@ -69,7 +69,7 @@ public class Place implements Serializable {
         private ObjectId imageId;
 
         @Field("data")
-        private Binary data;
+        private String data;
 
         @Field("description")
         private String description;
@@ -82,11 +82,11 @@ public class Place implements Serializable {
             this.imageId = imageId;
         }
 
-        public Binary getData() {
+        public String getData() {
             return data;
         }
 
-        public void setData(Binary data) {
+        public void setData(String data) {
             this.data = data;
         }
 

@@ -19,12 +19,11 @@ package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
-import com.astar.ratingbackend.Repository.PlaceRepository;
+import com.astar.ratingbackend.Model.PlaceRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,5 +228,13 @@ public class PlaceServiceImpl {
 
         // Set the updated totalRatings to the place
         place.setTotalRatings(totalRatings);
+    }
+    public List<Place> searchPlacesByName(String locName) {
+        return placeRepository.findByLocNameContainingIgnoreCase(locName);
+    }
+
+    // Method to search places by name and category (case insensitive)
+    public List<Place> searchPlacesByNameAndCategory(String locName, String category) {
+        return placeRepository.findByLocNameContainingIgnoreCaseAndCategory(locName, category);
     }
 }

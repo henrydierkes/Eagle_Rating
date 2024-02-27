@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -53,5 +52,15 @@ public class PlaceController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+    @GetMapping("/search")
+    public List<Place> searchPlacesByName(@RequestParam String name) {
+        return placeService.searchPlacesByName(name);
+    }
+
+    // Endpoint to search places by name and category
+    @GetMapping("/search/category")
+    public List<Place> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category) {
+        return placeService.searchPlacesByNameAndCategory(name, category);
     }
 }
