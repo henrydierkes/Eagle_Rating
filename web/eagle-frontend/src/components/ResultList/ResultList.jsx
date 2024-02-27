@@ -24,12 +24,12 @@ const ResultList = ({ results }) => {
                     >
                         <span className="rating-number">{result.rating}</span>
                     </div>
-                    <p className="rating-description-outside">Outside Rating Description</p> {/* 在这里添加您的小字 */}
+                    <p className="rating-description-outside"></p> {/* 在这里添加您的小字 */}
                     <div>
                         <h3>{result.title}</h3>
                         <p>{result.description}</p>
-                        <p className="description">{result.additionalInfo}</p>
-                    </div>
+                        <p className="description">{result.num_rate + " ratings"}</p>
+                    </div>0
                 </div>
             ))}
         </div>
