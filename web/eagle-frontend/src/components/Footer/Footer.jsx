@@ -80,7 +80,7 @@ const Footer = () => {
       </div>
       <div className="footer-section">
     <h4 style={{ fontSize: '24px' }}>About Us</h4>
-    <p style={{ fontSize: '20px' }}>This project was created by a group in CS 370 Spring 2024. A* is Tuan Vinh, Jonathan Wang, Wenzhuo Ma, and Tung Dinh</p>
+    <p style={{ fontSize: '20px' }}>This project was created by a group in CS 370 Spring 2024. A* is Tuan Vinh, Jonathan Wang, Wenzhuo Ma, Tung Dinh, and Henry Dierkes</p>
     <h4 style={{ fontSize: '24px' }}>Learn More</h4>
     <p style={{ fontSize: '20px' }}>Github and Documentation</p>
     <h4 style={{ fontSize: '24px' }}>Help Center</h4>
