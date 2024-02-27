@@ -44,16 +44,6 @@ const Footer = () => {
       <h4 style={{ fontSize: '24px' }}>Get In Touch</h4>
         <form onSubmit={handleSubmit}>
           <div classname="input-group">
-            <div classname="name">
-              <input
-                type="text"
-                name="name"
-                value={name}
-                onChange={handleChange}
-                placeholder="Your Name"
-                required
-              />
-            </div>
             <div classname="email">
               <input
                 type="email"
