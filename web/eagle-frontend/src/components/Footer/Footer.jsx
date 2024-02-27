@@ -41,7 +41,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-section contact-form">
-        <h4>Get In Touch</h4>
+      <h4 style={{ fontSize: '24px' }}>Get In Touch</h4>
         <form onSubmit={handleSubmit}>
           <div classname="input-group">
             <div classname="name">
@@ -79,13 +79,13 @@ const Footer = () => {
         </form>
       </div>
       <div className="footer-section">
-        <h4>About Us</h4>
-        <p>This project was created by a group in CS 370 Spring 2024</p>
-        <h4>Learn More</h4>
-        <p>Github and Documentation</p>
-        <h4>Help Center</h4>
-        <p>The project is currently maintained by Tuan Vinh (tvinh@emory.edu)</p>
-      </div>
+    <h4 style={{ fontSize: '24px' }}>About Us</h4>
+    <p style={{ fontSize: '20px' }}>This project was created by a group in CS 370 Spring 2024. A* is Tuan Vinh, Jonathan Wang, Wenzhuo Ma, and Tung Dinh</p>
+    <h4 style={{ fontSize: '24px' }}>Learn More</h4>
+    <p style={{ fontSize: '20px' }}>Github and Documentation</p>
+    <h4 style={{ fontSize: '24px' }}>Help Center</h4>
+    <p style={{ fontSize: '20px' }}>The project is currently maintained by Tuan Vinh (tvinh@emory.edu)</p>
+</div>
       {/* Add more footer-sections here for additional content */}
     </footer>
   );
