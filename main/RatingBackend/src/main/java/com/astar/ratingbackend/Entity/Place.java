@@ -26,6 +26,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +65,12 @@ public class Place implements Serializable {
     private TotalRating totalRating;
     @Field("ratingAspect")
     private Map<String, String> ratingAspect;
+
+    @Field("isDeleted")
+    private boolean isDeleted;
+
+    @Field("deletedDate")
+    private Date deletedDate;
 
 
     // Nested class for Image documents within the "images" array

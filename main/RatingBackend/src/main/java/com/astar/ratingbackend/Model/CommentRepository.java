@@ -1,34 +1,19 @@
-/**
- * Project Name: Eagle_Rating
- * File Name:    CommentRepository.java
- * Package Name: com.astar.ratingbackend.Repository
- *
- * Type: Repository
- * Purpose: Repository interface for Comment Entity - Facilitates operations such as create, read, update, and delete (CRUD) for comments in the system.
- *
- * Created on: [2024-02-21]
- * Author: @Wenzhuo Ma
- *
- * History:
- * - [2024-02-21] Created by @Wenzhuo Ma
- * ...
- */
-
-package com.astar.ratingbackend.Repository;
+package com.astar.ratingbackend.Model;
 
 import com.astar.ratingbackend.Entity.Comment;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends MongoRepository<Comment, ObjectId> {
     // Example custom query method
-    List<Comment> findByUserId(ObjectId userId);
+    @Query("{ '_id' : ?0, 'isDeleted' : false }")
+    Optional<Comment> findByIdAndNotDeleted(ObjectId id);
 
-    // Additional custom methods could be added to facilitate specific queries, for example:
-    // - Find comments by date range
-    // - Find comments related to a specific rating
+    // Standard findById method
+    Optional<Comment> findById(ObjectId id);
 }

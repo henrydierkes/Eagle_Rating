@@ -60,6 +60,12 @@ public class Rating implements Serializable {
     @Field("overallRating")
     private OverallRating overallRating;
 
+    @Field("isDeleted")
+    private boolean isDeleted;
+
+    @Field("deletedDate")
+    private Date deletedDate;
+
     @Data
     public static class OverallRating implements Serializable {
         private Double overall;

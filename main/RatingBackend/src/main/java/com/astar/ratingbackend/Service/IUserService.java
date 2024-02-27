@@ -15,9 +15,8 @@ public interface IUserService {
 
     void updateUserPassword(String userId, String newPassword);
 
-    void deleteUser(String userId);
-
-    void deleteUser(ObjectId userId);
+    public void deleteUser(ObjectId id);
+    public void deleteUserT(ObjectId id);
     List<User> getAllUser();
 
     void addUser(User user);

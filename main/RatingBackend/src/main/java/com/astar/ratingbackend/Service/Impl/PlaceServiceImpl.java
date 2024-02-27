@@ -19,7 +19,7 @@ package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
-import com.astar.ratingbackend.Repository.PlaceRepository;
+import com.astar.ratingbackend.Model.PlaceRepository;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.types.ObjectId;
@@ -81,9 +81,18 @@ public class PlaceServiceImpl implements IPlaceService {
 
         return placeDetails;
     }
-
-    public void deletePlace(ObjectId id) {
+//    destructively delete, cannot recover
+    public void deletePlaceT(ObjectId id) {
         placeRepository.deleteById(id);
+    }
+
+//    fake delete, used usually
+    public void deletePlace(ObjectId id) {
+        placeRepository.findByIdAndNotDeleted(id).ifPresent(place -> {
+            place.setDeleted(true);
+            place.setDeletedDate(new Date());
+            placeRepository.save(place);
+        });
     }
 
 

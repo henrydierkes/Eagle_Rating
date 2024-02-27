@@ -1,6 +1,6 @@
 /**
  * Project Name: Eagle_Rating
- * File Name:    RateRepository.java
+ * File Name:    RatingRepository.java
  * Package Name: com.astar.ratingbackend.Repository
  *
  * Type: Repository
@@ -15,19 +15,23 @@
  * ...
  */
 
-package com.astar.ratingbackend.Repository;
+package com.astar.ratingbackend.Model;
 
 import com.astar.ratingbackend.Entity.Rating;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface RateRepository extends MongoRepository<Rating, ObjectId> {
+public interface RatingRepository extends MongoRepository<Rating, ObjectId> {
     // Example custom query method
     List<Rating> findByUserId(ObjectId userId);
+    @Query("{ '_id' : ?0, 'isDeleted' : false }")
+    Optional<Rating> findByIdAndNotDeleted(ObjectId id);
 
     // You can add more custom methods here to handle specific queries, e.g., find by tags, date range, etc.
 }

@@ -18,13 +18,14 @@
 package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Comment;
-import com.astar.ratingbackend.Repository.CommentRepository;
+import com.astar.ratingbackend.Model.CommentRepository;
 import com.astar.ratingbackend.Service.ICommentService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,5 +69,12 @@ public class CommentServiceImpl implements ICommentService {
     // Delete a comment by its ID
     public void deleteComment(ObjectId id) {
         commentRepository.deleteById(id);
+    }
+    public void deleteCommentT(ObjectId id) {
+        commentRepository.findByIdAndNotDeleted(id).ifPresent(comment -> {
+            comment.setDeleted(true);
+            comment.setDeletedDate(new Date());
+            commentRepository.save(comment);
+        });
     }
 }

@@ -58,7 +58,7 @@ public class RatingController {
     public ResponseEntity<Void> deleteRatingById(@RequestParam String ratingId) {
         try {
             ObjectId objectId = new ObjectId(ratingId);
-            ratingService.deleteRate(objectId);
+            ratingService.deleteRating(objectId);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build(); // Invalid ObjectId format

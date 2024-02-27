@@ -11,5 +11,6 @@ public interface ICommentService {
     public List<Comment> getAllComments();
     public Optional<Comment> getCommentById(ObjectId id);
     public Comment updateComment(ObjectId id, Comment commentDetails);
-    public void deleteComment(ObjectId id);
+//    public void deleteComment(ObjectId id);
+//    public void deleteCommentT(ObjectId id);
 }

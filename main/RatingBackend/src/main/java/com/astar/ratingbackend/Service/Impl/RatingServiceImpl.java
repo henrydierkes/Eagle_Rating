@@ -1,6 +1,5 @@
 /**
  * Project Name: Eagle_Rating
- * File Name:    RateService.java
  * Package Name: com.astar.ratingbackend.Service
  *
  * Type: Service
@@ -18,7 +17,6 @@
 package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Rating;
-import com.astar.ratingbackend.Repository.RateRepository;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +33,14 @@ import java.util.Optional;
 
 @Service
 public class RatingServiceImpl implements IRatingService {
-    private final RateRepository rateRepository;
+    private final com.astar.ratingbackend.Model.RatingRepository ratingRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
 
 
     @Autowired
-    public RatingServiceImpl(RateRepository rateRepository) {
-        this.rateRepository = rateRepository;
+    public RatingServiceImpl(com.astar.ratingbackend.Model.RatingRepository ratingRepository) {
+        this.ratingRepository = ratingRepository;
     }
 
     // Save a new rate
@@ -68,7 +66,7 @@ public class RatingServiceImpl implements IRatingService {
             rating.setComments(Collections.emptyList()); // Empty list as default value
         }
 
-        return rateRepository.save(rating);
+        return ratingRepository.save(rating);
     }
 
 
@@ -99,9 +97,18 @@ public class RatingServiceImpl implements IRatingService {
     }
 
 
-    // Delete a rate by its ID
-    public void deleteRate(ObjectId id) {
-        Query query = new Query(Criteria.where("_id").is(id));
-        mongoTemplate.remove(query, Rating.class);
+
+
+    public void deleteRatingT(ObjectId id) {
+        ratingRepository.deleteById(id);
+    }
+
+    //    fake delete, used usually
+    public void deleteRating(ObjectId id) {
+        ratingRepository.findByIdAndNotDeleted(id).ifPresent(rating -> {
+            rating.setDeleted(true);
+            rating.setDeletedDate(new Date());
+            ratingRepository.save(rating);
+        });
     }
 }

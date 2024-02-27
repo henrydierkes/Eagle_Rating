@@ -4,8 +4,9 @@ import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Model.UserRepository;
-import com.astar.ratingbackend.Service.Impl.PlaceServiceImpl;
-import com.astar.ratingbackend.Service.Impl.RatingServiceImpl;
+import com.astar.ratingbackend.Service.IPlaceService;
+import com.astar.ratingbackend.Service.IRatingService;
+import com.astar.ratingbackend.Service.IUserService;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,11 @@ class RatingBackendApplicationTests {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private PlaceServiceImpl placeService;
+    private IPlaceService placeService;
     @Autowired
-    private RatingServiceImpl ratingService;
+    private IRatingService ratingService;
+    @Autowired
+    private IUserService userService;
 
 
     @Test
@@ -68,6 +71,11 @@ class RatingBackendApplicationTests {
             // For example:
 
         }
+    }
+    @Test
+    void deleteUser(){
+        ObjectId id= new ObjectId("65d574294bb7330ced78f1ba");
+        userService.deleteUser(id);
     }
     @Test
     void testAverageRating(){
