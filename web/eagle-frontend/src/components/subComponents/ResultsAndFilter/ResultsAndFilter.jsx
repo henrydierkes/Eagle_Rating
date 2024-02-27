@@ -7,6 +7,7 @@ const ResultsAndFilter = ( {results} ) => {
   return (
     <div className="resultsandfilter">
       <ResultList results={results}/>
+      <div className="resultseparator"></div>
       <Filter />
     </div>
   );

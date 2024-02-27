@@ -37,4 +37,3 @@ const ResultList = ({ results }) => {
 };
 
 export default ResultList;
-
