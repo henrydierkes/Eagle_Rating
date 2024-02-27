@@ -29,7 +29,7 @@ const ResultList = ({ results }) => {
                         <h3>{result.title}</h3>
                         <p>{result.description}</p>
                         <p className="description">{result.num_rate + " ratings"}</p>
-                    </div>0
+                    </div>
                 </div>
             ))}
         </div>
