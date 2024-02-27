@@ -1,0 +1,20 @@
+.result-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-item {
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(223, 222, 222, 0.418);
+}
+
+.result-item h3 {
+  margin-top: 0;
+}
+
+.result-item p {
+  margin-bottom: 0;
+}

@@ -1,0 +1,31 @@
+.comments-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: #f0f0f0; /* Adjust the background color as needed */
+}
+
+.comment {
+  width: 30%; /* Adjust the width as necessary */
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ccc; /* Adjust border color as needed */
+  border-radius: 8px; /* Rounded corners */
+  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Simple box shadow */
+  text-align: center;
+}
+
+.user {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+q:before {
+  content: open-quote;
+}
+
+q:after {
+  content: close-quote;
+}

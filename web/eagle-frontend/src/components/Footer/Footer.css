@@ -1,0 +1,72 @@
+.footer {
+  background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  font-size: 12px;
+}
+
+.footer-section {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.footer-section h4 {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 90%;
+  padding: 15px; /* Increased padding for better visual and typing space */
+  margin-bottom: 15px;
+  border: 2px solid #c1c9f6; /* Slightly thicker border with a color that matches the gradient */
+  border-radius: 4px; /* More pronounced rounded corners for a modern look */
+  resize: none;
+  font-family: Arial, sans-serif;
+  font-size: 16px; /* Increased font size for better readability */
+  background-color: #f0f0f0; /* Light background to make it stand out */
+  color: #333; /* Darker text for better contrast */
+}
+
+.contact-form textarea {
+  width: 90%; /* Adjusted width for better alignment */
+  height: 100px;
+}
+
+.contact-form button,
+.contact-form input[type="submit"] {
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe);
+  color: #fff;
+  padding: 12px 20px; /* Adjusted padding */
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px; /* Increased font size */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for button */
+.contact-form button:hover,
+.contact-form input[type="submit"]:hover {
+  background-color: #4b6cb7; /* Darker shade for hover effect */
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-section {
+    margin-bottom: 20px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 80%; /* Adjusted width for small screens */
+  }
+}
