@@ -1,0 +1,15 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  top: 90px;
+  right: 0;
+  width: 30%;
+  height: calc(100% - 100px - 300px);
+  background-color: #ffffff;
+  padding: 20px;
+  /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); Optional: Add shadow for better visibility                maybe add this but probably not */
+  overflow-y: auto; /* Allow sidebar content to be scrolled if it exceeds height */
+}

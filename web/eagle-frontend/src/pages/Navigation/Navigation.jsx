@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import ResultList from "../../components/ResultList/ResultList";
+import ResultsAndFilter from "../../components/subComponents/ResultsAndFilter/ResultsAndFilter"
 import Footer from "../../components/Footer/Footer";
 
 const results = [
@@ -14,7 +14,7 @@ function Navigation() {
   return (
     <div className="Navigation">
       <NavBar />
-      <ResultList results={results}/>
+      <ResultsAndFilter results={results}/>
       <Footer />
     </div>
   );
