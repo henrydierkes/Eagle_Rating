@@ -1,5 +1,7 @@
 .nav-bar {
   display: flex;
+  /* position: fixed;         maybe put this in later? This makes the header sticky
+  width: 96%; */ 
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
@@ -16,7 +18,7 @@
 }
 @media (max-width: 768px) { /* This will only apply when the window is 768 pixels or less */
   .nav-links {
-    flex-wrap: nowrap; /* Ensures buttons don't wrap on smaller screens */
+    flex-wrap: nowrap; /* Makes it so buttons don't wrap on smaller screens */
   }
   .login-btn, .signup-btn {
     padding: 5px 10px; /* Adjust the padding to make the buttons smaller, 5px on top and bottom and 10px on left and right*/
@@ -39,6 +41,6 @@
 .separator {
   height: 30px;
   width: 1px;
-  background-color: #ccc; 
-  margin: 0 10px; 
+  background-color: #ccc;
+  margin: 0 10px;
 }
