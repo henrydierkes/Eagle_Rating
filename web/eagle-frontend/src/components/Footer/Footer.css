@@ -32,7 +32,8 @@
 }
 
 .contact-form textarea {
-  height: 100px; /* Adjusted height */
+  width: 90%; /* Adjusted width for better alignment */
+  height: 170px;
 }
 
 .contact-form button,
