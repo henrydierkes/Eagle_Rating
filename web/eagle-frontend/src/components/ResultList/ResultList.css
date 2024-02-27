@@ -2,20 +2,62 @@
   display: flex;
   flex-direction: column;
   width: 60%;
+  margin-right: auto;
 }
 
 .result-item {
-  border: 1px solid white;
+  display: flex;
+  align-items: center; /* aligns the text and the box vertically */
+  border: 1px solid #ccc; /* light gray border */
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: rgba(223, 222, 222, 0.418);
+  background-color: #f5f5f5; /* light gray background */
+  width: 100%;
 }
 
+.result-item .rating-box {
+  background-color: #4CAF50; /* example color */
+  color: white;
+  padding: 12px 16px; /* size of the box */
+  margin-right: 10px;
+  margin-top: -5px;
+  margin-left: 5px;
+  font-weight: bold;
+  border-radius: 5px; /* 更圆滑的边角 */
+  font-size: 1em; /* 增加文字大小 */
+
+}
+
+.rating-box .rating-number {
+  /* 样式示例 */
+  font-size: 1.2em; /* 调整数字大小 */
+  font-weight: 800; /* 加粗字体 */
+  color: #1a1a1a;
+  /* 您可以根据需要添加更多样式 */
+}
+
+
+.rating-description-below {
+  font-size: 0.8em; /* smaller font size for the rating description */
+  color: #999; /* light gray color for the text */
+  margin-top: 4px; /* space between the rating number and this text */
+}
+
+
 .result-item h3 {
-  margin-top: 0;
+  margin: 0;
+  font-size: 1.2em; /* slightly larger font for the title */
 }
 
 .result-item p {
-  margin-bottom: 0;
+  margin: 0;
+  color: #666; /* dark gray color for the description */
+  font-size: 0.9em;
+}
+
+.result-item .description {
+  font-size: 0.8em; /* smaller font for the additional description */
+  color: #999; /* lighter gray color */
+  margin-top: 4px; /* space between main description and this line */
 }
