@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ResultList.css';
+
 
 const getRatingColor = (rating) => {
     if (rating >= 4) {
@@ -14,6 +15,16 @@ const getRatingColor = (rating) => {
 };
 
 const ResultList = ({ results }) => {
+    const [highlights, setHighlights] = useState({}); // 用于存储每个结果的高亮状态
+
+    // 切换高亮状态的函数
+    const toggleHighlight = (index) => {
+        setHighlights(prevHighlights => ({
+            ...prevHighlights,
+            [index]: !prevHighlights[index]
+        }));
+    };
+
     return (
         <div className="result-list">
             {results.map((result, index) => (
@@ -24,7 +35,20 @@ const ResultList = ({ results }) => {
                     >
                         <span className="rating-number">{result.rating}</span>
                     </div>
-                    <p className="rating-description-outside"></p> {/* 在这里添加您的小字 */}
+                    <div
+                        className="highlight-tag"
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            backgroundColor: highlights[index] ? '#FFEB3B' : 'transparent',
+                            cursor: 'pointer',
+                            padding: '5px'
+                        }}
+                        onClick={() => toggleHighlight(index)}
+                    >
+                        {'☆'}
+                    </div>
                     <div>
                         <h3>{result.title}</h3>
                         <p>{result.description}</p>
@@ -37,4 +61,3 @@ const ResultList = ({ results }) => {
 };
 
 export default ResultList;
-
