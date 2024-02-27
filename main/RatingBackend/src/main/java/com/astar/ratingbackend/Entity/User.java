@@ -13,7 +13,7 @@ import java.util.Date;
 @Document("User")
 public class User implements Serializable {
     @Field("_id")
-    private ObjectId id;
+    private ObjectId userId;
     @Field("username")
     private String username;
     @Field("email")

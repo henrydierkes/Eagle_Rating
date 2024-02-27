@@ -21,9 +21,9 @@ public class UserController {
     public List<User> getUser(){
         return userService.getAllUser();
     }
-    @GetMapping("/get")
-    public List<User> getUserById(@RequestBody ObjectId userID){
-        return userService.getUserById(userID);
+    @PostMapping("/find")
+    public User getUserById(@RequestParam ObjectId userID){
+        return userService.findUserById(userID);
     }
     @PostMapping("/add")
     public ResponseEntity<String> addUser(@RequestBody User user) {

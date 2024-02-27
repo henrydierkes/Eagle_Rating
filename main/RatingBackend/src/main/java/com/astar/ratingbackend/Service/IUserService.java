@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface IUserService {
 
-    List<User> getUserById(ObjectId userId);
+    User findUserById(ObjectId id);
 
-    void updateUsername(String userId, String newName);
+    void updateUsername(ObjectId id, String newName);
 
-    void updateUserEmail(String userId, String newEmail);
+    void updateUserEmail(ObjectId id, String newEmail);
 
-    void updateUserPassword(String userId, String newPassword);
+    void updateUserPassword(ObjectId id, String newPassword);
 
     public void deleteUser(ObjectId id);
     public void deleteUserT(ObjectId id);

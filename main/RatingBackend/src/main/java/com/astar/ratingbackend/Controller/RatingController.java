@@ -35,6 +35,7 @@ public class RatingController {
     @Autowired
     private IRatingService ratingService; // Changed from PlaceService to RateService
 
+
     @Autowired
     private MongoTemplate mongoTemplate;
 

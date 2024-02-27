@@ -17,6 +17,8 @@
 package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Rating;
+import com.astar.ratingbackend.Model.RatingRepository;
+import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +38,11 @@ public class RatingServiceImpl implements IRatingService {
     private final com.astar.ratingbackend.Model.RatingRepository ratingRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
-
+    @Autowired
+    private IPlaceService placeService;
 
     @Autowired
-    public RatingServiceImpl(com.astar.ratingbackend.Model.RatingRepository ratingRepository) {
+    public RatingServiceImpl(RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
     }
 
@@ -109,6 +112,7 @@ public class RatingServiceImpl implements IRatingService {
             rating.setDeleted(true);
             rating.setDeletedDate(new Date());
             ratingRepository.save(rating);
+            placeService.removeRating(rating.getPlaceId(),rating);
         });
     }
 }

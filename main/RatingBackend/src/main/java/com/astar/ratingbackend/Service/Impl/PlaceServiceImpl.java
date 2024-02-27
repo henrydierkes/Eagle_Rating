@@ -38,12 +38,13 @@ public class PlaceServiceImpl implements IPlaceService {
     private final PlaceRepository placeRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
-    @Autowired RatingServiceImpl ratingService;
+
 
 
     @Autowired
     public PlaceServiceImpl(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
+
     }
 
     // Method to save a new place
@@ -70,18 +71,42 @@ public class PlaceServiceImpl implements IPlaceService {
                 .set("tags", placeDetails.getTags())
                 .set("ratingCount", placeDetails.getRatingCount())
                 .set("ratingIds", placeDetails.getRatingIds())
-                .set("images", placeDetails.getImages());
+                .set("images", placeDetails.getImages())
+                .set("totalRating", placeDetails.getTotalRating()) // Update totalRating field
+                .set("ratingAspect", placeDetails.getRatingAspect()) // Update ratingAspect field
+                .set("isDeleted", placeDetails.isDeleted()) // Update isDeleted field
+                .set("deletedDate", placeDetails.getDeletedDate()); // Update deletedDate field
 
         // Update the document in the database
         UpdateResult result = mongoTemplate.updateFirst(query, update, Place.class);
 
-        if (result.getModifiedCount() == 0) {
-            throw new RuntimeException("Failed to update place with id: " + id);
-        }
+//        if (result.getModifiedCount() == 0) {
+//            throw new Exception("Failed to update place with id: " + id);
+//        }
 
-        return placeDetails;
+        // Retrieve the updated place from the database
+        Place updatedPlace = mongoTemplate.findById(id, Place.class);
+        return updatedPlace;
     }
-//    destructively delete, cannot recover
+    public void removeRating(ObjectId id, Rating rating){
+        Double rating1 = rating.getOverallRating().getRating1();
+        Double rating2 = rating.getOverallRating().getRating2();
+        Double rating3 = rating.getOverallRating().getRating3();
+        findById(id).ifPresent(place->{
+            Place.TotalRating totalRatings = place.getTotalRating();
+
+            totalRatings.setOverall(totalRatings.getOverall() - rating1 - rating2 - rating3);
+            totalRatings.setRating1(totalRatings.getRating1() - rating1);
+            totalRatings.setRating2(totalRatings.getRating2() - rating2);
+            totalRatings.setRating3(totalRatings.getRating3() - rating3);
+
+            place.setTotalRating(totalRatings);
+            updatePlace(id, place);
+        });
+
+    }
+
+    //    destructively delete, cannot recover
     public void deletePlaceT(ObjectId id) {
         placeRepository.deleteById(id);
     }
@@ -147,30 +172,7 @@ public class PlaceServiceImpl implements IPlaceService {
 
         return placeRepository.save(place);
     }
-    public Place removeRating(ObjectId id, ObjectId ratingId) {
-        Optional<Rating> optionalRating = ratingService.getRateById(ratingId);
-        if (!optionalRating.isPresent()) {
-            throw new RuntimeException("Rating not found with id: " + ratingId);
-        }
-        Rating rating = optionalRating.get();
-        Double rating1 = rating.getOverallRating().getRating1();
-        Double rating2 = rating.getOverallRating().getRating2();
-        Double rating3 = rating.getOverallRating().getRating3();
 
-        Place place = placeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
-
-        Place.TotalRating totalRatings = place.getTotalRating();
-
-        totalRatings.setOverall(totalRatings.getOverall() - rating1 - rating2 - rating3);
-        totalRatings.setRating1(totalRatings.getRating1() - rating1);
-        totalRatings.setRating2(totalRatings.getRating2() - rating2);
-        totalRatings.setRating3(totalRatings.getRating3() - rating3);
-
-        place.setTotalRating(totalRatings);
-
-        return placeRepository.save(place);
-    }
     private void addTags(Place place, List<String> tags) {
         // Add the new tags to the existing list of tags
         List<String> existingTags = place.getTags();
@@ -233,46 +235,6 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setTotalRating(totalRatings);
     }
 
-    public void refresh(Place place){
-        List<ObjectId> ratingIds = place.getRatingIds();
-        List<Rating> ratingList = new ArrayList<>();
-        place.setRatingCount(ratingIds.size());
 
-        // Retrieve ratings from their IDs
-        for (ObjectId ratingId : ratingIds) {
-            Optional<Rating> optionalRating = ratingService.getRateById(ratingId);
-            if (optionalRating.isPresent()) {
-                Rating rating = optionalRating.get();
-                ratingList.add(rating);
-            } else {
-                throw new RuntimeException("Rating not found with id: " + ratingId);
-            }
-        }
-
-        double overallRating = 0, rating1 = 0, rating2 = 0, rating3 = 0;
-        List<String > tags=new ArrayList<>();
-
-        // Calculate overall and specific ratings
-        for (Rating rating : ratingList) {
-            Rating.OverallRating overallRatingObj = rating.getOverallRating();
-            rating1 += overallRatingObj.getRating1();
-            rating2 += overallRatingObj.getRating2();
-            rating3 += overallRatingObj.getRating3();
-            tags.addAll(rating.getTags());
-        }
-        overallRating =rating1+rating2+rating3;
-
-        // Update total ratings in the place entity
-        Place.TotalRating totalRating = place.getTotalRating();
-        totalRating.setOverall(overallRating);
-        totalRating.setRating1(rating1);
-        totalRating.setRating2(rating2);
-        totalRating.setRating3(rating3);
-        place.setTotalRating(totalRating);
-        place.setTags(tags);
-
-        // Save the updated place to the database
-        mongoTemplate.save(place);
-    }
 
 }

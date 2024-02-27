@@ -7,6 +7,7 @@ import com.astar.ratingbackend.Model.UserRepository;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import com.astar.ratingbackend.Service.IUserService;
+import com.astar.ratingbackend.Service.util.Util;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,8 @@ class RatingBackendApplicationTests {
     private IRatingService ratingService;
     @Autowired
     private IUserService userService;
-
+    @Autowired
+    private Util util;
 
     @Test
     public void test1() {
@@ -56,7 +58,7 @@ class RatingBackendApplicationTests {
     void testPlaceRefresh() {
         List<Place> places = placeService.getAllPlaces();
         for (Place place : places) {
-            placeService.refresh(place);
+            util.refreshPlace(place);
         }
     }
     @Test
@@ -78,6 +80,17 @@ class RatingBackendApplicationTests {
         userService.deleteUser(id);
     }
     @Test
+    void deletePlace(){
+        ObjectId id= new ObjectId("65de4b11e0e2413bed3f005a");
+        placeService.deletePlace(id);
+    }
+    @Test
+    void findUser(){
+        ObjectId id= new ObjectId("65d574294bb7330ced78f1ba");
+        User user=userService.findUserById(id);
+        System.out.println(user);
+    }
+    @Test
     void testAverageRating(){
         List<Place> places = placeService.getAllPlaces();
         for (Place place : places) {
@@ -87,6 +100,8 @@ class RatingBackendApplicationTests {
             }
         }
     }
+
+
 
     @Test
     void TestPlaceGet(){

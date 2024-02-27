@@ -38,7 +38,9 @@ public class Rating implements Serializable {
     private ObjectId ratingId;
 
     @Field("userId")
-    private String userId;
+    private ObjectId userId;
+    @Field("placeId")
+    private ObjectId placeId;
 
     @Field("tags")
     private List<String> tags;
