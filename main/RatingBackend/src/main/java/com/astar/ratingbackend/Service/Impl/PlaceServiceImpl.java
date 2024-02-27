@@ -36,12 +36,12 @@ public class PlaceServiceImpl implements IPlaceService {
 
     @Override
     public List<Place> searchPlacesByName(String name) {
-        return null;
+        return placeRepository.findByLocNameContainingIgnoreCase(name);
     }
 
     @Override
     public List<Place> searchPlacesByNameAndCategory(String name, String category) {
-        return null;
+        return placeRepository.findByLocNameContainingIgnoreCaseAndCategory(name, category);
     }
 
     public List<Place> getAllPlaces() {
