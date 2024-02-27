@@ -39,5 +39,9 @@ public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
     // - Find places by tags
     // - Find places within a certain location
     // - Find places on a specific campus
+    List<Place> findByLocNameContainingIgnoreCase(String locName);
 
+    // Method to find places with names that contain the given string (case insensitive) and have a specific category
+    List<Place> findByLocNameContainingIgnoreCaseAndCategory(String locName, String category);
 }
+

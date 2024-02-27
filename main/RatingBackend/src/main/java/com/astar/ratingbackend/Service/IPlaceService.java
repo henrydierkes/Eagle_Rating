@@ -22,4 +22,6 @@ public interface IPlaceService {
 
 
     Optional<Place> findById(ObjectId id);
+    List<Place> searchPlacesByName(String name);
+    List<Place> searchPlacesByNameAndCategory(String name, String category);
 }

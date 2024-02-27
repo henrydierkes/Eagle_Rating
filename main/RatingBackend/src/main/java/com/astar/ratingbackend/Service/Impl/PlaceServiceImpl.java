@@ -274,5 +274,12 @@ public class PlaceServiceImpl implements IPlaceService {
         // Save the updated place to the database
         mongoTemplate.save(place);
     }
+    public List<Place> searchPlacesByName(String locName) {
+        return placeRepository.findByLocNameContainingIgnoreCase(locName);
+    }
 
+    // Method to search places by name and category (case insensitive)
+    public List<Place> searchPlacesByNameAndCategory(String locName, String category) {
+        return placeRepository.findByLocNameContainingIgnoreCaseAndCategory(locName, category);
+    }
 }
