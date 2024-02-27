@@ -20,7 +20,7 @@
 package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.Comment;
-import com.astar.ratingbackend.Service.Impl.CommentServiceImpl;
+import com.astar.ratingbackend.Service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +33,7 @@ import java.util.List;
 @RequestMapping("/api/comment") // Changed from /api/user to /api/comment
 public class CommentController {
     @Autowired
-    private CommentServiceImpl commentService; // Changed from UserService to CommentService
+    private ICommentService commentService; // Changed from UserService to CommentService
 
 
     @GetMapping("/get")

@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Document("User")
@@ -29,5 +30,11 @@ public class User implements Serializable {
     private ObjectId[] ratings;
     @Field("places_added")
     private ObjectId[] placesAdded;
+
+    @Field("isDeleted")
+    private boolean isDeleted;
+
+    @Field("deletedDate")
+    private Date deletedDate;
 
 }

@@ -20,19 +20,21 @@ package com.astar.ratingbackend.Entity;
 
 
 import lombok.Data;
-import org.bson.types.Binary;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Data
 @Document("Places")
 public class Place implements Serializable {
-    @Field("_locId")
+    @Id
+    @Field("_id")
     private ObjectId locId;
 
     @Field("locName")
@@ -53,14 +55,23 @@ public class Place implements Serializable {
     @Field("ratingCount")
     private Integer ratingCount;
 
-    @Field("ratings")
-    private List<ObjectId> ratings;
+    @Field("ratingIds")
+    private List<ObjectId> ratingIds;
 
     @Field("images")
     private List<Image> images;
 
-    @Field("totalRatings")
-    private TotalRating totalRatings;
+    @Field("totalRating")
+    private TotalRating totalRating;
+    @Field("ratingAspect")
+    private Map<String, String> ratingAspect;
+
+    @Field("isDeleted")
+    private boolean isDeleted;
+
+    @Field("deletedDate")
+    private Date deletedDate;
+
 
     // Nested class for Image documents within the "images" array
     @Data

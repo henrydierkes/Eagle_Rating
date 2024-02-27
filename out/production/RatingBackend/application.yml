@@ -1,7 +1,0 @@
-server:
-  port: 8080
-
-spring:
-  data:
-    mongodb:
-      uri: "mongodb+srv://jonathan:eaglerating@cluster0.7cjsxez.mongodb.net/EagleRating"

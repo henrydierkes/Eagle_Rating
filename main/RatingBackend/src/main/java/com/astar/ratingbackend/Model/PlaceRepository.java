@@ -20,7 +20,9 @@ package com.astar.ratingbackend.Model;
 import com.astar.ratingbackend.Entity.Place;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +30,8 @@ import java.util.Optional;
 public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
     // Example custom query method
     List<Place> findByCategory(String category);
+    @Query("{ '_id' : ?0, 'isDeleted' : false }")
+    Optional<Place> findByIdAndNotDeleted(ObjectId id);
 
     Optional<Place> findById(ObjectId id);
 
@@ -35,8 +39,5 @@ public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
     // - Find places by tags
     // - Find places within a certain location
     // - Find places on a specific campus
-    List<Place> findByLocNameContainingIgnoreCase(String locName);
 
-    // Method to find places with names that contain the given string (case insensitive) and have a specific category
-    List<Place> findByLocNameContainingIgnoreCaseAndCategory(String locName, String category);
 }

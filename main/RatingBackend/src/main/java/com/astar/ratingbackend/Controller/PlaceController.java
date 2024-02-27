@@ -20,7 +20,7 @@ package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
-import com.astar.ratingbackend.Service.Impl.PlaceServiceImpl;
+import com.astar.ratingbackend.Service.IPlaceService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("/api/place")
 public class PlaceController {
     @Autowired
-    private PlaceServiceImpl placeService;
+    private IPlaceService placeService;
 
 
     @GetMapping("/get")
@@ -41,7 +41,7 @@ public class PlaceController {
     }
     @PostMapping("/add")
     public ResponseEntity<Void> addPlace(@RequestBody Place place){
-        placeService.savePlace(place);
+        placeService.addPlace(place);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     @PostMapping("/addRating")
