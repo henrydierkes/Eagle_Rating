@@ -20,19 +20,26 @@ package com.astar.ratingbackend.Service.Impl;
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Repository.PlaceRepository;
+import com.astar.ratingbackend.Service.IPlaceService;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-public class PlaceServiceImpl {
+public class PlaceServiceImpl implements IPlaceService {
     private final PlaceRepository placeRepository;
+    @Autowired
+    private MongoTemplate mongoTemplate;
+    @Autowired RatingServiceImpl ratingService;
+
 
     @Autowired
     public PlaceServiceImpl(PlaceRepository placeRepository) {
@@ -40,69 +47,46 @@ public class PlaceServiceImpl {
     }
 
     // Method to save a new place
-    public Place savePlace(Place place) {
-        return placeRepository.save(place);
+    public Place addPlace(Place place) {
+        return mongoTemplate.save(place);
     }
     public Optional<Place> findById(ObjectId id) {
-        return placeRepository.findById(id);
+        return Optional.ofNullable(mongoTemplate.findById(id, Place.class));
     }
 
     // Method to retrieve all places
     public List<Place> getAllPlaces() {
-        return placeRepository.findAll();
+        return mongoTemplate.findAll(Place.class);
     }
 
-    // Method to find a place by ID
-    public Optional<Place> getPlaceById(ObjectId id) {
-        return placeRepository.findById(id);
-    }
 
-    // Method to update an existing place
     public Place updatePlace(ObjectId id, Place placeDetails) {
-        Place place = placeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
-        place.setLocName(placeDetails.getLocName());
-        place.setCategory(placeDetails.getCategory());
-        place.setLocation(placeDetails.getLocation());
-        place.setCampus(placeDetails.getCampus());
-        place.setTags(placeDetails.getTags());
-        place.setRatingCount(placeDetails.getRatingCount());
-        place.setRatings(placeDetails.getRatings());
-        place.setImages(placeDetails.getImages());
-        return placeRepository.save(place);
+        Query query = new Query(Criteria.where("_id").is(id));
+        Update update = new Update()
+                .set("locName", placeDetails.getLocName())
+                .set("category", placeDetails.getCategory())
+                .set("location", placeDetails.getLocation())
+                .set("campus", placeDetails.getCampus())
+                .set("tags", placeDetails.getTags())
+                .set("ratingCount", placeDetails.getRatingCount())
+                .set("ratingIds", placeDetails.getRatingIds())
+                .set("images", placeDetails.getImages());
+
+        // Update the document in the database
+        UpdateResult result = mongoTemplate.updateFirst(query, update, Place.class);
+
+        if (result.getModifiedCount() == 0) {
+            throw new RuntimeException("Failed to update place with id: " + id);
+        }
+
+        return placeDetails;
     }
+
     public void deletePlace(ObjectId id) {
         placeRepository.deleteById(id);
     }
 
-    public Place incrementRatingCount(ObjectId id) {
-        Place place = placeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
 
-        place.setRatingCount(place.getRatingCount() + 1);
-
-        return placeRepository.save(place);
-    }
-    public Place decrementRatingCount(ObjectId id) {
-        Place place = placeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
-
-        int currentRatingCount = place.getRatingCount();
-        if (currentRatingCount > 0) {
-            place.setRatingCount(currentRatingCount - 1);
-        }
-
-        return placeRepository.save(place);
-    }
-//    public ResponseEntity<Place> addRating(ObjectId id, Rating rating) {
-//        Place place = placeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Place not found."));
-//        Rating.OverallRating overallRating = rating.getOverallRating();
-//        validateOverallRating(overallRating);
-//        addRatingSpecific(id, overallRating.getRating1(), overallRating.getRating2(), overallRating.getRating3());
-//        incrementRatingCount(id);
-//        addTags(id, rating.getTags());
-//        return ResponseEntity.ok(place);
-//    }
     public ResponseEntity<Place> addRating(ObjectId id, Rating rating) {
         // Retrieve place from the database
         Place place = placeRepository.findById(id)
@@ -143,29 +127,38 @@ public class PlaceServiceImpl {
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
 
-        Place.TotalRating totalRatings = place.getTotalRatings();
+        Place.TotalRating totalRatings = place.getTotalRating();
 
         totalRatings.setOverall(totalRatings.getOverall() + rating1 + rating2 + rating3);
         totalRatings.setRating1(totalRatings.getRating1() + rating1);
         totalRatings.setRating2(totalRatings.getRating2() + rating2);
         totalRatings.setRating3(totalRatings.getRating3() + rating3);
 
-        place.setTotalRatings(totalRatings);
+        place.setTotalRating(totalRatings);
 
         return placeRepository.save(place);
     }
-    public Place removeRating(ObjectId id, int rating1, int rating2, int rating3) {
+    public Place removeRating(ObjectId id, ObjectId ratingId) {
+        Optional<Rating> optionalRating = ratingService.getRateById(ratingId);
+        if (!optionalRating.isPresent()) {
+            throw new RuntimeException("Rating not found with id: " + ratingId);
+        }
+        Rating rating = optionalRating.get();
+        Double rating1 = rating.getOverallRating().getRating1();
+        Double rating2 = rating.getOverallRating().getRating2();
+        Double rating3 = rating.getOverallRating().getRating3();
+
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
 
-        Place.TotalRating totalRatings = place.getTotalRatings();
+        Place.TotalRating totalRatings = place.getTotalRating();
 
         totalRatings.setOverall(totalRatings.getOverall() - rating1 - rating2 - rating3);
         totalRatings.setRating1(totalRatings.getRating1() - rating1);
         totalRatings.setRating2(totalRatings.getRating2() - rating2);
         totalRatings.setRating3(totalRatings.getRating3() - rating3);
 
-        place.setTotalRatings(totalRatings);
+        place.setTotalRating(totalRatings);
 
         return placeRepository.save(place);
     }
@@ -181,17 +174,17 @@ public class PlaceServiceImpl {
         Place place = placeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Place not found with id: " + id));
 
-        Place.TotalRating totalRatings = place.getTotalRatings();
+        Place.TotalRating totalRatings = place.getTotalRating();
+        Map<String,String> ratingAspect=place.getRatingAspect();
         int ratingCount = place.getRatingCount();
-        Map<String, String> ratingNameMap = totalRatings.getRatingName();
 
-        Map<String, Double> averageRatings = new HashMap<>();
+
+        Map<String, Double> averageRatings = new LinkedHashMap<>();
         averageRatings.put("overall", totalRatings.getOverall() / ratingCount);
-
         // Replace rating keys with corresponding specific values
-        averageRatings.put(ratingNameMap.getOrDefault("rating1", "rating1"), totalRatings.getRating1() / ratingCount);
-        averageRatings.put(ratingNameMap.getOrDefault("rating2", "rating2"), totalRatings.getRating2() / ratingCount);
-        averageRatings.put(ratingNameMap.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating1", "rating1"), totalRatings.getRating1() / ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating2", "rating2"), totalRatings.getRating2() / ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / ratingCount);
 
         return averageRatings;
     }
@@ -199,7 +192,7 @@ public class PlaceServiceImpl {
         Place place = findById(placeId)
                 .orElseThrow(() -> new RuntimeException("Place not found with id: " + placeId));
 
-        Place.TotalRating totalRatings = place.getTotalRatings();
+        Place.TotalRating totalRatings = place.getTotalRating();
 
         // Add ratings to the total ratings
         totalRatings.setOverall(totalRatings.getOverall() + rating.getOverallRating().getOverall());
@@ -207,14 +200,14 @@ public class PlaceServiceImpl {
         totalRatings.setRating2(totalRatings.getRating2() + rating.getOverallRating().getRating2());
         totalRatings.setRating3(totalRatings.getRating3() + rating.getOverallRating().getRating3());
 
-        place.setTotalRatings(totalRatings);
+        place.setTotalRating(totalRatings);
 
         placeRepository.save(place);
     }
 
     private void updateRatingsAndCount(Place place, Rating rating) {
         // Get the existing totalRatings
-        Place.TotalRating totalRatings = place.getTotalRatings();
+        Place.TotalRating totalRatings = place.getTotalRating();
 
         // Update overallRating
         totalRatings.setOverall(totalRatings.getOverall() + rating.getOverallRating().getOverall());
@@ -228,6 +221,49 @@ public class PlaceServiceImpl {
         place.setRatingCount(place.getRatingCount() + 1);
 
         // Set the updated totalRatings to the place
-        place.setTotalRatings(totalRatings);
+        place.setTotalRating(totalRatings);
     }
+
+    public void refresh(Place place){
+        List<ObjectId> ratingIds = place.getRatingIds();
+        List<Rating> ratingList = new ArrayList<>();
+        place.setRatingCount(ratingIds.size());
+
+        // Retrieve ratings from their IDs
+        for (ObjectId ratingId : ratingIds) {
+            Optional<Rating> optionalRating = ratingService.getRateById(ratingId);
+            if (optionalRating.isPresent()) {
+                Rating rating = optionalRating.get();
+                ratingList.add(rating);
+            } else {
+                throw new RuntimeException("Rating not found with id: " + ratingId);
+            }
+        }
+
+        double overallRating = 0, rating1 = 0, rating2 = 0, rating3 = 0;
+        List<String > tags=new ArrayList<>();
+
+        // Calculate overall and specific ratings
+        for (Rating rating : ratingList) {
+            Rating.OverallRating overallRatingObj = rating.getOverallRating();
+            rating1 += overallRatingObj.getRating1();
+            rating2 += overallRatingObj.getRating2();
+            rating3 += overallRatingObj.getRating3();
+            tags.addAll(rating.getTags());
+        }
+        overallRating =rating1+rating2+rating3;
+
+        // Update total ratings in the place entity
+        Place.TotalRating totalRating = place.getTotalRating();
+        totalRating.setOverall(overallRating);
+        totalRating.setRating1(rating1);
+        totalRating.setRating2(rating2);
+        totalRating.setRating3(rating3);
+        place.setTotalRating(totalRating);
+        place.setTags(tags);
+
+        // Save the updated place to the database
+        mongoTemplate.save(place);
+    }
+
 }

@@ -18,7 +18,7 @@
 package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.Rating;
-import com.astar.ratingbackend.Service.Impl.RatingServiceImpl;
+import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -33,22 +33,14 @@ import java.util.Optional;
 @RequestMapping("/api/rate") // Changed from /api/place to /api/rate
 public class RatingController {
     @Autowired
-    private RatingServiceImpl ratingService; // Changed from PlaceService to RateService
+    private IRatingService ratingService; // Changed from PlaceService to RateService
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Rating>> getAllRating(){
-        try {
-            List<Rating> ratings = ratingService.getAllRatings();
-            if (ratings.isEmpty()) {
-                return ResponseEntity.noContent().build(); // No ratings found
-            }
-            return ResponseEntity.ok(ratings); // Return list of ratings
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Server error
-        }
+    public List<Rating> getAllRating(){
+        return ratingService.getAllRatings();
     }
     @PostMapping("/get")
     public ResponseEntity<Rating> getRatingById(@RequestParam String ratingId){
@@ -77,7 +69,7 @@ public class RatingController {
     @PostMapping("/add")
     public ResponseEntity<Rating> addRating(@RequestBody Rating rating) {
         try {
-            Rating savedRating = ratingService.saveRate(rating);
+            Rating savedRating = ratingService.addRating(rating);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedRating);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

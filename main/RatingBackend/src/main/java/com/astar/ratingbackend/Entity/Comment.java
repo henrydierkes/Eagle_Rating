@@ -33,7 +33,7 @@ import java.util.Date;
 public class Comment implements Serializable {
 
     @Id // This annotation is used to specify the primary key
-    @Field("commentId")
+    @Field("_id")
     private ObjectId commentId; // Changed to commentId
 
     @Field("userId")

@@ -19,6 +19,7 @@ package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Comment;
 import com.astar.ratingbackend.Repository.CommentRepository;
+import com.astar.ratingbackend.Service.ICommentService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommentServiceImpl {
+public class CommentServiceImpl implements ICommentService {
     private final CommentRepository commentRepository;
 
     @Autowired
@@ -40,7 +41,7 @@ public class CommentServiceImpl {
     }
 
     // Save a new comment
-    public Comment saveComment(Comment comment) {
+    public Comment addComment(Comment comment) {
         return commentRepository.save(comment);
     }
 

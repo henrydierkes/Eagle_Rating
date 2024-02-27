@@ -34,7 +34,7 @@ import java.util.Map;
 public class Rating implements Serializable {
 
     @Id
-    @Field("ratingId")
+    @Field("_id")
     private ObjectId ratingId;
 
     @Field("userId")

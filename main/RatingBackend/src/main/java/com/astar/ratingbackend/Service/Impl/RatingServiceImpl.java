@@ -19,8 +19,13 @@ package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Repository.RateRepository;
+import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -29,9 +34,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RatingServiceImpl {
+public class RatingServiceImpl implements IRatingService {
     private final RateRepository rateRepository;
-
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
 
     @Autowired
@@ -40,7 +46,7 @@ public class RatingServiceImpl {
     }
 
     // Save a new rate
-    public Rating saveRate(Rating rating) {
+    public Rating addRating(Rating rating) {
         if(rating.getRatingId()==null){
 
         }
@@ -68,32 +74,34 @@ public class RatingServiceImpl {
 
     // Retrieve all rates
     public List<Rating> getAllRatings() {
-        return rateRepository.findAll();
+        return mongoTemplate.findAll(Rating.class);
     }
 
     // Find a rate by ID
     public Optional<Rating> getRateById(ObjectId id) {
-        return rateRepository.findById(id);
+        return Optional.ofNullable(mongoTemplate.findById(id, Rating.class));
     }
 
     // Update an existing rate
     public Rating updateRate(ObjectId id, Rating rateDetails) {
-        Rating existingRate = rateRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Rate not found with id: " + id));
-        existingRate.setUserId(rateDetails.getUserId());
-        existingRate.setTags(rateDetails.getTags());
-        existingRate.setComment(rateDetails.getComment());
-        existingRate.setDate(rateDetails.getDate());
-        existingRate.setLikes(rateDetails.getLikes());
-        existingRate.setDislikes(rateDetails.getDislikes());
-        existingRate.setComments(rateDetails.getComments());
+        Query query = new Query(Criteria.where("_id").is(id));
+        Update update = new Update()
+                .set("userId", rateDetails.getUserId())
+                .set("tags", rateDetails.getTags())
+                .set("comment", rateDetails.getComment())
+                .set("date", rateDetails.getDate())
+                .set("likes", rateDetails.getLikes())
+                .set("dislikes", rateDetails.getDislikes())
+                .set("comments", rateDetails.getComments());
         // Additional fields to be updated if needed
-        return rateRepository.save(existingRate);
+        mongoTemplate.updateFirst(query, update, Rating.class);
+        return rateDetails;
     }
 
 
     // Delete a rate by its ID
     public void deleteRate(ObjectId id) {
-        rateRepository.deleteById(id);
+        Query query = new Query(Criteria.where("_id").is(id));
+        mongoTemplate.remove(query, Rating.class);
     }
 }
