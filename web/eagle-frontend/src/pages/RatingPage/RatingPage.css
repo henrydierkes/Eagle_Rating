@@ -1,0 +1,4 @@
+.RatingPage {
+    display: flex;
+    flex-direction: column;
+}

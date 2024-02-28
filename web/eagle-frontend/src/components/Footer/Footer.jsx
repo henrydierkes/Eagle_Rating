@@ -43,8 +43,8 @@ const Footer = () => {
       <div className="footer-section contact-form">
       <h4 style={{ fontSize: '24px' }}>Get In Touch</h4>
         <form onSubmit={handleSubmit}>
-          <div classname="input-group">
-            <div classname="email">
+          <div className="input-group">
+            <div className="email">
               <input
                 type="email"
                 name="email"
@@ -55,7 +55,7 @@ const Footer = () => {
               />
             </div>
           </div>
-          <div classname="message">
+          <div className="message">
             <textarea
               name="message"
               value={message}
