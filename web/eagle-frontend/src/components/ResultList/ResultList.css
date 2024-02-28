@@ -25,17 +25,15 @@
   margin-top: -5px;
   margin-left: 5px;
   font-weight: bold;
-  border-radius: 5px; /* 更圆滑的边角 */
-  font-size: 1em; /* 增加文字大小 */
+  border-radius: 5px;
+  font-size: 1em;
 
 }
 
 .rating-box .rating-number {
-  /* 样式示例 */
-  font-size: 1.2em; /* 调整数字大小 */
-  font-weight: 800; /* 加粗字体 */
+  font-size: 1.2em; 
+  font-weight: 800;
   color: #1a1a1a;
-  /* 您可以根据需要添加更多样式 */
 }
 
 
@@ -64,7 +62,7 @@
 }
 
 .result-item .description {
-  font-size: 0.8em; /* smaller font for the additional description */
+  font-size: 0.8em;
   color: #999; /* lighter gray color */
   margin-top: 4px; /* space between main description and this line */
 }
