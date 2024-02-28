@@ -1,5 +1,0 @@
-Team: A*
-Project Name: Eagle Rating
-
-Overview
-This is the frontend ReadMe
