@@ -2,50 +2,46 @@ import React, { useState } from 'react';
 import './Filter.css';
 
 const Filter = ({ onFilterChange }) => {
-  const [filters, setFilters] = useState({
-    option1: false,
-    option2: false,
-    option3: false,
-  });
-  const handleFilterChange = (filterName) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [filterName]: !prevFilters[filterName],
-    }));
+  const [tags, setTags] = useState([]);
+
+  const handleTagChange = (e) => {
+    const tag = e.target.value.trim();
+    if (tag === '') return;
+    if (!tags.includes(tag)) {
+      setTags([...tags, tag]);
+    }
+    e.target.value = '';
   };
+
+  const removeTag = (tagToRemove) => {
+    setTags(tags.filter(tag => tag !== tagToRemove));
+  };
+
   const applyFilters = () => {
-    // Pass the current filter state to the parent component
-    onFilterChange(filters);
+    onFilterChange(tags);
   };
+
   return (
     <div className="sidebar">
       <h2>Filter by tags</h2>
-      <label>
-        <input
-          type="checkbox"
-          checked={filters.option1}
-          onChange={() => handleFilterChange('option1')}
-        />
-        Option 1
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={filters.option2}
-          onChange={() => handleFilterChange('option2')}
-        />
-        Option 2
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={filters.option3}
-          onChange={() => handleFilterChange('option3')}
-        />
-        Option 3
-      </label>
-      <button onClick={applyFilters}>Apply Filters</button>
+      <div className="tags-container">
+        {tags.map((tag, index) => (
+          <div key={index} className="tag">
+            {tag}
+            <button onClick={() => removeTag(tag)}>x</button>
+          </div>
+        ))}
+      </div>
+      <input
+        type="text"
+        placeholder="Add tag"
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') handleTagChange(e);
+        }}
+      />
+      <button onClick={applyFilters}>Add tags</button>
     </div>
   );
-  }
-  export default Filter;
+};
+
+export default Filter;
