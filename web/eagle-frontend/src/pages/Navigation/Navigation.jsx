@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import ResultsAndFilter from "../../components/subComponents/ResultsAndFilter/ResultsAndFilter"
+import ResultsAndFilter from "../../components/ResultsAndFilter/ResultsAndFilter"
 import Footer from "../../components/Footer/Footer";
 import "./Navigation.css";
 

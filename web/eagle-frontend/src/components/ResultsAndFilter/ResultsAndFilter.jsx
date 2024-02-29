@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ResultList from "../../ResultList/ResultList"
-import Filter from "../../Filter/Filter";
+import ResultList from "../subComponents/ResultList/ResultList"
+import Filter from "../subComponents/Filter/Filter";
 import './ResultsAndFilter.css';
 
 const ResultsAndFilter = ( {results} ) => {
