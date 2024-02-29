@@ -1,6 +1,8 @@
 import React from "react";
 import NavBar from "../../components/NavBar/NavBar.jsx";
-
+import PlaceDetails from "../../components/PlaceDetails/PlaceDetails.jsx"
+import CommentFilter from "../../components/CommentFilter/CommentFilter.jsx"
+import CommentList from "../../components/CommentList/CommentList.jsx"
 import Footer from "../../components/Footer/Footer.jsx";
 
 
@@ -13,6 +15,9 @@ function RatingPage() {
     return (
         <div className="RatingPage">
             <NavBar />
+            <PlaceDetails />
+            <CommentFilter />
+            <CommentList/>
             <Footer />
         </div>
     );
