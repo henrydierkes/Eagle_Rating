@@ -23,6 +23,7 @@ const PlaceDetails = ({ results }) => {
           >
             <span className="rating-number-details">{result.rating}</span>
       </div>
+      <p className="rating-amount">{result.num_rate + " ratings"}</p>
     </div>
   );
 };

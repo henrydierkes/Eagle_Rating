@@ -6,9 +6,9 @@
 }
 
 .rating-box-details {
-    width: 180px;
+    width: 110px;
     height: 80px;
-    /* color: white; */
+    color: white;
     padding: 12px 16px;
     margin-right: 10px;
     margin-top: 15px;
@@ -16,10 +16,13 @@
     font-weight: bold;
     border-radius: 5px;
     font-size: 1em;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 .rating-number-details {
-    font-size: 1.2em; 
+    font-size: 4em; 
     font-weight: 800;
     color: #1a1a1a;
 }
