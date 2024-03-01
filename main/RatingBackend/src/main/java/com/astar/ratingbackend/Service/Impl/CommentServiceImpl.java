@@ -61,6 +61,8 @@ public class CommentServiceImpl implements ICommentService {
         Comment existingComment = commentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Comment not found with id: " + id));
         existingComment.setText(commentDetails.getText());
+        existingComment.setDeleted(commentDetails.isDeleted());
+        existingComment.setDeletedDate(commentDetails.getDeletedDate());
         existingComment.setDate(commentDetails.getDate());
         // Additional fields to be updated if needed
         return commentRepository.save(existingComment);

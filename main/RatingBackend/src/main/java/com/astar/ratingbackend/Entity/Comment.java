@@ -41,7 +41,7 @@ public class Comment implements Serializable {
 
 
     @Field("userId")
-    private String userId; // Added for linking the comment to a user
+    private ObjectId userId; // Added for linking the comment to a user
 
     @Field("text")
     private String text; // The actual comment text

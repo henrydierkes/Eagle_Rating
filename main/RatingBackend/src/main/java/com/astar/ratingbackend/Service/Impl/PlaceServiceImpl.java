@@ -7,9 +7,6 @@ import com.astar.ratingbackend.Service.IPlaceService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +24,16 @@ public class PlaceServiceImpl implements IPlaceService {
     }
 
     public Place addPlace(Place place) {
-        return (Place)this.mongoTemplate.save(place);
+        if(place.getCampus()==null){
+            place.setCampus("Emory-Main");
+        }
+        place.setDeleted(false);
+        place.setDeletedDate(null);
+        return this.mongoTemplate.save(place);
     }
 
     public Optional<Place> findById(ObjectId id) {
-        return Optional.ofNullable((Place)this.mongoTemplate.findById(id, Place.class));
+        return Optional.ofNullable(this.mongoTemplate.findById(id, Place.class));
     }
 
     @Override
@@ -49,10 +51,28 @@ public class PlaceServiceImpl implements IPlaceService {
     }
 
     public Place updatePlace(ObjectId id, Place placeDetails) {
-        Query query = new Query(Criteria.where("_id").is(id));
-        Update update = (new Update()).set("locName", placeDetails.getLocName()).set("category", placeDetails.getCategory()).set("location", placeDetails.getLocation()).set("campus", placeDetails.getCampus()).set("tags", placeDetails.getTags()).set("ratingCount", placeDetails.getRatingCount()).set("ratingIds", placeDetails.getRatingIds()).set("images", placeDetails.getImages()).set("totalRating", placeDetails.getTotalRating()).set("ratingAspect", placeDetails.getRatingAspect()).set("isDeleted", placeDetails.isDeleted()).set("deletedDate", placeDetails.getDeletedDate());
-        this.mongoTemplate.updateFirst(query, update, Place.class);
-        Place updatedPlace = (Place)this.mongoTemplate.findById(id, Place.class);
+        Place existingPlace = placeRepository.findById(id).orElse(null);
+        if (existingPlace == null) {
+            // Handle case when place is not found
+            return null;
+        }
+
+        // Update all fields from placeDetails
+        existingPlace.setLocName(placeDetails.getLocName());
+        existingPlace.setCategory(placeDetails.getCategory());
+        existingPlace.setLocation(placeDetails.getLocation());
+        existingPlace.setCampus(placeDetails.getCampus());
+        existingPlace.setTags(placeDetails.getTags());
+        existingPlace.setRatingCount(placeDetails.getRatingCount());
+        existingPlace.setRatingIds(placeDetails.getRatingIds());
+        existingPlace.setImages(placeDetails.getImages());
+        existingPlace.setTotalRating(placeDetails.getTotalRating());
+        existingPlace.setRatingAspect(placeDetails.getRatingAspect());
+        existingPlace.setDeletedDate(placeDetails.getDeletedDate());
+        existingPlace.setDeleted(placeDetails.isDeleted());
+
+        // Save the updated place using the repository
+        Place updatedPlace = placeRepository.save(existingPlace);
         return updatedPlace;
     }
 
@@ -84,12 +104,12 @@ public class PlaceServiceImpl implements IPlaceService {
     }
 
     public ResponseEntity<Place> addRating(ObjectId id, Rating rating) {
-        Place place = (Place)this.placeRepository.findById(id).orElseThrow(() -> {
+        Place place = this.placeRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("Place not found with id: " + id);
         });
         this.updateRatingsAndCount(place, rating);
         this.addTags(place, rating.getTags());
-        Place updatedPlace = (Place)this.placeRepository.save(place);
+        Place updatedPlace = this.placeRepository.save(place);
         return ResponseEntity.ok(updatedPlace);
     }
 
@@ -113,7 +133,7 @@ public class PlaceServiceImpl implements IPlaceService {
     }
 
     public Place addRatingSpecific(ObjectId id, double rating1, double rating2, double rating3) {
-        Place place = (Place)this.placeRepository.findById(id).orElseThrow(() -> {
+        Place place = this.placeRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Place not found with id: " + id);
         });
         Place.TotalRating totalRatings = place.getTotalRating();
@@ -122,7 +142,7 @@ public class PlaceServiceImpl implements IPlaceService {
         totalRatings.setRating2(totalRatings.getRating2() + rating2);
         totalRatings.setRating3(totalRatings.getRating3() + rating3);
         place.setTotalRating(totalRatings);
-        return (Place)this.placeRepository.save(place);
+        return this.placeRepository.save(place);
     }
 
     private void addTags(Place place, List<String> tags) {
@@ -132,7 +152,7 @@ public class PlaceServiceImpl implements IPlaceService {
     }
 
     public Map<String, Double> getAverageRatings(ObjectId id) {
-        Place place = (Place)this.placeRepository.findById(id).orElseThrow(() -> {
+        Place place = this.placeRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Place not found with id: " + id);
         });
         Place.TotalRating totalRatings = place.getTotalRating();
@@ -140,14 +160,14 @@ public class PlaceServiceImpl implements IPlaceService {
         int ratingCount = place.getRatingCount();
         Map<String, Double> averageRatings = new LinkedHashMap();
         averageRatings.put("overall", totalRatings.getOverall() / (double)ratingCount);
-        averageRatings.put((String)ratingAspect.getOrDefault("rating1", "rating1"), totalRatings.getRating1() / (double)ratingCount);
-        averageRatings.put((String)ratingAspect.getOrDefault("rating2", "rating2"), totalRatings.getRating2() / (double)ratingCount);
-        averageRatings.put((String)ratingAspect.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / (double)ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating1", "rating1"), totalRatings.getRating1() / (double)ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating2", "rating2"), totalRatings.getRating2() / (double)ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / (double)ratingCount);
         return averageRatings;
     }
 
     private void updatePlaceRatings(ObjectId placeId, Rating rating) {
-        Place place = (Place)this.findById(placeId).orElseThrow(() -> {
+        Place place = this.findById(placeId).orElseThrow(() -> {
             return new RuntimeException("Place not found with id: " + placeId);
         });
         Place.TotalRating totalRatings = place.getTotalRating();

@@ -20,8 +20,10 @@ package com.astar.ratingbackend.Entity;
 
 
 import lombok.Data;
+import org.bson.types.Binary;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -44,7 +46,9 @@ public class Place implements Serializable {
     private String category;
 
     @Field("location")
-    private String location;
+    private GeoJsonPoint location;
+    @Field("floor")
+    private int floor;
 
     @Field("campus")
     private String campus;
@@ -80,7 +84,7 @@ public class Place implements Serializable {
         private ObjectId imageId;
 
         @Field("data")
-        private String data;
+        private Binary data;
 
         @Field("description")
         private String description;
@@ -93,11 +97,11 @@ public class Place implements Serializable {
             this.imageId = imageId;
         }
 
-        public String getData() {
+        public Binary getData() {
             return data;
         }
 
-        public void setData(String data) {
+        public void setData(Binary data) {
             this.data = data;
         }
 
