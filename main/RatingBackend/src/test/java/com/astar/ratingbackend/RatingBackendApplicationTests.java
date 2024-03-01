@@ -51,7 +51,7 @@ class RatingBackendApplicationTests {
         user.setName("Tuan");
         user.setEmail("tt123@emory.edu");
         user.setPassword("123456");
-        user.setCreatedAt(new Date().toString());
+        user.setCreateDate(new Date());
         userRepository.save(user);
     }
     @Test

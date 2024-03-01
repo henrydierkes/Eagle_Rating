@@ -22,8 +22,8 @@ public class User implements Serializable {
     private String password;
     @Field("name")
     private String name;
-    @Field("created_at")
-    private String createdAt;
+    @Field("createDate")
+    private Date createDate;
     @Field("comments")
     private ObjectId[] comments;
     @Field("ratings")
