@@ -77,9 +77,11 @@ public class RatingController {
         }
     }
     @GetMapping("/filter")
-    public List<Rating> getRatingByFilter(@RequestParam(required = false) Rating.OverallRating overallRating,
-                                          @RequestParam(required = false) Integer floor) {
-        return ratingService.getRatingByFilter(overallRating, floor != null ? floor.intValue() : -1);
+    public List<Rating> getRatingByFilter(@RequestParam Rating.OverallRating overallRating,
+                                          @RequestParam Integer floor) {
+
+       List<Rating> res= ratingService.getRatingByFilter(overallRating, floor != null ? floor : -1);
+       return res;
     }
 
 

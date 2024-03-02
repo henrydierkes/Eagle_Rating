@@ -138,39 +138,27 @@ public class RatingServiceImpl implements IRatingService {
         List<Rating> ratingsByRating1 = null;
         List<Rating> ratingsByRating2 = null;
         List<Rating> ratingsByRating3 = null;
-
+        List<Rating> commonRatings = getAllRatings();
         if (overallRating != null) {
             if (overallRating.getOverall() != -1) {
                 ratingsByOverallRating = getRatingsByOverallRatingGreaterThan(overallRating.getOverall());
+                commonRatings.retainAll(ratingsByOverallRating);
             }
             if (overallRating.getRating1() != -1) {
                 ratingsByRating1 = getRatingsByRating1GreaterThan(overallRating.getRating1());
+                commonRatings.retainAll(ratingsByRating1);
             }
             if (overallRating.getRating2() != -1) {
                 ratingsByRating2 = getRatingsByRating2GreaterThan(overallRating.getRating2());
+                commonRatings.retainAll(ratingsByRating2);
             }
             if (overallRating.getRating3() != -1) {
                 ratingsByRating3 = getRatingsByRating3GreaterThan(overallRating.getRating3());
-            }
-
-            List<Rating> commonRatings = new ArrayList<>();
-
-            if (ratingsByOverallRating != null) {
-                commonRatings.addAll(ratingsByOverallRating);
-            }
-            if (ratingsByRating1 != null) {
-                commonRatings.retainAll(ratingsByRating1);
-            }
-            if (ratingsByRating2 != null) {
-                commonRatings.retainAll(ratingsByRating2);
-            }
-            if (ratingsByRating3 != null) {
                 commonRatings.retainAll(ratingsByRating3);
             }
-
-            return commonRatings;
         }
-        return new ArrayList<>();
+            //add here
+        return commonRatings;
     }
 
     public List<Rating> getRatingByFilter(Rating.OverallRating overallRating, int floor) {
