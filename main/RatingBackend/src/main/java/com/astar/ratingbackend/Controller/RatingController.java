@@ -17,6 +17,7 @@
 
 package com.astar.ratingbackend.Controller;
 
+import com.astar.ratingbackend.Entity.CommentFilterRequest;
 import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
@@ -76,10 +77,11 @@ public class RatingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @GetMapping("/filter")
-    public List<Rating> getRatingByFilter(@RequestParam(required = false) Rating.OverallRating overallRating,
-                                          @RequestParam(required = false) Integer floor) {
-        return ratingService.getRatingByFilter(overallRating, floor != null ? floor.intValue() : -1);
+    @PostMapping("/filter")
+    public List<Rating> getRatingByFilter(@RequestBody CommentFilterRequest commentFilterRequest) {
+        Rating.OverallRating overallRating=commentFilterRequest.getOverallRating();
+        int floor=commentFilterRequest.getFloor()!= null ? commentFilterRequest.getFloor() : -1;
+        return ratingService.getRatingByFilter(overallRating,floor);
     }
 
 
