@@ -188,5 +188,8 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setRatingCount(place.getRatingCount() + 1);
         place.setTotalRating(totalRatings);
     }
+    public List<Place> searchByTags(List<String> tags) {
+        return placeRepository.findByTagsContainingAll(tags);
+    }
 }
 

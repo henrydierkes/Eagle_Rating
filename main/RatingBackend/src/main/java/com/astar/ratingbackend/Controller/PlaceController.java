@@ -63,4 +63,9 @@ public class PlaceController {
     public List<Place> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category) {
         return placeService.searchPlacesByNameAndCategory(name, category);
     }
+    @GetMapping("/search/tags")
+    public ResponseEntity<List<Place>> searchByTags(@RequestParam List<String> tags) {
+        List<Place> places = placeService.searchByTags(tags);
+        return ResponseEntity.ok(places);
+    }
 }
