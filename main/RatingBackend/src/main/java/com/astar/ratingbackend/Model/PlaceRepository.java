@@ -43,5 +43,7 @@ public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
 
     // Method to find places with names that contain the given string (case insensitive) and have a specific category
     List<Place> findByLocNameContainingIgnoreCaseAndCategory(String locName, String category);
+    @Query("{ 'tags': { $all: ?0 } }")
+    List<Place> findByTagsContainingAll(List<String> tags);
 }
 
