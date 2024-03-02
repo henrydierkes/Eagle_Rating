@@ -28,10 +28,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RatingServiceImpl implements IRatingService {
@@ -115,4 +112,83 @@ public class RatingServiceImpl implements IRatingService {
             placeService.removeRating(rating.getPlaceId(),rating);
         });
     }
+    public List<Rating> getRatingsByOverallRatingGreaterThan(Double overallRating) {
+        return ratingRepository.findByOverallRatingOverallGreaterThan(overallRating);
+    }
+
+    // Method to find ratings where rating1 is greater than a specified value
+    public List<Rating> getRatingsByRating1GreaterThan(Double rating1) {
+        return ratingRepository.findByOverallRatingRating1GreaterThan(rating1);
+    }
+
+    // Method to find ratings where rating2 is greater than a specified value
+    public List<Rating> getRatingsByRating2GreaterThan(Double rating2) {
+        return ratingRepository.findByOverallRatingRating2GreaterThan(rating2);
+    }
+
+    // Method to find ratings where rating3 is greater than a specified value
+    public List<Rating> getRatingsByRating3GreaterThan(Double rating3) {
+        return ratingRepository.findByOverallRatingRating3GreaterThan(rating3);
+    }
+    public List<Rating> getRatingsByFloor(int floor) {
+        return ratingRepository.findByFloor(floor);
+    }
+    public List<Rating> getRatingsByOverallRating(Rating.OverallRating overallRating) {
+        List<Rating> ratingsByOverallRating = null;
+        List<Rating> ratingsByRating1 = null;
+        List<Rating> ratingsByRating2 = null;
+        List<Rating> ratingsByRating3 = null;
+
+        if (overallRating != null) {
+            if (overallRating.getOverall() != -1) {
+                ratingsByOverallRating = getRatingsByOverallRatingGreaterThan(overallRating.getOverall());
+            }
+            if (overallRating.getRating1() != -1) {
+                ratingsByRating1 = getRatingsByRating1GreaterThan(overallRating.getRating1());
+            }
+            if (overallRating.getRating2() != -1) {
+                ratingsByRating2 = getRatingsByRating2GreaterThan(overallRating.getRating2());
+            }
+            if (overallRating.getRating3() != -1) {
+                ratingsByRating3 = getRatingsByRating3GreaterThan(overallRating.getRating3());
+            }
+
+            List<Rating> commonRatings = new ArrayList<>();
+
+            if (ratingsByOverallRating != null) {
+                commonRatings.addAll(ratingsByOverallRating);
+            }
+            if (ratingsByRating1 != null) {
+                commonRatings.retainAll(ratingsByRating1);
+            }
+            if (ratingsByRating2 != null) {
+                commonRatings.retainAll(ratingsByRating2);
+            }
+            if (ratingsByRating3 != null) {
+                commonRatings.retainAll(ratingsByRating3);
+            }
+
+            return commonRatings;
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Rating> getRatingByFilter(Rating.OverallRating overallRating, int floor) {
+        if (overallRating == null && floor == -1) {
+            return getAllRatings();
+        }
+
+        if (overallRating == null) {
+            return new ArrayList<>(getRatingsByFloor(floor));
+        }
+
+        if (floor == -1) {
+            return getRatingsByOverallRating(overallRating);
+        }
+
+        List<Rating> commonRatings = new ArrayList<>(getRatingsByFloor(floor));
+        commonRatings.retainAll(getRatingsByOverallRating(overallRating));
+        return commonRatings;
+    }
+
 }

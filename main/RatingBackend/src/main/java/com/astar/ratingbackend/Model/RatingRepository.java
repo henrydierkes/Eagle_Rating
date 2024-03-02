@@ -33,5 +33,12 @@ public interface RatingRepository extends MongoRepository<Rating, ObjectId> {
     @Query("{ '_id' : ?0, 'isDeleted' : false }")
     Optional<Rating> findByIdAndNotDeleted(ObjectId id);
 
+    List<Rating> findByOverallRatingOverallGreaterThan(Double overallRating);
+
+    List<Rating> findByOverallRatingRating1GreaterThan(Double rating1);
+    List<Rating> findByOverallRatingRating2GreaterThan(Double rating2);
+    List<Rating> findByOverallRatingRating3GreaterThan(Double rating3);
+    List<Rating> findByFloor(int floor);
+
     // You can add more custom methods here to handle specific queries, e.g., find by tags, date range, etc.
 }

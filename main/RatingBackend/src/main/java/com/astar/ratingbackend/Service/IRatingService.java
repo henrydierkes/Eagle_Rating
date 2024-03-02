@@ -13,4 +13,5 @@ public interface IRatingService {
     public Rating updateRate(ObjectId id, Rating rateDetails);
     public void deleteRating(ObjectId id);
     public void deleteRatingT(ObjectId id);
+    public List<Rating> getRatingByFilter(Rating.OverallRating rating, int floor);
 }

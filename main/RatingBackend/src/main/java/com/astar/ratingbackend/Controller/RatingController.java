@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/rate") // Changed from /api/place to /api/rate
+@RequestMapping("/api/rating") // Changed from /api/place to /api/rate
 public class RatingController {
     @Autowired
     private IRatingService ratingService; // Changed from PlaceService to RateService
@@ -43,7 +43,7 @@ public class RatingController {
     public List<Rating> getAllRating(){
         return ratingService.getAllRatings();
     }
-    @PostMapping("/get")
+    @GetMapping("/get")
     public ResponseEntity<Rating> getRatingById(@RequestParam String ratingId){
         try {
             ObjectId objectId = new ObjectId(ratingId);
@@ -76,4 +76,11 @@ public class RatingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @GetMapping("/filter")
+    public List<Rating> getRatingByFilter(@RequestParam(required = false) Rating.OverallRating overallRating,
+                                          @RequestParam(required = false) Integer floor) {
+        return ratingService.getRatingByFilter(overallRating, floor != null ? floor.intValue() : -1);
+    }
+
+
 }

@@ -50,7 +50,8 @@ public class Rating implements Serializable {
 
     @Field("date")
     private Date date;
-
+    @Field("floor")
+    private int floor;
     @Field("likes")
     private Integer likes;
 
