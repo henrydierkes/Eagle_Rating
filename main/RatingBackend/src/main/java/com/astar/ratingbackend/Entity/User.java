@@ -1,21 +1,40 @@
 package com.astar.ratingbackend.Entity;
 
+
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.io.Serializable;
+import java.util.Date;
 
 @Data
-public class User {
-
-    @Id
-    private String id;
+@Document("User")
+public class User implements Serializable {
+    @Field("_id")
+    private ObjectId userId;
+    @Field("username")
+    private String username;
+    @Field("email")
+    private String email;
+    @Field("password")
+    private String password;
+    @Field("name")
     private String name;
+    @Field("createDate")
+    private Date createDate;
+    @Field("comments")
+    private ObjectId[] comments;
+    @Field("ratings")
+    private ObjectId[] ratings;
+    @Field("places_added")
+    private ObjectId[] placesAdded;
 
+    @Field("isDeleted")
+    private boolean isDeleted;
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    @Field("deletedDate")
+    private Date deletedDate;
+
 }
