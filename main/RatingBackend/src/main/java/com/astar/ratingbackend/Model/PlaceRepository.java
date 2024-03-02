@@ -45,5 +45,8 @@ public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
     List<Place> findByLocNameContainingIgnoreCaseAndCategory(String locName, String category);
     @Query("{ 'tags': { $all: ?0 } }")
     List<Place> findByTagsContainingAll(List<String> tags);
+    @Query("{ 'locName': {$regex: ?0, $options: 'i'}, 'category': {$regex: ?1, $options: 'i'}, 'tags': {$all: ?2} }")
+    List<Place> findByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags);
+
 }
 

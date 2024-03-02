@@ -54,8 +54,13 @@ public class PlaceController {
         }
     }
     @GetMapping("/search")
-    public List<Place> searchPlacesByName(@RequestParam String name) {
-        return placeService.searchPlacesByName(name);
+    public ResponseEntity<List<Place>> searchByLocNameAndCategoryAndTagsAll(
+            @RequestParam(required = false) String locName,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) List<String> tags
+    ) {
+        List<Place> places = placeService.searchByLocNameAndCategoryAndTagsAll(locName, category, tags);
+        return ResponseEntity.ok(places);
     }
 
     // Endpoint to search places by name and category
