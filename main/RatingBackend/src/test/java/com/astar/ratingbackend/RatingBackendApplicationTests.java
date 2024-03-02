@@ -94,7 +94,7 @@ class RatingBackendApplicationTests {
     void testAverageRating(){
         List<Place> places = placeService.getAllPlaces();
         for (Place place : places) {
-            Map<String, Double> averageRatings = placeService.getAverageRatings(place.getLocId());
+            Map<String, Double> averageRatings = placeService.getAverageRatingsMap(place.getLocId());
             for(String s:averageRatings.keySet()){
                 System.out.println(s+": "+averageRatings.get(s));
             }
