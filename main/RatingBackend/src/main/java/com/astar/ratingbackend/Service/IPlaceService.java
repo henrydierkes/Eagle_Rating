@@ -25,4 +25,5 @@ public interface IPlaceService {
     List<Place> searchByTags(List<String> tags);
 
     List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags);
+    void sortRatingsDescending(List<Place> places);
 }

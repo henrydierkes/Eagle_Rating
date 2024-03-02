@@ -230,5 +230,14 @@ public class PlaceServiceImpl implements IPlaceService {
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
         return placeRepository.findByLocNameAndCategoryAndTagsAll(locName, category, tags);
     }
+
+    public void sortRatingsDescending(List<Place> places) {
+        Collections.sort(places, new Comparator<Place>() {
+            @Override
+            public int compare(Place p1, Place p2) {
+                return Double.compare(p2.getAverageRating().getOverall(), p1.getAverageRating().getOverall());
+            }
+        });
+    }
 }
 

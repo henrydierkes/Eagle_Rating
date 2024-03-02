@@ -41,7 +41,10 @@ public class RatingController {
     private MongoTemplate mongoTemplate;
 
     @GetMapping("/getAll")
-    public List<Rating> getAllRating(){
+    public List<Rating> getAllRating(@RequestParam(required = false) Boolean desc){
+        if(desc!=null&&desc){
+            return ratingService.getAllRatingsDesc();
+        }
         return ratingService.getAllRatings();
     }
     @GetMapping("/get")
