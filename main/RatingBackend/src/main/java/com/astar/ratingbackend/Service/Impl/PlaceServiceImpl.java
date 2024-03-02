@@ -227,5 +227,8 @@ public class PlaceServiceImpl implements IPlaceService {
     public List<Place> searchByTags(List<String> tags) {
         return placeRepository.findByTagsContainingAll(tags);
     }
+    public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
+        return placeRepository.findByLocNameAndCategoryAndTagsAll(locName, category, tags);
+    }
 }
 

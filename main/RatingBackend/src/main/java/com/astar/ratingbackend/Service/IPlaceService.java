@@ -23,4 +23,6 @@ public interface IPlaceService {
     List<Place> searchPlacesByName(String name);
     List<Place> searchPlacesByNameAndCategory(String name, String category);
     List<Place> searchByTags(List<String> tags);
+
+    List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags);
 }
