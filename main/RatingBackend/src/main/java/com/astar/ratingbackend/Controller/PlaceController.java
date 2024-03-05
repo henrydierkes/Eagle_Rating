@@ -34,16 +34,32 @@ public class PlaceController {
     @Autowired
     private IPlaceService placeService;
 
-
+    /**
+     * Retrieves all places stored in the database.
+     * @return A list of all places.
+     */
     @GetMapping("/get")
     public List<Place> getPlace(){
         return placeService.getAllPlaces();
     }
+
+    /**
+     * Adds a new place to the database.
+     * @param place The Place entity to be added.
+     * @return A response entity indicating the operation's status (CREATED).
+     */
     @PostMapping("/add")
     public ResponseEntity<Void> addPlace(@RequestBody Place place){
         placeService.addPlace(place);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    /**
+     * Adds a rating to a specific place based on the place's ID.
+     * @param placeId The ID of the place to which the rating is added.
+     * @param rating The Rating entity to be added to the place.
+     * @return A response entity containing the updated place with the new rating or an error status.
+     */
     @PostMapping("/addRating")
     public ResponseEntity<Place> addRating(@RequestParam ObjectId placeId, @RequestParam Rating rating) {
         ResponseEntity<Place> response = placeService.addRating(placeId, rating);
@@ -53,6 +69,14 @@ public class PlaceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    /**
+     * Searches for places based on location name, category, and tags. All parameters are optional.
+     * @param locName Optional location name for filtering places.
+     * @param category Optional category for filtering places.
+     * @param tags Optional list of tags for filtering places.
+     * @return A response entity containing a list of places that match the search criteria.
+     */
     @GetMapping("/search")
     public ResponseEntity<List<Place>> searchByLocNameAndCategoryAndTagsAll(
             @RequestParam(required = false) String locName,
@@ -63,11 +87,22 @@ public class PlaceController {
         return ResponseEntity.ok(places);
     }
 
-    // Endpoint to search places by name and category
+    /**
+     * Searches for places by name and category.
+     * @param name The name of the location to search for.
+     * @param category The category of the places to search for.
+     * @return A list of places that match the name and category.
+     */
     @GetMapping("/search/category")
     public List<Place> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category) {
         return placeService.searchPlacesByNameAndCategory(name, category);
     }
+
+    /**
+     * Searches for places by tags.
+     * @param tags The list of tags to filter the places.
+     * @return A response entity containing a list of places that match the tags.
+     */
     @GetMapping("/search/tags")
     public ResponseEntity<List<Place>> searchByTags(@RequestParam List<String> tags) {
         List<Place> places = placeService.searchByTags(tags);

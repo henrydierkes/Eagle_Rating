@@ -43,7 +43,11 @@ public class RatingServiceImpl implements IRatingService {
         this.ratingRepository = ratingRepository;
     }
 
-    // Save a new rate
+    /**
+     * Saves a new rating to the repository, ensuring all necessary default values are set.
+     * @param rating The rating entity to be saved.
+     * @return The saved rating entity.
+     */
     public Rating addRating(Rating rating) {
         if(rating.getRatingId()==null){
 
@@ -70,17 +74,29 @@ public class RatingServiceImpl implements IRatingService {
     }
 
 
-    // Retrieve all rates
+    /**
+     * Retrieves all ratings from the repository.
+     * @return A list of all ratings.
+     */
     public List<Rating> getAllRatings() {
         return mongoTemplate.findAll(Rating.class);
     }
 
-    // Find a rate by ID
+    /**
+     * Finds a rating by its ID.
+     * @param id The ObjectId of the rating to find.
+     * @return An Optional containing the found rating or empty if not found.
+     */
     public Optional<Rating> getRateById(ObjectId id) {
         return Optional.ofNullable(mongoTemplate.findById(id, Rating.class));
     }
 
-    // Update an existing rate
+    /**
+     * Updates an existing rating identified by ID with new details.
+     * @param id The ObjectId of the rating to update.
+     * @param rateDetails The new details for the rating.
+     * @return The updated rating entity.
+     */
     public Rating updateRate(ObjectId id, Rating rateDetails) {
         Query query = new Query(Criteria.where("_id").is(id));
         Update update = new Update()
@@ -98,11 +114,18 @@ public class RatingServiceImpl implements IRatingService {
 
 
 
-
+    /**
+     * Deletes a rating by its ID.
+     * @param id The ObjectId of the rating to delete.
+     */
     public void deleteRatingT(ObjectId id) {
         ratingRepository.deleteById(id);
     }
-
+    /**
+     * Marks a rating as deleted without actually removing it from the repository.
+     * Also updates the associated place to remove the rating.
+     * @param id The ObjectId of the rating to mark as deleted.
+     */
     //    fake delete, used usually
     public void deleteRating(ObjectId id) {
         ratingRepository.findByIdAndNotDeleted(id).ifPresent(rating -> {
@@ -112,6 +135,11 @@ public class RatingServiceImpl implements IRatingService {
             placeService.removeRating(rating.getPlaceId(),rating);
         });
     }
+    /**
+     * Retrieves ratings with an overall rating greater than a specified value.
+     * @param overallRating The minimum overall rating value.
+     * @return A list of ratings meeting the criteria.
+     */
     public List<Rating> getRatingsByOverallRatingGreaterThan(Double overallRating) {
         return ratingRepository.findByOverallRatingOverallGreaterThan(overallRating);
     }

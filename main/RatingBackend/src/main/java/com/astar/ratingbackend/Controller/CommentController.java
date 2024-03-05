@@ -28,16 +28,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
+/**
+ * Controller for managing comments.
+ * Provides endpoints for retrieving comments from the database.
+ */
 @RestController
-@RequestMapping("/api/comment") // Changed from /api/user to /api/comment
+@RequestMapping("/api/comment")
 public class CommentController {
     @Autowired
-    private ICommentService commentService; // Changed from UserService to CommentService
+    private ICommentService commentService;
 
-
+    /**
+     * Retrieves all comments stored in the database.
+     * @return A list of all comments.
+     */
     @GetMapping("/get")
-    public List<Comment> getComments(){ // Method and return type changed to reflect comments
-        return commentService.getAllComments(); // Assuming a method getAllComments() in CommentService
+    public List<Comment> getComments(){
+        return commentService.getAllComments();
     }
 }
