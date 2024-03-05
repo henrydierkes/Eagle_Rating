@@ -40,6 +40,11 @@ const PlaceDetails = ({ results }) => {
           <h3 className='quiet'>Quiet: {result.quiet}</h3>
         </div>
       </div>
+      <div className='tags'>
+        Top Tags: 
+  {result.top_tags.map((tag, index) => (
+    <span key={index}>{tag}</span>
+  ))}</div>
     </div>
   );
 };

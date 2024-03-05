@@ -8,7 +8,7 @@ import "./RatingPage.css"
 
 
 const results = [
-    { id: 1, title: "Place 567", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1400 Emory Street', top_tags: ['table', 'chair'], size: 5, clean: 5, quiet: 5, building: 'Building A', floor: '2nd floor'},
+    { id: 1, title: "Place 567", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1400 Emory Street', top_tags: ['tables', 'chairs'], size: 5, clean: 5, quiet: 5, building: 'Building A', floor: '2nd floor'},
 ];
 
 function RatingPage() {
