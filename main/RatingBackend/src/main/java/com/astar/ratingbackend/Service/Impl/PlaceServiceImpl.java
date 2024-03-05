@@ -22,7 +22,11 @@ public class PlaceServiceImpl implements IPlaceService {
     public PlaceServiceImpl(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
     }
-
+    /**
+     * Adds a new place to the database, setting default values for unspecified fields.
+     * @param place The Place entity to be added.
+     * @return The saved Place entity.
+     */
     public Place addPlace(Place place) {
         if(place.getCampus()==null){
             place.setCampus("Emory-Main");
@@ -31,25 +35,47 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setDeletedDate(null);
         return this.mongoTemplate.save(place);
     }
-
+    /**
+     * Retrieves a place by its ID.
+     * @param id The ObjectId of the place to retrieve.
+     * @return An Optional containing the found Place or empty if not found.
+     */
     public Optional<Place> findById(ObjectId id) {
         return Optional.ofNullable(this.mongoTemplate.findById(id, Place.class));
     }
-
+    /**
+     * Searches for places by name, ignoring case sensitivity.
+     * @param name The name to search for in place entities.
+     * @return A list of places matching the search criteria.
+     */
     @Override
     public List<Place> searchPlacesByName(String name) {
         return placeRepository.findByLocNameContainingIgnoreCase(name);
     }
-
+    /**
+     * Searches for places by name and category, ignoring case sensitivity.
+     * @param name The name to search for.
+     * @param category The category to filter by.
+     * @return A list of places matching the search criteria.
+     */
     @Override
     public List<Place> searchPlacesByNameAndCategory(String name, String category) {
         return placeRepository.findByLocNameContainingIgnoreCaseAndCategory(name, category);
     }
-
+    /**
+     * Retrieves all places from the database.
+     * @return A list of all places.
+     */
     public List<Place> getAllPlaces() {
         return this.mongoTemplate.findAll(Place.class);
     }
 
+    /**
+     * Updates the details of an existing place.
+     * @param id The ObjectId of the place to update.
+     * @param placeDetails The updated details of the place.
+     * @return The updated Place entity, or null if the place was not found.
+     */
     public Place updatePlace(ObjectId id, Place placeDetails) {
         Place existingPlace = placeRepository.findById(id).orElse(null);
         if (existingPlace == null) {
@@ -75,7 +101,11 @@ public class PlaceServiceImpl implements IPlaceService {
         Place updatedPlace = placeRepository.save(existingPlace);
         return updatedPlace;
     }
-
+    /**
+     * Removes a rating from a place and updates the total ratings accordingly.
+     * @param id The ObjectId of the place from which to remove the rating.
+     * @param rating The Rating to be removed.
+     */
     public void removeRating(ObjectId id, Rating rating) {
         Double rating1 = rating.getOverallRating().getRating1();
         Double rating2 = rating.getOverallRating().getRating2();
@@ -90,11 +120,17 @@ public class PlaceServiceImpl implements IPlaceService {
             this.updatePlace(id, place);
         });
     }
-
+    /**
+     * Deletes a place from the database by its ID.
+     * @param id The ObjectId of the place to delete.
+     */
     public void deletePlaceT(ObjectId id) {
         this.placeRepository.deleteById(id);
     }
-
+    /**
+     * Marks a place as deleted without actually removing it from the database.
+     * @param id The ObjectId of the place to mark as deleted.
+     */
     public void deletePlace(ObjectId id) {
         this.placeRepository.findByIdAndNotDeleted(id).ifPresent((place) -> {
             place.setDeleted(true);
@@ -102,7 +138,12 @@ public class PlaceServiceImpl implements IPlaceService {
             this.placeRepository.save(place);
         });
     }
-
+    /**
+     * Adds a rating to a specific place and updates its overall ratings.
+     * @param id The ObjectId of the place to rate.
+     * @param rating The Rating to add.
+     * @return A ResponseEntity containing the updated Place or an error message.
+     */
     public ResponseEntity<Place> addRating(ObjectId id, Rating rating) {
         Place place = this.placeRepository.findById(id).orElseThrow(() -> {
             return new IllegalArgumentException("Place not found with id: " + id);
@@ -112,7 +153,12 @@ public class PlaceServiceImpl implements IPlaceService {
         Place updatedPlace = this.placeRepository.save(place);
         return ResponseEntity.ok(updatedPlace);
     }
-
+    /**
+     * Validates the overall rating object, ensuring that no part of it is null or NaN. If any specific rating
+     * component (rating1, rating2, rating3) is null or NaN, it is set to the value of the overall rating.
+     * @param overallRating The overall rating object to validate.
+     * @throws IllegalArgumentException if the overall rating is null or NaN.
+     */
     private void validateOverallRating(Rating.OverallRating overallRating) {
         if (overallRating != null && overallRating.getOverall() != null && !Double.isNaN(overallRating.getOverall())) {
             if (overallRating.getRating1() == null || Double.isNaN(overallRating.getRating1())) {
@@ -131,7 +177,15 @@ public class PlaceServiceImpl implements IPlaceService {
             throw new IllegalArgumentException("Overall rating cannot be null or NaN");
         }
     }
-
+    /**
+     * Adds specific rating values to a place and updates its total rating accordingly.
+     * @param id The ObjectId of the place to add the rating to.
+     * @param rating1 The first rating value to add.
+     * @param rating2 The second rating value to add.
+     * @param rating3 The third rating value to add.
+     * @return The updated Place entity with the new ratings added.
+     * @throws RuntimeException if the place is not found by the provided id.
+     */
     public Place addRatingSpecific(ObjectId id, double rating1, double rating2, double rating3) {
         Place place = this.placeRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Place not found with id: " + id);
@@ -151,12 +205,22 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setAverageRating(averageRating);
         return this.placeRepository.save(place);
     }
-
+    /**
+     * Adds a list of tags to a place. If the place already contains tags, the new tags are appended to the existing list.
+     * @param place The Place entity to which the tags are added.
+     * @param tags The list of tags to add to the place.
+     */
     private void addTags(Place place, List<String> tags) {
         List<String> existingTags = place.getTags();
         existingTags.addAll(tags);
         place.setTags(existingTags);
     }
+    /**
+     * Calculates and returns the average ratings for a place by dividing the total ratings by the number of ratings.
+     * @param id The ObjectId of the place for which to calculate the average ratings.
+     * @return A map containing the average ratings for each rating aspect.
+     * @throws RuntimeException if the place is not found by the provided id.
+     */
     public Map<String, Double> getAverageRatings(ObjectId id) {
         Place place = this.placeRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Place not found with id: " + id);
@@ -206,7 +270,11 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setAverageRating(averageRating);
         this.placeRepository.save(place);
     }
-
+    /**
+     * Updates the total ratings and rating count of a place with the values from a new Rating entity.
+     * @param place The Place entity to update.
+     * @param rating The Rating entity containing the new ratings to add.
+     */
     private void updateRatingsAndCount(Place place, Rating rating) {
         Place.TotalRating totalRatings = place.getTotalRating();
         totalRatings.setOverall(totalRatings.getOverall() + rating.getOverallRating().getOverall());
@@ -224,9 +292,22 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setAverageRating(averageRating);
         this.placeRepository.save(place);
     }
+    /**
+     * Searches for places containing all specified tags.
+     * @param tags The list of tags to search for.
+     * @return A list of places containing all the specified tags.
+     */
     public List<Place> searchByTags(List<String> tags) {
         return placeRepository.findByTagsContainingAll(tags);
     }
+
+    /**
+     * Searches for places by location name, category, and containing all specified tags, using case-insensitive matching.
+     * @param locName The location name to search for.
+     * @param category The category of places to search for.
+     * @param tags The list of tags each place must contain.
+     * @return A list of places matching all specified criteria.
+     */
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
         return placeRepository.findByLocNameAndCategoryAndTagsAll(locName, category, tags);
     }
