@@ -39,8 +39,12 @@ public class PlaceController {
      * @return A list of all places.
      */
     @GetMapping("/get")
-    public List<Place> getPlace(){
-        return placeService.getAllPlaces();
+    public List<Place> getPlace(@RequestParam(required = false) Boolean desc){
+        List <Place> places=placeService.getAllPlaces();
+        if(desc!=null&&desc){
+            placeService.sortRatingsDescending(places);
+        }
+        return places;
     }
 
     /**
@@ -81,9 +85,13 @@ public class PlaceController {
     public ResponseEntity<List<Place>> searchByLocNameAndCategoryAndTagsAll(
             @RequestParam(required = false) String locName,
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) List<String> tags
+            @RequestParam(required = false) List<String> tags,
+            @RequestParam(required = false) Boolean desc
     ) {
         List<Place> places = placeService.searchByLocNameAndCategoryAndTagsAll(locName, category, tags);
+        if(desc!=null&&desc){
+            placeService.sortRatingsDescending(places);
+        }
         return ResponseEntity.ok(places);
     }
 
@@ -94,8 +102,12 @@ public class PlaceController {
      * @return A list of places that match the name and category.
      */
     @GetMapping("/search/category")
-    public List<Place> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category) {
-        return placeService.searchPlacesByNameAndCategory(name, category);
+    public ResponseEntity<List<Place>> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category,@RequestParam(required = false) Boolean desc) {
+        List<Place> places= placeService.searchPlacesByNameAndCategory(name, category);
+        if(desc!=null&&desc){
+            placeService.sortRatingsDescending(places);
+        }
+        return ResponseEntity.ok(places);
     }
 
     /**
@@ -104,8 +116,11 @@ public class PlaceController {
      * @return A response entity containing a list of places that match the tags.
      */
     @GetMapping("/search/tags")
-    public ResponseEntity<List<Place>> searchByTags(@RequestParam List<String> tags) {
+    public ResponseEntity<List<Place>> searchByTags(@RequestParam List<String> tags,@RequestParam(required = false) Boolean desc) {
         List<Place> places = placeService.searchByTags(tags);
+        if(desc!=null&&desc){
+            placeService.sortRatingsDescending(places);
+        }
         return ResponseEntity.ok(places);
     }
 }

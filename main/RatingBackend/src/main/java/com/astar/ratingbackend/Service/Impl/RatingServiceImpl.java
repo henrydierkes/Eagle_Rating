@@ -81,6 +81,12 @@ public class RatingServiceImpl implements IRatingService {
     public List<Rating> getAllRatings() {
         return mongoTemplate.findAll(Rating.class);
     }
+    public List<Rating> getAllRatingsDesc() {
+        List<Rating> ratings = mongoTemplate.findAll(Rating.class);
+        sortRatingsDescending(ratings);
+        return ratings;
+    }
+
 
     /**
      * Finds a rating by its ID.
@@ -205,6 +211,19 @@ public class RatingServiceImpl implements IRatingService {
         List<Rating> commonRatings = new ArrayList<>(getRatingsByFloor(floor));
         commonRatings.retainAll(getRatingsByOverallRating(overallRating));
         return commonRatings;
+    }
+    public List<Rating> getRatingByFilterDesc(Rating.OverallRating overallRating, int floor){
+        List<Rating> ratings=getRatingByFilter(overallRating,floor);
+        sortRatingsDescending(ratings);
+        return ratings;
+    }
+    private void sortRatingsDescending(List<Rating> ratings) {
+        Collections.sort(ratings, new Comparator<Rating>() {
+            @Override
+            public int compare(Rating r1, Rating r2) {
+                return Double.compare(r2.getOverallRating().getOverall(), r1.getOverallRating().getOverall());
+            }
+        });
     }
 
 }

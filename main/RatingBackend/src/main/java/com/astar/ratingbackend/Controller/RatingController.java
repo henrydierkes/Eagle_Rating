@@ -27,7 +27,10 @@ public class RatingController {
      * @return A list of all ratings.
      */
     @GetMapping("/getAll")
-    public List<Rating> getAllRating(){
+    public List<Rating> getAllRating(@RequestParam(required = false) Boolean desc){
+        if(desc!=null&&desc){
+            return ratingService.getAllRatingsDesc();
+        }
         return ratingService.getAllRatings();
     }
 

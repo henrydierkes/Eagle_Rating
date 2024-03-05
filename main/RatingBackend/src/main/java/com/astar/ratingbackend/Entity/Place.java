@@ -66,6 +66,8 @@ public class Place implements Serializable {
 
     @Field("totalRating")
     private TotalRating totalRating;
+    @Field("averageRating")
+    private AverageRating averageRating;
     @Field("ratingAspect")
     private Map<String, String> ratingAspect;
 
@@ -119,15 +121,27 @@ public class Place implements Serializable {
         private double rating1;
         private double rating2;
         private double rating3;
-        private Map<String, String> ratingName; // Map rating1, rating2, rating3 to specific names
 
-        public TotalRating(double overall, double rating1, double rating2, double rating3, Map<String, String> ratingName) {
+        public TotalRating(double overall, double rating1, double rating2, double rating3) {
             this.overall = overall;
             this.rating1 = rating1;
             this.rating2 = rating2;
             this.rating3 = rating3;
-            this.ratingName = ratingName;
         }
 
+    }
+    @Data
+    public static class AverageRating implements Serializable {
+        private double overall;
+        private double rating1;
+        private double rating2;
+        private double rating3;
+
+        public AverageRating(double overall, double rating1, double rating2, double rating3) {
+            this.overall = overall;
+            this.rating1 = rating1;
+            this.rating2 = rating2;
+            this.rating3 = rating3;
+        }
     }
 }

@@ -1,9 +1,6 @@
-/**
-Au
-**/
+
 Team: A*
 Project Name: Eagle Rating
-
 
 Overview
 This is the backend ReadMe

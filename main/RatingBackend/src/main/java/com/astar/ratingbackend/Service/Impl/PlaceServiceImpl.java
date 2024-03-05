@@ -196,6 +196,13 @@ public class PlaceServiceImpl implements IPlaceService {
         totalRatings.setRating2(totalRatings.getRating2() + rating2);
         totalRatings.setRating3(totalRatings.getRating3() + rating3);
         place.setTotalRating(totalRatings);
+        int ratingCount = place.getRatingCount();
+        Place.AverageRating averageRating=place.getAverageRating();
+        averageRating.setRating1(totalRatings.getRating1() / (double)ratingCount);
+        averageRating.setRating2(totalRatings.getRating2() / (double)ratingCount);
+        averageRating.setRating3(totalRatings.getRating1() / (double)ratingCount);
+        averageRating.setOverall(totalRatings.getOverall() / (double)ratingCount);
+        place.setAverageRating(averageRating);
         return this.placeRepository.save(place);
     }
     /**
@@ -228,12 +235,22 @@ public class PlaceServiceImpl implements IPlaceService {
         averageRatings.put(ratingAspect.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / (double)ratingCount);
         return averageRatings;
     }
-    /**
-     * Updates the place ratings with a new Rating entity's values and increments the rating count.
-     * @param placeId The ObjectId of the place to update the ratings for.
-     * @param rating The new Rating entity containing the ratings to add.
-     * @throws RuntimeException if the place is not found by the provided id.
-     */
+
+    public Map<String, Double> getAverageRatingsMap(ObjectId id) {
+        Place place = this.placeRepository.findById(id).orElseThrow(() -> {
+            return new RuntimeException("Place not found with id: " + id);
+        });
+        Place.TotalRating totalRatings = place.getTotalRating();
+        Map<String, String> ratingAspect = place.getRatingAspect();
+        int ratingCount = place.getRatingCount();
+        Map<String, Double> averageRatings = new LinkedHashMap();
+        averageRatings.put("overall", totalRatings.getOverall() / (double)ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating1", "rating1"), totalRatings.getRating1() / (double)ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating2", "rating2"), totalRatings.getRating2() / (double)ratingCount);
+        averageRatings.put(ratingAspect.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / (double)ratingCount);
+        return averageRatings;
+    }
+
     private void updatePlaceRatings(ObjectId placeId, Rating rating) {
         Place place = this.findById(placeId).orElseThrow(() -> {
             return new RuntimeException("Place not found with id: " + placeId);
@@ -244,6 +261,13 @@ public class PlaceServiceImpl implements IPlaceService {
         totalRatings.setRating2(totalRatings.getRating2() + rating.getOverallRating().getRating2());
         totalRatings.setRating3(totalRatings.getRating3() + rating.getOverallRating().getRating3());
         place.setTotalRating(totalRatings);
+        int ratingCount = place.getRatingCount();
+        Place.AverageRating averageRating=place.getAverageRating();
+        averageRating.setRating1(totalRatings.getRating1() / (double)ratingCount);
+        averageRating.setRating2(totalRatings.getRating2() / (double)ratingCount);
+        averageRating.setRating3(totalRatings.getRating1() / (double)ratingCount);
+        averageRating.setOverall(totalRatings.getOverall() / (double)ratingCount);
+        place.setAverageRating(averageRating);
         this.placeRepository.save(place);
     }
     /**
@@ -259,6 +283,14 @@ public class PlaceServiceImpl implements IPlaceService {
         totalRatings.setRating3(totalRatings.getRating3() + rating.getOverallRating().getRating3());
         place.setRatingCount(place.getRatingCount() + 1);
         place.setTotalRating(totalRatings);
+        int ratingCount = place.getRatingCount();
+        Place.AverageRating averageRating=place.getAverageRating();
+        averageRating.setRating1(totalRatings.getRating1() / (double)ratingCount);
+        averageRating.setRating2(totalRatings.getRating2() / (double)ratingCount);
+        averageRating.setRating3(totalRatings.getRating1() / (double)ratingCount);
+        averageRating.setOverall(totalRatings.getOverall() / (double)ratingCount);
+        place.setAverageRating(averageRating);
+        this.placeRepository.save(place);
     }
     /**
      * Searches for places containing all specified tags.
@@ -278,6 +310,15 @@ public class PlaceServiceImpl implements IPlaceService {
      */
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
         return placeRepository.findByLocNameAndCategoryAndTagsAll(locName, category, tags);
+    }
+
+    public void sortRatingsDescending(List<Place> places) {
+        Collections.sort(places, new Comparator<Place>() {
+            @Override
+            public int compare(Place p1, Place p2) {
+                return Double.compare(p2.getAverageRating().getOverall(), p1.getAverageRating().getOverall());
+            }
+        });
     }
 }
 
