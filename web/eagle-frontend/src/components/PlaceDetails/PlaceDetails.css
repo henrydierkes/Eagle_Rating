@@ -3,26 +3,66 @@
     flex-direction: column;
     width: 100%;
     margin-right: auto;
+    font-size: 20px;
+}
+
+.header {
+    display: flex;
 }
 
 .rating-box-details {
-    width: 110px;
-    height: 80px;
+    width: 160px;
+    height: 120px;
     color: white;
     padding: 12px 16px;
     margin-right: 10px;
     margin-top: 15px;
-    margin-left: 15px;
+    margin-left: 20px;
     font-weight: bold;
     border-radius: 5px;
-    font-size: 1em;
+    font-size: 1.3em;
     align-items: center;
     justify-content: center;
     display: flex;
 }
 
+.mainInfo {
+    margin-left: 5px;
+}
+
+.title {
+    color: black;
+    margin-top: 20px;
+    margin-bottom: -14px;
+    font-size: 50px;
+}
+
+.building{
+    margin-bottom: -20px;
+}
+
 .rating-number-details {
-    font-size: 4em; 
+    font-size: 4em;
     font-weight: 800;
     color: #1a1a1a;
+}
+
+.rating-amount {
+    margin-top: 0px;
+    margin-left: 70px;
+}
+
+.location {
+    margin-top: 20px;
+    margin-left: 25px;
+    font-weight: normal;
+}
+
+.locationAndRatings {
+    display: flex;
+}
+
+.ratings {
+    margin-left: 20px;
+    margin-top: -37.5px;
 }
