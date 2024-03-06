@@ -1,6 +1,14 @@
 import React from "react";
 import "./categoryItem.css";
-function categoryItem() {
-  return <div className="categoryItem"></div>;
+
+function CategoryItem() {
+  return (
+    <div className="CategoryItem">
+      <div className="Name">
+        <h2>Name</h2>
+      </div>
+    </div>
+  );
 }
-export default categoryItem;
+
+export default CategoryItem;

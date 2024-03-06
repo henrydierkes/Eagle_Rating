@@ -1,6 +1,7 @@
 import React from "react";
 import "./Category.css";
-import categoryList from "../subComponents/categoryList/categoryList.jsx"
+import CategoryList from "../subComponents/categoryList/categoryList";
+
 
 function Category() {
   return (
@@ -8,7 +9,7 @@ function Category() {
       <div className="title">
         <h1>Category</h1>
       </div>
-     <categoryList/>
+     <CategoryList/>
     </div>
   );
 }
