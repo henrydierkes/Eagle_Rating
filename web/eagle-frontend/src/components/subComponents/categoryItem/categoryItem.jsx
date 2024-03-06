@@ -1,11 +1,11 @@
 import React from "react";
 import "./categoryItem.css";
 
-function CategoryItem() {
+function CategoryItem({ name }) {
   return (
     <div className="CategoryItem">
       <div className="Name">
-        <h2>Name</h2>
+        <h2>{name}</h2>
       </div>
     </div>
   );
