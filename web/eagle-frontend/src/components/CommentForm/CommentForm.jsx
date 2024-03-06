@@ -166,6 +166,7 @@ const RatingForm = () => {
           <img className='uploaded-image'key={index} src={image} alt={`Uploaded Image ${index + 1}`} />
           ))}
         </div>
+
         <button className='submit-button' type="submit">Submit</button>
       </form>
     </div>
