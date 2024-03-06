@@ -7,7 +7,7 @@ const NavBar = () => {
   const navigate = useNavigate(); 
    
     const navigateToFrontPage = () => {
-      navigate('pages/Home'); 
+      navigate('/home'); 
     };
 
   const handleLoginClick = () => {
@@ -24,7 +24,7 @@ const NavBar = () => {
        <h1 className="logo" onClick={navigateToFrontPage}>EagleRating</h1>
       <SearchBar />
       <div className="nav-links">
-        <button className="login-btn" onClick={handleLoginClick}>Login</button>
+        <button className="login-btn" onClick={handleLoginClick}>Log In</button>
         <div className="separator"></div>
         <button className="signup-btn" onClick={handleSignUpClick}>Sign Up</button> 
       </div>

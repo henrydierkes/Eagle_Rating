@@ -28,6 +28,7 @@ function App() {
           <Route path="/addComment" element={<AddComment />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/Home" element={<Home />} />
       </Routes>
     </Router>
   );
