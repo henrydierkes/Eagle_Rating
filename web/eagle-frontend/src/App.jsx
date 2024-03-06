@@ -5,7 +5,7 @@ import Navigation from "./pages/Navigation/Navigation";
 import RatingPage from "./pages/RatingPage/RatingPage.jsx";
 import AddLocation from "./pages/AddLocation/AddLocation.jsx";
 import AddComment from "./pages/AddComment/AddComment.jsx"
-
+import SignUp from "./pages/Login/SignUp.jsx";
 
 import SmoothScroll from 'smooth-scroll';
 
@@ -25,6 +25,7 @@ function App() {
           <Route path="/ratingpage" element={<RatingPage />} />
           <Route path="/addLocation" element={<AddLocation />} />
           <Route path="/addComment" element={<AddComment />} />
+          <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>
   );
