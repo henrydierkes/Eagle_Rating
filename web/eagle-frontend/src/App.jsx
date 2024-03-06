@@ -1,8 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login.jsx"
 import Navigation from "./pages/Navigation/Navigation";
-import SmoothScroll from 'smooth-scroll';
 import RatingPage from "./pages/RatingPage/RatingPage.jsx";
+import AddLocation from "./pages/AddLocation/AddLocation.jsx";
+import AddComment from "./pages/AddComment/AddComment.jsx"
+
+
+import SmoothScroll from 'smooth-scroll';
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -15,8 +20,11 @@ function App() {
     <Router>
       <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/navigation" element={<Navigation />} />
           <Route path="/ratingpage" element={<RatingPage />} />
+          <Route path="/addLocation" element={<AddLocation />} />
+          <Route path="/addComment" element={<AddComment />} />
       </Routes>
     </Router>
   );

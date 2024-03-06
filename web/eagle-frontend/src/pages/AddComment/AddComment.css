@@ -1,0 +1,4 @@
+.AddComment {
+  display: flex;
+  flex-direction: column;
+}
