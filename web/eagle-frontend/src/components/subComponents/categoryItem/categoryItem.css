@@ -1,4 +1,4 @@
-.categoryItem {
+.CategoryItem {
   width: 20vw;
   height: 20vw;
   background-color: whitesmoke;
@@ -6,7 +6,7 @@
   position: relative;
   font-size: 40px;
 }
-.categoryItem .Name {
+.CategoryItem .Name {
   width: 100%;
   height: 20%;
   position: absolute;
@@ -18,7 +18,7 @@
   background-color: darkgray;
   transform: translate(-50%, -50%);
 }
-.categoryItem .Name h2 {
+.CategoryItem .Name h2 {
   color: white;
   text-align: center;
     font-size: 40px;

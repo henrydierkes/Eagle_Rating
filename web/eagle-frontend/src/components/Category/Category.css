@@ -1,6 +1,8 @@
 .Category {
   display: flex;
   flex-direction: column;
+  margin-bottom: 10vh;
+/*  need to standardize*/
 }
 .Category .title {
   margin-left: 20px;
