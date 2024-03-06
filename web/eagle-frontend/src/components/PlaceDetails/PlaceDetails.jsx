@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PlaceDetails.css';
+import RatingBar from "../subComponents/RatingBar/RatingBar.jsx";
 
 const getRatingColor = (rating) => {
   if (rating >= 4) {
@@ -35,10 +36,12 @@ const PlaceDetails = ({ results }) => {
       <div className='locationAndRatings'>
         <h3 className='location'>📍{result.location}</h3>
         <div className='ratings'>
-          <h3 className='size'>Size: {result.size}</h3>
-          <h3 className='clean'>Clean: {result.clean}</h3>
-          <h3 className='quiet'>Quiet: {result.quiet}</h3>
+          {/*<h3 className='size'>Size: {result.size}</h3>*/}
+          {/*<h3 className='clean'>Clean: {result.clean}</h3>*/}
+          {/*<h3 className='quiet'>Quiet: {result.quiet}</h3>*/}
+
         </div>
+
       </div>
       <div className='tags'>
         Top Tags: 

@@ -32,7 +32,6 @@ function RatingPage() {
         <div className="RatingPage">
             <NavBar />
             <PlaceDetails results={results}/>
-            <DetailRating results={results}/>
             <CommentFilter />
             <CommentList/>
             <Footer />
