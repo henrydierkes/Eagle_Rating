@@ -9,7 +9,8 @@ import DetailRating from "../../components/subComponents/detailRating/DetailRati
 
 
 const results = [
-    { id: 1, title: "Place 567", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1400 Emory Street', top_tags: ['tables', 'chairs'],
+    { id: 1, title: "Place 567", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1400 Emory Street',
+        top_tags: ['tables', 'chairs', 'restroom'],
         details: {
             cleanliness: {
                 name: "Cleanliness",

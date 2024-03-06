@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './PlaceDetails.css';
 import RatingBar from "../subComponents/RatingBar/RatingBar.jsx";
+import TopRatings from "../subComponents/TopRatings/TopRatings.jsx";
 
 const getRatingColor = (rating) => {
   if (rating >= 4) {
@@ -44,7 +45,7 @@ const PlaceDetails = ({ results }) => {
 
       </div>
       <div className='tags'>
-        Top Tags: 
+          <TopRatings results={results}/>
   {result.top_tags.map((tag, index) => (
     <span key={index}>{tag}</span>
   ))}</div>
