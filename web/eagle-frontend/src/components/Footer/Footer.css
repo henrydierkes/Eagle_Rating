@@ -13,7 +13,7 @@
 }
 
 .footer-section h4 {
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   font-size: 14px;
 }
 
@@ -32,24 +32,25 @@
 }
 
 .contact-form input{
-  margin-top: 13px;
+  margin-top: 0px;
+  height: 2px;
 }
 
 .contact-form textarea {
   width: 90%; /* Adjusted width for better alignment */
-  height: 100px;
+  height: 70px;
 }
 
 .contact-form button,
 .contact-form input[type="submit"] {
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   color: #fff;
-  padding: 12px 20px; /* Adjusted padding */
-  margin: 8px 0;
+  padding: 10px 30px; /* Adjusted padding */
+  margin: 0 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 18px; /* Increased font size */
+  font-size: 14px; /* Increased font size */
   transition: background-color 0.3s ease; /* Smooth transition for hover effect */
 }
 

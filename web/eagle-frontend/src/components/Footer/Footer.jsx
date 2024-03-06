@@ -41,7 +41,7 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-section contact-form">
-      <h4 style={{ fontSize: '24px' }}>Get In Touch</h4>
+      <h4 style={{ fontSize: '18px' }}>Get In Touch</h4>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <div className="email">
@@ -69,12 +69,12 @@ const Footer = () => {
         </form>
       </div>
       <div className="footer-section">
-    <h4 style={{ fontSize: '24px' }}>About Us</h4>
-    <p style={{ fontSize: '20px' }}>This project was created by a group in CS 370 Spring 2024. A* is Henry Dierkes, Tuan Vinh, Jonathan Wang, Wenzhuo Ma, and Tung Dinh.</p>
-    <h4 style={{ fontSize: '24px' }}>Learn More</h4>
-    <p style={{ fontSize: '20px' }}>Github and Documentation</p>
-    <h4 style={{ fontSize: '24px' }}>Help Center</h4>
-    <p style={{ fontSize: '20px' }}>The project is currently maintained by Tuan Vinh (tvinh@emory.edu)</p>
+    <h4 style={{ fontSize: '18px' }}>About Us</h4>
+    <p style={{ fontSize: '16px' }}>This project was created by a group in CS 370 Spring 2024. A* is Henry Dierkes, Tuan Vinh, Jonathan Wang, Wenzhuo Ma, and Tung Dinh.</p>
+    <h4 style={{ fontSize: '18px' }}>Learn More</h4>
+    <p style={{ fontSize: '16px' }}>Github and Documentation</p>
+    <h4 style={{ fontSize: '18px' }}>Help Center</h4>
+    <p style={{ fontSize: '16px' }}>The project is currently maintained by Tuan Vinh (tvinh@emory.edu)</p>
 </div>
       {/* Add more footer-sections here for additional content */}
     </footer>
