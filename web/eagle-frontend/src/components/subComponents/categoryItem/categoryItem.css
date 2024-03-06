@@ -4,6 +4,7 @@
   background-color: whitesmoke;
   margin-right: 20px; /* Add margin to create space between TrendPlace components */
   position: relative;
+  font-size: 40px;
 }
 .categoryItem .Name {
   width: 100%;
@@ -20,4 +21,5 @@
 .categoryItem .Name h2 {
   color: white;
   text-align: center;
+    font-size: 40px;
 }

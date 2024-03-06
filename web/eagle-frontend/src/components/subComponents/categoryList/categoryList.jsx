@@ -5,9 +5,7 @@ function categoryList() {
   return (
     <div className="categories">
       <div className="slide">
-        <categoryItem />
-        <categoryItem />
-        <categoryItem />
+        
       </div>
     </div>
   );
