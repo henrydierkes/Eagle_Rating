@@ -24,7 +24,6 @@ const SearchBar = () => {
         id="tags-limit-search"
         options={placesInEmory}
         getOptionLabel={(option) => option.title}
-        defaultValue={[placesInEmory[0], placesInEmory[1]]}
         renderInput={(params) => (
           <TextField
             {...params}
