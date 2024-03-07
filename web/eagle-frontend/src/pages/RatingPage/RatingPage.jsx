@@ -33,7 +33,7 @@ const comments = [
       id: 1,
       user: {
         name: "John Doe",
-        profilePicture: "../../../public/images/bleachamongus.png",
+        profilePicture: "https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png",
       },
       datePosted: "2024-03-06",
       overallRating: 4.5,
@@ -50,7 +50,7 @@ const comments = [
       id: 2,
       user: {
         name: "Jane Smith",
-        profilePicture: "https://example.com/profile.jpg",
+        profilePicture: "https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png",
       },
       datePosted: "2024-03-05",
       overallRating: 3.8,

@@ -48,7 +48,7 @@ const PlaceDetails = ({ results }) => {
       <div className='tags'>
           <TopRatings results={results}/>
           <UserImages results={results}/>
-          <UserComments results={results}/>
+          {/* <UserComments results={results}/> */}
           
   {/* {result.top_tags.map((tag, index) => (
     <span key={index}>{tag}</span>          Idk why this code block is here, if we don't need it then lets delete it
