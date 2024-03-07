@@ -133,12 +133,13 @@ public class RatingServiceImpl implements IRatingService {
      * @param id The ObjectId of the rating to mark as deleted.
      */
     //    fake delete, used usually
-    public void deleteRating(ObjectId id) {
-        ratingRepository.findByIdAndNotDeleted(id).ifPresent(rating -> {
+    public void deleteRating(String id) {
+        ObjectId objectId=new ObjectId(id);
+        ratingRepository.findByIdAndNotDeleted(objectId).ifPresent(rating -> {
             rating.setDeleted(true);
             rating.setDeletedDate(new Date());
             ratingRepository.save(rating);
-            placeService.removeRating(rating.getPlaceId(),rating);
+            placeService.removeRating(new ObjectId(rating.getPlaceId()),rating);
         });
     }
     /**

@@ -21,11 +21,12 @@ package com.astar.ratingbackend.Controller;
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Service.IPlaceService;
-import org.bson.types.ObjectId;
+import com.astar.ratingbackend.Service.IRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -33,6 +34,8 @@ import java.util.List;
 public class PlaceController {
     @Autowired
     private IPlaceService placeService;
+    @Autowired
+    private IRatingService ratingService;
 
     /**
      * Retrieves all places stored in the database.
@@ -65,8 +68,10 @@ public class PlaceController {
      * @return A response entity containing the updated place with the new rating or an error status.
      */
     @PostMapping("/addRating")
-    public ResponseEntity<Place> addRating(@RequestParam ObjectId placeId, @RequestParam Rating rating) {
+    public ResponseEntity<Place> addRating(@RequestBody Rating rating) {
+        String placeId = rating.getPlaceId();
         ResponseEntity<Place> response = placeService.addRating(placeId, rating);
+        ratingService.addRating(rating);
         if (response.getStatusCode() == HttpStatus.OK) {
             return ResponseEntity.ok(response.getBody());
         } else {

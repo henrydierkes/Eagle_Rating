@@ -31,6 +31,12 @@ public class PlaceServiceImpl implements IPlaceService {
         if(place.getCampus()==null){
             place.setCampus("Emory-Main");
         }
+        if(place.getAverageRating()==null){
+            place.setAverageRating(new Place.AverageRating(0,0,0,0));
+        }
+        if(place.getTotalRating()==null){
+            place.setTotalRating(new Place.TotalRating(0,0,0,0));
+        }
         place.setDeleted(false);
         place.setDeletedDate(null);
         return this.mongoTemplate.save(place);
@@ -144,8 +150,17 @@ public class PlaceServiceImpl implements IPlaceService {
      * @param rating The Rating to add.
      * @return A ResponseEntity containing the updated Place or an error message.
      */
-    public ResponseEntity<Place> addRating(ObjectId id, Rating rating) {
-        Place place = this.placeRepository.findById(id).orElseThrow(() -> {
+    public ResponseEntity<Place> addRating(String id, Rating rating) {
+        ObjectId objectId = new ObjectId(id);
+        if(rating.getOverallRating()==null){
+            Rating.OverallRating overallRating = new Rating.OverallRating();
+            overallRating.setOverall(0.0);
+            overallRating.setRating1(0.0); // Set other rating values as needed
+            overallRating.setRating2(0.0);
+            overallRating.setRating3(0.0);
+            rating.setOverallRating(overallRating);
+        }
+        Place place = this.placeRepository.findById(objectId).orElseThrow(() -> {
             return new IllegalArgumentException("Place not found with id: " + id);
         });
         this.updateRatingsAndCount(place, rating);
@@ -277,20 +292,32 @@ public class PlaceServiceImpl implements IPlaceService {
      */
     private void updateRatingsAndCount(Place place, Rating rating) {
         Place.TotalRating totalRatings = place.getTotalRating();
-        totalRatings.setOverall(totalRatings.getOverall() + rating.getOverallRating().getOverall());
-        totalRatings.setRating1(totalRatings.getRating1() + rating.getOverallRating().getRating1());
-        totalRatings.setRating2(totalRatings.getRating2() + rating.getOverallRating().getRating2());
-        totalRatings.setRating3(totalRatings.getRating3() + rating.getOverallRating().getRating3());
-        place.setRatingCount(place.getRatingCount() + 1);
-        place.setTotalRating(totalRatings);
-        int ratingCount = place.getRatingCount();
-        Place.AverageRating averageRating=place.getAverageRating();
-        averageRating.setRating1(totalRatings.getRating1() / (double)ratingCount);
-        averageRating.setRating2(totalRatings.getRating2() / (double)ratingCount);
-        averageRating.setRating3(totalRatings.getRating1() / (double)ratingCount);
-        averageRating.setOverall(totalRatings.getOverall() / (double)ratingCount);
-        place.setAverageRating(averageRating);
-        this.placeRepository.save(place);
+        Rating.OverallRating overallRating = rating.getOverallRating();
+
+        if (overallRating != null) {
+            Double overall = overallRating.getOverall() != null ? overallRating.getOverall() : 0.0;
+            Double rating1 = overallRating.getRating1() != null ? overallRating.getRating1() : 0.0;
+            Double rating2 = overallRating.getRating2() != null ? overallRating.getRating2() : 0.0;
+            Double rating3 = overallRating.getRating3() != null ? overallRating.getRating3() : 0.0;
+
+            totalRatings.setOverall(totalRatings.getOverall() + overall);
+            totalRatings.setRating1(totalRatings.getRating1() + rating1);
+            totalRatings.setRating2(totalRatings.getRating2() + rating2);
+            totalRatings.setRating3(totalRatings.getRating3() + rating3);
+            place.setRatingCount(place.getRatingCount() + 1);
+            place.setTotalRating(totalRatings);
+            int ratingCount = place.getRatingCount();
+            Place.AverageRating averageRating = place.getAverageRating();
+
+            averageRating.setRating1(totalRatings.getRating1() / (double) ratingCount);
+            averageRating.setRating2(totalRatings.getRating2() / (double) ratingCount);
+            averageRating.setRating3(totalRatings.getRating1() / (double) ratingCount); // <-- Should this be rating3?
+            averageRating.setOverall(totalRatings.getOverall() / (double) ratingCount);
+            place.setAverageRating(averageRating);
+            this.placeRepository.save(place);
+        } else {
+            // Handle the case where overallRating is null
+        }
     }
     /**
      * Searches for places containing all specified tags.

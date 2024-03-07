@@ -60,8 +60,7 @@ public class RatingController {
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteRatingById(@RequestParam String ratingId) {
         try {
-            ObjectId objectId = new ObjectId(ratingId);
-            ratingService.deleteRating(objectId);
+            ratingService.deleteRating(ratingId);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build(); // Invalid ObjectId format

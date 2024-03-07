@@ -27,7 +27,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Document(collection = "Ratings")
@@ -38,9 +37,9 @@ public class Rating implements Serializable {
     private ObjectId ratingId;
 
     @Field("userId")
-    private ObjectId userId;
+    private String userId;
     @Field("placeId")
-    private ObjectId placeId;
+    private String placeId;
 
     @Field("tags")
     private List<String> tags;
@@ -75,7 +74,10 @@ public class Rating implements Serializable {
         private Double rating1;
         private Double rating2;
         private Double rating3;
-        private Map<String, String> ratingAspect;
+
+        public OverallRating() {
+            // Default constructor
+        }
     }
 
 
