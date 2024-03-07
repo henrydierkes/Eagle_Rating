@@ -29,15 +29,8 @@ const SearchBar = () => {
           <TextField
             {...params}
             variant="outlined"
-            placeholder="Look for Places"
-            InputProps={{
-              ...params.InputProps,
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
+            placeholder="Starting typing to look for places!"
+   
           />
         )}
         sx={{ width: '100%', height: '80%', marginLeft: '20px', marginRight: '20px' }}
