@@ -1,9 +1,8 @@
 .TrendPlace {
-  width: 20vw;
-  height: 20vw;
-  background-color: whitesmoke;
-  margin-right: 20px; /* Add margin to create space between TrendPlace components */
+  width: 18%; /* Set width to 20% of the parent width */
+  padding-top: 18%; /* Set padding-top to maintain aspect ratio */
   position: relative;
+  background-color: whitesmoke;
 }
 .TrendPlace .RateBar{
   position: absolute;
@@ -12,8 +11,20 @@
   width: 40%;
   height: 20%;
   background-color: green;
+  border-top-left-radius: 8px;
 }
-.TrendPlace .Name{
+.TrendPlace  .mask{
+  position:absolute;
+  top:0;
+  left:0;
+  background:rgba( 255, 255, 255, 0);
+  border-radius:8px;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  backdrop-filter: blur( 0px );
+}
+.TrendPlace  .Name{
   width: 100%;
   height: 20%;
   position:absolute;

@@ -1,6 +1,71 @@
+
+.TrendPlaces {
+  position: relative; /* Ensure absolute positioning works as expected */
+  overflow-x: hidden; /* Hide overflowing content */
+  width: 100%;
+  transition: 0.2s;
+
+}
 .TrendPlaces .slide{
-  margin-left:5vw;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start; /* Align items from the start (left side) */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  scroll-behavior: smooth; /* Add smooth scrolling effect */
+  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+  justify-content: space-between; /* Center the content horizontally */
+  align-items: center;
+  transition: transform 0.5s ease;
+}
+.TrendPlaces .buttons {
+  position: absolute;
+  top: 50%; /* Position buttons vertically centered */
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Align buttons at the ends */
+  z-index: 22222;
+}
+.TrendPlaces .buttons button{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border:1px solid #555;
+  background: rgba( 255, 255, 255, 0.25 );
+  transition:0.2s;
+}
+#prev {
+  position: absolute;
+  top: 50%;
+  left: 7vw;
+  transform: translate(-50%, -50%);
+}
+#next{
+  position: absolute;
+  top: 50%;
+  right: 4vw;
+  transform: translate(-50%, -50%);
+}
+.TrendPlaces .buttons button:hover{
+  background-color: #c9c9c5;;
+}
+.TrendPlace{
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
+.TrendPlace:nth-child(1)  .mask{
+  background: rgba( 255, 255, 255, 0.25 );
+  /*box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );*/
+  backdrop-filter: blur( 4.5px );
+  -webkit-backdrop-filter: blur( 4.5px );
+  /*border-radius: 10px;*/
+  /*border: 1px solid rgba( 255, 255, 255, 0.18 );*/
+}
+
+.TrendPlace:last-child  .mask{
+  background: rgba( 255, 255, 255, 0.25 );
+  /*box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );*/
+  backdrop-filter: blur( 4.5px );
+  -webkit-backdrop-filter: blur( 4.5px );
+  overflow: hidden;
 }
