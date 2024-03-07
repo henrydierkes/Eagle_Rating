@@ -1,4 +1,8 @@
 import React from 'react';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import AddCommentIcon from '@mui/icons-material/AddComment';
+import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
 
 const CommentList = ({ comments }) => {
@@ -17,18 +21,18 @@ const CommentList = ({ comments }) => {
             <div className="ratings">
               <p className="overall-rating">{comment.overallRating}</p>
               <div className="specific-ratings">
-                <p>Size: {comment.sizeRating}</p>
-                <p>Cleanliness: {comment.cleanlinessRating}</p>
-                <p>Quietness: {comment.quietnessRating}</p>
+                <p>Size: {comment.specificRatings.sizeRating}</p>
+                <p>Cleanliness: {comment.specificRatings.cleanlinessRating}</p>
+                <p>Quietness: {comment.specificRatings.quietnessRating}</p>
               </div>
             </div>
             <p className="comment-text">{comment.text}</p>
           </div>
           <div className="comment-footer">
-            <button className="upvote">Upvote</button>
-            <button className="downvote">Downvote</button>
-            <button className="comment">Comment</button>
-            <button className="share">Share</button>
+            <button className="upvote" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ThumbUpIcon sx={{ color: 'success.main' }} /></button>
+            <button className="downvote" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ThumbDownIcon sx={{ color: 'error.main' }} /></button>
+            <button className="addComment" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><AddCommentIcon sx={{ color: 'primary.main' }} /></button>
+            <button className="share" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ShareIcon sx={{ color: 'secondary.main' }} /></button>
           </div>
         </div>
       ))}

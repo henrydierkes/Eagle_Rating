@@ -15,9 +15,8 @@ const getRatingColor = (rating) => {
 };
 
 const ResultList = ({ results }) => {
-    const [highlights, setHighlights] = useState({}); // 用于存储每个结果的高亮状态
+    const [highlights, setHighlights] = useState({});
 
-    // 切换高亮状态的函数
     const toggleHighlight = (index) => {
         setHighlights(prevHighlights => ({
             ...prevHighlights,
@@ -31,7 +30,7 @@ const ResultList = ({ results }) => {
                 <div key={index} className="result-item">
                     <div
                         className="rating-box"
-                        style={{ backgroundColor: getRatingColor(result.rating) }} // 设置背景颜色
+                        style={{ backgroundColor: getRatingColor(result.rating) }}
                     >
                         <span className="rating-number">{result.rating}</span>
                     </div>

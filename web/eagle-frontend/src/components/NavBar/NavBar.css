@@ -2,11 +2,15 @@
   display: flex;
   /* position: fixed;         maybe put this in later? This makes the header sticky*/
   width: 96%;
+  position: sticky;
+  top: 0;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   background-color: #fff;
+  z-index: 1000;
 }
+
 
 .logo {
   font-size: 25px;
