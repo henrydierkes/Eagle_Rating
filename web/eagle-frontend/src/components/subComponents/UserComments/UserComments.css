@@ -95,7 +95,7 @@
     font-weight: 400;
     text-decoration: none;
     margin-top: 10px;
-    float: inherit;
+    /* float: inherit;      this has an error and I don't know what it is */
 }
 
 .comment-post {

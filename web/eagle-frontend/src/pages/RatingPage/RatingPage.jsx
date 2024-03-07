@@ -9,7 +9,7 @@ import DetailRating from "../../components/subComponents/detailRating/DetailRati
 
 
 const results = [
-    { id: 1, title: "Place 567", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1400 Emory Street',
+    { id: 1, title: "Shared Study Room A", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1960 N Druid Hills Rd, Atlanta, GA 30322',
         top_tags: ['tables', 'chairs', 'restroom'],
         details: {
             cleanliness: {
@@ -25,7 +25,7 @@ const results = [
                 rating: 5.0,
             },
         },
-        building: 'Building A', floor: '2nd floor'},
+        building: 'Goizueta Business School\'s Library', floor: '2nd floor'},
 ];
 
 const comments = [

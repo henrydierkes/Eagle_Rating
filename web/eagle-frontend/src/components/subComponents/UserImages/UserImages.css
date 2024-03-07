@@ -3,7 +3,11 @@
     align-items: center;
     justify-content: center;
     position: relative;
-}
+    width: 400px;
+    height: 400px;
+    margin-left: 690px;
+    margin-top: -360px;
+  }
 
 .images-container img {
     display: none;

@@ -1,13 +1,14 @@
 .top-ratings {
     font-family: Arial, sans-serif;
     text-align: left;
-    margin-bottom: 20px;
 }
 
 .tag-list {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 1rem;
+    width: 550px;
+
 }
 
 .tag {
@@ -15,7 +16,11 @@
     color: #333;
     padding: 0.5rem 1rem;
     margin: 0.25rem;
-    border-radius: 0.25rem;
+    border-radius: 1rem;
+    width: 170px;
+    height: 40px;
+    font-size: 35px;
+    text-align: center;
 }
 
 .rating-button {
@@ -23,10 +28,14 @@
     color: ghostwhite;
     border: none;
     padding: 1.8rem 4rem;
-    border-radius: 10rem; /* more circle */
+    border-radius: 3rem; /* more circle */
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 2rem;
+    width: 500px;
+    height: 150px;
+    font-size: 60px;
+    margin-top: 70px;
 }
 
 .rating-button:hover {
