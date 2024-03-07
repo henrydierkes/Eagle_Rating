@@ -1,6 +1,49 @@
-.CategoryList .slide {
-  margin-left: 5vw;
+.CategoryList{
+  position: relative; /* Ensure absolute positioning works as expected */
+  overflow-x: hidden; /* Hide overflowing content */
+  width: 100%;
+  transition: 0.2s;
+  margin-left: auto; /* Set left margin to auto */
+  margin-right: auto; /* Set right margin to auto */
+}
+.CategoryList .slider-container {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start; /* Align items from the start (left side) */
+  justify-content: center;
+}
+.CategoryList .buttons {
+  position: absolute;
+  top: 50%; /* Position buttons vertically centered */
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Align buttons at the ends */
+  z-index: 22222;
+}
+.CategoryList .buttons button{
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border:1px solid #555;
+  background: rgba( 255, 255, 255, 0.25 );
+  transition:0.2s;
+}
+.CategoryList .buttons .prev {
+  position: absolute;
+  top: 50%;
+  left: 7vw;
+  transform: translate(-50%, -50%);
+}
+.CategoryList .buttons .next{
+  position: absolute;
+  top: 50%;
+  right: 7vw;
+  transform: translate(-50%, -50%);
+}
+.CategoryList .buttons button:hover{
+  background-color: #c9c9c5;;
+}
+.CategoryItem{
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
 }

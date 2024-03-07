@@ -1,10 +1,13 @@
 .CategoryItem {
-  width: 20vw;
-  height: 20vw;
-  background-color: whitesmoke;
-  margin-right: 20px; /* Add margin to create space between TrendPlace components */
+  width: 250px; /* Set width to 20% of the parent width */
+  height: 220px; /* Set padding-top to maintain aspect ratio */
   position: relative;
-  font-size: 40px;
+  background-color: whitesmoke;
+  transition: all .1s linear;
+}
+.CategoryItem:hover {
+  border-color: rgba(0,0,0,.4);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
 }
 .CategoryItem .Name {
   width: 100%;

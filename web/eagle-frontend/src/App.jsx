@@ -8,6 +8,7 @@ import AddComment from "./pages/AddComment/AddComment.jsx"
 import SignUp from "./pages/Login/SignUp.jsx";
 import SignIn from "./pages/Login/SignIn.jsx";
 
+
 import SmoothScroll from 'smooth-scroll';
 
 export const scroll = new SmoothScroll('a[href*="#"]', {

@@ -4,13 +4,13 @@
   width: 96%;
   justify-content: center; /* Center the content horizontally */
   align-items: center;
-
 }
+
 .Trending .title {
   width: 100%;
   text-align: left; /* Align the title to the left */
-  margin-left: 20px; /* Add left margin to the title */
 }
+
 .Trending .title h1 {
   color: rgb(80, 80, 80);
   font-size: 40px;

@@ -1,6 +1,6 @@
 .TrendPlace {
-  width: 18%; /* Set width to 20% of the parent width */
-  padding-top: 18%; /* Set padding-top to maintain aspect ratio */
+  width: 220px; /* Set width to 20% of the parent width */
+  height: 220px; /* Set padding-top to maintain aspect ratio */
   position: relative;
   background-color: whitesmoke;
   transition: all .1s linear;

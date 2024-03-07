@@ -2,63 +2,48 @@ import React, { useEffect, useRef } from "react";
 import "./TrendPlaces.css";
 import TrendPlace from "../TrendPlace/TrendPlace";
 import $ from "jquery"; // Import jQuery if not already done
-import 'slick-carousel/slick/slick.css';
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
-import 'slick-carousel';
+import 'slick-carousel/slick/slick.css';
+import "slick-carousel/slick/slick";
+
+
 
 function TrendPlaces() {
-    const slideRef = useRef(null);
-    const slickRef = useRef(null);
-
-    useEffect(() => {
-        const slideElement = slideRef.current;
-        if (slideElement) {
-            const slickInstance = $(slideElement).slick({
-                dots: false,
-                arrows: true,
-                slidesToShow: 5,
-                infinite: false,
-            });
-
-            slickRef.current = slickInstance;
-
-            return () => {
-                if (slickInstance) {
-                    slickInstance.slick('unslick');
-                }
-            };
-        }
-    }, [slideRef.current]);
-
-
-    const scrollRight = () => {
-        if (slideRef.current) {
-            jQuery(slideRef.current).slick("slickNext");
-        }
+    const slider = React.useRef(null);
+    const settings = {
+        dot:false,
+        centerMode: true,
+        speed:300,
+        infinite: true,
+        slidesToShow: 5,
+        arrows: false,
+        autoplay: false,
     };
-
-    const scrollLeft = () => {
-        if (slideRef.current) {
-            jQuery(slideRef.current).slick("slickPrev");
-        }
-    };
-
     return (
         <div className="TrendPlaces">
             <div className="buttons">
-                <button id="prev" onClick={scrollLeft}>
+                <button className="prev" onClick={() => slider?.current?.slickPrev()}>
                     <i className="fas fa-angle-left" style={{ fontSize: "24px" }}></i>
                 </button>
-                <button id="next" onClick={scrollRight}>
+                <button className="next"  onClick={() => slider?.current?.slickNext()}>
                     <i className="fas fa-angle-right" style={{ fontSize: "24px" }}></i>
                 </button>
             </div>
-            <div className="slide" ref={slideRef}>
-                <TrendPlace name="Place 1" />
-                <TrendPlace name="Place 2" />
-                <TrendPlace name="Place 3" />
-                <TrendPlace name="Place 4" />
-                <TrendPlace name="Place 5" />
+            <div className="masks">
+                <div className="leftMask mask">
+                </div>
+                <div className="rightMask mask">
+                </div>
+            </div>
+            <div className="SliderContainer">
+                <Slider ref={slider} {...settings}>
+                    <TrendPlace name="Place 1" />
+                    <TrendPlace name="Place 2" />
+                    <TrendPlace name="Place 3" />
+                    <TrendPlace name="Place 4" />
+                    <TrendPlace name="Place 5" />
+                </Slider>
             </div>
         </div>
     );
