@@ -21,7 +21,7 @@ const NavBar = () => {
 
   return (
     <div className="nav-bar">
-       <h1 className="logo" onClick={navigateToFrontPage}>EagleRating</h1>
+       <h1 className="logo button" onClick={navigateToFrontPage}>EagleRating</h1>
       <SearchBar />
       <div className="nav-links">
         <button className="login-btn" onClick={handleLoginClick}>Log In</button>

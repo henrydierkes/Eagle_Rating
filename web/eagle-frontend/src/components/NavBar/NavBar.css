@@ -1,10 +1,7 @@
 .nav-bar {
   display: flex;
-  position: sticky;  
-  top: 0;
-
-  z-index: 1000; /* Ensure navbar is above other content */
-  background-color: #fff; /* Or any color you prefer */
+  /* position: fixed;         maybe put this in later? This makes the header sticky
+  width: 96%; */ 
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
