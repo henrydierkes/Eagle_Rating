@@ -1,6 +1,6 @@
 .CategoryItem {
-  width: 250px; /* Set width to 20% of the parent width */
-  height: 220px; /* Set padding-top to maintain aspect ratio */
+  width: 400px; /* Set width to 20% of the parent width */
+  height: 200px; /* Set padding-top to maintain aspect ratio */
   position: relative;
   background-color: whitesmoke;
   transition: all .1s linear;
