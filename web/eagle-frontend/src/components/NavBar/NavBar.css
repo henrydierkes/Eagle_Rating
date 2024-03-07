@@ -1,7 +1,7 @@
 .nav-bar {
   display: flex;
   /* position: fixed;         maybe put this in later? This makes the header sticky*/
-  width: 96%;
+  width: 100%;
   position: sticky;
   top: 0;
   justify-content: space-between;
