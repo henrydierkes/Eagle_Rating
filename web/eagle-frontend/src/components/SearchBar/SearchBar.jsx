@@ -1,9 +1,10 @@
 import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 import './SearchBar.css';
 
-// Assuming you have a similar list for places in Emory University as we have for films
 const placesInEmory = [
   { title: 'Woodruff Library' },
   { title: 'Cox Hall' },
@@ -29,14 +30,20 @@ const SearchBar = () => {
             {...params}
             variant="outlined"
             placeholder="Look for Places"
+            InputProps={{
+              ...params.InputProps,
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         )}
-        // Adjust this value as needed to move the component to the right
-        sx={{ width: '100%', height: '80%', marginLeft: '20px', marginRight: '20px' }} // Adding left margin
+        sx={{ width: '100%', height: '80%', marginLeft: '20px', marginRight: '20px' }}
       />
     </div>
   );
 };
-
 
 export default SearchBar;
