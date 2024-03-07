@@ -42,19 +42,19 @@ const PlaceDetails = ({ results }) => {
           {/*<h3 className='size'>Size: {result.size}</h3>*/}
           {/*<h3 className='clean'>Clean: {result.clean}</h3>*/}
           {/*<h3 className='quiet'>Quiet: {result.quiet}</h3>*/}
-
         </div>
-
       </div>
-
-        <RatingBar results={results}/>
+          <RatingBar results={results}/>
       <div className='tags'>
           <TopRatings results={results}/>
           <UserImages results={results}/>
           <UserComments results={results}/>
-  {result.top_tags.map((tag, index) => (
-    <span key={index}>{tag}</span>
-  ))}</div>
+          
+  {/* {result.top_tags.map((tag, index) => (
+    <span key={index}>{tag}</span>          Idk why this code block is here, if we don't need it then lets delete it
+  ))} */}
+
+  </div>
     </div>
   );
 };

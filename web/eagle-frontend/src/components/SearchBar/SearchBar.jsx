@@ -29,7 +29,6 @@ const SearchBar = () => {
             {...params}
             variant="outlined"
             placeholder="Starting typing to look for places!"
-   
           />
         )}
         sx={{ width: '100%', height: '80%', marginLeft: '20px', marginRight: '20px' }}

@@ -36,7 +36,7 @@
   
   .date {
     color: #888;
-    margin-left: auto; /* Align date to the right */
+    margin-left: auto;
   }
   
   .comment-body {
