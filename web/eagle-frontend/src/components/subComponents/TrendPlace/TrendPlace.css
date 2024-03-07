@@ -3,6 +3,11 @@
   padding-top: 18%; /* Set padding-top to maintain aspect ratio */
   position: relative;
   background-color: whitesmoke;
+  transition: all .1s linear;
+}
+.TrendPlace:hover {
+  border-color: rgba(0,0,0,.4);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
 }
 .TrendPlace .RateBar{
   position: absolute;
