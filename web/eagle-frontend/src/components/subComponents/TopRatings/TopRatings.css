@@ -10,7 +10,7 @@
 }
 
 .tag {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2;;
     color: #333;
     padding: 0.5rem 1rem;
     margin: 0.25rem;
@@ -19,15 +19,15 @@
 
 .rating-button {
     background-color: #333;
-    color: #fff;
+    color: ghostwhite;
     border: none;
     padding: 1.8rem 4rem;
-    border-radius: 0.5rem;
+    border-radius: 10rem; /* more circle */
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-size: 2rem;
 }
 
 .rating-button:hover {
-    background-color: #555;
+    background-color: #555555; /* suspension color on background */
 }
