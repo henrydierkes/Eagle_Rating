@@ -14,15 +14,15 @@ const results = [
         details: {
             cleanliness: {
                 name: "Cleanliness",
-                rating: 4.5,
+                rating: 5,
             },
             service: {
                 name: "Service",
-                rating: 4.0,
+                rating: 2,
             },
             location: {
                 name: "Location",
-                rating: 5.0,
+                rating: 3,
             },
         },
         building: 'Goizueta Business School\'s Library', floor: '2nd floor'},
