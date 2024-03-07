@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   max-width: 1250px;
+  min-width: 1000px;
 }
 
 .comment-header {
@@ -52,8 +53,8 @@
 }
 
 .profile-picture {
-  width: 110px;
-  height: 110px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -98,9 +99,11 @@
 .comment-text {
   position: relative;
   max-width: 600px;
-  margin-top: 25px;
+  margin-top: 5px;
   margin-left: 70px;
   margin-bottom: 10px;
+  max-width: 650px;
+  font-size: 25px;
 }
 
 .comment-footer {
