@@ -24,13 +24,13 @@ public class Util {
     }
 
     public void refreshPlace(Place place) {
-        List<ObjectId> ratingIds = place.getRatingIds();
+        List<String> ratingIds = place.getRatingIds();
         List<Rating> ratingList = new ArrayList<>();
         place.setRatingCount(ratingIds.size());
 
         // Retrieve ratings from their IDs
-        for (ObjectId ratingId : ratingIds) {
-            Optional<Rating> optionalRating = ratingService.getRateById(ratingId);
+        for (String ratingId : ratingIds) {
+            Optional<Rating> optionalRating = ratingService.getRateById(new ObjectId(ratingId));
             if (optionalRating.isPresent()) {
                 Rating rating = optionalRating.get();
                 ratingList.add(rating);

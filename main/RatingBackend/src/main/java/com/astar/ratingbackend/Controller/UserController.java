@@ -68,6 +68,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add user");
         }
     }
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> userDelete(@RequestParam String userId){
+        try{
+            userService.deleteUser(new ObjectId(userId));
+            return ResponseEntity.status(HttpStatus.OK).body("User soft delete successfully");
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete user");
+        }
+    }
 //    @PostMapping("/login")
 //    public ResponseEntity<String> userLogin(@RequestParam("email")String email, @RequestParam("password")String password) {
 //        try {

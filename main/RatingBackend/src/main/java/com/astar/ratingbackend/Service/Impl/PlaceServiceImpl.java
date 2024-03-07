@@ -165,6 +165,7 @@ public class PlaceServiceImpl implements IPlaceService {
         });
         this.updateRatingsAndCount(place, rating);
         this.addTags(place, rating.getTags());
+        this.addRatingIds(place,rating.getRatingId().toString());
         Place updatedPlace = this.placeRepository.save(place);
         return ResponseEntity.ok(updatedPlace);
     }
@@ -229,6 +230,11 @@ public class PlaceServiceImpl implements IPlaceService {
         List<String> existingTags = place.getTags();
         existingTags.addAll(tags);
         place.setTags(existingTags);
+    }
+    private void addRatingIds(Place place, String ratingId) {
+        List<String> existingIds = place.getRatingIds();
+        existingIds.add(ratingId);
+        place.setTags(existingIds);
     }
     /**
      * Calculates and returns the average ratings for a place by dividing the total ratings by the number of ratings.

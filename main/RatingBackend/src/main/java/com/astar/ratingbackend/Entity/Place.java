@@ -59,7 +59,7 @@ public class Place implements Serializable {
     private Integer ratingCount;
 
     @Field("ratingIds")
-    private List<ObjectId> ratingIds;
+    private List<String> ratingIds;
 
     @Field("images")
     private List<Image> images;

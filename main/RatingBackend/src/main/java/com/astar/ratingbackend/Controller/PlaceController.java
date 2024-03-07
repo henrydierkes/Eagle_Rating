@@ -63,7 +63,6 @@ public class PlaceController {
 
     /**
      * Adds a rating to a specific place based on the place's ID.
-     * @param placeId The ID of the place to which the rating is added.
      * @param rating The Rating entity to be added to the place.
      * @return A response entity containing the updated place with the new rating or an error status.
      */

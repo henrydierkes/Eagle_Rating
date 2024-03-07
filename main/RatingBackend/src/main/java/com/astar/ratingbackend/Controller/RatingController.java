@@ -1,8 +1,11 @@
 package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.CommentFilterRequest;
+import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
+import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
+import com.astar.ratingbackend.Service.IUserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,10 @@ import java.util.Optional;
 public class RatingController {
     @Autowired
     private IRatingService ratingService;
+    @Autowired
+    private IPlaceService placeService;
+    @Autowired
+    private IUserService userService;
 
     /**
      * Retrieves all ratings from the database.
@@ -74,13 +81,16 @@ public class RatingController {
      * @param rating The rating entity to be added.
      * @return A ResponseEntity containing the created rating or an error status.
      */
-    @PostMapping("/add")
-    public ResponseEntity<Rating> addRating(@RequestBody Rating rating) {
-        try {
-            Rating savedRating = ratingService.addRating(rating);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedRating);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    @PostMapping("/addRating")
+    public ResponseEntity<Place> addRating(@RequestBody Rating rating) {
+        String placeId = rating.getPlaceId();
+        rating=ratingService.addRating(rating);
+        userService.addRating(rating);
+        ResponseEntity<Place> response = placeService.addRating(placeId, rating);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return ResponseEntity.ok(response.getBody());
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
