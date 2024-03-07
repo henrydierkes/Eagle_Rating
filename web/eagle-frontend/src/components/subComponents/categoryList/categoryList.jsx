@@ -29,8 +29,8 @@ function CategoryList({ categories }) {
         </div>
         <div className="SliderContainer">
             <Slider ref={slider} {...settings}>
-            {categories.map((category, index) => (
-              <CategoryItem key={index} name={category} />
+            {categories.map((category, index, image) => (
+              <CategoryItem key={index} name={category.category} imageUrl={category.url} />
             ))}
             </Slider>
         </div>

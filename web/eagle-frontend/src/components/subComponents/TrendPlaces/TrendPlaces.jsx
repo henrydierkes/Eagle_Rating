@@ -13,7 +13,7 @@ const images = [
     "images/oxford.jpeg",
     "images/candler.jpeg",
     "images/campus_background.jpeg"
-  ];
+];
 
   const settings = {
     dots: true,
