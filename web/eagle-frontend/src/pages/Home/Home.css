@@ -1,6 +1,8 @@
 .Home {
   display: flex;
   flex-direction: column;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center;
 }
 body {
   font-family: 'Helvetica';

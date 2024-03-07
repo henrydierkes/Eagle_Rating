@@ -1,3 +1,66 @@
 .comment-list {
+    margin-top: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+  
+  .comment {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
-}
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-picture {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .profile-name {
+    font-weight: bold;
+  }
+  
+  .date {
+    color: #888;
+    margin-left: auto; /* Align date to the right */
+  }
+  
+  .comment-body {
+    margin-bottom: 10px;
+  }
+  
+  .ratings {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .specific-ratings {
+    margin-left: 20px;
+  }
+  
+  .comment-footer {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .comment-footer button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  

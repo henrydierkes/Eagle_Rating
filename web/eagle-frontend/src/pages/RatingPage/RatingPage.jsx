@@ -28,14 +28,52 @@ const results = [
         building: 'Building A', floor: '2nd floor'},
 ];
 
+const comments = [
+    {
+      id: 1,
+      user: {
+        name: "John Doe",
+        profilePicture: "../../../public/images/bleachamongus.png",
+      },
+      datePosted: "2024-03-06",
+      overallRating: 4.5,
+      specificRatings: {
+        sizeRating: 4,
+        cleanlinessRating: 5,
+        quietnessRating: 3,
+      },
+      upvotes: 10,
+      downvotes: 2,
+      comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam at convallis magna. Aenean ultricies eros ac lectus fermentum, quis volutpat elit fermentum.",
+    },
+    {
+      id: 2,
+      user: {
+        name: "Jane Smith",
+        profilePicture: "https://example.com/profile.jpg",
+      },
+      datePosted: "2024-03-05",
+      overallRating: 3.8,
+      specificRatings: {
+        sizeRating: 3,
+        cleanlinessRating: 4,
+        quietnessRating: 4,
+      },
+      upvotes: 5,
+      downvotes: 1,
+      comment: "Sed malesuada arcu a suscipit malesuada. Sed tincidunt massa ut nisi scelerisque, non aliquam lorem ullamcorper.",
+    },
+    // Add more comments as needed
+  ];
+
 function RatingPage() {
     return (
         <div className="RatingPage">
             <NavBar />
             <PlaceDetails results={results}/>
-            <hr className="divider" /> {/* Add a horizontal rule as a divider */}
+            <hr className="divider" /> 
             <CommentFilter />
-            <CommentList/>
+            <CommentList comments={comments}/>
             <Footer />
         </div>
     );

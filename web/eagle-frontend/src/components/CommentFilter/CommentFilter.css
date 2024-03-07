@@ -1,8 +1,8 @@
 .comment-filter {
     display: flex;
-    flex-direction: row-reverse;
+    margin-top: 10px;
     margin-bottom: 20px;
-    margin-right: 40px;
+    margin-left: 30px;
   }
   
   .comment-filter label {
