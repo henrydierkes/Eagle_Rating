@@ -14,7 +14,7 @@
 }
 
 .footer-section h4 {
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   font-size: 14px;
 }
 
@@ -22,7 +22,7 @@
 .contact-form textarea {
   width: 90%;
   padding: 15px; /* Increased padding for better visual and typing space */
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border: 2px solid #c1c9f6; /* Slightly thicker border with a color that matches the gradient */
   border-radius: 4px; /* More pronounced rounded corners for a modern look */
   resize: none;
@@ -34,19 +34,19 @@
 
 .contact-form input{
   margin-top: 0px;
-  height: 2px;
+  height: 0px;
 }
 
 .contact-form textarea {
   width: 90%; /* Adjusted width for better alignment */
-  height: 70px;
+  height: 75px;
 }
 
 .contact-form button,
 .contact-form input[type="submit"] {
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   color: #fff;
-  padding: 10px 30px; /* Adjusted padding */
+  padding: 9px 30px; /* Adjusted padding */
   margin: 0 0;
   border: none;
   border-radius: 4px;

@@ -2,14 +2,13 @@ import React from "react";
 import "./categoryList.css";
 import CategoryItem from "../categoryItem/categoryItem";
 
-function CategoryList() {
+function CategoryList({ categories }) {
   return (
     <div className="CategoryList">
       <div className="slide">
-        <CategoryItem />
-        <CategoryItem />
-        <CategoryItem />
-        <CategoryItem />
+        {categories.map((category, index) => (
+          <CategoryItem key={index} name={category} />
+        ))}
       </div>
     </div>
   );
