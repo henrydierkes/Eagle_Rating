@@ -12,7 +12,9 @@
 }
 
 .logo {
-  font-size: 25px;
+  font-size: 30px;
+  margin-left: -10px;
+  margin-top: 18px;
 }
 
 .button {
