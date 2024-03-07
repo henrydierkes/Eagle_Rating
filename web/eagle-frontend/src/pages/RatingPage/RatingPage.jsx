@@ -33,6 +33,7 @@ function RatingPage() {
         <div className="RatingPage">
             <NavBar />
             <PlaceDetails results={results}/>
+            <hr className="divider" /> {/* Add a horizontal rule as a divider */}
             <CommentFilter />
             <CommentList/>
             <Footer />
