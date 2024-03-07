@@ -1,0 +1,51 @@
+.user-images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* UserImages.css */
+.images-container img {
+    display: none; /* 默认情况下隐藏所有图片 */
+    width: 100%; /* 或者根据需要调整 */
+    height: auto; /* 保持图片的原始宽高比 */
+}
+
+.images-container img.active {
+    display: block; /* 仅显示激活的图片 */
+}
+
+
+.arrow-btn {
+    padding: 50px; /* 使按钮更接近圆形，调整padding确保内容居中 */
+    border: none;
+    background-color: transparent; /* 初始背景透明 */
+    color: white; /* 文本颜色 */
+    cursor: pointer;
+    font-size: 50px;
+    border-radius: 50%; /* 完全圆角边框 */
+    transition: all 0.3s ease; /* 平滑过渡效果 */
+    width: 50px; /* 指定宽度 */
+    height: 40px; /* 指定高度，与宽度相同，确保按钮是圆形的 */
+    display: flex; /* 使用flex布局使内容居中 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+}
+
+.arrow-btn:hover {
+    background-color: #333333; /* 鼠标悬浮时的背景颜色 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 鼠标悬浮时的圆形阴影 */
+    color: #FFF; /* 鼠标悬浮时可以调整文字颜色，如果需要 */
+}
+
+
+.prev {
+    position: absolute;
+    left: 10px;
+}
+
+.next {
+    position: absolute;
+    right: 10px;
+}

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './PlaceDetails.css';
 import RatingBar from "../subComponents/RatingBar/RatingBar.jsx";
 import TopRatings from "../subComponents/TopRatings/TopRatings.jsx";
+import UserImages from "../subComponents/UserImages/UserImages.jsx";
+import UserComments from "../subComponents/UserComments/UserComments.jsx";
 
 const getRatingColor = (rating) => {
   if (rating >= 4) {
@@ -44,8 +46,12 @@ const PlaceDetails = ({ results }) => {
         </div>
 
       </div>
+
+        <RatingBar results={results}/>
       <div className='tags'>
           <TopRatings results={results}/>
+          <UserImages results={results}/>
+          <UserComments results={results}/>
   {result.top_tags.map((tag, index) => (
     <span key={index}>{tag}</span>
   ))}</div>
