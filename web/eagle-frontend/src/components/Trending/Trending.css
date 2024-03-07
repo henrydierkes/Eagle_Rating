@@ -1,7 +1,7 @@
 .Trending {
   display: flex;
   flex-direction: column;
-  width: 96%;
+  width: 100%;
   justify-content: center; /* Center the content horizontally */
   align-items: center;
 }
