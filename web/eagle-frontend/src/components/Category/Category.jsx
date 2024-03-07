@@ -4,7 +4,7 @@ import CategoryList from "../subComponents/categoryList/categoryList";
 
 function Category() {
   // Define your categories as an array of strings
-  const categories = ["Study Spaces", "Parking Lot", "Dorm", "Bathroom"];
+  const categories = ["Study Spaces", "Parking Lot", "Dorm", "Bathroom", "Library"];
 
   return (
     <div className="Category">
