@@ -17,7 +17,7 @@ const CommentFilter = ({ onSortChange }) => {
 
   return (
     <div className="comment-filter">
-      <Box sx={{ minWidth: 120 }}>
+      <Box sx={{  minWidth: 160, width: 'auto' }}>
         <FormControl fullWidth>
           <InputLabel id="comment-filter-label">Sort by:</InputLabel>
           <Select
