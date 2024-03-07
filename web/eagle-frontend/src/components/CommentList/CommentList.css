@@ -1,6 +1,7 @@
 .comment-list {
     margin-top: 20px;
     margin-left: 25px;
+    margin-right: 25px;
   }
   
   .comment {
@@ -35,6 +36,7 @@
   
   .date {
     color: #888;
+    margin-left: auto; /* Align date to the right */
   }
   
   .comment-body {
@@ -54,5 +56,11 @@
   .comment-footer {
     display: flex;
     gap: 10px;
+  }
+  
+  .comment-footer button {
+    background: none;
+    border: none;
+    cursor: pointer;
   }
   
