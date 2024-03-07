@@ -5,9 +5,23 @@ import $ from "jquery"; // Import jQuery if not already done
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import "slick-carousel/slick/slick";
+import 'slick-carousel/slick/slick';
 
+const images = [
+    "images/Woodruff_Library.jpeg",
+    "images/cand.jpeg",
+    "images/oxford.jpeg",
+    "images/candler.jpeg",
+    "images/campus_background.jpeg"
+  ];
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
 
 function TrendPlaces() {
     const slider = React.useRef(null);
@@ -38,11 +52,9 @@ function TrendPlaces() {
             </div>
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
-                    <TrendPlace name="Place 1" />
-                    <TrendPlace name="Place 2" />
-                    <TrendPlace name="Place 3" />
-                    <TrendPlace name="Place 4" />
-                    <TrendPlace name="Place 5" />
+                {images.map((image, index) => (
+          <TrendPlace key={index} name={`Place ${index + 1}`} imageUrl={image} />
+        ))}
                 </Slider>
             </div>
         </div>
