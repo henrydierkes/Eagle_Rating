@@ -34,7 +34,7 @@ const tags = [
   'Sussy imposter'
 ];
 
-const RatingForm = () => {
+const CommentForm = () => {
   const [rating, setRating] = useState(0);
   const [size, setSize] = useState(0);
   const [cleanliness, setCleanliness] = useState(0);
@@ -173,4 +173,4 @@ const RatingForm = () => {
   );
 };
 
-export default RatingForm;
+export default CommentForm;
