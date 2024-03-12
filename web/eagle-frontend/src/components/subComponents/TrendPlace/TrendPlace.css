@@ -58,3 +58,21 @@
   max-height: 80%;
   object-fit: contain; /* Maintain aspect ratio */
 }
+
+@media screen and (max-width: 2560px) and (max-height: 1600px) {
+  .TrendPlace {
+    width: 250px;
+    height: 350px;
+    position: relative;
+  }
+  .TrendPlace .Name {
+    width: 100.7%;
+    height: 20%;
+    position: absolute;
+    bottom: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgray;
+  }
+}

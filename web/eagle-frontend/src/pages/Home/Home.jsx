@@ -9,7 +9,7 @@ import "./Home.css";
 function Home() {
   return (
     <div className="Home">
-       <NavBar />
+      <NavBar />
       <Background />
       <Trending />
       <Category />

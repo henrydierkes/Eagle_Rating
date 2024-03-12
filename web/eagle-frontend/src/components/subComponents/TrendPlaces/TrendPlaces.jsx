@@ -8,20 +8,17 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick';
 
 const images = [
-    "images/Woodruff_Library.jpeg",
-    "images/cand.jpeg",
-    "images/oxford.jpeg",
-    "images/candler.jpeg",
-    "images/campus_background.jpeg"
+    {url: "images/Woodruff_Library.jpeg", name: 'Woodruff Library', rating: 4.9},
+    {url: "images/cand.jpeg", name: 'Candler', rating: 2.3},
+    {url: "images/oxford.jpeg", name: 'Oxford Library', rating: 3.3},
+    {url: "images/candler.jpeg", name: 'Candler Library', rating: 4.3},
+    {url: "images/campus_background.jpeg", name: 'Campus', rating: 1.2},
+    {url: "images/convocation-hall.png", name: 'Convocation Hall', rating: 0.9},
+    {url: "images/entrance.jpeg", name: 'Entrance', rating: 0.0},
+    {url: "images/sign.jpeg", name: 'Sign', rating: 3.3},
+    {url: "images/building.jpeg", name: 'Some Building', rating: 5.0},
+    {url: "images/quad.jpeg", name: 'Quad', rating: 1.2}
 ];
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1
-  };
 
 function TrendPlaces() {
     const slider = React.useRef(null);
@@ -52,8 +49,8 @@ function TrendPlaces() {
             </div>
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
-                {images.map((image, index) => (
-          <TrendPlace key={index} name={`Place ${index + 1}`} imageUrl={image} />
+                {images.map(({ url, name, rating }, index) => (
+          <TrendPlace key={index} placeName={name} imageUrl={url} placeRating={rating} />
         ))}
                 </Slider>
             </div>

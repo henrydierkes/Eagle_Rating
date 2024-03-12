@@ -1,7 +1,7 @@
 import React from "react";
 import "./TrendPlace.css";
 
-function TrendPlace({ name, imageUrl }) {
+function TrendPlace({ placeName, imageUrl, placeRating }) {
 
   const backgroundStyle = {
     backgroundImage: `url(${imageUrl})`,
@@ -11,9 +11,9 @@ function TrendPlace({ name, imageUrl }) {
 
   return (
     <div className="TrendPlace" style={backgroundStyle}>
-      <div className="RateBar"></div>
+      <div className="RateBar">{placeRating}</div>
       <div className="Name">
-        <h2>{name}</h2>
+        <h2>{placeName}</h2>
       </div>
       <div className="mask"></div>
     </div>
