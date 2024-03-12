@@ -85,6 +85,7 @@ const LocationForm = () => {
       <TextField sx={{ mb: 1}} className='place-name' id="outlined-basic" label="Enter Place Name" variant="outlined" required/>
       <TextField sx={{ mb: 1}} className='building-name' id="outlined-basic" label="Enter Building" variant="outlined" />
       <TextField sx={{ mb: 1}} className='floor-name' id="outlined-basic" label="Enter Floor" variant="outlined" />
+      <TextField sx={{ mb: 1}} className='category-name' id="outlined-basic" label="Enter Category" variant="outlined" />
 
       <form onSubmit={handleSubmit}>
         <div className='overall-rating'>

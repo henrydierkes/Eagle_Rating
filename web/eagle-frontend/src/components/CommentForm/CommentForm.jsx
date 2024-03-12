@@ -87,6 +87,7 @@ const CommentForm = () => {
         <div className='overall-rating'>
           <Typography component="legend">Overall Rating:</Typography>
           <Rating
+            // precision={0.5}
             name="rating"
             value={rating}
             onChange={(event, newValue) => {

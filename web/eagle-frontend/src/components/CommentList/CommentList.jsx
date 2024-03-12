@@ -90,7 +90,7 @@ const CommentList = ({ comments }) => {
           <div className="comment-footer">
             <button className="upvote" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ThumbUpIcon sx={{ color: 'success.main' }} /></button>
             <button className="downvote" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ThumbDownIcon sx={{ color: 'error.main' }} /></button>
-            <button className="addComment" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><AddCommentIcon sx={{ color: 'primary.main' }} /></button>
+            {/* <button className="addComment" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><AddCommentIcon sx={{ color: 'primary.main' }} /></button> */}
             <button className="share" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ShareIcon sx={{ color: 'secondary.main' }} /></button>
           </div>
         </div>
