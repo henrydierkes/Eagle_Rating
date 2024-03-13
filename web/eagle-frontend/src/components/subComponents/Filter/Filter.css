@@ -1,15 +1,133 @@
-.filter {
-  display: flex;
-  flex-direction: column;
+/* Filter.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e0e0e0; /* Light gray background */
 }
 
 .sidebar {
-  top: 90px;
-  right: 0;
-  width: 30%;
-  height: calc(100% - 100px - 300px);
-  background-color: #ffffff;
+  background-color: #f4f4f4;
   padding: 20px;
-  /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); Optional: Add shadow for better visibility                maybe add this but probably not */
-  overflow-y: auto; /* Allow sidebar content to be scrolled if it exceeds height */
+  border-radius: 5px;
+  width: 250px; /* Adjust the width as needed for different layouts */
+  margin: auto; /* Centers the sidebar if there's a width set */
+}
+
+h2 {
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Filter.css */
+/* ... other styles ... */
+
+.tag {
+  background-color: #800080; /* Vibrant purple background */
+  color: #ffffff; /* White text color for contrast */
+  border-radius: 16px; /* Rounded corners for the tags to look like a bubble */
+  padding: 8px 16px; /* Padding inside the tags */
+  margin: 5px; /* Margin between the tags */
+  font-size: 15px;
+  cursor: pointer; /* Indicates the tag is clickable */
+  display: inline-flex;
+  align-items: center; /* Centers the text and button vertically */
+  position: relative; /* Needed for positioning the tail */
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.2); /* Optional: Adds a subtle shadow for depth */
+  border: none; /* No border for the tag */
+}
+
+/* ... other styles ... */
+
+
+.tag::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px; /* Position the tail below the tag */
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: #808080 transparent transparent transparent; /* The color should match the tag's background */
+  transform: translateX(-50%); /* Center the tail */
+}
+
+.tag button {
+  background-color: #ff4747; /* Red background for delete button */
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+}
+
+input[type="text"] {
+  width: 100%; /* Full width */
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #28a745; /* Green background for add button */
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  width: 100%; /* Full width */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px; /* Space between button and input */
+}
+
+button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.suggestions {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px; /* Space between suggestions and input */
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  border-radius: 5px;
+  max-height: 150px; /* Maximum height for the suggestion box */
+  overflow-y: auto; /* Allows scrolling on overflow */
+}
+
+.suggestions li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.suggestions li:last-child {
+  border-bottom: none; /* Removes border from the last item */
+}
+
+.suggestions li:hover {
+  background-color: #f4f4f4;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 90%; /* Takes more width on smaller screens */
+    margin-top: 20px;
+  }
 }
