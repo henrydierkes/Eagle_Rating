@@ -74,7 +74,7 @@ h2 {
   line-height: 1;
 }
 
-input[type="text"] {
+.textinput {
   width: 100%; /* Full width */
   padding: 10px;
   margin-bottom: 10px;
@@ -83,7 +83,7 @@ input[type="text"] {
   font-size: 16px;
 }
 
-button {
+.add-tag-button {
   background-color: #28a745; /* Green background for add button */
   color: #ffffff;
   border: none;
@@ -95,7 +95,7 @@ button {
   margin-top: 10px; /* Space between button and input */
 }
 
-button:hover {
+.add-tag-button:hover {
   background-color: #218838; /* Darker green on hover */
 }
 
