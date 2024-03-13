@@ -47,7 +47,7 @@ public class Place implements Serializable {
     @Field("location")
     private GeoJsonPoint location;
     @Field("floor")
-    private int floor;
+    private Integer floor;
 
     @Field("campus")
     private String campus;

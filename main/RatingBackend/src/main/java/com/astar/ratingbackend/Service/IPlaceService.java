@@ -17,9 +17,9 @@ public interface IPlaceService {
     public void deletePlaceT(ObjectId id);
     public ResponseEntity<Place> addRating(String id, Rating rating);
     public Map<String, Double> getAverageRatingsMap(ObjectId id);
-    public void removeRating(ObjectId id, Rating rating);
-
+    public boolean deleteRating(Rating rating);
     Optional<Place> findById(ObjectId id);
+    Place validatePlace(String placeId);
     List<Place> searchPlacesByName(String name);
     List<Place> searchPlacesByNameAndCategory(String name, String category);
     List<Place> searchByTags(List<String> tags);

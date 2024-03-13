@@ -35,13 +35,13 @@ public class User implements Serializable {
     private Date createDate;
     @Field("comments")
     @ApiModelProperty(value = "comments posted")
-    private ObjectId[] comments;
+    private String[] comments;
     @Field("ratings")
     @ApiModelProperty(value = "ratings posted")
-    private ObjectId[] ratings;
+    private String[] ratings;
     @Field("places_added")
     @ApiModelProperty(value = "places added")
-    private ObjectId[] placesAdded;
+    private String[] placesAdded;
 
     @Field("isDeleted")
     @ApiModelProperty(value = "isDeleted")

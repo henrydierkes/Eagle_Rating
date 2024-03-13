@@ -3,6 +3,7 @@ package com.astar.ratingbackend.Controller;
 import com.astar.ratingbackend.Entity.CommentFilterRequest;
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
+import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import com.astar.ratingbackend.Service.IUserService;
@@ -65,14 +66,23 @@ public class RatingController {
      * @return A ResponseEntity indicating the outcome of the operation.
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteRatingById(@RequestParam String ratingId) {
+    public ResponseEntity<Object> deleteRatingById(@RequestParam String ratingId) {
         try {
-            ratingService.deleteRating(ratingId);
-            return ResponseEntity.noContent().build();
+            Rating rating=ratingService.validateRating(ratingId);
+            User user = userService.validateUser(rating.getUserId());
+            Place place = placeService.validatePlace(rating.getPlaceId());
+            boolean ratingDeleted = ratingService.deleteRating(ratingId);
+            boolean userDeleted = userService.deleteRating(rating);
+            boolean placeDeleted = placeService.deleteRating(rating);
+            if (!ratingDeleted || !userDeleted || !placeDeleted) {
+                // If any deletion fails, return an INTERNAL_SERVER_ERROR response
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+            // If deletion is successful, return an OK response
+            return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().build(); // Invalid ObjectId format
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Other errors
+            // If an IllegalArgumentException occurs, return an INTERNAL_SERVER_ERROR response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
@@ -84,12 +94,14 @@ public class RatingController {
     @PostMapping("/addRating")
     public ResponseEntity<Place> addRating(@RequestBody Rating rating) {
         String placeId = rating.getPlaceId();
-        rating=ratingService.addRating(rating);
-        userService.addRating(rating);
-        ResponseEntity<Place> response = placeService.addRating(placeId, rating);
-        if (response.getStatusCode() == HttpStatus.OK) {
+        try {
+            User user = userService.validateUser(rating.getUserId());
+            Place place = placeService.validatePlace(placeId);
+            Rating addedRating = ratingService.addRating(rating, user);
+            userService.addRating(addedRating);
+            ResponseEntity<Place> response = placeService.addRating(placeId, addedRating);
             return ResponseEntity.ok(response.getBody());
-        } else {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

@@ -17,6 +17,7 @@
 package com.astar.ratingbackend.Service.Impl;
 
 import com.astar.ratingbackend.Entity.Rating;
+import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Model.RatingRepository;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
@@ -43,12 +44,29 @@ public class RatingServiceImpl implements IRatingService {
         this.ratingRepository = ratingRepository;
     }
 
+    public Rating validateRating(String ratingId) {
+        // Check if the rating exists
+        Optional<Rating> optionalRating = ratingRepository.findById(new ObjectId(ratingId));
+        if (optionalRating.isPresent()) {
+            return optionalRating.get();
+        } else {
+            throw new IllegalArgumentException("Rating with ID " + ratingId + " does not exist.");
+        }
+    }
     /**
      * Saves a new rating to the repository, ensuring all necessary default values are set.
      * @param rating The rating entity to be saved.
      * @return The saved rating entity.
      */
-    public Rating addRating(Rating rating) {
+    public Rating addRating(Rating rating, User user) {
+        // Check if user already rated the place
+        if (user.getRatings() != null) {
+            for (String ratingId : user.getRatings()) {
+                if (ratingId.equals(rating.getPlaceId())) {
+                    throw new IllegalArgumentException("User has already rated this place.");
+                }
+            }
+        }
         if(rating.getRatingId()==null){
 
         }
@@ -57,7 +75,11 @@ public class RatingServiceImpl implements IRatingService {
         }
         if (rating.getComment() == null) {
             rating.setComment(""); // Empty string as default value
-        }if (rating.getDate() == null) {
+        }
+        if(rating.getComments()==null){
+            rating.setComments(null);
+        }
+        if (rating.getDate() == null) {
             rating.setDate(new Date()); // Current date as default value
         }
         if (rating.getLikes() == null) {
@@ -68,6 +90,9 @@ public class RatingServiceImpl implements IRatingService {
         }
         if (rating.getComments() == null) {
             rating.setComments(Collections.emptyList()); // Empty list as default value
+        }
+        if(rating.getFloor()==null){
+            rating.setFloor(null);
         }
 
         return ratingRepository.save(rating);
@@ -133,14 +158,17 @@ public class RatingServiceImpl implements IRatingService {
      * @param id The ObjectId of the rating to mark as deleted.
      */
     //    fake delete, used usually
-    public void deleteRating(String id) {
-        ObjectId objectId=new ObjectId(id);
-        ratingRepository.findByIdAndNotDeleted(objectId).ifPresent(rating -> {
+    public boolean deleteRating(String id) {
+        Optional<Rating> optionalRating = ratingRepository.findByIdAndNotDeleted(new ObjectId(id));
+        if (optionalRating.isPresent()) {
+            Rating rating = optionalRating.get();
             rating.setDeleted(true);
             rating.setDeletedDate(new Date());
             ratingRepository.save(rating);
-            placeService.removeRating(new ObjectId(rating.getPlaceId()),rating);
-        });
+            return true;
+        } else {
+            return false; // Rating not found
+        }
     }
     /**
      * Retrieves ratings with an overall rating greater than a specified value.

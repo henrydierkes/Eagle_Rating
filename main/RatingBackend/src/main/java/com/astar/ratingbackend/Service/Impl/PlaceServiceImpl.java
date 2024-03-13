@@ -37,6 +37,21 @@ public class PlaceServiceImpl implements IPlaceService {
         if(place.getTotalRating()==null){
             place.setTotalRating(new Place.TotalRating(0,0,0,0));
         }
+        if(place.getRatingCount()==null){
+            place.setRatingCount(0);
+        }
+        if(place.getRatingIds()==null){
+            place.setRatingIds(new ArrayList<String>());
+        }
+        if(place.getFloor()==null){
+            place.setFloor(null);
+        }
+        if(place.getTags()==null){
+            place.setTags(new ArrayList<String>());
+        }
+        if(place.getImages()==null){
+            place.setImages(new ArrayList<Place.Image>());
+        }
         place.setDeleted(false);
         place.setDeletedDate(null);
         return this.mongoTemplate.save(place);
@@ -109,22 +124,36 @@ public class PlaceServiceImpl implements IPlaceService {
     }
     /**
      * Removes a rating from a place and updates the total ratings accordingly.
-     * @param id The ObjectId of the place from which to remove the rating.
      * @param rating The Rating to be removed.
      */
-    public void removeRating(ObjectId id, Rating rating) {
+    public boolean deleteRating(Rating rating) {
+        ObjectId id=new ObjectId(rating.getPlaceId());
         Double rating1 = rating.getOverallRating().getRating1();
         Double rating2 = rating.getOverallRating().getRating2();
         Double rating3 = rating.getOverallRating().getRating3();
-        this.findById(id).ifPresent((place) -> {
+        Optional<Place> optionalPlace = this.findById(id);
+        if (optionalPlace.isPresent()) {
+            Place place = optionalPlace.get();
+
+            if (place.isDeleted()) {
+                // Place is already deleted
+                return false;
+            }
+
             Place.TotalRating totalRatings = place.getTotalRating();
             totalRatings.setOverall(totalRatings.getOverall() - rating1 - rating2 - rating3);
             totalRatings.setRating1(totalRatings.getRating1() - rating1);
             totalRatings.setRating2(totalRatings.getRating2() - rating2);
             totalRatings.setRating3(totalRatings.getRating3() - rating3);
+            place.setRatingCount(place.getRatingCount()-1);
             place.setTotalRating(totalRatings);
+
+            // Save the updated place object back to the database
             this.updatePlace(id, place);
-        });
+            return true; // Place found and updated successfully
+        } else {
+            return false; // Place not found
+        }
     }
     /**
      * Deletes a place from the database by its ID.
@@ -163,7 +192,7 @@ public class PlaceServiceImpl implements IPlaceService {
         Place place = this.placeRepository.findById(objectId).orElseThrow(() -> {
             return new IllegalArgumentException("Place not found with id: " + id);
         });
-        this.updateRatingsAndCount(place, rating);
+        this.addRatingsAndCount(place, rating);
         this.addTags(place, rating.getTags());
         this.addRatingIds(place,rating.getRatingId().toString());
         Place updatedPlace = this.placeRepository.save(place);
@@ -271,6 +300,13 @@ public class PlaceServiceImpl implements IPlaceService {
         averageRatings.put(ratingAspect.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / (double)ratingCount);
         return averageRatings;
     }
+    @Override
+    public Place validatePlace(String placeId) {
+        ObjectId placeIdObj = new ObjectId(placeId);
+        Place place = placeRepository.findByIdAndNotDeleted(placeIdObj)
+                .orElseThrow(() -> new IllegalArgumentException("Place not found or deleted with ID: " + placeId));
+        return place;
+    }
 
     private void updatePlaceRatings(ObjectId placeId, Rating rating) {
         Place place = this.findById(placeId).orElseThrow(() -> {
@@ -296,7 +332,7 @@ public class PlaceServiceImpl implements IPlaceService {
      * @param place The Place entity to update.
      * @param rating The Rating entity containing the new ratings to add.
      */
-    private void updateRatingsAndCount(Place place, Rating rating) {
+    private void addRatingsAndCount(Place place, Rating rating) {
         Place.TotalRating totalRatings = place.getTotalRating();
         Rating.OverallRating overallRating = rating.getOverallRating();
 

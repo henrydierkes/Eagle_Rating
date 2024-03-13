@@ -19,7 +19,6 @@
 package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.Place;
-import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +55,9 @@ public class PlaceController {
      * @return A response entity indicating the operation's status (CREATED).
      */
     @PostMapping("/add")
-    public ResponseEntity<Void> addPlace(@RequestBody Place place){
-        placeService.addPlace(place);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Place> addPlace(@RequestBody Place place) {
+        Place addedPlace = placeService.addPlace(place);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addedPlace);
     }
 
     /**
@@ -66,17 +65,17 @@ public class PlaceController {
      * @param rating The Rating entity to be added to the place.
      * @return A response entity containing the updated place with the new rating or an error status.
      */
-    @PostMapping("/addRating")
-    public ResponseEntity<Place> addRating(@RequestBody Rating rating) {
-        String placeId = rating.getPlaceId();
-        ResponseEntity<Place> response = placeService.addRating(placeId, rating);
-        ratingService.addRating(rating);
-        if (response.getStatusCode() == HttpStatus.OK) {
-            return ResponseEntity.ok(response.getBody());
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
+//    @PostMapping("/addRating")
+//    public ResponseEntity<Place> addRating(@RequestBody Rating rating) {
+//        String placeId = rating.getPlaceId();
+//        ResponseEntity<Place> response = placeService.addRating(placeId, rating);
+//        ratingService.addRating(rating,);
+//        if (response.getStatusCode() == HttpStatus.OK) {
+//            return ResponseEntity.ok(response.getBody());
+//        } else {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
 
     /**
      * Searches for places based on location name, category, and tags. All parameters are optional.
