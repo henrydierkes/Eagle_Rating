@@ -48,7 +48,8 @@ const Filter = ({ onFilterChange }) => {
                     </span>
                 ))}
             </div>
-            <input
+            <input 
+                className='textinput'
                 type="text"
                 placeholder="Add tag"
                 value={inputTag}
@@ -69,7 +70,7 @@ const Filter = ({ onFilterChange }) => {
                     ))}
                 </ul>
             )}
-            <button onClick={() => handleAddTag(inputTag)}>Add Tag</button>
+            <button className='add-tag-button' onClick={() => handleAddTag(inputTag)}>Add Tag</button>
         </div>
     );
 };
