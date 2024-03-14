@@ -7,8 +7,10 @@ import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import com.astar.ratingbackend.Service.IUserService;
+import com.mongodb.client.ClientSession;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/rating")
 public class RatingController {
+    @Autowired
+    private MongoDatabaseFactory mongoDatabaseFactory;
     @Autowired
     private IRatingService ratingService;
     @Autowired
@@ -95,6 +99,7 @@ public class RatingController {
     public ResponseEntity<Place> addRating(@RequestBody Rating rating) {
         String placeId = rating.getPlaceId();
         try {
+            ClientSession session = mongoDatabaseFactory.getSession();
             User user = userService.validateUser(rating.getUserId());
             Place place = placeService.validatePlace(placeId);
             Rating addedRating = ratingService.addRating(rating, user);
