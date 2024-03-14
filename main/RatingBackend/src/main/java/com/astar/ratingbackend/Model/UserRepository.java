@@ -14,5 +14,6 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
     List<User> findAllBy();
     @Query("{ '_id' : ?0, 'isDeleted' : false }")
     Optional<User> findByIdAndNotDeleted(ObjectId id);
+    User findByEmail(String email);
 
 }
