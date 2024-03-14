@@ -1,0 +1,87 @@
+/* FilterRating.css */
+
+.filter-rating-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 300px; /* Adjust as needed */
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.yotpo-reviews-main-widget {
+    /* Add styles specific to your layout needs */
+}
+
+.yotpo-main-widget-layout {
+    /* Further layout styles if necessary */
+}
+
+.yotpo-filters-container {
+    margin-top: 20px;
+}
+
+.yotpo-filters-top-panel {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.yotpo-filters-top-panel span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.filter-rating-container select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fafafa;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+}
+
+.filter-rating-container select:focus {
+    border-color: #999;
+    outline: none;
+}
+
+#filterRatingContainer .star {
+    color: #ffd700; /* Yellow color for stars */
+    font-size: 18px;
+    margin: 0 2px;
+}
+
+
+/* Hide the select arrow for browsers that support it */
+.filter-rating-container select::-ms-expand {
+    display: none;
+}
+
+/* Custom arrow style */
+.filter-rating-container select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23000" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px 12px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .filter-rating-container {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .filter-rating-container select {
+        padding: 6px 8px;
+    }
+}
