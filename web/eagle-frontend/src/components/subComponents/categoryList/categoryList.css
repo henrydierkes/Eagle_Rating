@@ -1,10 +1,10 @@
 .CategoryList{
   position: relative; /* Ensure absolute positioning works as expected */
-  overflow-x: hidden; /* Hide overflowing content */
+  overflow-x: visible; /* Overflow visible for buttons to appear outside the content area if needed */
   width: 100%;
   transition: 0.2s;
-  margin-left: auto; /* Set left margin to auto */
-  margin-right: auto; /* Set right margin to auto */
+  margin-left: auto; /* Centering the container */
+  margin-right: auto; /* Centering the container */
 }
 .CategoryList .slider-container {
   display: flex;
@@ -22,30 +22,38 @@
   justify-content: space-between; /* Align buttons at the ends */
   z-index: 22222;
 }
-.CategoryList .buttons button{
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  border:1px solid #55555578;
-  background: rgba( 255, 255, 255, 0.25 );
-  transition:0.2s;
+.CategoryList .buttons button {
+  width: 5vw; /* Scale width with viewport */
+  height: 12.5vw; /* Scale height with viewport, maintaining aspect ratio */
+  min-width: 60px; /* Minimum width to ensure usability */
+  min-height: 90px; /* Minimum height to ensure usability */
+  border-radius: 0%;
+  border: 1px solid #55555578;
+  background: rgba(255, 255, 255, 0.25);
+  transition: 0.2s;
+  position: relative;
+}
+.CategoryList .buttons .prev, .CategoryList .buttons .next {
+  top: 50%;
 }
 .CategoryList .buttons .prev {
-  position: absolute;
-  top: 50%;
-  left: 7vw;
-  transform: translate(-50%, -50%);
+  left: 0; /* Align to the far left */
 }
-.CategoryList .buttons .next{
-  position: absolute;
-  top: 50%;
-  right: 7vw;
-  transform: translate(-50%, -50%);
+.CategoryList .buttons .next {
+  right: 0; /* Align to the far right */
 }
 .CategoryList .buttons button:hover{
-  background-color: #c9c9c5;;
+  background-color: #e7e7e622; /* Button background hover effect */
 }
 .CategoryItem{
   border-radius: 10px;
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+/* Example media query for smaller screens */
+@media (max-width: 600px) {
+  .CategoryList .buttons button {
+    width: 10vw; /* Larger percentage for smaller screens */
+    height: 15vw;
+    min-width: 50px; /* Adjusted minimum sizes */
+  }
 }

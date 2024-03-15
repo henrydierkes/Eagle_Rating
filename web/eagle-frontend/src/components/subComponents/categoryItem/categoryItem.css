@@ -1,12 +1,12 @@
 .CategoryItem {
-  flex: 1 0 200px;
-  max-width: 98%; /* Adjust the width to be responsive */
+  flex: 1 0;
+  max-width: 100%; /* Adjust the width to be responsive */
   height: auto; /* Adjust height automatically */
   aspect-ratio: 1.8 / 1; /* Maintain an aspect ratio of 2:1 */
   position: relative;
   background-color: whitesmoke;
   transition: all .1s linear;
-  margin: 0px; /* Add some margin for spacing between items */
+  margin: 2px; /* Add some margin for spacing between items */
 }
 
 .CategoryItem:hover {
