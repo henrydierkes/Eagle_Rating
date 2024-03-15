@@ -2,7 +2,7 @@
   background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
   color: white;
   display: flex;
-  width: 98%;
+  width: 100%;
   justify-content: space-between;
   padding: 10px;
   font-size: 12px;
