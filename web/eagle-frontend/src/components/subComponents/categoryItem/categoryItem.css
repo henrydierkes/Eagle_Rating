@@ -1,15 +1,8 @@
-.CategoryContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px; /* Adjusts the gap between items */
-  justify-content: center; /* Centers the items in the container */
-  padding: 20px; /* Optional: Adds padding around the entire grid */
-}
-
 .CategoryItem {
-  width: 100%; /* Adjust the width to be responsive */
+  flex: 1 0 200px;
+  max-width: 98%; /* Adjust the width to be responsive */
   height: auto; /* Adjust height automatically */
-  aspect-ratio: 2 / 1; /* Maintain an aspect ratio of 2:1 */
+  aspect-ratio: 1.8 / 1; /* Maintain an aspect ratio of 2:1 */
   position: relative;
   background-color: whitesmoke;
   transition: all .1s linear;
