@@ -3,7 +3,7 @@
 ### Project Name: Eagle Rating
 
 ## Overview
-Eagle Frontend is a web application designed for [short description of the application's purpose]. This project contains all the frontend code necessary to build and run the user interface of Eagle platform.
+Eagle Frontend is a web application designed for Eagle Rating, a social media intended for university students to rate places around their campus. This project contains all the frontend code necessary to build and run the user interface of Eagle platform.
 
 ## Project Structure
 The project follows a standard React application structure with the following directories:
@@ -53,4 +53,4 @@ Eagle Frontend is [licensed under the MIT License](LICENSE.md).
 
 ## Contact
 
-For any additional questions or comments, please contact [contact information or link to contact page].
+For any additional questions or comments, please contact Tuan Vinh (@tvinh@emory.edu).
