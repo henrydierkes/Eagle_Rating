@@ -53,4 +53,4 @@ Eagle Frontend is [licensed under the MIT License](LICENSE.md).
 
 ## Contact
 
-For any additional questions or comments, please contact Tuan Vinh (@tvinh@emory.edu).
+For any additional questions or comments, please contact Tuan Vinh (tvinh@emory.edu).
