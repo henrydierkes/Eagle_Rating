@@ -1,6 +1,6 @@
 # Eagle Frontend
 ## Overview
-Eagle Frontend is a web application designed for Eagle Rating, a social media intended for university students to rate places around their campus. This project contains all the frontend code necessary to build and run the user interface of Eagle platform.
+This project contains all the frontend code necessary to build and run the user interface of Eagle platform.
 
 ## Project Structure
 The project follows a standard React application structure with the following directories:
