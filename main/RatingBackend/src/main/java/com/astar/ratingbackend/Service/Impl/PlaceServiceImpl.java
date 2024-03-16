@@ -140,7 +140,7 @@ public class PlaceServiceImpl implements IPlaceService {
                 // Place is already deleted
                 return false;
             }
-
+            //update totalRating
             Place.TotalRating totalRatings = place.getTotalRating();
             totalRatings.setOverall(Math.max(totalRatings.getOverall() - overall,0));
             totalRatings.setRating1(totalRatings.getRating1() - rating1);
@@ -148,6 +148,7 @@ public class PlaceServiceImpl implements IPlaceService {
             totalRatings.setRating3(totalRatings.getRating3() - rating3);
             place.setRatingCount(place.getRatingCount()-1);
             place.setTotalRating(totalRatings);
+            //update averageRating
             Place.AverageRating averageRating = place.getAverageRating();
             averageRating.setOverall(place.getRatingCount()==0?0:Math.max(0,totalRatings.getOverall()/place.getRatingCount()));
             averageRating.setRating1(place.getRatingCount()==0?0:totalRatings.getRating1()/place.getRatingCount());
