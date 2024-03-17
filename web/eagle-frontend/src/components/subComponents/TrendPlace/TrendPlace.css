@@ -1,34 +1,31 @@
-.TrendPlacesContainer { /* Assuming this is the class of your container */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 6vw; /* This gap will scale with the viewport width */
-}
-
 .TrendPlace {
-  width: 20vw; /* Adjust width based on viewport width */
-  height: 26.67vw; /* Adjust height to maintain aspect ratio, e.g., 4:3 */
-  max-width: 300px; /* Maximum width */
-  max-height: 400px; /* Maximum height */
-  min-width: 200px; /* Minimum width */
-  min-height: 267px; /* Minimum height to maintain aspect ratio */
+  flex: 1 0 20vw; /* Starts with a basis of 20vw, but can grow */
+  height: auto; /* Height is automatic */
+  aspect-ratio: 2 / 3; /* Maintain an aspect ratio of 2:3 */
   position: relative;
   background-color: whitesmoke;
   transition: all .1s linear;
+  margin: 1vw; /* Scalable margin for spacing based on viewport width */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10px; /* Added border-radius for consistent styling */
-  border: 1px solid transparent; /* Default border color */
+  border-radius: 10px;
+  border: 1px solid transparent;
 }
 
 .TrendPlace:hover {
-  border-color: rgba(0,0,0,.4);
-  box-shadow: 0 0 10px 0 rgba(0,0,0,.15);
+  border-color: rgba(0,0,0,0.4);
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.15);
+}
+
+.TrendPlace .RateBar, .TrendPlace .Name {
+  width: 100%;
+  position: absolute;
 }
 
 .TrendPlace .RateBar {
-  width: 40%;
+  top: 0;
   height: 20%;
   background-color: green;
   border-top-left-radius: 8px;
@@ -36,11 +33,13 @@
 
 .TrendPlace .Name {
   bottom: 5%;
-  background-color: darkgray;
+  height: 20%;
+  background-color: rgba(169, 169, 169, 0.383);
+  transform: translateY(0); /* Adjusted for alignment */
 }
 
 .TrendPlace .Name h2 {
-  font-size: 1.5vw; /* Scalable font size */
+  font-size: 1.5vw; /* Scalable font size based on viewport width */
   color: white;
 }
 

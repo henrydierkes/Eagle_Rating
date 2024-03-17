@@ -1,6 +1,6 @@
 .TrendPlaces {
   position: relative;
-  overflow-x: hidden;
+  overflow-x: visible;
   width: 100%;
   transition: 0.2s;
   margin-left: auto;
@@ -25,7 +25,7 @@
 
 .TrendPlaces .buttons button {
   width: 5vw; /* Example: width scales with 5% of the viewport width */
-  height: 40vh; /* Example: height scales with 10% of the viewport height */
+  height: 32vh; /* Example: height scales with 10% of the viewport height */
   min-width: 50px; /* Minimum width to ensure button remains usable on smaller screens */
   border-radius: 0%;
   border: 1px solid #555;
