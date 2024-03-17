@@ -12,19 +12,31 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
+import {useState} from "react";
 
 
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    try {
+      const response = await axios.post('http://localhost:8080/auth/sign-in', {
+        email,
+        password,
+      });
+      console.log('Login successful:', response.data);
+      // Handle successful login, e.g., redirect to dashboard
+    } catch (error) {
+      console.error('Login failed:', error.response.data);
+      setError(error.response.data.message);
+    }
   };
 
   return (
@@ -52,6 +64,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -62,7 +76,14 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
+            {error && (
+                <Typography variant="body2" color="error">
+                  {error}
+                </Typography>
+            )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
