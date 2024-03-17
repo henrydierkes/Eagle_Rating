@@ -117,7 +117,7 @@ public class PlaceServiceImpl implements IPlaceService {
         existingPlace.setRatingAspect(placeDetails.getRatingAspect());
         existingPlace.setDeletedDate(placeDetails.getDeletedDate());
         existingPlace.setDeleted(placeDetails.isDeleted());
-
+        existingPlace.setAverageRating(placeDetails.getAverageRating());
         // Save the updated place using the repository
         Place updatedPlace = placeRepository.save(existingPlace);
         return updatedPlace;
@@ -131,6 +131,7 @@ public class PlaceServiceImpl implements IPlaceService {
         Double rating1 = rating.getOverallRating().getRating1();
         Double rating2 = rating.getOverallRating().getRating2();
         Double rating3 = rating.getOverallRating().getRating3();
+        Double overall=(rating1+rating2+rating3)/3.0;
         Optional<Place> optionalPlace = this.findById(id);
         if (optionalPlace.isPresent()) {
             Place place = optionalPlace.get();
@@ -139,14 +140,36 @@ public class PlaceServiceImpl implements IPlaceService {
                 // Place is already deleted
                 return false;
             }
-
+            //update totalRating
             Place.TotalRating totalRatings = place.getTotalRating();
-            totalRatings.setOverall(totalRatings.getOverall() - rating1 - rating2 - rating3);
+            totalRatings.setOverall(Math.max(totalRatings.getOverall() - overall,0));
             totalRatings.setRating1(totalRatings.getRating1() - rating1);
             totalRatings.setRating2(totalRatings.getRating2() - rating2);
             totalRatings.setRating3(totalRatings.getRating3() - rating3);
             place.setRatingCount(place.getRatingCount()-1);
             place.setTotalRating(totalRatings);
+            //update averageRating
+            Place.AverageRating averageRating = place.getAverageRating();
+            averageRating.setOverall(place.getRatingCount()==0?0:Math.max(0,totalRatings.getOverall()/place.getRatingCount()));
+            averageRating.setRating1(place.getRatingCount()==0?0:totalRatings.getRating1()/place.getRatingCount());
+            averageRating.setRating2(place.getRatingCount()==0?0:totalRatings.getRating2()/place.getRatingCount());
+            averageRating.setRating3(place.getRatingCount()==0?0:totalRatings.getRating3()/place.getRatingCount());
+            place.setAverageRating(averageRating);
+
+            String ratingIdString = rating.getRatingId() != null ? rating.getRatingId().toString() : null;
+            if (ratingIdString == null) {
+                return false; // Rating ID is null, cannot proceed with deletion
+            }
+            List<String> ratings = new ArrayList<>();
+            if (place.getRatingIds() != null) {
+               ratings=place.getRatingIds();
+            }
+            if (!ratings.contains(rating.getRatingId().toString())) {
+                // Rating not found in user's ratings array
+                return false;
+            }
+            ratings.remove(rating.getRatingId().toString());
+            place.setRatingIds(ratings);
 
             // Save the updated place object back to the database
             this.updatePlace(id, place);
@@ -353,12 +376,13 @@ public class PlaceServiceImpl implements IPlaceService {
 
             averageRating.setRating1(totalRatings.getRating1() / (double) ratingCount);
             averageRating.setRating2(totalRatings.getRating2() / (double) ratingCount);
-            averageRating.setRating3(totalRatings.getRating1() / (double) ratingCount); // <-- Should this be rating3?
+            averageRating.setRating3(totalRatings.getRating3() / (double) ratingCount);
             averageRating.setOverall(totalRatings.getOverall() / (double) ratingCount);
             place.setAverageRating(averageRating);
             this.placeRepository.save(place);
         } else {
             // Handle the case where overallRating is null
+            throw new IllegalArgumentException("Overall rating cannot be null or NaN");
         }
     }
     /**

@@ -87,6 +87,7 @@ public class UserServiceImpl implements IUserService {
         return mongoTemplate.findAll(User.class);
 
     }
+
     @Override
     public User validateUser(String userId) {
         ObjectId userIdObj = new ObjectId(userId);
@@ -128,6 +129,11 @@ public class UserServiceImpl implements IUserService {
         User user = findUserById(userId);
         if (user != null && !user.isDeleted()) {
             // Update the user's ratings array
+
+            String ratingIdString = rating.getRatingId() != null ? rating.getRatingId().toString() : null;
+            if (ratingIdString == null) {
+                return false; // Rating ID is null, cannot proceed with deletion
+            }
             List<String> ratings = new ArrayList<>();
             if (user.getRatings() != null) {
                 ratings.addAll(Arrays.asList(user.getRatings()));
