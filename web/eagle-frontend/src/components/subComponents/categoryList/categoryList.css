@@ -1,0 +1,59 @@
+.CategoryList{
+  position: relative; /* Ensure absolute positioning works as expected */
+  overflow-x: visible; /* Overflow visible for buttons to appear outside the content area if needed */
+  width: 100%;
+  transition: 0.2s;
+  margin-left: auto; /* Centering the container */
+  margin-right: auto; /* Centering the container */
+}
+.CategoryList .slider-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; 
+}
+.CategoryList .buttons {
+  position: absolute;
+  top: 50%; /* Position buttons vertically centered */
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* Align buttons at the ends */
+  z-index: 22222;
+}
+.CategoryList .buttons button {
+  width: 5vw; /* Scale width with viewport */
+  height: 12.5vw; /* Scale height with viewport, maintaining aspect ratio */
+  min-width: 60px; /* Minimum width to ensure usability */
+  min-height: 90px; /* Minimum height to ensure usability */
+  border-radius: 0%;
+  border: 1px solid #55555578;
+  background: rgba(255, 255, 255, 0.25);
+  transition: 0.2s;
+  position: relative;
+}
+.CategoryList .buttons .prev, .CategoryList .buttons .next {
+  top: 50%;
+}
+.CategoryList .buttons .prev {
+  left: 0; /* Align to the far left */
+}
+.CategoryList .buttons .next {
+  right: 0; /* Align to the far right */
+}
+.CategoryList .buttons button:hover{
+  background-color: #e7e7e622; /* Button background hover effect */
+}
+.CategoryItem{
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+/* Example media query for smaller screens */
+@media (max-width: 600px) {
+  .CategoryList .buttons button {
+    width: 10vw; /* Larger percentage for smaller screens */
+    height: 15vw;
+    min-width: 50px; /* Adjusted minimum sizes */
+  }
+}
