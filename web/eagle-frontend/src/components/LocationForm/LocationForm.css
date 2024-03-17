@@ -1,0 +1,56 @@
+.location-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.location-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.location-form label {
+  margin-bottom: 20px;
+}
+
+.location-form input,
+.location-form textarea {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+.location-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.location-form button:hover {
+  background-color: #0056b3;
+}
+
+.location-form .toggle-comment-form-button {
+  padding: 10px 20px;
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.location-form .toggle-comment-form-button:hover {
+  background-color: #5a6268;
+}
+
+.place-name {
+  margin-bottom: 10px;
+}

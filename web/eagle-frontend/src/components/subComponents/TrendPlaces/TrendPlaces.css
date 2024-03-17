@@ -1,0 +1,59 @@
+.TrendPlaces {
+  position: relative;
+  overflow-x: visible;
+  width: 100%;
+  transition: 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.TrendPlaces .slider-container {
+  display: flex;
+  justify-content: center;
+}
+
+.TrendPlaces .buttons {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 22222;
+}
+
+.TrendPlaces .buttons button {
+  width: 5vw; /* Example: width scales with 5% of the viewport width */
+  height: 32vh; /* Example: height scales with 10% of the viewport height */
+  min-width: 50px; /* Minimum width to ensure button remains usable on smaller screens */
+  border-radius: 0%;
+  border: 1px solid #555;
+  background: rgba(255, 255, 255, 0.25);
+  transition: 0.2s;
+  position: relative;
+}
+
+
+.TrendPlaces .buttons .prev, .TrendPlaces .buttons .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.TrendPlaces .buttons .prev {
+  left: 0;
+}
+
+.TrendPlaces .buttons .next {
+  right: 0;
+}
+
+.TrendPlaces .buttons button:hover {
+  background-color: #c9c9c51a;;
+}
+
+.TrendPlace {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}

@@ -1,0 +1,14 @@
+.Category {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10vh;
+/*  need to standardize*/
+}
+.Category .title {
+  margin-left: 20px;
+}
+.Category .title h1 {
+  color: rgb(0, 0, 0);
+  font-size: 40px;
+}

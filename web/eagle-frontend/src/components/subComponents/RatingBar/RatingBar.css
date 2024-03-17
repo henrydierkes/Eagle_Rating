@@ -1,0 +1,34 @@
+.detail-rating {
+    margin-left: 540px;
+    margin-top: -130px;
+    margin-right: 100px;
+}
+
+.rating-bar {
+    font-family: Arial, sans-serif;
+}
+
+.rating-container {
+    margin-bottom: 10px;
+}
+
+.rating-label {
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.rating-bar-background {
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.rating-fill {
+    height: 100%;
+    background-color: #000;
+    border-radius: 10px 0 0 10px;
+    transition: width 0.3s ease-in-out;
+}

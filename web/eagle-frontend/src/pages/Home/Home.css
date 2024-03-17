@@ -1,4 +1,16 @@
+body {
+  font-family: 'Helvetica';
+  background-color: #FFFFFF; /* Sets the background color to white */
+}
+
 .Home {
   display: flex;
   flex-direction: column;
+  justify-content: center; /* Center the content vertically */
+  align-items: center; /* Center the content horizontally */
+  width: 100%; /* Ensures the .Home container takes up the full viewport width */
+  min-height: 100vh; /* Ensures the .Home container takes up at least the full viewport height */
+}
+@media screen { 
+  
 }

@@ -1,0 +1,12 @@
+.resultsandfilter {
+  display: flex;
+  justify-content: space-between;
+  width: 90%
+}
+
+.resultseparator {
+  width: 1px;
+  background-color: #ccc; /* Grey color for the line */
+  margin: 0 30px;
+  height: 500px;
+}
