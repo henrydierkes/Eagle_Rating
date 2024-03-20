@@ -16,6 +16,9 @@ const getRatingColor = (rating) => {
       return '#F44336'; // red
   }
 };
+const goToPage = () => {
+
+};
 
 const PlaceDetails = ({ results }) => {
   const result=results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
@@ -37,7 +40,7 @@ const PlaceDetails = ({ results }) => {
       </div>
       <p className="rating-amount">{result.num_rate + " ratings"}</p>
       <div className='locationAndRatings'>
-        <h3 className='location'>📍{result.location}</h3>
+        <a className='location' href={result.url} rel="noopener noreferrer" target="_blank">📍{result.location}</a>
         <div className='ratings'>
           {/*<h3 className='size'>Size: {result.size}</h3>*/}
           {/*<h3 className='clean'>Clean: {result.clean}</h3>*/}
