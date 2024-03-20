@@ -75,8 +75,8 @@ public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
      * @param tags The list of tags each place must contain.
      * @return A list of places containing all specified tags.
      */
-    @Query("{ 'tags': { $all: ?0 } }")
-    List<Place> findByTagsContainingAll(List<String> tags);
+    @Query("{ 'tags': { $all: ?0, $elemMatch: { $gt: 0 } } }")
+    List<Place> findByTags(List<String> tags);
 
     /**
      * Finds places by location name, category, and containing all specified tags, with all parameters supporting regex for flexible matching.
@@ -85,6 +85,6 @@ public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
      * @param tags The list of tags each place must contain.
      * @return A list of places matching the location name, category, and tags criteria.
      */
-    @Query("{ 'locName': {$regex: ?0, $options: 'i'}, 'category': {$regex: ?1, $options: 'i'}, 'tags': {$all: ?2} }")
-    List<Place> findByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags);
+    @Query("{ 'locName': { $regex: ?0, $options: 'i' }, 'category': { $regex: ?1, $options: 'i' }, 'tags': { $all: ?2 } })")
+    List<Place> findByLocNameAndCategoryAndTags(String locName, String category, List<String> tags);
 }

@@ -22,7 +22,7 @@ public interface IPlaceService {
     Place validatePlace(String placeId);
     List<Place> searchPlacesByName(String name);
     List<Place> searchPlacesByNameAndCategory(String name, String category);
-    List<Place> searchByTags(List<String> tags);
+    List<Place> searchByTagsAndCategory(List<String> tags, String category);
 
     List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags);
     void sortRatingsDescending(List<Place> places);

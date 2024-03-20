@@ -1,11 +1,11 @@
 package com.astar.ratingbackend.Config;
-import org.springframework.context.annotation.Configuration;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.context.annotation.Bean;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -17,12 +17,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // Note: Disabling CSRF is not recommended for production
+                .csrf().disable() // Disabling CSRF for simplicity. Note: Consider the security implications.
                 .authorizeRequests()
-                .antMatchers("/auth/sign-up", "/auth/sign-in").permitAll() // Permit all access to sign-up and sign-in
-                .anyRequest().authenticated() // All other requests require authentication
+                .anyRequest().permitAll() // Permit all requests without authentication.
                 .and()
-                .httpBasic(); // Basic HTTP auth for simplicity here
+                .httpBasic().disable() // Disable basic authentication.
+                .formLogin().disable(); // Disable form login.
     }
 
 }

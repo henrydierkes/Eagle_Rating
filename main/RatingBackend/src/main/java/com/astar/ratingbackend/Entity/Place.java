@@ -53,7 +53,7 @@ public class Place implements Serializable {
     private String campus;
 
     @Field("tags")
-    private List<String> tags;
+    private Map<String, Integer> tags;
 
     @Field("ratingCount")
     private Integer ratingCount;

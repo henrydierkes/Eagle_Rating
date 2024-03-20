@@ -7,6 +7,8 @@ import com.astar.ratingbackend.Service.IPlaceService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +49,7 @@ public class PlaceServiceImpl implements IPlaceService {
             place.setFloor(null);
         }
         if(place.getTags()==null){
-            place.setTags(new ArrayList<String>());
+            place.setTags(new HashMap<String, Integer>());
         }
         if(place.getImages()==null){
             place.setImages(new ArrayList<Place.Image>());
@@ -276,17 +278,34 @@ public class PlaceServiceImpl implements IPlaceService {
     /**
      * Adds a list of tags to a place. If the place already contains tags, the new tags are appended to the existing list.
      * @param place The Place entity to which the tags are added.
-     * @param tags The list of tags to add to the place.
+     * @param ratingTags The list of tags to add to the place.
      */
-    private void addTags(Place place, List<String> tags) {
-        List<String> existingTags = place.getTags();
-        existingTags.addAll(tags);
+     private void addTags(Place place, Map<String, Boolean> ratingTags) {
+        Map<String, Integer> existingTags = place.getTags();
+
+        // Iterate over the tags from the rating
+        for (Map.Entry<String, Boolean> entry : ratingTags.entrySet()) {
+            String tag = entry.getKey();
+            boolean present = entry.getValue();
+            // Check if the tag already exists in the place tags
+            if (existingTags.containsKey(tag)) {
+                // Increment the count if the tag is present in the rating
+                if (present) {
+                    existingTags.put(tag, existingTags.get(tag) + 1);
+                }
+            } else {
+                // Add the tag with count 1 if it doesn't exist
+                if (present) {
+                    existingTags.put(tag, 1);
+                }
+            }
+        }
         place.setTags(existingTags);
     }
     private void addRatingIds(Place place, String ratingId) {
         List<String> existingIds = place.getRatingIds();
         existingIds.add(ratingId);
-        place.setTags(existingIds);
+        place.setRatingIds(existingIds);
     }
     /**
      * Calculates and returns the average ratings for a place by dividing the total ratings by the number of ratings.
@@ -390,19 +409,67 @@ public class PlaceServiceImpl implements IPlaceService {
      * @param tags The list of tags to search for.
      * @return A list of places containing all the specified tags.
      */
-    public List<Place> searchByTags(List<String> tags) {
-        return placeRepository.findByTagsContainingAll(tags);
-    }
+    public List<Place> searchByTagsAndCategory(List<String> tags, String category) {
+        Query query = new Query();
 
+        // Create a map to keep track of added tags
+        Map<String, Boolean> addedTags = new HashMap<>();
+
+        // Add criteria for each tag in the list
+        for (String tag : tags) {
+            // Check if the tag has already been added
+            if (!addedTags.containsKey(tag)) {
+                Criteria criteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                query.addCriteria(criteria);
+                addedTags.put(tag, true); // Mark the tag as added
+            }
+        }
+
+        // Add category criteria if provided
+        if (category != null) {
+            query.addCriteria(Criteria.where("category").is(category));
+        }
+
+        // Execute the query
+        return mongoTemplate.find(query, Place.class);
+    }
     /**
      * Searches for places by location name, category, and containing all specified tags, using case-insensitive matching.
      * @param locName The location name to search for.
      * @param category The category of places to search for.
-     * @param tags The list of tags each place must contain.
+     * @param tags The map of tags each place must contain with their counts.
      * @return A list of places matching all specified criteria.
      */
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
-        return placeRepository.findByLocNameAndCategoryAndTagsAll(locName, category, tags);
+
+        Query query = new Query();
+
+        if (locName != null) {
+            Criteria locNameCriteria = Criteria.where("locName").regex(locName, "i"); // Case-insensitive regex match for locName
+            query.addCriteria(locNameCriteria);
+        }
+
+        if (category != null) {
+            Criteria categoryCriteria = Criteria.where("category").regex(category, "i"); // Case-insensitive regex match for category
+            query.addCriteria(categoryCriteria);
+        }
+        if (tags != null) {
+            // Create a map to keep track of added tags
+            Map<String, Boolean> addedTags = new HashMap<>();
+
+            // Add criteria for each tag in the list
+            for (String tag : tags) {
+                // Check if the tag has already been added
+                if (!addedTags.containsKey(tag)) {
+                    Criteria tagCriteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                    query.addCriteria(tagCriteria);
+                    addedTags.put(tag, true); // Mark the tag as added
+                }
+            }
+        }
+
+        // Execute the query
+        return mongoTemplate.find(query, Place.class);
     }
 
     public void sortRatingsDescending(List<Place> places) {
