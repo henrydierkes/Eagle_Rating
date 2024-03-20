@@ -10,6 +10,7 @@
 .TrendPlaces .slider-container {
   display: flex;
   justify-content: center;
+  
 }
 
 .TrendPlaces .buttons {
@@ -20,7 +21,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  z-index: 22222;
+  z-index: 100;
 }
 
 .TrendPlaces .buttons button {
