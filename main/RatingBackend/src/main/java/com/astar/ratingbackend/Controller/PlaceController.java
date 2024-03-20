@@ -87,7 +87,7 @@ public class PlaceController {
     @GetMapping("/search")
     public ResponseEntity<List<Place>> searchByLocNameAndCategoryAndTagsAll(
             @RequestParam(required = false) String locName,
-            @RequestParam(required = false) String category,
+            @RequestParam(required = true) String category,
             @RequestParam(required = false) List<String> tags,
             @RequestParam(required = false) Boolean desc
     ) {
@@ -104,26 +104,26 @@ public class PlaceController {
      * @param category The category of the places to search for.
      * @return A list of places that match the name and category.
      */
-    @GetMapping("/search/category")
-    public ResponseEntity<List<Place>> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category,@RequestParam(required = false) Boolean desc) {
-        List<Place> places= placeService.searchPlacesByNameAndCategory(name, category);
-        if(desc!=null&&desc){
-            placeService.sortRatingsDescending(places);
-        }
-        return ResponseEntity.ok(places);
-    }
+//    @GetMapping("/search/category")
+//    public ResponseEntity<List<Place>> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category,@RequestParam(required = false) Boolean desc) {
+//        List<Place> places= placeService.searchPlacesByNameAndCategory(name, category);
+//        if(desc!=null&&desc){
+//            placeService.sortRatingsDescending(places);
+//        }
+//        return ResponseEntity.ok(places);
+//    }
 
-    /**
-     * Searches for places by tags.
-     * @param tags The list of tags to filter the places.
-     * @return A response entity containing a list of places that match the tags.
-     */
-    @GetMapping("/search/tags")
-    public ResponseEntity<List<Place>> searchByTags(@RequestParam List<String> tags,@RequestParam(required = false) Boolean desc) {
-        List<Place> places = placeService.searchByTags(tags);
-        if(desc!=null&&desc){
-            placeService.sortRatingsDescending(places);
-        }
-        return ResponseEntity.ok(places);
-    }
+//    /**
+//     * Searches for places by tags.
+//     * @param tags The list of tags to filter the places.
+//     * @return A response entity containing a list of places that match the tags.
+//     */
+//    @GetMapping("/search/tags")
+//    public ResponseEntity<List<Place>> searchByTags(@RequestParam List<String> tags,@RequestParam(required = false) Boolean desc) {
+//        List<Place> places = placeService.searchByTags(tags);
+//        if(desc!=null&&desc){
+//            placeService.sortRatingsDescending(places);
+//        }
+//        return ResponseEntity.ok(places);
+//    }
 }

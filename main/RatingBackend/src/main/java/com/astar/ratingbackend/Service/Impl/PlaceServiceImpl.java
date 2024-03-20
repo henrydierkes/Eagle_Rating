@@ -409,7 +409,7 @@ public class PlaceServiceImpl implements IPlaceService {
      * @param tags The list of tags to search for.
      * @return A list of places containing all the specified tags.
      */
-    public List<Place> searchByTags(List<String> tags) {
+    public List<Place> searchByTagsAndCategory(List<String> tags, String category) {
         Query query = new Query();
 
         // Create a map to keep track of added tags
@@ -425,10 +425,14 @@ public class PlaceServiceImpl implements IPlaceService {
             }
         }
 
+        // Add category criteria if provided
+        if (category != null) {
+            query.addCriteria(Criteria.where("category").is(category));
+        }
+
         // Execute the query
         return mongoTemplate.find(query, Place.class);
     }
-
     /**
      * Searches for places by location name, category, and containing all specified tags, using case-insensitive matching.
      * @param locName The location name to search for.
@@ -437,25 +441,30 @@ public class PlaceServiceImpl implements IPlaceService {
      * @return A list of places matching all specified criteria.
      */
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
+
         Query query = new Query();
 
-        // Add criteria for location name and category
-        Criteria locNameCriteria = Criteria.where("locName").regex(locName, "i"); // Case-insensitive regex match for locName
-        query.addCriteria(locNameCriteria);
+        if (locName != null) {
+            Criteria locNameCriteria = Criteria.where("locName").regex(locName, "i"); // Case-insensitive regex match for locName
+            query.addCriteria(locNameCriteria);
+        }
 
-        Criteria categoryCriteria = Criteria.where("category").regex(category, "i"); // Case-insensitive regex match for category
-        query.addCriteria(categoryCriteria);
+        if (category != null) {
+            Criteria categoryCriteria = Criteria.where("category").regex(category, "i"); // Case-insensitive regex match for category
+            query.addCriteria(categoryCriteria);
+        }
+        if (tags != null) {
+            // Create a map to keep track of added tags
+            Map<String, Boolean> addedTags = new HashMap<>();
 
-        // Create a map to keep track of added tags
-        Map<String, Boolean> addedTags = new HashMap<>();
-
-        // Add criteria for each tag in the list
-        for (String tag : tags) {
-            // Check if the tag has already been added
-            if (!addedTags.containsKey(tag)) {
-                Criteria tagCriteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
-                query.addCriteria(tagCriteria);
-                addedTags.put(tag, true); // Mark the tag as added
+            // Add criteria for each tag in the list
+            for (String tag : tags) {
+                // Check if the tag has already been added
+                if (!addedTags.containsKey(tag)) {
+                    Criteria tagCriteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                    query.addCriteria(tagCriteria);
+                    addedTags.put(tag, true); // Mark the tag as added
+                }
             }
         }
 
