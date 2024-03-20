@@ -7,6 +7,8 @@ import com.astar.ratingbackend.Service.IPlaceService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -408,7 +410,23 @@ public class PlaceServiceImpl implements IPlaceService {
      * @return A list of places containing all the specified tags.
      */
     public List<Place> searchByTags(List<String> tags) {
-        return placeRepository.findByTags(tags);
+        Query query = new Query();
+
+        // Create a map to keep track of added tags
+        Map<String, Boolean> addedTags = new HashMap<>();
+
+        // Add criteria for each tag in the list
+        for (String tag : tags) {
+            // Check if the tag has already been added
+            if (!addedTags.containsKey(tag)) {
+                Criteria criteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                query.addCriteria(criteria);
+                addedTags.put(tag, true); // Mark the tag as added
+            }
+        }
+
+        // Execute the query
+        return mongoTemplate.find(query, Place.class);
     }
 
     /**
@@ -419,7 +437,30 @@ public class PlaceServiceImpl implements IPlaceService {
      * @return A list of places matching all specified criteria.
      */
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
-        return placeRepository.findByLocNameAndCategoryAndTags(locName, category, tags);
+        Query query = new Query();
+
+        // Add criteria for location name and category
+        Criteria locNameCriteria = Criteria.where("locName").regex(locName, "i"); // Case-insensitive regex match for locName
+        query.addCriteria(locNameCriteria);
+
+        Criteria categoryCriteria = Criteria.where("category").regex(category, "i"); // Case-insensitive regex match for category
+        query.addCriteria(categoryCriteria);
+
+        // Create a map to keep track of added tags
+        Map<String, Boolean> addedTags = new HashMap<>();
+
+        // Add criteria for each tag in the list
+        for (String tag : tags) {
+            // Check if the tag has already been added
+            if (!addedTags.containsKey(tag)) {
+                Criteria tagCriteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                query.addCriteria(tagCriteria);
+                addedTags.put(tag, true); // Mark the tag as added
+            }
+        }
+
+        // Execute the query
+        return mongoTemplate.find(query, Place.class);
     }
 
     public void sortRatingsDescending(List<Place> places) {
