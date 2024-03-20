@@ -2,8 +2,9 @@ import React from "react";
 import "./Category.css";
 import CategoryList from "../subComponents/categoryList/categoryList";
 
+
 function Category() {
-  // Define your categories as an array of strings
+
   const things = [
     {  category: "Study Spaces", url: "images/studys.webp" },
     {  category: "Parking Lot", url: "images/parking.jpg"},

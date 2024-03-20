@@ -1,3 +1,4 @@
+
 .CategoryList{
   position: relative; /* Ensure absolute positioning works as expected */
   overflow-x: visible; /* Overflow visible for buttons to appear outside the content area if needed */
@@ -9,8 +10,6 @@
 .CategoryList .slider-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px; 
 }
 .CategoryList .buttons {
   position: absolute;

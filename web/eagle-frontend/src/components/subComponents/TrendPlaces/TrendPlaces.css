@@ -57,3 +57,10 @@
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+@media (max-width: 600px) {
+  .TrendPlaces.buttons button {
+    width: 10vw; /* Larger percentage for smaller screens */
+    height: 15vw;
+    min-width: 50px; /* Adjusted minimum sizes */
+  }
+}
