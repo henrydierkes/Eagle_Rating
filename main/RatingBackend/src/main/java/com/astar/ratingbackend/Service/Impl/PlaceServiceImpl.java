@@ -47,7 +47,7 @@ public class PlaceServiceImpl implements IPlaceService {
             place.setFloor(null);
         }
         if(place.getTags()==null){
-            place.setTags(new ArrayList<String>());
+            place.setTags(new HashMap<String, Integer>());
         }
         if(place.getImages()==null){
             place.setImages(new ArrayList<Place.Image>());
@@ -276,17 +276,34 @@ public class PlaceServiceImpl implements IPlaceService {
     /**
      * Adds a list of tags to a place. If the place already contains tags, the new tags are appended to the existing list.
      * @param place The Place entity to which the tags are added.
-     * @param tags The list of tags to add to the place.
+     * @param ratingTags The list of tags to add to the place.
      */
-    private void addTags(Place place, List<String> tags) {
-        List<String> existingTags = place.getTags();
-        existingTags.addAll(tags);
+     private void addTags(Place place, Map<String, Boolean> ratingTags) {
+        Map<String, Integer> existingTags = place.getTags();
+
+        // Iterate over the tags from the rating
+        for (Map.Entry<String, Boolean> entry : ratingTags.entrySet()) {
+            String tag = entry.getKey();
+            boolean present = entry.getValue();
+            // Check if the tag already exists in the place tags
+            if (existingTags.containsKey(tag)) {
+                // Increment the count if the tag is present in the rating
+                if (present) {
+                    existingTags.put(tag, existingTags.get(tag) + 1);
+                }
+            } else {
+                // Add the tag with count 1 if it doesn't exist
+                if (present) {
+                    existingTags.put(tag, 1);
+                }
+            }
+        }
         place.setTags(existingTags);
     }
     private void addRatingIds(Place place, String ratingId) {
         List<String> existingIds = place.getRatingIds();
         existingIds.add(ratingId);
-        place.setTags(existingIds);
+        place.setRatingIds(existingIds);
     }
     /**
      * Calculates and returns the average ratings for a place by dividing the total ratings by the number of ratings.
@@ -391,18 +408,18 @@ public class PlaceServiceImpl implements IPlaceService {
      * @return A list of places containing all the specified tags.
      */
     public List<Place> searchByTags(List<String> tags) {
-        return placeRepository.findByTagsContainingAll(tags);
+        return placeRepository.findByTags(tags);
     }
 
     /**
      * Searches for places by location name, category, and containing all specified tags, using case-insensitive matching.
      * @param locName The location name to search for.
      * @param category The category of places to search for.
-     * @param tags The list of tags each place must contain.
+     * @param tags The map of tags each place must contain with their counts.
      * @return A list of places matching all specified criteria.
      */
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
-        return placeRepository.findByLocNameAndCategoryAndTagsAll(locName, category, tags);
+        return placeRepository.findByLocNameAndCategoryAndTags(locName, category, tags);
     }
 
     public void sortRatingsDescending(List<Place> places) {

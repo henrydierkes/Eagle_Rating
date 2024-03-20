@@ -125,7 +125,7 @@ public class RatingServiceImpl implements IRatingService {
 
         }
         if (rating.getTags() == null) {
-            rating.setTags(Collections.emptyList()); // Empty list as default value
+            rating.setTags(new HashMap<>());  // Empty list as default value
         }
         if (rating.getComment() == null) {
             rating.setComment(""); // Empty string as default value

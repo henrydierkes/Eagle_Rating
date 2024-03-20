@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class Util {
@@ -40,7 +38,7 @@ public class Util {
         }
 
         double overallRating = 0, rating1 = 0, rating2 = 0, rating3 = 0;
-        List<String> tags = new ArrayList<>();
+        Map<String, Integer> tags = new HashMap<String, Integer>();
 
         // Calculate overall and specific ratings
         for (Rating rating : ratingList) {
@@ -48,7 +46,15 @@ public class Util {
             rating1 += overallRatingObj.getRating1();
             rating2 += overallRatingObj.getRating2();
             rating3 += overallRatingObj.getRating3();
-            tags.addAll(rating.getTags());
+            // Iterate over tags and update counts if true
+            Map<String, Boolean> ratingTags = rating.getTags();
+            for (Map.Entry<String, Boolean> entry : ratingTags.entrySet()) {
+                String tag = entry.getKey();
+                boolean tagValue = entry.getValue();
+                if (tagValue) {
+                    tags.put(tag, tags.getOrDefault(tag, 0) + 1);
+                }
+            }
         }
         overallRating = rating1 + rating2 + rating3;
 
