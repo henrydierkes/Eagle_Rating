@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ResultList from "../subComponents/ResultList/ResultList"
 import Filter from "../subComponents/Filter/Filter";
 import './ResultsAndFilter.css';
@@ -6,7 +6,9 @@ import FilterRating from "../subComponents/FilterRating/FilterRating.jsx";
 
 const ResultsAndFilter = ( {results} ) => {
   const [filteredResults, setFilteredResults] = useState(results);
-
+  useEffect(() => {
+    setFilteredResults(results);
+  }, [results]);
   const handleFilterChange = (filters) => {
     console.log('Filters applied:', filters);
   };
