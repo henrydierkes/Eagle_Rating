@@ -1,43 +1,116 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './FilterRating.css';
 
-const FilterRating = () => {
-    const [rating, setRating] = useState('');
+const RangeSlider = () => {
+    const [rangeValues, setRangeValues] = useState({
+        overall: 4.6,
+        size: 4.6,
+        quiet: 3.9,
+        clean: 3.0
+    });
 
-    useEffect(() => {
-        // You might want to fetch the ratings or perform some actions here
-    }, []);
+    const [subRatingsEnabled, setSubRatingsEnabled] = useState(true);
+    const [individualToggles, setIndividualToggles] = useState({
+        size: true,
+        quiet: true,
+        clean: true
+    });
 
-    // Function to render stars
-    const renderStars = (num) => {
-        return [...Array(num)].map((e, i) => (
-            <span key={i} className="star">&#9733;</span> // This is the Unicode for a star
-        ));
+    // Refs for the sliders to calculate positions
+    const sliderRefs = useRef({
+        overall: null,
+        size: null,
+        quiet: null,
+        clean: null
+    });
+
+    const handleMasterToggle = () => {
+        const newEnabledState = !subRatingsEnabled;
+        setSubRatingsEnabled(newEnabledState);
+        setIndividualToggles({
+            size: newEnabledState,
+            quiet: newEnabledState,
+            clean: newEnabledState
+        });
     };
 
+    const handleIndividualToggle = (name) => () => {
+        setIndividualToggles(prevToggles => ({
+            ...prevToggles,
+            [name]: !prevToggles[name]
+        }));
+    };
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setRangeValues(prevValues => ({
+            ...prevValues,
+            [name]: parseFloat(value).toFixed(1)
+        }));
+    };
+
+    useEffect(() => {
+        // Adjust the position of value indicators upon initial render and when values change
+        Object.keys(rangeValues).forEach(key => {
+            const slider = sliderRefs.current[key];
+            if (slider) {
+                const valueIndicator = slider.nextSibling;
+                const newValue = rangeValues[key];
+                const max = slider.max;
+                const min = slider.min;
+                const percentage = ((newValue - min) / (max - min)) * 100;
+                valueIndicator.style.left = `calc(${percentage}% + (${(20 - percentage * 0.4)}px))`; // Adjust based on slider thumb width
+            }
+        });
+    }, [rangeValues]);
+
     return (
-        <div id="filterRatingContainer" className="filter-rating-container">
-            <div className="yotpo-reviews-main-widget">
-                <div className="yotpo-main-widget-layout">
-                    <div className="yotpo-filters-container">
-                        <div className="yotpo-filters-container-inner">
-                            <div className="yotpo-filters-top-panel">
-                                <span>Filter by rating</span>
-                                <select value={rating} onChange={(e) => setRating(e.target.value)}>
-                                    <option value="">All Ratings</option>
-                                    <option value="5">{renderStars(5)}</option>
-                                    <option value="4">{renderStars(4)}</option>
-                                    <option value="3">{renderStars(3)}</option>
-                                    <option value="2">{renderStars(2)}</option>
-                                    <option value="1">{renderStars(1)}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+        <div className="filter-rating">
+            <h2>Filter by ratings</h2>
+            {Object.entries(rangeValues).map(([key, value]) => (
+                <div key={key} className={`range-slider ${key !== 'overall' && (!subRatingsEnabled || !individualToggles[key]) ? 'disabled' : ''}`}>
+                    <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+                    <span>0.0</span>
+                    <input
+                        ref={el => sliderRefs.current[key] = el}
+                        name={key}
+                        type="range"
+                        min="0"
+                        max="5.0"
+                        step="0.1"
+                        value={value}
+                        onChange={handleInputChange}
+                        className="range-slider__range"
+                        disabled={key !== 'overall' && (!subRatingsEnabled || !individualToggles[key])}
+                    />
+                    <span>5.0</span>
+                    <div className="range-slider__value">{value}</div>
+                    {key !== 'overall' && (
+                        <label className="switch">
+                            <input
+                                type="checkbox"
+                                checked={individualToggles[key]}
+                                onChange={handleIndividualToggle(key)}
+                                disabled={!subRatingsEnabled}
+                            />
+                            <span className="slider round"></span>
+                        </label>
+                    )}
                 </div>
+            ))}
+            <div className="master-toggle">
+                <label>Enable Subratings</label>
+                <label className="switch">
+                    <input
+                        type="checkbox"
+                        checked={subRatingsEnabled}
+                        onChange={handleMasterToggle}
+                    />
+                    <span className="slider round"></span>
+                </label>
             </div>
         </div>
     );
 };
 
-export default FilterRating;
+export default RangeSlider;

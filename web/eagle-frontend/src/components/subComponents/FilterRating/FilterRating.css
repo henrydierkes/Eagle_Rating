@@ -1,87 +1,143 @@
 /* FilterRating.css */
 
-.filter-rating-container {
-    font-family: 'Arial', sans-serif;
-    max-width: 300px; /* Adjust as needed */
-    margin: 20px auto;
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.filter-rating {
+    background: white;
     padding: 20px;
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    width: 90%;
+    max-width: 600px;
 }
 
-.yotpo-reviews-main-widget {
-    /* Add styles specific to your layout needs */
-}
-
-.yotpo-main-widget-layout {
-    /* Further layout styles if necessary */
-}
-
-.yotpo-filters-container {
-    margin-top: 20px;
-}
-
-.yotpo-filters-top-panel {
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.yotpo-filters-top-panel span {
-    font-size: 16px;
-    font-weight: bold;
+h2 {
     color: #333;
-    display: block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-.filter-rating-container select {
-    width: 100%;
-    padding: 8px 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #fafafa;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+.range-slider {
+    margin: 20px 0;
     position: relative;
 }
 
-.filter-rating-container select:focus {
-    border-color: #999;
+.range-slider label {
+    display: block;
+    color: #606770;
+    margin-bottom: 5px;
+}
+
+.range-slider__range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: #e9ecef;
     outline: none;
 }
 
-#filterRatingContainer .star {
-    color: #ffd700; /* Yellow color for stars */
-    font-size: 18px;
-    margin: 0 2px;
+.range-slider__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #006400; /* Dark green */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
 }
 
-
-/* Hide the select arrow for browsers that support it */
-.filter-rating-container select::-ms-expand {
-    display: none;
+.range-slider__range:active::-webkit-slider-thumb,
+.range-slider__range:focus::-webkit-slider-thumb {
+    background: #004d00; /* Darker shade for active state */
 }
 
-/* Custom arrow style */
-.filter-rating-container select {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23000" d="M7 10l5 5 5-5z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px top 50%;
-    background-size: 12px 12px;
+.range-slider__value {
+    position: absolute;
+    top: -50px; /* Move up to accommodate larger text */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #006400; /* Dark green */
+    color: #fff;
+    padding: 6px 16px; /* Increase padding for larger text */
+    border-radius: 4px;
+    font-size: 20px; /* Significantly larger font size */
+    white-space: nowrap;
+    box-shadow: 0 3px 6px rgba(0, 64, 0, 0.3); /* Shadow for depth */
+    z-index: 2; /* Ensure it's above other elements */
 }
 
-/* Responsive styles */
+.master-toggle, .subratings-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #006400; /* Dark green */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #006400; /* Dark green */
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.disabled .range-slider__range,
+.disabled label {
+    opacity: 0.5;
+}
+
 @media (max-width: 600px) {
-    .filter-rating-container {
-        width: 90%;
-        margin: 10px auto;
-    }
-
-    .filter-rating-container select {
-        padding: 6px 8px;
+    .filter-rating {
+        width: calc(100% - 40px);
     }
 }
