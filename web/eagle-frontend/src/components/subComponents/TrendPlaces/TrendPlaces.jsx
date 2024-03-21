@@ -14,7 +14,7 @@ const images = [
     {url: "images/candler.jpeg", name: 'Candler Library', rating: 4.3},
     {url: "images/campus_background.jpeg", name: 'Campus', rating: 4.5},
     {url: "images/convocation-hall.png", name: 'Convo Hall', rating: 4.8},
-    {url: "images/entrance.jpeg", name: 'Entrance', rating: 0.0},
+    {url: "images/entrance.jpeg", name: 'Entrance', rating: 4.3},
     {url: "images/sign.jpeg", name: 'Sign', rating: 4.5},
     {url: "images/building.jpeg", name: 'Some Building', rating: 5.0},
     {url: "images/quad.jpeg", name: 'Quad', rating: 4.2}
