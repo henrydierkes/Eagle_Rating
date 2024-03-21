@@ -1,5 +1,6 @@
 import React from "react";
 import "./categoryItem.css";
+import axios from "axios";
 
 function CategoryItem({ name, imageUrl }) {
 
@@ -12,6 +13,7 @@ function CategoryItem({ name, imageUrl }) {
   };
 
   const handleClick = () => {
+    console.log("clicked");
     axios.get("http://localhost:8080/api/place/search", {
       params: {
         category: name
