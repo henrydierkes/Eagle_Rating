@@ -17,7 +17,7 @@ const ResultsAndFilter = ( {results} ) => {
     <div className="resultsandfilter">
         <ResultList results={filteredResults} />
         <div className="resultseparator"></div>
-        <Filter onFilterChange={handleFilterChange} />
+        {/*<Filter onFilterChange={handleFilterChange} />*/}
         <FilterRating onFilterChange={handleFilterChange} />
     </div>
   );
