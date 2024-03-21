@@ -41,3 +41,7 @@
 .rating-button:hover {
     background-color: #555555; /* suspension color on background */
 }
+
+.top-tags-name {
+    text-align: left;
+}

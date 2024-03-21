@@ -13,7 +13,7 @@ const handleAddCommentClick = () => {
 
     return (
         <div className="top-ratings">
-            <h2>Top Tags:</h2>
+            <h2 className='top-tags-name'>Top Tags:</h2>
             <div className="tag-list">
                 {top_tags.map((tag, index) => (
                     <span key={index} className="tag">
