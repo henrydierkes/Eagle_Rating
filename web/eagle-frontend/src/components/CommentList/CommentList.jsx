@@ -63,28 +63,8 @@ const CommentList = ({ comments }) => {
             <p className="date">{comment.datePosted}</p>
           </div>
           <div className="comment-body">
+          </div>
             <div className="ratings">
-            <div className="specific-ratings">
-              <p>
-                Size: {comment.specificRatings.sizeRating}
-                <div className="rating-bar-background">
-                  <div className="rating-fill" style={{ width: getPercentage(comment.specificRatings.sizeRating) }}></div>
-                </div>
-              </p>
-              <p>
-                Cleanliness: {comment.specificRatings.cleanlinessRating}
-                <div className="rating-bar-background">
-                  <div className="rating-fill" style={{ width: getPercentage(comment.specificRatings.cleanlinessRating) }}></div>
-                </div>
-              </p>
-              <p>
-                Quietness: {comment.specificRatings.quietnessRating}
-                <div className="rating-bar-background">
-                  <div className="rating-fill" style={{ width: getPercentage(comment.specificRatings.quietnessRating) }}></div>
-                </div>
-              </p>
-            </div>
-            </div>
             <p className="comment-text">{comment.comment}</p>
           </div>
           <div className="comment-footer">

@@ -9,15 +9,15 @@ import 'slick-carousel/slick/slick';
 
 const images = [
     {url: "images/Woodruff_Library.jpeg", name: 'Woodruff Library', rating: 4.9},
-    {url: "images/cand.jpeg", name: 'Candler', rating: 2.3},
-    {url: "images/oxford.jpeg", name: 'Oxford Library', rating: 3.3},
+    {url: "images/cand.jpeg", name: 'Candler', rating: 4.6},
+    {url: "images/oxford.jpeg", name: 'Oxford Library', rating: 4.7},
     {url: "images/candler.jpeg", name: 'Candler Library', rating: 4.3},
-    {url: "images/campus_background.jpeg", name: 'Campus', rating: 1.2},
-    {url: "images/convocation-hall.png", name: 'Convo Hall', rating: 0.9},
+    {url: "images/campus_background.jpeg", name: 'Campus', rating: 4.5},
+    {url: "images/convocation-hall.png", name: 'Convo Hall', rating: 4.8},
     {url: "images/entrance.jpeg", name: 'Entrance', rating: 0.0},
-    {url: "images/sign.jpeg", name: 'Sign', rating: 3.3},
+    {url: "images/sign.jpeg", name: 'Sign', rating: 4.5},
     {url: "images/building.jpeg", name: 'Some Building', rating: 5.0},
-    {url: "images/quad.jpeg", name: 'Quad', rating: 1.2}
+    {url: "images/quad.jpeg", name: 'Quad', rating: 4.2}
 ];
 
 function TrendPlaces() {
