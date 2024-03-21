@@ -1,0 +1,40 @@
+#bg,
+#bg_mask {
+    /* ふちボケ対策 */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: calc(var(--blur) * -1);
+
+    background: url(https://images.unsplash.com/photo-1622664843830-e79e37074452?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTg5NTQzMTR8&ixlib=rb-4.0.3&q=85)
+    no-repeat center bottom/cover;
+    z-index: -100;
+}
+#bg {
+    filter: blur(var(--blur));
+}
+#bg_mask {
+    mask-image: linear-gradient(
+            transparent,
+            transparent calc(var(--y) - var(--focus-range) - var(--blur-range)),
+            black calc(var(--y) - var(--focus-range)),
+            black var(--y),
+            black calc(var(--y) + var(--focus-range)),
+            transparent calc(var(--y) + var(--focus-range) + var(--blur-range)),
+            transparent
+    );
+}
+.loginHolder{
+    background-color: white;
+    width: 40%;
+    height: 60%;
+    border-radius: 20px;
+}
+.Signin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure full height of the viewport */
+}
