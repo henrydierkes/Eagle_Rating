@@ -9,7 +9,7 @@ function Navigation() {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    const apiUrl = "http://localhost:8080/api/place"; // Adjust this as necessary
+    const apiUrl = "http://localhost:8080/api"; // Adjust this as necessary
 
     // Use Axios to fetch the places from your backend API
     Axios.get(`${apiUrl}/place/get`)

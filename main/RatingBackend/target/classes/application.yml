@@ -5,7 +5,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: "mongodb+srv://tuan:eaglerating@cluster0.7cjsxez.mongodb.net/EagleRating"
+      uri: "mongodb+srv://henry:eaglerating12345@cluster0.7cjsxez.mongodb.net/EagleRating"
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

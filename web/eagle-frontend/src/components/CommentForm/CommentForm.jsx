@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import './CommentForm.css';
+import axios from 'axios';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,9 +30,7 @@ const results = [
 const tags = [
   'Charging Ports',
   'Quiet Space',
-  'Water Fountain',
-  'Among us',
-  'Sussy imposter'
+  'Water Fountain'
 ];
 
 const CommentForm = () => {
@@ -41,7 +40,7 @@ const CommentForm = () => {
   const [quietness, setQuietness] = useState(0);
   const [tag, setTag] = React.useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
-
+  const [comment, setComment] = useState('');
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -57,19 +56,49 @@ const CommentForm = () => {
       reader.readAsDataURL(files[i]);
     }
   };
-  
+    const handleCheckboxChange = (event) => {
+        setTags({ ...tags, [event.target.name]: event.target.checked });
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log({
-      rating,
-      size,
-      cleanliness,
-      quietness,
-      images,
-    });
-  };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // Convert the selected tags array to an object with boolean values
+        const tagsObject = tags.reduce((obj, item) => {
+            obj[item] = tag.includes(item);
+            return obj;
+        }, {});
+
+        // Prepare the data object based on your database schema
+        const ratingData = {
+            userId: "65d574294bb7330ced78f1ba", // Replace with actual userId from authentication context
+            placeId: "65ea0d2312a27f0061751baa", // Replace with actual placeId relevant to the rating
+            comment: comment,
+            date: new Date(), // Set the current date/time for the rating
+            likes: 0, // Initialize likes and dislikes as zero
+            dislikes: 0,
+            overallRating: {
+                overall: rating,
+                rating1: cleanliness,
+                rating2: quietness,
+                rating3: size,
+            },
+            tags: tagsObject,
+            floor: 2, // Set the floor number if applicable, otherwise remove this line
+        };
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/rating/addRating', ratingData);
+
+            console.log(response.data);
+            alert('Rating successfully added!');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to submit rating.');
+        }
+    };
+
+
 
   const handleTagsChange = (event) => {
     const {
@@ -150,13 +179,15 @@ const CommentForm = () => {
     </div>
     </div>
         <div className='comment-rating'>
-          <TextField
-          id="filled-textarea"
-          label="Comment"
-          placeholder="Type comment here"
-          multiline
-          variant="filled"
-        />
+            <TextField
+                id="filled-textarea"
+                label="Comment"
+                placeholder="Type comment here"
+                multiline
+                variant="filled"
+                value={comment} // Make sure to control the input with the state
+                onChange={(e) => setComment(e.target.value)} // Update the state when the input changes
+            />
         </div>
         <div className="upload-images">
           <label htmlFor="upload" className="upload-label">
