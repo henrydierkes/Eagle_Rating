@@ -38,11 +38,6 @@ const comments = [
       },
       datePosted: "2024-03-06",
       overallRating: 4.5,
-      specificRatings: {
-        sizeRating: 4,
-        cleanlinessRating: 5,
-        quietnessRating: 3,
-      },
       upvotes: 10,
       downvotes: 2,
       comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam at convallis magna. Aenean ultricies eros ac lectus fermentum, quis volutpat elit fermentum.",

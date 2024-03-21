@@ -15,16 +15,17 @@
 }
 
 .TrendPlace:hover {
-  border-color: rgba(0,0,0,0.4);
-  box-shadow: 0 0 10px 0 rgba(0,0,0,0.15);
+  border-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
 }
+
 
 .RateBar {
   position: absolute;
   top: 12px; /* Adjust the top position */
   left: 12px; /* Adjust the left position */
   padding: 10px 20px; /* Adjust the padding */
-  background-color: rgba(0, 128, 0, 0.8); /* Semi-transparent green */
+  background-image: linear-gradient(to right, #5ea5fcd5, #637afed5); /* Gradient background */
   color: white;
   border-radius: 10px;
   font-size: 1.5rem; /* Adjust the font size */
@@ -32,6 +33,7 @@
   align-items: center;
   z-index: 3;
 }
+
 
 
 .Name {
@@ -54,7 +56,7 @@
   left: -1px;
   width: 100.6%;
   height: 100.6%;
-  background-color: rgba(196, 196, 196, 0.3); /* Semi-transparent overlay */
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
   pointer-events: none; /* Allow clicking through overlay */
   z-index: 1;
   border-radius: 10px;
