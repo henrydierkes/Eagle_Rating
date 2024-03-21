@@ -1,28 +1,28 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./TrendPlace.css";
 
 function TrendPlace({ placeName, imageUrl, placeRating }) {
+    const backgroundStyle = {
+        backgroundImage: `url(${imageUrl})`,
+        backgroundSize: "auto 101%",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        borderRadius: "10px",
+    };
 
-  const backgroundStyle = {
-    backgroundImage: `url(${imageUrl})`,
-    backgroundSize: "auto 101%",
-    backgroundPosition: "center", // Adjust the position of the background image
-    backgroundRepeat: "no-repeat", // Set background repeat behavior
-    borderRadius: "10px", // Apply border radius to the background
-  };
-
-  return (
-    <div className="TrendPlace" style={backgroundStyle}>
-      <div className="RateBar">
-        <i className="fas fa-star" style={{ marginRight: "5px" }}></i>
-        {placeRating}
-      </div>
-      <div className="Name">
-        <h2>{placeName}</h2>
-      </div>
-      <div className="Overlay"></div>
-    </div>
-  );
+    return (
+        <Link to={`/ratingpage/${placeName}`} className="TrendPlace" style={backgroundStyle}>
+            <div className="RateBar">
+                <i className="fas fa-star" style={{ marginRight: "5px" }}></i>
+                {placeRating}
+            </div>
+            <div className="Name">
+                <h2>{placeName}</h2>
+            </div>
+            <div className="Overlay"></div>
+        </Link>
+    );
 }
 
 export default TrendPlace;
