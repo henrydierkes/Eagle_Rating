@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import './ResultList.css';
 
-
-const getRatingColor = (rating) => {
-    if (rating >= 4) {
+const getRatingColor = (averageRating) => {
+    if (averageRating >= 4) {
         return '#4CAF50'; // green
-    } else if (rating >= 3) {
+    } else if (averageRating >= 3) {
         return '#CDDC39'; // lime
-    } else if (rating >= 2) {
+    } else if (averageRating >= 2) {
         return '#FFC107'; // amber
     } else {
         return '#F44336'; // red
@@ -27,12 +26,13 @@ const ResultList = ({ results }) => {
     return (
         <div className="result-list">
             {results.map((result, index) => (
-                <div key={index} className="result-item">
+                <div key={result.locId || index} className="result-item">  {/* Use result.locId as key if available */}
                     <div
                         className="rating-box"
-                        style={{ backgroundColor: getRatingColor(result.rating) }}
+                        style={{ backgroundColor: getRatingColor(result.averageRating?.overall) }}
                     >
-                        <span className="rating-number">{result.rating}</span>
+                        {/* Ensure you use the ?. operator to safely access nested properties */}
+                        <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                     </div>
                     <div
                         className="highlight-tag"
@@ -49,9 +49,9 @@ const ResultList = ({ results }) => {
                         {'☆'}
                     </div>
                     <div>
-                        <h3>{result.title}</h3>
-                        <p>{result.description}</p>
-                        <p className="description">{result.num_rate + " ratings"}</p>
+                        <h3>{result.locName}</h3>
+                        {/* Use the appropriate fields from your Place entity */}
+                        <p className="description">{result.ratingCount + " ratings"}</p>
                     </div>
                 </div>
             ))}

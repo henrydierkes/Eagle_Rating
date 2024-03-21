@@ -10,6 +10,7 @@
 .Trending .title {
   width: 100%;
   text-align: left; /* Align the title to the left */
+  margin-left: 40px;
 }
 
 .Trending .title h1 {

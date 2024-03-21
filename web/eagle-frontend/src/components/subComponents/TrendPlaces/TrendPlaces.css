@@ -25,14 +25,24 @@
 }
 
 .TrendPlaces .buttons button {
-  width: 5vw; /* Example: width scales with 5% of the viewport width */
-  height: 32vh; /* Example: height scales with 10% of the viewport height */
-  min-width: 50px; /* Minimum width to ensure button remains usable on smaller screens */
-  border-radius: 0%;
-  border: 1px solid #555;
-  background: rgba(255, 255, 255, 0.25);
-  transition: 0.2s;
+  width: 5vw; /* Scale width with viewport */
+  height: 5vw; /* Scale height with viewport, maintaining aspect ratio */
+  min-width: 30px; /* Minimum width to ensure usability */
+  min-height: 30px; /* Minimum height to ensure usability */
+  border: none; /* Remove border */
+  background-color: #7cc8ff; /* Light blue background */
+  color: black; /* White text color */
+  font-size: 14px; /* Font size */
+  border-radius: 50%; /* Rounded corners */
+  cursor: pointer; /* Cursor style */
+  transition: background-color 0.3s ease; /* Smooth transition */
   position: relative;
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 9px );
+  -webkit-backdrop-filter: blur( 9px );
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  margin: 10px;
 }
 
 
