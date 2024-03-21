@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/place")
 public class PlaceController {
     @Autowired
@@ -41,6 +42,7 @@ public class PlaceController {
      * @return A list of all places.
      */
     @GetMapping("/get")
+    @CrossOrigin
     public List<Place> getPlace(@RequestParam(required = false) Boolean desc){
         List <Place> places=placeService.getAllPlaces();
         if(desc!=null&&desc){
@@ -55,6 +57,7 @@ public class PlaceController {
      * @return A response entity indicating the operation's status (CREATED).
      */
     @PostMapping("/add")
+    @CrossOrigin
     public ResponseEntity<Place> addPlace(@RequestBody Place place) {
         Place addedPlace = placeService.addPlace(place);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedPlace);
@@ -85,6 +88,7 @@ public class PlaceController {
      * @return A response entity containing a list of places that match the search criteria.
      */
     @GetMapping("/search")
+    @CrossOrigin
     public ResponseEntity<List<Place>> searchByLocNameAndCategoryAndTagsAll(
             @RequestParam(required = false) String locName,
             @RequestParam(required = true) String category,
