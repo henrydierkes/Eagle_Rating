@@ -9,7 +9,7 @@ import DetailRating from "../../components/subComponents/detailRating/DetailRati
 
 
 const results = [
-    { id: 1, title: "Shared Study Room A", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1960 N Druid Hills Rd, Atlanta, GA 30322',
+    { id: 1, title: "Shared Study Room A", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '540 Asbury Cir, Atlanta, GA 30307',
         top_tags: ['tables', 'chairs', 'restroom'],
         details: {
             cleanliness: {
