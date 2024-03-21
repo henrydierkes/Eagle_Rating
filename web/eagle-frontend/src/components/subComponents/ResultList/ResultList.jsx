@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ResultList.css';
+import {useNavigate} from "react-router-dom";
 
 const getRatingColor = (averageRating) => {
     if (averageRating >= 4) {
@@ -13,8 +14,15 @@ const getRatingColor = (averageRating) => {
     }
 };
 
+
+
 const ResultList = ({ results }) => {
     const [highlights, setHighlights] = useState({});
+
+    const handleAddLocationClick = () => {
+        navigate('/addLocation'); // Navigate to comment page
+    };
+    const navigate = useNavigate();
 
     const toggleHighlight = (index) => {
         setHighlights(prevHighlights => ({
@@ -29,7 +37,7 @@ const ResultList = ({ results }) => {
                 <div key={result.locId || index} className="result-item">  {/* Use result.locId as key if available */}
                     <div
                         className="rating-box"
-                        style={{ backgroundColor: getRatingColor(result.averageRating?.overall) }}
+                        style={{backgroundColor: getRatingColor(result.averageRating?.overall)}}
                     >
                         {/* Ensure you use the ?. operator to safely access nested properties */}
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
@@ -55,6 +63,7 @@ const ResultList = ({ results }) => {
                     </div>
                 </div>
             ))}
+            <button className="rating-button" onClick={handleAddLocationClick}>Add Location</button>
         </div>
     );
 };
