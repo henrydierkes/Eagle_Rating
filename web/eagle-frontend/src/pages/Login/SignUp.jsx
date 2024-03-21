@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import {Link as RouterLink, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -36,10 +36,17 @@ export default function SignUp() {
     }
   };
 
+  const navigate = useNavigate();
+
+  const navigateToFrontPage = () => {
+    navigate('/home');
+  };
+
   return (
       <ThemeProvider theme={defaultTheme}>
+        <h1 className="logo button" onClick={navigateToFrontPage} style={{ marginTop: '25px', fontSize: '25px' }}>EagleRating</h1>
         <Container component="main" maxWidth="xs">
-          <CssBaseline />
+          <CssBaseline/>
           <Box
               sx={{
                 marginTop: 8,
@@ -51,7 +58,7 @@ export default function SignUp() {
             <Typography component="h1" variant="h5">
               Sign Up
             </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
               <TextField
                   margin="normal"
                   required
@@ -97,7 +104,7 @@ export default function SignUp() {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{mt: 3, mb: 2}}
               >
                 Sign Up
               </Button>
