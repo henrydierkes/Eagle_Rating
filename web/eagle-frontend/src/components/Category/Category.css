@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 100%;
   padding-bottom: 10vh;
-  background-color: whitesmoke;
+  background-color: rgb(255, 255, 255);
 /*  need to standardize*/
 }
 .Category .title {

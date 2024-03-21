@@ -4,7 +4,7 @@
   width: 100%;
   justify-content: center; /* Center the content horizontally */
   align-items: center;
-  background-color: whitesmoke;
+  background-color: rgb(255, 251, 251);
 }
 
 .Trending .title {
