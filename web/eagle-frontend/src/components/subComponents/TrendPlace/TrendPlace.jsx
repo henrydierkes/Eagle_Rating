@@ -14,7 +14,7 @@ function TrendPlace({ placeName, imageUrl, placeRating }) {
     return (
         <Link to={`/ratingpage/${placeName}`} className="TrendPlace" style={backgroundStyle}>
             <div className="RateBar">
-                <i className="fas fa-star" style={{ marginRight: "5px" }}></i>
+                <i className="fas" style={{ marginRight: "5px" }}></i>
                 {placeRating}
             </div>
             <div className="Name">
