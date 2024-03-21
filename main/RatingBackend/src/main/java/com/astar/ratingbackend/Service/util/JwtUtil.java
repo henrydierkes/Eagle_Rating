@@ -14,10 +14,9 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "your-secret-key"; // Use a secure, randomly generated key
+    private final String SECRET_KEY = "your-secret-key";
 
     public String generateToken(User user) {
-        // 1000ms * 60s * 60min = 1 hour
         long expirationTime = 1000 * 60 * 60;
 
         return JWT.create()
