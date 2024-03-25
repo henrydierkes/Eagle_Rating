@@ -21,6 +21,7 @@ function Navigation() {
 
       Axios.get(apiUrl)
         .then(response => {
+          console.log('Data fetched:', response.data);
           setResults(response.data); // Set results with the search results
         })
         .catch(error => {

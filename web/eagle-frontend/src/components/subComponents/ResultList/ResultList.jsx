@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ResultList.css';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const getRatingColor = (averageRating) => {
     if (averageRating >= 4) {
@@ -14,14 +14,12 @@ const getRatingColor = (averageRating) => {
     }
 };
 
-
-
-const ResultList = ({ results, tagsParam }) => {
+const ResultList = ({ results }) => {
     const [highlights, setHighlights] = useState({});
     const navigate = useNavigate();
 
     const handleAddLocationClick = () => {
-        navigate('/addLocation'); // Navigate to comment page
+        navigate('/addLocation'); // Navigate to the add location page
     };
 
     const toggleHighlight = (index) => {
@@ -31,17 +29,14 @@ const ResultList = ({ results, tagsParam }) => {
         }));
     };
 
-    const filteredResults = results.filter(result => result.locName === tagsParam);
-
     return (
         <div className="result-list">
-            {filteredResults.map((result, index) => (
-                <div key={result.locId || index} className="result-item">  {/* Use result.locId as key if available */}
+            {results.map((result, index) => (
+                <div key={result.locId || index} className="result-item">
                     <div
                         className="rating-box"
-                        style={{backgroundColor: getRatingColor(result.averageRating?.overall)}}
+                        style={{ backgroundColor: getRatingColor(result.averageRating?.overall) }}
                     >
-                        {/* Ensure you use the ?. operator to safely access nested properties */}
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                     </div>
                     <div
@@ -60,7 +55,6 @@ const ResultList = ({ results, tagsParam }) => {
                     </div>
                     <div>
                         <h3>{result.locName}</h3>
-                        {/* Use the appropriate fields from your Place entity */}
                         <p className="description">{result.ratingCount + " ratings"}</p>
                     </div>
                 </div>
