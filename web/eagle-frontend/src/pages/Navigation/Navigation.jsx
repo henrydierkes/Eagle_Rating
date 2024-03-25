@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"; // Import useLocation
 import Axios from 'axios'; // Import Axios
 import NavBar from "../../components/NavBar/NavBar";
 import ResultsAndFilter from "../../components/ResultsAndFilter/ResultsAndFilter";
@@ -7,6 +8,9 @@ import "./Navigation.css";
 
 function Navigation() {
   const [results, setResults] = useState([]);
+  const location = useLocation(); // Use useLocation hook to access location object
+  const queryParams = new URLSearchParams(location.search);
+  const tagsParam = queryParams.get('tags'); // Get the tags from query parameters
 
   useEffect(() => {
     const apiUrl = "http://localhost:8080/api"; // Adjust this as necessary
@@ -21,10 +25,12 @@ function Navigation() {
       });
   }, []);
 
+  console.log("Tags:", tagsParam); // Log the tags to the console for testing
+
   return (
     <div className="Navigation">
       <NavBar />
-      <ResultsAndFilter results={results}/>
+      <ResultsAndFilter results={results} tagsParam={tagsParam} />
       <Footer />
     </div>
   );
