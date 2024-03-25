@@ -1,73 +1,151 @@
 .place-details {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-right: auto;
-    font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-right: auto;
+  font-size: 20px;
+}
+.header-left,
+.location {
+  width: 50%; /* Set the width to 50% */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Align contents vertically */
 }
 
 .header {
-    display: flex;
+  display: flex;
+  flex-direction: row;
+}
+.header-left {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+.header-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  position: relative; /* Ensure positioning works relative to this container */
 }
 
+.header-left-l {
+  display: flex;
+  flex-direction: column;
+}
+.header-left-r {
+  display: flex;
+  flex-direction: column;
+}
 .rating-box-details {
-    width: 160px;
-    height: 120px;
-    color: white;
-    padding: 12px 16px;
-    margin-right: 10px;
-    margin-top: 15px;
-    margin-left: 20px;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 1.3em;
-    align-items: center;
-    justify-content: center;
-    display: flex;
+  width: 160px;
+  height: 120px;
+  color: white;
+  padding: 12px 16px;
+  margin-right: 10px;
+  margin-top: 15px;
+  margin-left: 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 1.3em;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .mainInfo {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .title {
-    color: black;
-    margin-top: 20px;
-    margin-bottom: -14px;
-    font-size: 50px;
+  color: black;
+  margin-top: 20px;
+  margin-bottom: -14px;
+  font-size: 50px;
 }
 
-.building{
-    margin-bottom: -20px;
+.building {
+  margin-bottom: -20px;
 }
 
 .rating-number-details {
-    font-size: 4em;
-    font-weight: 800;
-    color: #1a1a1a;
+  font-size: 4em;
+  font-weight: 800;
+  color: #1a1a1a;
 }
 
 .rating-amount {
-    margin-top: 0px;
-    margin-left: 70px;
+  margin-top: 0px;
+  margin-left: 70px;
 }
 
+.location-link {
+  /* margin-top: 20px; */
+  /* margin-left: 25px; */
+  font-weight: normal;
+}
 .location {
-    margin-top: 20px;
-    margin-left: 25px;
-    font-weight: normal;
+  margin-top: 20px;
+  margin-left: 25px;
+  width: 50%;
 }
-
-.locationAndRatings {
-    display: flex;
+.Image {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Ensure positioning works relative to this container */
+}
+.locationAndImage {
+  display: flex;
+  flex-direction: row;
 }
 
 .ratings {
-    margin-left: 20px;
-    margin-top: -37.5px;
+  margin-left: 20px;
+  margin-top: -37.5px;
 }
 
 .tags {
-    font-weight: bold;
-    margin-left: 30px;
+  font-weight: bold;
+  margin-left: 30px;
+}
+
+.rating-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px; /* Adjust the margin as needed */
+}
+
+.rating-button-container .rating-button {
+  background-color: #333;
+  color: ghostwhite;
+  border: none;
+  padding: 1.8rem 4rem;
+  border-radius: 3rem; /* more circle */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 2rem;
+  width: 500px;
+  height: 150px;
+  font-size: 60px;
+  margin-top: 70px;
+}
+
+.rating-button-container .rating-button:hover {
+  background-color: #555555; /* suspension color on background */
+}
+
+.tag-level {
+  width: 100%;
+  display: flex;
+}
+.tag-level-l {
+  width: 50%;
+  display: flex;
+  justify-content: center; /* Center contents horizontally */
+  align-items: center; /* Center contents vertically */
 }

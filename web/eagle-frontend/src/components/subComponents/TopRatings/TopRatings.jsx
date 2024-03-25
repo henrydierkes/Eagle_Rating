@@ -1,30 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './TopRatings.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./TopRatings.css";
 
 const TopRatings = ({ results }) => {
-    const { top_tags } = results[0];
+  const { top_tags } = results[0];
 
-const handleAddCommentClick = () => {
-    navigate('/addComment'); // Navigate to comment page
-  };
+  const navigate = useNavigate();
 
-    const navigate = useNavigate(); 
-
-    return (
-        <div className="top-ratings">
-            <h2 className='top-tags-name'>Top Tags:</h2>
-            <div className="tag-list">
-                {top_tags.map((tag, index) => (
-                    <span key={index} className="tag">
+  return (
+    <div className="top-ratings">
+      <h2 className="top-tags-name">Top Tags:</h2>
+      <div className="tag-list">
+        {top_tags.map((tag, index) => (
+          <span key={index} className="tag">
             {tag}
           </span>
-                ))}
-            </div>
-            <button className="rating-button" onClick={handleAddCommentClick}>Add Rating</button>
-        </div>
-    );
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default TopRatings;
-
