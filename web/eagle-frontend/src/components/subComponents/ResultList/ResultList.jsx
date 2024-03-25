@@ -16,13 +16,13 @@ const getRatingColor = (averageRating) => {
 
 
 
-const ResultList = ({ results }) => {
+const ResultList = ({ results, tagsParam }) => {
     const [highlights, setHighlights] = useState({});
+    const navigate = useNavigate();
 
     const handleAddLocationClick = () => {
         navigate('/addLocation'); // Navigate to comment page
     };
-    const navigate = useNavigate();
 
     const toggleHighlight = (index) => {
         setHighlights(prevHighlights => ({
@@ -31,9 +31,11 @@ const ResultList = ({ results }) => {
         }));
     };
 
+    const filteredResults = results.filter(result => result.locName === tagsParam);
+
     return (
         <div className="result-list">
-            {results.map((result, index) => (
+            {filteredResults.map((result, index) => (
                 <div key={result.locId || index} className="result-item">  {/* Use result.locId as key if available */}
                     <div
                         className="rating-box"

@@ -4,7 +4,7 @@ import Filter from "../subComponents/Filter/Filter";
 import './ResultsAndFilter.css';
 import FilterRating from "../subComponents/FilterRating/FilterRating.jsx";
 
-const ResultsAndFilter = ( {results} ) => {
+const ResultsAndFilter = ( {results, tagsParam} ) => {
   const [filteredResults, setFilteredResults] = useState(results);
   useEffect(() => {
     setFilteredResults(results);
@@ -15,7 +15,7 @@ const ResultsAndFilter = ( {results} ) => {
 
   return (
     <div className="resultsandfilter">
-        <ResultList results={filteredResults} />
+        <ResultList results={filteredResults} tagsParam={tagsParam} />
         <div className="resultseparator"></div>
         {/*<Filter onFilterChange={handleFilterChange} />*/}
         <FilterRating onFilterChange={handleFilterChange} />
