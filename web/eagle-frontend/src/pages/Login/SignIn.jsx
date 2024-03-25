@@ -84,7 +84,7 @@ export default function SignIn() {
           <div id="bg"></div>
           <div id="bg_mask"></div>
           <div className="loginHolder">
-            <h1 className="logo button logo-bold" onClick={navigateToFrontPage} style={{ marginTop: '25px', fontSize: '25px' }}>EagleRating</h1>
+            <h1 className="logo button logo-bold" onClick={navigateToFrontPage} style={{ marginTop: '25px', fontSize: '25px', display: 'inline-block' }}>EagleRating</h1>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
               <Box
