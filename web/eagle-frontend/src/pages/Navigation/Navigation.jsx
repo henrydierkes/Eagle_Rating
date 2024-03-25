@@ -1,21 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Axios from 'axios';
+import { useLocation } from 'react-router-dom'; // Import useLocation
 import NavBar from "../../components/NavBar/NavBar";
-import ResultsAndFilter from "../../components/ResultsAndFilter/ResultsAndFilter"
+import ResultsAndFilter from "../../components/ResultsAndFilter/ResultsAndFilter";
 import Footer from "../../components/Footer/Footer";
 import "./Navigation.css";
 
-const results = [
-  { id: 1, title: "Place 1", description: "Description for Result 1", rating: 4.5, num_rate: 33 },
-  { id: 2, title: "Place 2", description: "Description for Result 2", rating: 3.2, num_rate: 20 },
-  { id: 3, title: "Place 3", description: "Description for Result 3", rating: 2.4, num_rate: 5 },
-
-  { id: 4, title: "Place 4", description: "Description for Result 4", rating: 1.1, num_rate: 10 },
-  { id: 5, title: "Place 5", description: "Description for Result 5", rating: 2.3, num_rate: 21 },
-  { id: 6, title: "Place 6", description: "Description for Result 6", rating: 4.9, num_rate: 500 },
-];
-
-
 function Navigation() {
+  const [results, setResults] = useState([]);
+  const location = useLocation(); // Get access to the location object
+
+  useEffect(() => {
+    // Extract the search query parameter from the URL
+    const searchParams = new URLSearchParams(location.search);
+    const searchQuery = searchParams.get('search');
+
+    if (searchQuery) {
+      // Make an API call using the search query
+      const apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}`; // Adjust the endpoint as needed
+
+      Axios.get(apiUrl)
+        .then(response => {
+          console.log('Data fetched:', response.data);
+          setResults(response.data); // Set results with the search results
+        })
+        .catch(error => {
+          console.error('Error fetching search results: ', error);
+        });
+    } else {
+      // If there is no search query, you can decide to fetch all places or do nothing
+      // Here's how you'd fetch all places
+      Axios.get(`http://localhost:8080/api/place/get`)
+        .then(response => {
+          setResults(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data: ', error);
+        });
+    }
+  }, [location.search]); // Run the effect when the search query changes
+
   return (
     <div className="Navigation">
       <NavBar />

@@ -4,13 +4,13 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  padding: 10px;
+  padding-top: 0px;
   font-size: 12px;
 }
 
 .footer-section {
   flex: 1;
-  padding: 0 15px;
+  margin: 0 15px;
 }
 
 .footer-section h4 {

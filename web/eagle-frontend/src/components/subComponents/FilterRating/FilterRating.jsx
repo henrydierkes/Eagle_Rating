@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './FilterRating.css';
 
-const RangeSlider = () => {
+const FilterRating = () => {
     const [rangeValues, setRangeValues] = useState({
         overall: 4.6,
         size: 4.6,
@@ -66,11 +66,15 @@ const RangeSlider = () => {
 
     return (
         <div className="filter-rating">
-            <h2>Filter by ratings</h2>
+            <h2 className="filterhead">Filter by ratings</h2>
             {Object.entries(rangeValues).map(([key, value]) => (
-                <div key={key} className={`range-slider ${key !== 'overall' && (!subRatingsEnabled || !individualToggles[key]) ? 'disabled' : ''}`}>
+                <div key={key}
+                     className={`range-slider ${key !== 'overall' && (!subRatingsEnabled || !individualToggles[key]) ? 'disabled' : ''}`}>
                     <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
-                    <span>0.0</span>
+                    <span
+                        className={`zero ${key !== 'overall' && (!subRatingsEnabled || !individualToggles[key]) ? 'disabled' : ''}`}>
+                        0.0
+                    </span>
                     <input
                         ref={el => sliderRefs.current[key] = el}
                         name={key}
@@ -83,8 +87,16 @@ const RangeSlider = () => {
                         className="range-slider__range"
                         disabled={key !== 'overall' && (!subRatingsEnabled || !individualToggles[key])}
                     />
-                    <span>5.0</span>
-                    <div className="range-slider__value">{value}</div>
+                    <span
+                        className={`zero ${key !== 'overall' && (!subRatingsEnabled || !individualToggles[key]) ? 'disabled' : ''}`}>
+                        5.0
+                    </span>
+                    <div
+                        className={`range-slider__value ${key !== 'overall' && (!subRatingsEnabled || !individualToggles[key]) ? 'disabled' : ''}`}
+                        style={key !== 'overall' && (!subRatingsEnabled || !individualToggles[key]) ? {opacity: 0.5} : {}}
+                    >
+                        {value}
+                    </div>
                     {key !== 'overall' && (
                         <label className="switch">
                             <input
@@ -113,4 +125,4 @@ const RangeSlider = () => {
     );
 };
 
-export default RangeSlider;
+export default FilterRating;

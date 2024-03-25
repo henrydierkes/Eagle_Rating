@@ -15,14 +15,14 @@ public interface IPlaceService {
     public Place updatePlace(ObjectId id, Place placeDetails);
     public void deletePlace(ObjectId id);
     public void deletePlaceT(ObjectId id);
-    public ResponseEntity<Place> addRating(ObjectId id, Rating rating);
+    public ResponseEntity<Place> addRating(String id, Rating rating);
     public Map<String, Double> getAverageRatingsMap(ObjectId id);
-    public void removeRating(ObjectId id, Rating rating);
-
+    public boolean deleteRating(Rating rating);
     Optional<Place> findById(ObjectId id);
+    Place validatePlace(String placeId);
     List<Place> searchPlacesByName(String name);
     List<Place> searchPlacesByNameAndCategory(String name, String category);
-    List<Place> searchByTags(List<String> tags);
+    List<Place> searchByTagsAndCategory(List<String> tags, String category);
 
     List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags);
     void sortRatingsDescending(List<Place> places);

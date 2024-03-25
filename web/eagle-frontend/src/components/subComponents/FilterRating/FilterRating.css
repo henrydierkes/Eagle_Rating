@@ -1,27 +1,18 @@
 /* FilterRating.css */
 
-body {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f8f9fa;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
 .filter-rating {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    width: 90%;
+    /*box-shadow: 0 2px 12px rgba(0,0,0,0.1);*/
+    width: 70%;
     max-width: 600px;
 }
 
-h2 {
+.filterhead {
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    top: 30px;
     text-align: center;
 }
 
@@ -38,7 +29,8 @@ h2 {
 
 .range-slider__range {
     -webkit-appearance: none;
-    width: 100%;
+    width: 85%;
+    margin: 20px;
     height: 8px;
     border-radius: 5px;
     background: #e9ecef;
@@ -62,7 +54,7 @@ h2 {
 
 .range-slider__value {
     position: absolute;
-    top: -50px; /* Move up to accommodate larger text */
+    top: -10px; /* Move up to accommodate larger text */
     left: 50%;
     transform: translateX(-50%);
     background-color: #006400; /* Dark green */
@@ -126,6 +118,11 @@ input:checked + .slider {
 input:focus + .slider {
     box-shadow: 0 0 1px #006400; /* Dark green */
 }
+
+.zero.disabled {
+    color: #888; /* or any other shade of grey you prefer */
+}
+
 
 input:checked + .slider:before {
     transform: translateX(26px);

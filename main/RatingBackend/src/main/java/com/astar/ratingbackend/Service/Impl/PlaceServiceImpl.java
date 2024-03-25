@@ -7,6 +7,8 @@ import com.astar.ratingbackend.Service.IPlaceService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,27 @@ public class PlaceServiceImpl implements IPlaceService {
     public Place addPlace(Place place) {
         if(place.getCampus()==null){
             place.setCampus("Emory-Main");
+        }
+        if(place.getAverageRating()==null){
+            place.setAverageRating(new Place.AverageRating(0,0,0,0));
+        }
+        if(place.getTotalRating()==null){
+            place.setTotalRating(new Place.TotalRating(0,0,0,0));
+        }
+        if(place.getRatingCount()==null){
+            place.setRatingCount(0);
+        }
+        if(place.getRatingIds()==null){
+            place.setRatingIds(new ArrayList<String>());
+        }
+        if(place.getFloor()==null){
+            place.setFloor(null);
+        }
+        if(place.getTags()==null){
+            place.setTags(new HashMap<String, Integer>());
+        }
+        if(place.getImages()==null){
+            place.setImages(new ArrayList<Place.Image>());
         }
         place.setDeleted(false);
         place.setDeletedDate(null);
@@ -96,29 +119,66 @@ public class PlaceServiceImpl implements IPlaceService {
         existingPlace.setRatingAspect(placeDetails.getRatingAspect());
         existingPlace.setDeletedDate(placeDetails.getDeletedDate());
         existingPlace.setDeleted(placeDetails.isDeleted());
-
+        existingPlace.setAverageRating(placeDetails.getAverageRating());
         // Save the updated place using the repository
         Place updatedPlace = placeRepository.save(existingPlace);
         return updatedPlace;
     }
     /**
      * Removes a rating from a place and updates the total ratings accordingly.
-     * @param id The ObjectId of the place from which to remove the rating.
      * @param rating The Rating to be removed.
      */
-    public void removeRating(ObjectId id, Rating rating) {
+    public boolean deleteRating(Rating rating) {
+        ObjectId id=new ObjectId(rating.getPlaceId());
         Double rating1 = rating.getOverallRating().getRating1();
         Double rating2 = rating.getOverallRating().getRating2();
         Double rating3 = rating.getOverallRating().getRating3();
-        this.findById(id).ifPresent((place) -> {
+        Double overall=(rating1+rating2+rating3)/3.0;
+        Optional<Place> optionalPlace = this.findById(id);
+        if (optionalPlace.isPresent()) {
+            Place place = optionalPlace.get();
+
+            if (place.isDeleted()) {
+                // Place is already deleted
+                return false;
+            }
+            //update totalRating
             Place.TotalRating totalRatings = place.getTotalRating();
-            totalRatings.setOverall(totalRatings.getOverall() - rating1 - rating2 - rating3);
+            totalRatings.setOverall(Math.max(totalRatings.getOverall() - overall,0));
             totalRatings.setRating1(totalRatings.getRating1() - rating1);
             totalRatings.setRating2(totalRatings.getRating2() - rating2);
             totalRatings.setRating3(totalRatings.getRating3() - rating3);
+            place.setRatingCount(place.getRatingCount()-1);
             place.setTotalRating(totalRatings);
+            //update averageRating
+            Place.AverageRating averageRating = place.getAverageRating();
+            averageRating.setOverall(place.getRatingCount()==0?0:Math.max(0,totalRatings.getOverall()/place.getRatingCount()));
+            averageRating.setRating1(place.getRatingCount()==0?0:totalRatings.getRating1()/place.getRatingCount());
+            averageRating.setRating2(place.getRatingCount()==0?0:totalRatings.getRating2()/place.getRatingCount());
+            averageRating.setRating3(place.getRatingCount()==0?0:totalRatings.getRating3()/place.getRatingCount());
+            place.setAverageRating(averageRating);
+
+            String ratingIdString = rating.getRatingId() != null ? rating.getRatingId().toString() : null;
+            if (ratingIdString == null) {
+                return false; // Rating ID is null, cannot proceed with deletion
+            }
+            List<String> ratings = new ArrayList<>();
+            if (place.getRatingIds() != null) {
+               ratings=place.getRatingIds();
+            }
+            if (!ratings.contains(rating.getRatingId().toString())) {
+                // Rating not found in user's ratings array
+                return false;
+            }
+            ratings.remove(rating.getRatingId().toString());
+            place.setRatingIds(ratings);
+
+            // Save the updated place object back to the database
             this.updatePlace(id, place);
-        });
+            return true; // Place found and updated successfully
+        } else {
+            return false; // Place not found
+        }
     }
     /**
      * Deletes a place from the database by its ID.
@@ -144,12 +204,22 @@ public class PlaceServiceImpl implements IPlaceService {
      * @param rating The Rating to add.
      * @return A ResponseEntity containing the updated Place or an error message.
      */
-    public ResponseEntity<Place> addRating(ObjectId id, Rating rating) {
-        Place place = this.placeRepository.findById(id).orElseThrow(() -> {
+    public ResponseEntity<Place> addRating(String id, Rating rating) {
+        ObjectId objectId = new ObjectId(id);
+        if(rating.getOverallRating()==null){
+            Rating.OverallRating overallRating = new Rating.OverallRating();
+            overallRating.setOverall(0.0);
+            overallRating.setRating1(0.0); // Set other rating values as needed
+            overallRating.setRating2(0.0);
+            overallRating.setRating3(0.0);
+            rating.setOverallRating(overallRating);
+        }
+        Place place = this.placeRepository.findById(objectId).orElseThrow(() -> {
             return new IllegalArgumentException("Place not found with id: " + id);
         });
-        this.updateRatingsAndCount(place, rating);
+        this.addRatingsAndCount(place, rating);
         this.addTags(place, rating.getTags());
+        this.addRatingIds(place,rating.getRatingId().toString());
         Place updatedPlace = this.placeRepository.save(place);
         return ResponseEntity.ok(updatedPlace);
     }
@@ -208,12 +278,34 @@ public class PlaceServiceImpl implements IPlaceService {
     /**
      * Adds a list of tags to a place. If the place already contains tags, the new tags are appended to the existing list.
      * @param place The Place entity to which the tags are added.
-     * @param tags The list of tags to add to the place.
+     * @param ratingTags The list of tags to add to the place.
      */
-    private void addTags(Place place, List<String> tags) {
-        List<String> existingTags = place.getTags();
-        existingTags.addAll(tags);
+     private void addTags(Place place, Map<String, Boolean> ratingTags) {
+        Map<String, Integer> existingTags = place.getTags();
+
+        // Iterate over the tags from the rating
+        for (Map.Entry<String, Boolean> entry : ratingTags.entrySet()) {
+            String tag = entry.getKey();
+            boolean present = entry.getValue();
+            // Check if the tag already exists in the place tags
+            if (existingTags.containsKey(tag)) {
+                // Increment the count if the tag is present in the rating
+                if (present) {
+                    existingTags.put(tag, existingTags.get(tag) + 1);
+                }
+            } else {
+                // Add the tag with count 1 if it doesn't exist
+                if (present) {
+                    existingTags.put(tag, 1);
+                }
+            }
+        }
         place.setTags(existingTags);
+    }
+    private void addRatingIds(Place place, String ratingId) {
+        List<String> existingIds = place.getRatingIds();
+        existingIds.add(ratingId);
+        place.setRatingIds(existingIds);
     }
     /**
      * Calculates and returns the average ratings for a place by dividing the total ratings by the number of ratings.
@@ -250,6 +342,13 @@ public class PlaceServiceImpl implements IPlaceService {
         averageRatings.put(ratingAspect.getOrDefault("rating3", "rating3"), totalRatings.getRating3() / (double)ratingCount);
         return averageRatings;
     }
+    @Override
+    public Place validatePlace(String placeId) {
+        ObjectId placeIdObj = new ObjectId(placeId);
+        Place place = placeRepository.findByIdAndNotDeleted(placeIdObj)
+                .orElseThrow(() -> new IllegalArgumentException("Place not found or deleted with ID: " + placeId));
+        return place;
+    }
 
     private void updatePlaceRatings(ObjectId placeId, Rating rating) {
         Place place = this.findById(placeId).orElseThrow(() -> {
@@ -275,41 +374,102 @@ public class PlaceServiceImpl implements IPlaceService {
      * @param place The Place entity to update.
      * @param rating The Rating entity containing the new ratings to add.
      */
-    private void updateRatingsAndCount(Place place, Rating rating) {
+    private void addRatingsAndCount(Place place, Rating rating) {
         Place.TotalRating totalRatings = place.getTotalRating();
-        totalRatings.setOverall(totalRatings.getOverall() + rating.getOverallRating().getOverall());
-        totalRatings.setRating1(totalRatings.getRating1() + rating.getOverallRating().getRating1());
-        totalRatings.setRating2(totalRatings.getRating2() + rating.getOverallRating().getRating2());
-        totalRatings.setRating3(totalRatings.getRating3() + rating.getOverallRating().getRating3());
-        place.setRatingCount(place.getRatingCount() + 1);
-        place.setTotalRating(totalRatings);
-        int ratingCount = place.getRatingCount();
-        Place.AverageRating averageRating=place.getAverageRating();
-        averageRating.setRating1(totalRatings.getRating1() / (double)ratingCount);
-        averageRating.setRating2(totalRatings.getRating2() / (double)ratingCount);
-        averageRating.setRating3(totalRatings.getRating1() / (double)ratingCount);
-        averageRating.setOverall(totalRatings.getOverall() / (double)ratingCount);
-        place.setAverageRating(averageRating);
-        this.placeRepository.save(place);
+        Rating.OverallRating overallRating = rating.getOverallRating();
+
+        if (overallRating != null) {
+            Double overall = overallRating.getOverall() != null ? overallRating.getOverall() : 0.0;
+            Double rating1 = overallRating.getRating1() != null ? overallRating.getRating1() : 0.0;
+            Double rating2 = overallRating.getRating2() != null ? overallRating.getRating2() : 0.0;
+            Double rating3 = overallRating.getRating3() != null ? overallRating.getRating3() : 0.0;
+
+            totalRatings.setOverall(totalRatings.getOverall() + overall);
+            totalRatings.setRating1(totalRatings.getRating1() + rating1);
+            totalRatings.setRating2(totalRatings.getRating2() + rating2);
+            totalRatings.setRating3(totalRatings.getRating3() + rating3);
+            place.setRatingCount(place.getRatingCount() + 1);
+            place.setTotalRating(totalRatings);
+            int ratingCount = place.getRatingCount();
+            Place.AverageRating averageRating = place.getAverageRating();
+
+            averageRating.setRating1(totalRatings.getRating1() / (double) ratingCount);
+            averageRating.setRating2(totalRatings.getRating2() / (double) ratingCount);
+            averageRating.setRating3(totalRatings.getRating3() / (double) ratingCount);
+            averageRating.setOverall(totalRatings.getOverall() / (double) ratingCount);
+            place.setAverageRating(averageRating);
+            this.placeRepository.save(place);
+        } else {
+            // Handle the case where overallRating is null
+            throw new IllegalArgumentException("Overall rating cannot be null or NaN");
+        }
     }
     /**
      * Searches for places containing all specified tags.
      * @param tags The list of tags to search for.
      * @return A list of places containing all the specified tags.
      */
-    public List<Place> searchByTags(List<String> tags) {
-        return placeRepository.findByTagsContainingAll(tags);
-    }
+    public List<Place> searchByTagsAndCategory(List<String> tags, String category) {
+        Query query = new Query();
 
+        // Create a map to keep track of added tags
+        Map<String, Boolean> addedTags = new HashMap<>();
+
+        // Add criteria for each tag in the list
+        for (String tag : tags) {
+            // Check if the tag has already been added
+            if (!addedTags.containsKey(tag)) {
+                Criteria criteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                query.addCriteria(criteria);
+                addedTags.put(tag, true); // Mark the tag as added
+            }
+        }
+
+        // Add category criteria if provided
+        if (category != null) {
+            query.addCriteria(Criteria.where("category").is(category));
+        }
+
+        // Execute the query
+        return mongoTemplate.find(query, Place.class);
+    }
     /**
      * Searches for places by location name, category, and containing all specified tags, using case-insensitive matching.
      * @param locName The location name to search for.
      * @param category The category of places to search for.
-     * @param tags The list of tags each place must contain.
+     * @param tags The map of tags each place must contain with their counts.
      * @return A list of places matching all specified criteria.
      */
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
-        return placeRepository.findByLocNameAndCategoryAndTagsAll(locName, category, tags);
+
+        Query query = new Query();
+
+        if (locName != null) {
+            Criteria locNameCriteria = Criteria.where("locName").regex(locName, "i"); // Case-insensitive regex match for locName
+            query.addCriteria(locNameCriteria);
+        }
+
+        if (category != null) {
+            Criteria categoryCriteria = Criteria.where("category").regex(category, "i"); // Case-insensitive regex match for category
+            query.addCriteria(categoryCriteria);
+        }
+        if (tags != null) {
+            // Create a map to keep track of added tags
+            Map<String, Boolean> addedTags = new HashMap<>();
+
+            // Add criteria for each tag in the list
+            for (String tag : tags) {
+                // Check if the tag has already been added
+                if (!addedTags.containsKey(tag)) {
+                    Criteria tagCriteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                    query.addCriteria(tagCriteria);
+                    addedTags.put(tag, true); // Mark the tag as added
+                }
+            }
+        }
+
+        // Execute the query
+        return mongoTemplate.find(query, Place.class);
     }
 
     public void sortRatingsDescending(List<Place> places) {

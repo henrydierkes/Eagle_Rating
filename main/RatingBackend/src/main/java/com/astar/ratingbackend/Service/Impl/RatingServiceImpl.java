@@ -16,17 +16,23 @@
 
 package com.astar.ratingbackend.Service.Impl;
 
+import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
+import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Model.RatingRepository;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
+import com.astar.ratingbackend.Service.IUserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -37,27 +43,97 @@ public class RatingServiceImpl implements IRatingService {
     private MongoTemplate mongoTemplate;
     @Autowired
     private IPlaceService placeService;
+    @Autowired
+    private IUserService userService;
+
 
     @Autowired
     public RatingServiceImpl(RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
     }
 
+    public Rating validateRating(String ratingId) {
+        // Check if the rating exists
+        Optional<Rating> optionalRating = ratingRepository.findById(new ObjectId(ratingId));
+        if (optionalRating.isPresent()) {
+            return optionalRating.get();
+        } else {
+            throw new IllegalArgumentException("Rating with ID " + ratingId + " does not exist.");
+        }
+    }
+    @Override
+    @Transactional
+    public Rating validateNewRating(Rating rating){
+        String userId=rating.getUserId();
+        String placeId=rating.getPlaceId();
+        // Retrieve user's ratings
+        String[] ratingIds = userService.findUserById(new ObjectId(userId)).getRatings();
+        if(ratingIds==null) return rating;
+        // Filter out deleted ratings and collect the remaining ones
+        List<String> validRatingIds = new ArrayList<>();
+        for (String ratingId : ratingIds) {
+            Optional<Rating> existingRating = getRateById(new ObjectId(ratingId));
+            if (!existingRating.isPresent() || !existingRating.get().isDeleted()) {
+                validRatingIds.add(ratingId);
+            }
+        }
+        for (String ratingId : validRatingIds) {
+            Optional<Rating> existingRating = getRateById(new ObjectId(ratingId));
+            if (existingRating.isPresent() && existingRating.get().getPlaceId().equals(placeId)) {
+                throw new IllegalArgumentException("User has already rated this place.");
+            }
+        }
+        return rating;
+    }
+    /**
+     * Saves a new rating to the repository, and updates user and place
+     * @param rating The rating entity to be saved.
+     * @return The saved rating entity.
+     */
+
+    @Transactional
+    public ResponseEntity<String> addRating(Rating rating){
+        String placeId = rating.getPlaceId();
+        try {
+            User user = userService.validateUser(rating.getUserId());
+            Place place = placeService.validatePlace(placeId);
+//            rating=validateNewRating(rating);
+            Rating addedRating = addRatingDb(rating, user);
+            userService.addRating(addedRating);
+            placeService.addRating(placeId, addedRating);
+            return ResponseEntity.ok("Rating added successfully");
+        } catch (IllegalArgumentException e) {
+            String errorMessage = "Invalid parameter: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
+    }
     /**
      * Saves a new rating to the repository, ensuring all necessary default values are set.
      * @param rating The rating entity to be saved.
      * @return The saved rating entity.
      */
-    public Rating addRating(Rating rating) {
+    public Rating addRatingDb(Rating rating, User user) {
+        // Check if user already rated the place
+        if (user.getRatings() != null) {
+            for (String ratingId : user.getRatings()) {
+                if (ratingId.equals(rating.getPlaceId())) {
+                    throw new IllegalArgumentException("User has already rated this place.");
+                }
+            }
+        }
         if(rating.getRatingId()==null){
 
         }
         if (rating.getTags() == null) {
-            rating.setTags(Collections.emptyList()); // Empty list as default value
+            rating.setTags(new HashMap<>());  // Empty list as default value
         }
         if (rating.getComment() == null) {
             rating.setComment(""); // Empty string as default value
-        }if (rating.getDate() == null) {
+        }
+        if(rating.getComments()==null){
+            rating.setComments(null);
+        }
+        if (rating.getDate() == null) {
             rating.setDate(new Date()); // Current date as default value
         }
         if (rating.getLikes() == null) {
@@ -69,6 +145,25 @@ public class RatingServiceImpl implements IRatingService {
         if (rating.getComments() == null) {
             rating.setComments(Collections.emptyList()); // Empty list as default value
         }
+        if(rating.getFloor()==null){
+            rating.setFloor(null);
+        }
+        Rating.OverallRating overallRating=rating.getOverallRating();
+        Double overall=overallRating.getOverall();
+        Double rating1=overallRating.getRating1();
+        Double rating2=overallRating.getRating2();
+        Double rating3=overallRating.getRating3();
+        if(overall==null&&(rating1==null||rating2==null||rating3==null)){
+            throw new IllegalArgumentException("ratings is invalid");
+        }
+        if (overall==null){
+            overallRating.setOverall((rating1+rating2+rating3)/3.0);
+        }else if(rating1==null){
+            overallRating.setRating1(overall);
+            overallRating.setRating2(overall);
+            overallRating.setRating3(overall);
+        }
+        rating.setOverallRating(overallRating);
 
         return ratingRepository.save(rating);
     }
@@ -124,7 +219,7 @@ public class RatingServiceImpl implements IRatingService {
      * Deletes a rating by its ID.
      * @param id The ObjectId of the rating to delete.
      */
-    public void deleteRatingT(ObjectId id) {
+    public void deleteRatingDbT(ObjectId id) {
         ratingRepository.deleteById(id);
     }
     /**
@@ -133,13 +228,39 @@ public class RatingServiceImpl implements IRatingService {
      * @param id The ObjectId of the rating to mark as deleted.
      */
     //    fake delete, used usually
-    public void deleteRating(ObjectId id) {
-        ratingRepository.findByIdAndNotDeleted(id).ifPresent(rating -> {
+    public boolean deleteRatingDb(String id) {
+        Optional<Rating> optionalRating = ratingRepository.findByIdAndNotDeleted(new ObjectId(id));
+        if (optionalRating.isPresent()) {
+            Rating rating = optionalRating.get();
             rating.setDeleted(true);
             rating.setDeletedDate(new Date());
             ratingRepository.save(rating);
-            placeService.removeRating(rating.getPlaceId(),rating);
-        });
+            return true;
+        } else {
+            return false; // Rating not found
+        }
+    }
+    @Transactional
+    @Override
+    public ResponseEntity<String> deleteRating(String id){
+        try {
+            Rating rating=validateRating(id);
+            User user = userService.validateUser(rating.getUserId());
+            Place place = placeService.validatePlace(rating.getPlaceId());
+            boolean ratingDeleted = deleteRatingDb(id);
+            boolean userDeleted = userService.deleteRating(rating);
+            boolean placeDeleted = placeService.deleteRating(rating);
+            if (!ratingDeleted || !userDeleted || !placeDeleted) {
+                // If any deletion fails, return an INTERNAL_SERVER_ERROR response
+                String errorMessage = "deleteError";
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            }
+            // If deletion is successful, return an OK response
+            return ResponseEntity.ok("Rating deleted successfully");
+        } catch (IllegalArgumentException e) {
+            String errorMessage = "Invalid parameter: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
     }
     /**
      * Retrieves ratings with an overall rating greater than a specified value.

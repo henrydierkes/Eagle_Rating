@@ -38,12 +38,12 @@ public class Rating implements Serializable {
     private ObjectId ratingId;
 
     @Field("userId")
-    private ObjectId userId;
+    private String userId;
     @Field("placeId")
-    private ObjectId placeId;
+    private String placeId;
 
     @Field("tags")
-    private List<String> tags;
+    private Map<String, Boolean> tags;
 
     @Field("comment")
     private String comment;
@@ -51,7 +51,7 @@ public class Rating implements Serializable {
     @Field("date")
     private Date date;
     @Field("floor")
-    private int floor;
+    private Integer floor;
     @Field("likes")
     private Integer likes;
 
@@ -75,7 +75,10 @@ public class Rating implements Serializable {
         private Double rating1;
         private Double rating2;
         private Double rating3;
-        private Map<String, String> ratingAspect;
+
+        public OverallRating() {
+            // Default constructor
+        }
     }
 
 

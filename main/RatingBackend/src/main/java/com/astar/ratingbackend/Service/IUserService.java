@@ -1,5 +1,6 @@
 package com.astar.ratingbackend.Service;
 
+import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Entity.User;
 import org.bson.types.ObjectId;
 
@@ -20,4 +21,7 @@ public interface IUserService {
     List<User> getAllUser();
 
     void addUser(User user);
+    void addRating(Rating rating);
+    boolean deleteRating(Rating rating);
+    public User validateUser(String userId);
 }

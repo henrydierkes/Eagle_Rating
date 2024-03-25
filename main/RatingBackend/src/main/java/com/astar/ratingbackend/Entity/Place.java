@@ -47,19 +47,19 @@ public class Place implements Serializable {
     @Field("location")
     private GeoJsonPoint location;
     @Field("floor")
-    private int floor;
+    private Integer floor;
 
     @Field("campus")
     private String campus;
 
     @Field("tags")
-    private List<String> tags;
+    private Map<String, Integer> tags;
 
     @Field("ratingCount")
     private Integer ratingCount;
 
     @Field("ratingIds")
-    private List<ObjectId> ratingIds;
+    private List<String> ratingIds;
 
     @Field("images")
     private List<Image> images;

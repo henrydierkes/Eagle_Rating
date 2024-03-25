@@ -10,6 +10,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import './LocationForm.css';
+import axios from 'axios'; // Import Axios
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,10 +24,6 @@ const MenuProps = {
   },
 };
 
-const results = [
-  { id: 1, title: "Place 567", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1400 Emory Street', top_tags: ['tables', 'chairs'], size: 5, clean: 5, quiet: 5, building: 'Building A', floor: '2nd floor'},
-];
-
 const tags = [
   'Charging Ports',
   'Quiet Space',
@@ -35,13 +33,41 @@ const tags = [
 ];
 
 const LocationForm = () => {
-  const [rating, setRating] = useState(0);
-  const [size, setSize] = useState(0);
-  const [cleanliness, setCleanliness] = useState(0);
-  const [quietness, setQuietness] = useState(0);
-  const [tag, setTag] = React.useState([]);
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const [formData, setFormData] = useState({
+    placeName: '',
+    buildingName: '',
+    floorName: '',
+    categoryName: '',
+    rating: 0,
+    size: 0,
+    cleanliness: 0,
+    quietness: 0,
+    tags: [],
+    comment: '',
+    uploadedImages: []
+  });
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleRatingChange = (name, newValue) => {
+    setFormData({
+      ...formData,
+      [name]: newValue
+    });
+  };
+
+  const handleTagsChange = (event) => {
+    setFormData({
+      ...formData,
+      tags: event.target.value
+    });
+  };
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -51,129 +77,187 @@ const LocationForm = () => {
       reader.onload = (event) => {
         imagesArray.push(event.target.result);
         if (imagesArray.length === files.length) {
-          setUploadedImages(imagesArray);
+          setFormData({
+            ...formData,
+            uploadedImages: imagesArray
+          });
         }
       };
       reader.readAsDataURL(files[i]);
     }
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log({
-      rating,
-      size,
-      cleanliness,
-      quietness,
-      images,
-    });
-  };
-
-  const handleTagsChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setTag(
-      typeof value === 'string' ? value.split(',') : value,
-    );
+    axios.post('http://localhost:8080/api/place/add', {  // Use axios.post instead of fetch
+      locName: formData.placeName + ' ' + formData.buildingName,
+      category: formData.categoryName,
+      floor: formData.floorName,
+      location: null,
+      tags: formData.tags.reduce((acc, tag) => {
+        acc[tag] = 1; // Assuming all tags have a count of 1
+        return acc;
+      }, {}),
+      ratingCount: 0, // Assuming there's always at least 1 rating for a new place
+      ratingIds: [],
+      images: formData.uploadedImages.map(image => ({ data: image })),
+      // totalRating: {
+      //   overall: formData.rating,
+      //   rating1: formData.size,
+      //   rating2: formData.cleanliness,
+      //   rating3: formData.quietness
+      // },
+      isDeleted: false,
+      deletedDate: null
+    })
+        .then(response => {
+          console.log('Place added successfully:', response.data);
+          // Reset form data after successful submission
+          setFormData({
+            placeName: '',
+            buildingName: '',
+            floorName: '',
+            categoryName: '',
+            rating: 0,
+            size: 0,
+            cleanliness: 0,
+            quietness: 0,
+            tags: [],
+            comment: '',
+            uploadedImages: []
+          });
+        })
+        .catch(error => {
+          console.error('Error adding place:', error);
+        });
   };
 
   return (
-    <div className="rating-form">
-      <TextField sx={{ mb: 1}} className='place-name' id="outlined-basic" label="Enter Place Name" variant="outlined" required/>
-      <TextField sx={{ mb: 1}} className='building-name' id="outlined-basic" label="Enter Building" variant="outlined" />
-      <TextField sx={{ mb: 1}} className='floor-name' id="outlined-basic" label="Enter Floor" variant="outlined" />
-      <TextField sx={{ mb: 1}} className='category-name' id="outlined-basic" label="Enter Category" variant="outlined" />
-
-      <form onSubmit={handleSubmit}>
-        <div className='overall-rating'>
-          <Typography component="legend">Overall Rating:</Typography>
-          <Rating
-            name="rating"
-            value={rating}
-            onChange={(event, newValue) => {
-              setRating(newValue);
-            }}
-          />
-        </div>
-        <div className='size'>
-          <Typography component="legend">Size:</Typography>
-          <Rating
-            name="size"
-            value={size}
-            onChange={(event, newValue) => {
-              setSize(newValue);
-            }}
-          />
-        </div>
-        <div className='cleanliness'>
-          <Typography component="legend">Cleanliness:</Typography>
-          <Rating
-            name="cleanliness"
-            value={cleanliness}
-            onChange={(event, newValue) => {
-              setCleanliness(newValue);
-            }}
-          />
-        </div>
-        <div className='quietness'>
-          <Typography component="legend">Quietness:</Typography>
-          <Rating
-            name="quietness"
-            value={quietness}
-            onChange={(event, newValue) => {
-              setQuietness(newValue);
-            }}
-          />
-        </div>
-      <div>
-    <div className='rating-tags'>
-      <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
-        <InputLabel id="tags-label">Tags</InputLabel>
-        <Select
-          labelId="tags-label"
-          id="tags-select"
-          multiple
-          value={tag}
-          onChange={handleTagsChange}
-          input={<OutlinedInput label="Tag" />}
-          renderValue={(selected) => selected.join(', ')}
-          MenuProps={MenuProps}
-        >
-          {tags.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={tag.indexOf(name) > -1} />
-              <ListItemText primary={name} />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
-    </div>
-        <div className='comment-rating'>
-          <TextField
-          id="filled-textarea"
-          label="Comment"
-          placeholder="Type comment here"
-          multiline
-          variant="filled"
+      <div className="rating-form">
+        <TextField
+            sx={{ mb: 1}}
+            className='place-name'
+            id="outlined-basic"
+            label="Enter Place Name"
+            variant="outlined"
+            name="placeName"
+            value={formData.placeName}
+            onChange={handleInputChange}
+            required
         />
-        </div>
-        <div className="upload-images">
-          <label htmlFor="upload" className="upload-label">
-            <span>Upload Image</span>
-            <input id="upload" type="file" multiple onChange={handleImageChange} className="upload-input" />
-          </label>
-          {uploadedImages.map((image, index) => (
-          <img className='uploaded-image'key={index} src={image} alt={`Uploaded Image ${index + 1}`} />
-          ))}
-        </div>
+        <TextField
+            sx={{ mb: 1}}
+            className='building-name'
+            id="outlined-basic"
+            label="Enter Building"
+            variant="outlined"
+            name="buildingName"
+            value={formData.buildingName}
+            onChange={handleInputChange}
+        />
+        <TextField
+            sx={{ mb: 1}}
+            className='floor-name'
+            id="outlined-basic"
+            label="Enter Floor"
+            variant="outlined"
+            name="floorName"
+            value={formData.floorName}
+            onChange={handleInputChange}
+        />
+        <TextField
+            sx={{ mb: 1}}
+            className='category-name'
+            id="outlined-basic"
+            label="Enter Category"
+            variant="outlined"
+            name="categoryName"
+            value={formData.categoryName}
+            onChange={handleInputChange}
+        />
 
-        <button className='submit-button' type="submit">Submit</button>
-      </form>
-    </div>
+        <form onSubmit={handleSubmit}>
+          <div className='overall-rating'>
+            <Typography component="legend">Overall Rating:</Typography>
+            <Rating
+                name="rating"
+                value={formData.rating}
+                onChange={(event, newValue) => handleRatingChange('rating', newValue)}
+            />
+          </div>
+          <div className='size'>
+            <Typography component="legend">Size:</Typography>
+            <Rating
+                name="size"
+                value={formData.size}
+                onChange={(event, newValue) => handleRatingChange('size', newValue)}
+            />
+          </div>
+          <div className='cleanliness'>
+            <Typography component="legend">Cleanliness:</Typography>
+            <Rating
+                name="cleanliness"
+                value={formData.cleanliness}
+                onChange={(event, newValue) => handleRatingChange('cleanliness', newValue)}
+            />
+          </div>
+          <div className='quietness'>
+            <Typography component="legend">Quietness:</Typography>
+            <Rating
+                name="quietness"
+                value={formData.quietness}
+                onChange={(event, newValue) => handleRatingChange('quietness', newValue)}
+            />
+          </div>
+          <div>
+            <div className='rating-tags'>
+              <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
+                <InputLabel id="tags-label">Tags</InputLabel>
+                <Select
+                    labelId="tags-label"
+                    id="tags-select"
+                    multiple
+                    value={formData.tags}
+                    onChange={handleTagsChange}
+                    input={<OutlinedInput label="Tag" />}
+                    renderValue={(selected) => selected.join(', ')}
+                    MenuProps={MenuProps}
+                >
+                  {tags.map((name) => (
+                      <MenuItem key={name} value={name}>
+                        <Checkbox checked={formData.tags.indexOf(name) > -1} />
+                        <ListItemText primary={name} />
+                      </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          </div>
+          <div className='comment-rating'>
+            <TextField
+                id="filled-textarea"
+                label="Comment"
+                placeholder="Type comment here"
+                multiline
+                variant="filled"
+                name="comment"
+                value={formData.comment}
+                onChange={handleInputChange}
+            />
+          </div>
+          <div className="upload-images">
+            <label htmlFor="upload" className="upload-label">
+              <span>Upload Image</span>
+              <input id="upload" type="file" multiple onChange={handleImageChange} className="upload-input" />
+            </label>
+            {formData.uploadedImages.map((image, index) => (
+                <img className='uploaded-image'key={index} src={image} alt={`Uploaded Image ${index + 1}`} />
+            ))}
+          </div>
+
+          <button className='submit-button' type="submit">Submit</button>
+        </form>
+      </div>
   );
 };
 
