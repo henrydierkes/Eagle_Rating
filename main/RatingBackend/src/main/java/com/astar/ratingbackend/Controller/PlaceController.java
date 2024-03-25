@@ -89,13 +89,13 @@ public class PlaceController {
      */
     @GetMapping("/search")
     @CrossOrigin
-    public ResponseEntity<List<Place>> searchByLocNameAndCategoryAndTagsAll(
+    public ResponseEntity<List<Place>> searchPlacesByName(
             @RequestParam(required = false) String locName,
-            @RequestParam(required = true) String category,
-            @RequestParam(required = false) List<String> tags,
+//            @RequestParam(required = false) String category,
+//            @RequestParam(required = false) List<String> tags,
             @RequestParam(required = false) Boolean desc
     ) {
-        List<Place> places = placeService.searchByLocNameAndCategoryAndTagsAll(locName, category, tags);
+        List<Place> places = placeService.searchPlacesByName(locName);
         if(desc!=null&&desc){
             placeService.sortRatingsDescending(places);
         }
