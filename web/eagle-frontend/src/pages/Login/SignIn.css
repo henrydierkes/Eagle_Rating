@@ -39,6 +39,9 @@
     height: 65%;
     border-radius: 20px;
 }
+.muititle{
+    margin-top: 32px;
+}
 .Signin{
     display: flex;
     justify-content: center;

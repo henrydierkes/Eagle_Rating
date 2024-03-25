@@ -89,13 +89,13 @@ export default function SignIn() {
               <CssBaseline />
               <Box
                   sx={{
-                    marginTop: 8,
+                    marginTop: 5,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                   }}
               >
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h5" className='muititle'>
                   Sign In
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
