@@ -1,5 +1,5 @@
 .footer {
-  background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
+  background: linear-gradient(to right, #b5d3f8, #9eabf6); /* Gradient background */
   color: white;
   display: flex;
   width: 100%;
@@ -21,24 +21,24 @@
 .contact-form input,
 .contact-form textarea {
   width: 90%;
-  padding: 15px; /* Increased padding for better visual and typing space */
+  padding: 15px;
   margin-bottom: 10px;
-  border: 2px solid #c1c9f6; /* Slightly thicker border with a color that matches the gradient */
-  border-radius: 4px; /* More pronounced rounded corners for a modern look */
+  border: 2px solid #c1c9f6;
+  border-radius: 4px;
   resize: none;
   font-family: Arial, sans-serif;
-  font-size: 16px; /* Increased font size for better readability */
-  background-color: #f0f0f0; /* Light background to make it stand out */
-  color: #333; /* Darker text for better contrast */
+  font-size: 16px;
+  background-color: #f0f0f0;
+  color: #333;
 }
 
-.contact-form input{
+.contact-form input {
   margin-top: 0px;
   height: 0px;
 }
 
 .contact-form textarea {
-  width: 90%; /* Adjusted width for better alignment */
+  width: 90%;
   height: 75px;
 }
 
@@ -46,19 +46,26 @@
 .contact-form input[type="submit"] {
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   color: #fff;
-  padding: 9px 30px; /* Adjusted padding */
+  padding: 9px 30px;
   margin: 0 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px; /* Increased font size */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  font-size: 14px;
+  transition: transform 0.2s ease, background-color 0.3s ease; /* Added transform to the transition */
 }
 
-/* Hover effect for button */
+/* Enhancing hover and focus with scale */
 .contact-form button:hover,
-.contact-form input[type="submit"]:hover {
+.contact-form input[type="submit"]:hover,
+.contact-form button:focus,
+.contact-form input[type="submit"]:focus {
   background-color: #4b6cb7; /* Darker shade for hover effect */
+}
+
+.contact-form button:active,
+.contact-form input[type="submit"]:active {
+  transform: scale(0.95); /* Slight decrease in size to simulate a press effect */
 }
 
 @media (max-width: 768px) {
@@ -73,6 +80,6 @@
 
   .contact-form input,
   .contact-form textarea {
-    width: 80%; /* Adjusted width for small screens */
+    width: 80%;
   }
 }

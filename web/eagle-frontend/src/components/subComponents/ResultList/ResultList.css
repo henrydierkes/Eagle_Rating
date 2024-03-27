@@ -57,12 +57,118 @@
 
 .result-item p {
   margin: 0;
-  color: #666; /* dark gray color for the description */
-  font-size: 0.9em;
+  color: #666; /* dark gray color for the descripti.footer {
+  background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
+  color: white;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-top: 0px;
+  font-size: 12px;
+}
+
+.footer-section {
+  flex: 1;
+  margin: 0 15px;
+}
+
+.footer-section h4 {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 90%;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 2px solid #c1c9f6;
+  border-radius: 4px;
+  resize: none;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.contact-form input {
+  margin-top: 0px;
+  height: 0px;
+}
+
+.contact-form textarea {
+  width: 90%;
+  height: 75px;
+}
+
+.contact-form button,
+.contact-form input[type="submit"] {
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe);
+  color: #fff;
+  padding: 9px 30px;
+  margin: 0 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s ease, background-color 0.3s ease; /* Added transform to the transition */
+}
+
+/* Enhancing hover and focus with scale */
+.contact-form button:hover,
+.contact-form input[type="submit"]:hover,
+.contact-form button:focus,
+.contact-form input[type="submit"]:focus {
+  transform: scale(1.05); /* Slight increase in size on hover/focus */
+  background-color: #4b6cb7; /* Darker shade for hover effect */
+}
+
+.contact-form button:active,
+.contact-form input[type="submit"]:active {
+  transform: scale(0.95); /* Slight decrease in size to simulate a press effect */
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-section {
+    margin-bottom: 20px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 80%;
+  }
 }
 
 .result-item .description {
   font-size: 0.8em;
   color: #999; /* lighter gray color */
   margin-top: 4px; /* space between main description and this line */
+}
+
+.rating-button {
+  padding: 10px 15px; /* Adjust padding for better ergonomics */
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe);
+  border: none; /* Remove default border */
+  border-radius: 25px; /* Rounded corners */
+  color: #fff; /* White text color for contrast */
+  font-size: 1rem; /* Appropriate font size */
+  cursor: pointer; /* Cursor pointer to indicate clickability */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
+  outline: none; /* Remove outline to maintain the style */
+  margin-top: 20px; /* Space from the last result item */
+}
+
+.rating-button:hover, .rating-button:focus {
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe); /* Slightly change the gradient on hover/focus for visual feedback */
+  transform: scale(1.01); /* Slight increase in size on hover/focus for interaction feedback */
+}
+
+.rating-button:active {
+  transform: scale(0.98); /* Slight decrease in size on active to simulate a press effect */
+  opacity: 2;
 }

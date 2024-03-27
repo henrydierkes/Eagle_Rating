@@ -24,7 +24,6 @@
   margin: 0;
   font-size: 3rem; /* Large font size for the title */
 }
-
 .choose-campus-btn {
   margin-top: 1rem;
   width: 190px;
@@ -37,20 +36,30 @@
   cursor: pointer;
   position: relative; /* Needed to position the pseudo-element */
   overflow: hidden; /* Ensures the pseudo-element doesn't exceed the button's bounds */
-  transition: background-color 0.3s ease; /* Transition for background color */
+  transition: transform 0.2s ease; /* Transition for transform */
 }
 
 .choose-campus-btn::after {
   content: '';
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0; /* Full cover */
-  background-color: #637afe4d; /* Replace with the color you want on hover */
+  background-color: rgba(99, 122, 254, 0.3); /* Semi-transparent overlay for visual feedback on hover */
   opacity: 0; /* Hide the overlay initially */
-  transition: opacity 0.3s ease; /* Transition for the opacity */
+  transition: opacity 0.3s ease; /* Smooth transition for the opacity */
+  transform: scale(1.01); /* Initial scale */
   border-radius: inherit; /* Match the border-radius of the button */
 }
 
-.choose-campus-btn:hover::after {
-  opacity: 2; /* Show the overlay on hover */
+.choose-campus-btn:hover, .choose-campus-btn:focus {
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe); /* Adjust the gradient on hover/focus for visual feedback */
+  transform: scale(1.01); /* Slight increase in size on hover/focus for interaction feedback */
 }
 
+.choose-campus-btn:hover::after, .choose-campus-btn:focus::after {
+  opacity: 1; /* Show the overlay on hover/focus */
+  transform: scale(1.05); /* Slight increase for a bouncy effect */
+}
+
+.choose-campus-btn:active {
+  transform: scale(0.98); /* Slight decrease in size on active to simulate a press effect */
+}
