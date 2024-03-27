@@ -36,6 +36,7 @@ To set up the project locally, follow these steps:
 3. Run `npm install` to install the dependencies.
 4. Start the development server with `npm run dev`.
 
+
 ## Usage
 
 Once the development server is running, you can view the application by navigating to `http://localhost:3000` in your web browser.
