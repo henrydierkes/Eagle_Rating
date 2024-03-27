@@ -26,9 +26,13 @@ import com.astar.ratingbackend.Service.IRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -60,13 +64,29 @@ public class PlaceController {
      */
     @PostMapping("/add")
     @CrossOrigin
+    @Transactional
     public ResponseEntity<Place> addPlace(@RequestBody AddPlaceRequest addPlaceRequest) {
-//    public ResponseEntity<Place> addPlace(@RequestBodyPlace place, @RequestParam("userId") String userId) {
+//    public ResponseEntity<Place> addPlace(@RequestBody Place place, @RequestParam("userId") String userId, @RequestParam("comment")String comment, @RequestParam("tags")List<String> tags) {
         Place place=addPlaceRequest.getPlace();
         String userId=addPlaceRequest.getUserId();
         Place.TotalRating totalRating=place.getTotalRating();
+        Map<String, Integer> tags = place.getTags();
+        Map<String, Boolean> tagsMap = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : tags.entrySet()) {
+            tagsMap.put(entry.getKey(), entry.getValue() == 1); // Convert Integer to Boolean
+        }
+        Integer floor = place.getFloor();
+        String comment=addPlaceRequest.getComment();
         Place addedPlace = placeService.addPlace(place);
-        if(totalRating.getOverall()!=0||(totalRating.getRating1()+totalRating.getRating2()+ totalRating.getRating3())!=0){
+//          Place.TotalRating totalRating=place.getTotalRating();
+//          Integer floor = place.getFloor();
+//          String campus = place.getCampus();
+//            Map<String, Boolean> tagsMap = new HashMap<>();
+//            for (String tag : tags) {
+//                tagsMap.put(tag, true); // Assuming all tags are selected
+//            }
+//          Place addedPlace = placeService.addPlace(place);
+        if(totalRating.getOverall()!=0||(totalRating.getRating1()+totalRating.getRating2()+ totalRating.getRating3())!=0||comment!=null){
             Rating rating=new Rating();
             rating.setUserId(userId);
             rating.setPlaceId(addedPlace.getLocId().toString());
@@ -75,6 +95,11 @@ public class PlaceController {
             overallRating.setRating1(totalRating.getRating1());
             overallRating.setRating2(totalRating.getRating2());
             overallRating.setRating3(totalRating.getRating3());
+            rating.setOverallRating(overallRating);
+            rating.setComment(comment);
+            rating.setDate(new Date());
+            rating.setFloor(floor);
+            rating.setTags(tagsMap);
             ratingService.addRating(rating);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(addedPlace);

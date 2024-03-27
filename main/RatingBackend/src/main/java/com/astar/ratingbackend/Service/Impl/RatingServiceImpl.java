@@ -156,9 +156,9 @@ public class RatingServiceImpl implements IRatingService {
         if(overall==null&&(rating1==null||rating2==null||rating3==null)){
             throw new IllegalArgumentException("ratings is invalid");
         }
-        if (overall==null){
+        if (overall==0){
             overallRating.setOverall((rating1+rating2+rating3)/3.0);
-        }else if(rating1==null){
+        }else{
             overallRating.setRating1(overall);
             overallRating.setRating2(overall);
             overallRating.setRating3(overall);

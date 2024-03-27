@@ -6,4 +6,5 @@ import lombok.Data;
 public class AddPlaceRequest {
     Place place;
     String userId;
+    String comment;
 }

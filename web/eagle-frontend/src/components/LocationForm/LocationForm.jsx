@@ -117,33 +117,34 @@ const LocationForm = ({ location }) => {
     e.preventDefault();
     console.log("Latitude on submit:", latitude);
     console.log("Longitude on submit:", longitude);
-    const userId = '65d574294bb7330ced78f1ba';// hard code userID; need to retrive from website later.
+    const userId = '65f63e365aaca164fc0ddb41';// hard code userID; need to retrive from website later.
+    const tagsObject = formData.tags.reduce((obj, item) => {
+      obj[item] = 1; // You can set any value, here I've used 1 as an example
+      return obj;
+    }, {});
     const placeForm={
-      locName: formData.placeName + ' ' + formData.buildingName,
-          category: formData.categoryName,
-          floor: formData.floor,
-          location: {
+      locName: formData.placeName + '-' + formData.buildingName,
+      category: formData.categoryName,
+      floor: formData.floor,
+      location: {
         longitude,
-            latitude,
+        latitude,
       },
-      tags: formData.tags.reduce((acc, tag) => {
-        acc[tag] = 1; // Assuming all tags have a count of 1
-        return acc;
-      }, {}),
-          images: formData.uploadedImages.map(image => ({data: image})),
-          totalRating: {
+      images: formData.uploadedImages.map(image => ({data: image})),
+      totalRating: {
         overall: formData.rating,
-            rating1: formData.subRating1,
-            rating2: formData.subRating2,
-            rating3: formData.subRating3,
+        rating1: formData.subRating1,
+        rating2: formData.subRating2,
+        rating3: formData.subRating3,
       },
+      tags:tagsObject,
       isDeleted: false,
-          deletedDate: null,
+      deletedDate: null,
     }
     const finalForm={
-      "place":placeForm,
-      'userId': userId
-
+      'place':placeForm,
+      'userId': userId,
+      'comment': formData.comment.toString(),
     }
     axios.post('http://localhost:8080/api/place/add', finalForm)
         .then(response => {
@@ -264,34 +265,34 @@ const LocationForm = ({ location }) => {
                 )}
                 {ratingType === 'sub' && (
                     <>
-                    <div className='subRating1'>
-                      <Typography component="legend">Size:</Typography>
-                      <Rating
-                          name="size"
-                          value={formData.subRating1}
-                          onChange={(event, newValue) => handleRatingChange('size', newValue)}
-                      />
-                    </div>
-                    <div className='subRating2'>
-                      <Typography component="legend">Cleanliness:</Typography>
-                      <Rating
-                          name="cleanliness"
-                          value={formData.subRating2}
-                          onChange={(event, newValue) => handleRatingChange('cleanliness', newValue)}
-                      />
-                    </div>
-                    <div className='subRating3'>
-                      <Typography component="legend">Quietness:</Typography>
-                      <Rating
-                          name="quietness"
-                          value={formData.subRating3}
-                          onChange={(event, newValue) => handleRatingChange('quietness', newValue)}
-                      />
-                    </div>
+                      <div className='subRating1'>
+                        <Typography component="legend">Size:</Typography>
+                        <Rating
+                            name="size"
+                            value={formData.subRating1}
+                            onChange={(event, newValue) => handleRatingChange('size', newValue)}
+                        />
+                      </div>
+                      <div className='subRating2'>
+                        <Typography component="legend">Cleanliness:</Typography>
+                        <Rating
+                            name="cleanliness"
+                            value={formData.subRating2}
+                            onChange={(event, newValue) => handleRatingChange('cleanliness', newValue)}
+                        />
+                      </div>
+                      <div className='subRating3'>
+                        <Typography component="legend">Quietness:</Typography>
+                        <Rating
+                            name="quietness"
+                            value={formData.subRating3}
+                            onChange={(event, newValue) => handleRatingChange('quietness', newValue)}
+                        />
+                      </div>
                     </>
-                  )}
-              </>
                 )}
+              </>
+          )}
 
           <div>
             <div className='rating-tags'>

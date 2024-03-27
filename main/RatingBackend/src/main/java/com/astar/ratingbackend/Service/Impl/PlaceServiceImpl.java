@@ -37,6 +37,7 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setRatingCount(0);
         place.setTotalRating(new Place.TotalRating(0,0,0,0));
         place.setRatingIds(new ArrayList<String>());
+        place.setTags(new LinkedHashMap<String,Integer>());
         if(place.getFloor()==null){
             place.setFloor(null);
         }
