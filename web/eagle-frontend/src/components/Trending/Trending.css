@@ -2,15 +2,15 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: center; /* Center the content horizontally */
-  align-items: center;
-  background-color: rgb(255, 251, 251);
+  padding-bottom: 2vh;
+  background-color: rgb(255, 255, 255);
+/*  need to standardize*/
 }
-
 .Trending .title {
-  width: 100%;
-  text-align: left; /* Align the title to the left */
-  margin-left: 40px;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: -21px;
+  font-size: 50px;
 }
 
 .Trending .title h1 {
