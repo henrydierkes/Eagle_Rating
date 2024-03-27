@@ -4,10 +4,11 @@ import RatingBar from "../subComponents/RatingBar/RatingBar.jsx";
 import TopRatings from "../subComponents/TopRatings/TopRatings.jsx";
 import UserImages from "../subComponents/UserImages/UserImages.jsx";
 import UserComments from "../subComponents/UserComments/UserComments.jsx";
+import { useNavigate } from "react-router-dom";
 
-const handleAddCommentClick = () => {
-  navigate("/addComment"); // Navigate to comment page
-};
+// const handleAddCommentClick = () => {
+//   navigate("/addComment"); // Navigate to comment page
+// };
 
 const getRatingColor = (rating) => {
   if (rating >= 4) {
@@ -23,6 +24,12 @@ const getRatingColor = (rating) => {
 const goToPage = () => {};
 
 const PlaceDetails = ({ results }) => {
+
+  const navigate = useNavigate();
+  const handleAddCommentClick = () => {
+    navigate("/addComment");
+  };
+
   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
   return (
     <div className="place-details">
