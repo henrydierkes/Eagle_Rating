@@ -82,6 +82,7 @@ const LocationForm = ({ location }) => {
   };
 
   const handleRatingChange = (name, newValue) => {
+    console.log(name, newValue); // This should log the name of the rating and the new value
     setFormData({
       ...formData,
       [name]: newValue
@@ -270,7 +271,7 @@ const LocationForm = ({ location }) => {
                         <Rating
                             name="size"
                             value={formData.subRating1}
-                            onChange={(event, newValue) => handleRatingChange('size', newValue)}
+                            onChange={(event, newValue) => handleRatingChange('subRating1', newValue)}
                         />
                       </div>
                       <div className='subRating2'>
@@ -278,7 +279,7 @@ const LocationForm = ({ location }) => {
                         <Rating
                             name="cleanliness"
                             value={formData.subRating2}
-                            onChange={(event, newValue) => handleRatingChange('cleanliness', newValue)}
+                            onChange={(event, newValue) => handleRatingChange('subRating2', newValue)}
                         />
                       </div>
                       <div className='subRating3'>
@@ -286,7 +287,7 @@ const LocationForm = ({ location }) => {
                         <Rating
                             name="quietness"
                             value={formData.subRating3}
-                            onChange={(event, newValue) => handleRatingChange('quietness', newValue)}
+                            onChange={(event, newValue) => handleRatingChange('subRating3', newValue)}
                         />
                       </div>
                     </>
