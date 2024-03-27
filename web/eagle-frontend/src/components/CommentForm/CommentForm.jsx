@@ -11,6 +11,8 @@ import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import './CommentForm.css';
 import axios from 'axios';
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ToggleButton from "@mui/material/ToggleButton";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -41,8 +43,21 @@ const CommentForm = () => {
   const [tag, setTag] = React.useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [comment, setComment] = useState('');
+    const [ratingType, setRatingType] = useState('total'); // 'total' or 'sub'
+    const [formData, setFormData] = useState({
+        rating: 0,
+        size: 0,
+        cleanliness: 0,
+        quietness: 0,
+    });
+    const handleRatingChange = (name, newValue) => {
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: newValue,
+        }));
+    };
 
-  const handleImageChange = (e) => {
+    const handleImageChange = (e) => {
     const files = e.target.files;
     const imagesArray = [];
     for (let i = 0; i < files.length; i++) {
@@ -113,47 +128,60 @@ const CommentForm = () => {
     <div className="rating-form">
       <h2>Rate {results[0].title}</h2>
       <form onSubmit={handleSubmit}>
-        <div className='overall-rating'>
-          <Typography component="legend">Overall Rating:</Typography>
-          <Rating
-            // precision={0.5}
-            name="rating"
-            value={rating}
-            onChange={(event, newValue) => {
-              setRating(newValue);
-            }}
-          />
-        </div>
-        <div className='size'>
-          <Typography component="legend">Size:</Typography>
-          <Rating
-            name="size"
-            value={size}
-            onChange={(event, newValue) => {
-              setSize(newValue);
-            }}
-          />
-        </div>
-        <div className='cleanliness'>
-          <Typography component="legend">Cleanliness:</Typography>
-          <Rating
-            name="cleanliness"
-            value={cleanliness}
-            onChange={(event, newValue) => {
-              setCleanliness(newValue);
-            }}
-          />
-        </div>
-        <div className='quietness'>
-          <Typography component="legend">Quietness:</Typography>
-          <Rating
-            name="quietness"
-            value={quietness}
-            onChange={(event, newValue) => {
-              setQuietness(newValue);
-            }}
-          />
-        </div>
+          <ToggleButtonGroup
+              value={ratingType}
+              exclusive
+              onChange={(event, newRatingType) => setRatingType(newRatingType)}
+              aria-label="rating type"
+              sx={{ mb: 1 }}
+          >
+              <ToggleButton value="total" aria-label="left aligned">
+                  Total Rating
+              </ToggleButton>
+              <ToggleButton value="sub" aria-label="centered">
+                  Subrating
+              </ToggleButton>
+          </ToggleButtonGroup>
+
+
+          {ratingType === 'total' && (
+              <div className='overall-rating'>
+                  <Typography component="legend">Overall Rating:</Typography>
+                  <Rating
+                      name="rating"
+                      value={formData.rating}
+                      onChange={(event, newValue) => handleRatingChange('rating', newValue)}
+                  />
+              </div>
+          )}
+          {ratingType === 'sub' && (
+              <>
+                  <div className='size'>
+                      <Typography component="legend">Size:</Typography>
+                      <Rating
+                          name="size"
+                          value={formData.size}
+                          onChange={(event, newValue) => handleRatingChange('size', newValue)}
+                      />
+                  </div>
+                  <div className='cleanliness'>
+                      <Typography component="legend">Cleanliness:</Typography>
+                      <Rating
+                          name="cleanliness"
+                          value={formData.cleanliness}
+                          onChange={(event, newValue) => handleRatingChange('cleanliness', newValue)}
+                      />
+                  </div>
+                  <div className='quietness'>
+                      <Typography component="legend">Quietness:</Typography>
+                      <Rating
+                          name="quietness"
+                          value={formData.quietness}
+                          onChange={(event, newValue) => handleRatingChange('quietness', newValue)}
+                      />
+                  </div>
+              </>
+          )}
       <div>
     <div className='rating-tags'>
       <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
