@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -160,3 +159,17 @@ export default function SignIn() {
       </div>
   );
 }
+<Box
+  sx={{
+    marginTop: 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white', // Ensures white background
+    padding: 3, // Consistent padding
+    borderRadius: 2, // Consistent border radius
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Consistent shadow for depth
+    width: '100%', // Ensures the Box takes up the width it needs based on its parent (Container maxWidth="xs")
+    maxWidth: 400, // Optional: Ensures the Box does not grow beyond 400px, adjust as needed
+  }}
+></Box>

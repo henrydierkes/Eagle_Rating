@@ -175,7 +175,7 @@ const LocationForm = ({ location }) => {
   return (
       <div className="rating-form">
         <TextField
-            sx={{ mb: 1}}
+            sx={{ mt: 2, mb: 1}}
             className='place-name'
             id="outlined-basic"
             label="Enter Place Name"
@@ -186,7 +186,7 @@ const LocationForm = ({ location }) => {
             required
         />
         <TextField
-            sx={{ mb: 1}}
+            sx={{ mt: 2, mb: 1}}
             className='building-name'
             id="outlined-basic"
             label="Enter Building"
@@ -207,7 +207,7 @@ const LocationForm = ({ location }) => {
           )}
         </div>
         <TextField
-            sx={{ mb: 1}}
+            sx={{ mt: 2, mb: 1}}
             className='floo'
             id="outlined-basic"
             label="Enter Floor"
@@ -217,7 +217,7 @@ const LocationForm = ({ location }) => {
             onChange={handleInputChange}
         />
         <TextField
-            sx={{ mb: 1}}
+            sx={{ mt: 2, mb: 1}}
             className='category-name'
             id="outlined-basic"
             label="Enter Category"
