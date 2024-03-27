@@ -45,10 +45,6 @@ Once the development server is running, you can view the application by navigati
 
 We welcome contributions to Eagle Frontend! Please read our contributing guidelines before submitting a pull request.
 
-## License
-
-Eagle Frontend is [licensed under the MIT License](LICENSE.md).
-
 ## Contact
 
 For any additional questions or comments, please contact Tuan Vinh (tvinh@emory.edu).
