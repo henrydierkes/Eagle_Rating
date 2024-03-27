@@ -36,6 +36,7 @@ To set up the project locally, follow these steps:
 3. Run `npm install` to install the dependencies.
 4. Start the development server with `npm run dev`.
 
+
 ## Usage
 
 Once the development server is running, you can view the application by navigating to `http://localhost:3000` in your web browser.
@@ -43,10 +44,6 @@ Once the development server is running, you can view the application by navigati
 ## Contributing
 
 We welcome contributions to Eagle Frontend! Please read our contributing guidelines before submitting a pull request.
-
-## License
-
-Eagle Frontend is [licensed under the MIT License](LICENSE.md).
 
 ## Contact
 
