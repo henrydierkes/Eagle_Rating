@@ -46,7 +46,7 @@ const PlaceDetails = ({ results }) => {
           </div>
           <div className="header-left-r">
             <div className="mainInfo">
-              <h1 className="title">{result.title}</h1>
+              <h1 className="placeName">{result.title}</h1>
               <h3 className="building">{result.building}</h3>
               <h4 className="floor">{result.floor}</h4>
             </div>
