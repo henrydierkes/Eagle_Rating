@@ -1,0 +1,140 @@
+/* FilterRating.css */
+
+.filter-rating {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    /*box-shadow: 0 2px 12px rgba(0,0,0,0.1);*/
+    width: 70%;
+    max-width: 600px;
+}
+
+.filterhead {
+    color: #333;
+    margin-bottom: 30px;
+    top: 30px;
+    text-align: center;
+}
+
+.range-slider {
+    margin: 20px 0;
+    position: relative;
+}
+
+.range-slider label {
+    display: block;
+    color: #606770;
+    margin-bottom: 5px;
+}
+
+.range-slider__range {
+    -webkit-appearance: none;
+    width: 85%;
+    margin: 20px;
+    height: 8px;
+    border-radius: 5px;
+    background: #e9ecef;
+    outline: none;
+}
+
+.range-slider__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #006400; /* Dark green */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.range-slider__range:active::-webkit-slider-thumb,
+.range-slider__range:focus::-webkit-slider-thumb {
+    background: #004d00; /* Darker shade for active state */
+}
+
+.range-slider__value {
+    position: absolute;
+    top: -10px; /* Move up to accommodate larger text */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #006400; /* Dark green */
+    color: #fff;
+    padding: 6px 16px; /* Increase padding for larger text */
+    border-radius: 4px;
+    font-size: 20px; /* Significantly larger font size */
+    white-space: nowrap;
+    box-shadow: 0 3px 6px rgba(0, 64, 0, 0.3); /* Shadow for depth */
+    z-index: 2; /* Ensure it's above other elements */
+}
+
+.master-toggle, .subratings-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #006400; /* Dark green */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #006400; /* Dark green */
+}
+
+.zero.disabled {
+    color: #888; /* or any other shade of grey you prefer */
+}
+
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.disabled .range-slider__range,
+.disabled label {
+    opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+    .filter-rating {
+        width: calc(100% - 40px);
+    }
+}

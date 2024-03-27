@@ -1,0 +1,55 @@
+.user-images {
+  position: absolute; /* Positioning relative to .Image */
+  top: 50%; /* Move the top of .user-images to the vertical center */
+  left: 50%; /* Move the left of .user-images to the horizontal center */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Center .user-images both vertically and horizontally */
+}
+
+.images-container img {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+.images-container img.active {
+  display: block;
+}
+
+.arrow-btn {
+  padding: 50px;
+  border: none;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 50px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  width: 50px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-btn:hover {
+  background-color: #333333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.prev {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.next {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}

@@ -1,0 +1,50 @@
+:root {
+    --blur: 10px; /* Adjust the blur intensity */
+    --y: 50%; /* Vertical center */
+    --focus-range: 20%; /* Range around the focus area */
+    --blur-range: 10%; /* Transition range from blur to focus */
+}
+
+#bg,
+#bg_mask {
+    /* ふちボケ対策 */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: calc(var(--blur) * -1);
+
+    background: url(https://communications.emory.edu/_includes/images/sections/resources/zoom%20bkgrnd3%20Emory%20Quad.jpg)
+    no-repeat center bottom/cover;
+    z-index: -100;
+}
+#bg {
+    filter: blur(var(--blur));
+}
+#bg_mask {
+    mask-image: linear-gradient(
+            transparent,
+            transparent calc(var(--y) - var(--focus-range) - var(--blur-range)),
+            black calc(var(--y) - var(--focus-range)),
+            black var(--y),
+            black calc(var(--y) + var(--focus-range)),
+            transparent calc(var(--y) + var(--focus-range) + var(--blur-range)),
+            transparent
+    );
+}
+.loginHolder{
+    background-color: white;
+    width: 40%;
+    height: 65%;
+    border-radius: 20px;
+}
+.muititle{
+    margin-top: 32px;
+}
+.Signin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure full height of the viewport */
+}

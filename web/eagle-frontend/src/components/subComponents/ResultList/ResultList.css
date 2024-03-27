@@ -1,0 +1,68 @@
+.result-list {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-right: auto;
+  margin-top: 30px;
+}
+
+.result-item {
+  position: relative;
+  display: flex;
+  align-items: center; /* aligns the text and the box vertically */
+  border: 1px solid #ccc; /* light gray border */
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f5f5f5; /* light gray background */
+  width: 100%;
+}
+
+.result-item .rating-box {
+  background-color: #4CAF50; /* example color */
+  color: white;
+  padding: 12px 16px; /* size of the box */
+  margin-right: 10px;
+  margin-top: -5px;
+  margin-left: 5px;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.rating-box .rating-number {
+  font-size: 1.2em; 
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+
+.rating-description-below {
+  font-size: 0.8em; /* smaller font size for the rating description */
+  color: #999; /* light gray color for the text */
+  margin-top: 4px; /* space between the rating number and this text */
+}
+
+.highlight-tag {
+  position: absolute;
+  top: 10px; /* 调整为所需的值 */
+  right: 10px; /* 调整为所需的值 */
+  cursor: pointer; /* 更改鼠标样式为指针 */
+}
+
+.result-item h3 {
+  margin: 0;
+  font-size: 1.2em; /* slightly larger font for the title */
+}
+
+.result-item p {
+  margin: 0;
+  color: #666; /* dark gray color for the description */
+  font-size: 0.9em;
+}
+
+.result-item .description {
+  font-size: 0.8em;
+  color: #999; /* lighter gray color */
+  margin-top: 4px; /* space between main description and this line */
+}

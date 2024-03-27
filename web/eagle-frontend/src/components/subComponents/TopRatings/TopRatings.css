@@ -1,0 +1,27 @@
+.top-ratings {
+  font-family: Arial, sans-serif;
+  text-align: left;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  width: 550px;
+}
+
+.tag {
+  background-color: #f2f2f2;
+  color: #333;
+  padding: 0.5rem 1rem;
+  margin: 0.25rem;
+  border-radius: 1rem;
+  width: 170px;
+  height: 40px;
+  font-size: 35px;
+  text-align: center;
+}
+
+.top-tags-name {
+  text-align: left;
+}

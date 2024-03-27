@@ -1,0 +1,76 @@
+.CategoryList {
+  position: relative;
+  overflow-x: visible;
+  width: 100%;
+  transition: 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.CategoryList .slider-container {
+  display: flex;
+  justify-content: center; /* Added to align with TrendPlaces */
+}
+
+.CategoryList .buttons {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 100; /* Adjusted to match TrendPlaces */
+}
+
+.CategoryList .buttons button {
+  width: 5vw;
+  height: 5vw;
+  min-width: 30px;
+  min-height: 30px;
+  border: none;
+  background-color: #7cc8ff; /* Retained original color; adjust as needed */
+  color: black;
+  font-size: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  margin: 10px;
+}
+
+.CategoryList .buttons button:hover {
+  background-color: #c9c9c51a; /* Adjusted hover background color to match TrendPlaces */
+}
+
+.CategoryList .buttons .prev, .CategoryList .buttons .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-70%);
+}
+
+.CategoryList .buttons .prev {
+  left: 0;
+}
+
+.CategoryList .buttons .next {
+  right: 0;
+}
+
+.CategoryItem {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+
+@media (max-width: 600px) {
+  .CategoryList .buttons button {
+    width: 10vw; /* Larger percentage for smaller screens */
+    height: 15vw;
+    min-width: 50px; /* Adjusted minimum sizes */
+  }
+}

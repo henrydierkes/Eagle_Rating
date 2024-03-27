@@ -1,0 +1,53 @@
+.nav-bar {
+  display: flex;
+  position: sticky;
+  top: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #fffffff4;
+  z-index: 1000;
+  width: 100%;
+}
+
+.logo {
+  font-size: 25px;
+  margin-left: 20px;
+}
+
+.nav-links {
+  display: flex;
+  white-space: nowrap; /* Prevents wrapping of child elements */
+}
+@media (max-width: 768px) { /* This will only apply when the window is 768 pixels or less */
+  .nav-links {
+    flex-wrap: nowrap; /* Makes it so buttons don't wrap on smaller screens */
+  }
+  .login-btn, .signup-btn {
+    padding: 5px 10px; /* Adjust the padding to make the buttons smaller, 5px on top and bottom and 10px on left and right*/
+    font-size: 0.8rem; /* Adjust font size to make text smaller, 80% of parent's size*/
+  }
+}
+
+.login-btn, .signup-btn {
+  white-space: nowrap;
+  height: 30px;
+  padding: 5px 15px;
+  border: none;
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+.signup-btn{
+  margin-right: 20px;
+}
+.login-btn {
+  margin-right: 0px;
+}
+
+.separator {
+  height: 30px;
+  width: 1px;
+  background-color: #ccc;
+  margin: 0 10px;
+}

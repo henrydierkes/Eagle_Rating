@@ -1,0 +1,19 @@
+.Trending {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center;
+  background-color: rgb(255, 251, 251);
+}
+
+.Trending .title {
+  width: 100%;
+  text-align: left; /* Align the title to the left */
+  margin-left: 40px;
+}
+
+.Trending .title h1 {
+  color: rgb(0, 0, 0);
+  font-size: 40px;
+}

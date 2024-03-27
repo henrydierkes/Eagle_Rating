@@ -1,0 +1,63 @@
+.TrendPlace {
+  flex: 1 0 20vw; /* Starts with a basis of 20vw, but can grow */
+  height: auto; /* Height is automatic */
+  aspect-ratio: 2 / 3; /* Maintain an aspect ratio of 2:3 */
+  position: relative;
+  background-color: whitesmoke;
+  transition: all .1s linear;
+  margin: 1vw; /* Scalable margin for spacing based on viewport width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.TrendPlace:hover {
+  border-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+}
+
+
+.RateBar {
+  position: absolute;
+  top: 12px; /* Adjust the top position */
+  left: 12px; /* Adjust the left position */
+  padding: 10px 20px; /* Adjust the padding */
+  background-image: linear-gradient(to right, #5ea5fcd5, #637afed5); /* Gradient background */
+  color: white;
+  border-radius: 10px;
+  font-size: 1.5rem; /* Adjust the font size */
+  display: flex;
+  align-items: center;
+  z-index: 3;
+}
+
+
+
+.Name {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 2;
+}
+
+.Name h2 {
+  margin: 0;
+  font-size: 2.2rem;
+  color: white;
+  text-align: left;
+}
+
+.Overlay {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 100.6%;
+  height: 100.6%;
+  background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+  pointer-events: none; /* Allow clicking through overlay */
+  z-index: 1;
+  border-radius: 10px;
+}

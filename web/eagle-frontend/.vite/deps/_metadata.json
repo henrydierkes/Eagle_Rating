@@ -1,0 +1,15 @@
+{
+  "hash": "ba9c1d13",
+  "configHash": "a323a7a9",
+  "lockfileHash": "f06c1aa0",
+  "browserHash": "9aff71ba",
+  "optimized": {
+    "smooth-scroll": {
+      "src": "../../../node_modules/smooth-scroll/dist/smooth-scroll.polyfills.min.js",
+      "file": "smooth-scroll.js",
+      "fileHash": "4223ab52",
+      "needsInterop": true
+    }
+  },
+  "chunks": {}
+}

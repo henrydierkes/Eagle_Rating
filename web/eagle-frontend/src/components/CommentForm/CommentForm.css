@@ -1,0 +1,97 @@
+.rating-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.overall-rating,
+.size,
+.cleanliness,
+.quietness {
+  margin-bottom: 20px;
+}
+
+.rating-tags {
+  margin-bottom: 20px;
+}
+
+.comment-rating {
+  margin-bottom: 20px;
+}
+
+.upload-images {
+  margin-bottom: 20px;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px dashed #ccc;
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.upload-label:hover {
+  border-color: #aaa;
+}
+
+.upload-input {
+  display: none;
+}
+
+.upload-images span {
+  font-size: 1.2em;
+}
+
+.uploaded-image {
+  border: 2px solid black; /* Set border color and width */
+  box-sizing: border-box; /* Include border and padding in the element's total width and height */
+  max-width: 100%; /* Limit the width of the image */
+  max-height: 100%; /* Limit the height of the image */
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+
+
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Styling for text fields */
+.MuiFormControl-root {
+  width: 100%;
+}
+
+/* Styling for text areas */
+.MuiTextField-root {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Styling for select inputs */
+.MuiSelect-select {
+  padding: 10px;
+}
+
+/* Styling for checkboxes */
+.MuiCheckbox-root {
+  padding: 0;
+}
