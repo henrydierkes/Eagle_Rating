@@ -18,7 +18,9 @@
 
 package com.astar.ratingbackend.Controller;
 
+import com.astar.ratingbackend.Entity.AddPlaceRequest;
 import com.astar.ratingbackend.Entity.Place;
+import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +60,25 @@ public class PlaceController {
      */
     @PostMapping("/add")
     @CrossOrigin
-    public ResponseEntity<Place> addPlace(@RequestBody Place place) {
+    public ResponseEntity<Place> addPlace(@RequestBody AddPlaceRequest addPlaceRequest) {
+//    public ResponseEntity<Place> addPlace(@RequestBodyPlace place, @RequestParam("userId") String userId) {
+        Place place=addPlaceRequest.getPlace();
+        String userId=addPlaceRequest.getUserId();
+        Place.TotalRating totalRating=place.getTotalRating();
         Place addedPlace = placeService.addPlace(place);
+        if(totalRating.getOverall()!=0||(totalRating.getRating1()+totalRating.getRating2()+ totalRating.getRating3())!=0){
+            Rating rating=new Rating();
+            rating.setUserId(userId);
+            rating.setPlaceId(addedPlace.getLocId().toString());
+            Rating.OverallRating overallRating=new Rating.OverallRating();
+            overallRating.setOverall(totalRating.getOverall());
+            overallRating.setRating1(totalRating.getRating1());
+            overallRating.setRating2(totalRating.getRating2());
+            overallRating.setRating3(totalRating.getRating3());
+            ratingService.addRating(rating);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(addedPlace);
+
     }
 
     /**
@@ -83,8 +101,6 @@ public class PlaceController {
     /**
      * Searches for places based on location name, category, and tags. All parameters are optional.
      * @param locName Optional location name for filtering places.
-     * @param category Optional category for filtering places.
-     * @param tags Optional list of tags for filtering places.
      * @return A response entity containing a list of places that match the search criteria.
      */
     @GetMapping("/search")

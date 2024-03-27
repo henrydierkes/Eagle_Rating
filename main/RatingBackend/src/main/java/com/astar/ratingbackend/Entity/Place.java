@@ -22,7 +22,6 @@ package com.astar.ratingbackend.Entity;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -45,7 +44,7 @@ public class Place implements Serializable {
     private String category;
 
     @Field("location")
-    private GeoJsonPoint location;
+    private Location location;
     @Field("floor")
     private Integer floor;
 
@@ -77,6 +76,15 @@ public class Place implements Serializable {
     @Field("deletedDate")
     private Date deletedDate;
 
+
+
+    @Data
+    public static class Location implements Serializable{
+        @Field("longitude")
+        private double longitude;
+        @Field("latitide")
+        private double latitude;
+    }
 
     // Nested class for Image documents within the "images" array
     @Data
@@ -121,6 +129,8 @@ public class Place implements Serializable {
         private double rating1;
         private double rating2;
         private double rating3;
+
+        public TotalRating() {}
 
         public TotalRating(double overall, double rating1, double rating2, double rating3) {
             this.overall = overall;

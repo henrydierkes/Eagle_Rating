@@ -33,18 +33,10 @@ public class PlaceServiceImpl implements IPlaceService {
         if(place.getCampus()==null){
             place.setCampus("Emory-Main");
         }
-        if(place.getAverageRating()==null){
-            place.setAverageRating(new Place.AverageRating(0,0,0,0));
-        }
-        if(place.getTotalRating()==null){
-            place.setTotalRating(new Place.TotalRating(0,0,0,0));
-        }
-        if(place.getRatingCount()==null){
-            place.setRatingCount(0);
-        }
-        if(place.getRatingIds()==null){
-            place.setRatingIds(new ArrayList<String>());
-        }
+        place.setAverageRating(new Place.AverageRating(0,0,0,0));
+        place.setRatingCount(0);
+        place.setTotalRating(new Place.TotalRating(0,0,0,0));
+        place.setRatingIds(new ArrayList<String>());
         if(place.getFloor()==null){
             place.setFloor(null);
         }
@@ -57,6 +49,7 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setDeleted(false);
         place.setDeletedDate(null);
         return this.mongoTemplate.save(place);
+
     }
     /**
      * Retrieves a place by its ID.

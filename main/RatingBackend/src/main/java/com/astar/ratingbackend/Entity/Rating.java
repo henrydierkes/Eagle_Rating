@@ -76,9 +76,6 @@ public class Rating implements Serializable {
         private Double rating2;
         private Double rating3;
 
-        public OverallRating() {
-            // Default constructor
-        }
     }
 
 
