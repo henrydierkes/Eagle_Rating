@@ -26,13 +26,14 @@ export default function SignIn() {
     event.preventDefault();
     try {
 
-      console.log('Request data:', { email, password });
+      // console.log('Request data:', { email, password });
       const response = await axios.post('http://localhost:8080/auth/sign-in', {
         email,
         password,
       });
-      console.log('Login successful:', response.data);
+      console.log('Login successful:', { email });
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('email', email);
       navigate('/home');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {

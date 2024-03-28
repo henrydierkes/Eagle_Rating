@@ -6,15 +6,21 @@ import { useNavigate } from 'react-router-dom';
 const NavBar = () => {
   const navigate = useNavigate(); 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState(null);
+
 
   const checkLoggedInStatus = () => {
     const token = localStorage.getItem('token');
     if (token) {
       // User is logged in
       setIsLoggedIn(true);
+      const email = localStorage.getItem('email');
+      console.log('Retrieved email from local storage:', email);
+      setUserEmail(email);
     } else {
       // User is not logged in
       setIsLoggedIn(false);
+      setUserEmail(null);
     }
   };
 
@@ -36,17 +42,27 @@ const NavBar = () => {
     navigate('/signup'); // Navigate to signup page
   };
 
+  const handleLogoutClick = () => {
+    // Clear user data from local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    // Update state to reflect logged out state
+    setIsLoggedIn(false);
+    setUserEmail(null);
+    // Redirect to home page or any other page after logout
+    navigate('/');
+  };
+
   return (
     <div className="nav-bar">
        <h1 className="logo button" onClick={navigateToFrontPage}>EagleRating</h1>
       <SearchBar />
       <div className="nav-links">
-        {/* Conditionally render profile picture or login/sign-up buttons */}
         {isLoggedIn ? (
-          <div className="profile-pic">
-            {/* Replace 'profile-pic' with the component displaying the user's profile picture */}
-            {/* You can also add a dropdown menu for user settings */}
-          </div>
+          <>
+          <div className="user-email">{userEmail}</div>
+          <button className="signup-btn" onClick={handleLogoutClick}>Log Out</button>
+          </>
         ) : (
           <>
             <button className="login-btn" onClick={handleLoginClick}>Log In</button>
