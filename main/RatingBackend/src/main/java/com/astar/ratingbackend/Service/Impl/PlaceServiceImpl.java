@@ -67,7 +67,11 @@ public class PlaceServiceImpl implements IPlaceService {
      */
     @Override
     public List<Place> searchPlacesByName(String name) {
-        return placeRepository.findByLocNameContainingIgnoreCase(name);
+        List<Place> lis= placeRepository.findByLocNameContainingIgnoreCase(name);
+        for(Place place :lis){
+            place.setLocationId(place.getLocId().toString());
+        }
+        return lis;
     }
     /**
      * Searches for places by name and category, ignoring case sensitivity.
@@ -461,9 +465,12 @@ public class PlaceServiceImpl implements IPlaceService {
                 }
             }
         }
-
+        List<Place> places=mongoTemplate.find(query, Place.class);
+        for(Place place:places){
+            place.setLocationId(place.getLocId().toString());
+        }
         // Execute the query
-        return mongoTemplate.find(query, Place.class);
+        return places;
     }
 
     public void sortRatingsDescending(List<Place> places) {
@@ -474,5 +481,6 @@ public class PlaceServiceImpl implements IPlaceService {
             }
         });
     }
+
 }
 

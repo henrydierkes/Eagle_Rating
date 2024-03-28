@@ -30,7 +30,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -128,13 +131,13 @@ public class PlaceController {
      */
     @GetMapping("/search")
     @CrossOrigin
-    public ResponseEntity<List<Place>> searchPlacesByName(
+    public ResponseEntity<List<Place>> searchPlaces(
             @RequestParam(required = false) String locName,
-//            @RequestParam(required = false) String category,
-//            @RequestParam(required = false) List<String> tags,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) List<String> tags,
             @RequestParam(required = false) Boolean desc
     ) {
-        List<Place> places = placeService.searchPlacesByName(locName);
+        List<Place> places = placeService.searchByLocNameAndCategoryAndTagsAll(locName,category,tags);
         if(desc!=null&&desc){
             placeService.sortRatingsDescending(places);
         }
@@ -180,5 +183,20 @@ public class PlaceController {
 //        }
 //        return ResponseEntity.ok(places);
 //    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Place> getPlaceById(@PathVariable String id) {
+        // Convert the string ID to an ObjectId
+        ObjectId objectId;
+        try {
+            objectId = new ObjectId(id);
+        } catch (IllegalArgumentException e) {
+            // If the string cannot be converted to an ObjectId, return bad request
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Place> place = placeService.findById(objectId);
+        return place.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
 }

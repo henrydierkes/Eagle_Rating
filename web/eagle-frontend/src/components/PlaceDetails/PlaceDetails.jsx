@@ -23,18 +23,28 @@ const getRatingColor = (rating) => {
 };
 const goToPage = () => {};
 
-const PlaceDetails = ({ results }) => {
+const PlaceDetails = ({ result }) => {
 
   const navigate = useNavigate();
+    const ratingColor = getRatingColor(result?.averageRating?.overall ?? 0);
+    const rating = result?.averageRating?.overall ?? 'N/A';
+    const numRate = result?.ratingCount ?? 'N/A';
+    const title = result?.locName ?? 'Unknown Title';
+    const building = result?.building ?? 'Unknown Building';
+    const floor = result?.floor ?? 'Unknown Floor';
+    const location = result?.location ?? 'Unknown Location';
+    const latitude = result?.location.latitude ?? '';
+    const longitude = result?.location.longitude ?? '';
+    console.log(latitude);
   const handleAddCommentClick = () => {
     navigate("/addRating");
   };
 
-  const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
+//   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
 
   // Function to generate Google Maps URL with latitude and longitude
   const getGoogleMapsUrl = (latitude, longitude) => {
-    return `https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`;
+    return `https://www.google.com/maps/search/?api=1&query=${longitude}%2C${latitude}`;
   };
 
 
@@ -45,22 +55,22 @@ const PlaceDetails = ({ results }) => {
           <div className="header-left-l">
             <div
               className="rating-box-details"
-              style={{ backgroundColor: getRatingColor(result.rating) }}
+              style={{ backgroundColor: getRatingColor(rating) }}
             >
-              <span className="rating-number-details">{result.rating}</span>
+              <span className="rating-number-details">{rating}</span>
             </div>
-            <p className="rating-amount">{result.num_rate + " ratings"}</p>
+            <p className="rating-amount">{numRate + " ratings"}</p>
           </div>
           <div className="header-left-r">
             <div className="mainInfo">
-              <h1 className="placeName">{result.title}</h1>
-              <h3 className="building">{result.building}</h3>
-              <h4 className="floor">{result.floor}</h4>
+              <h1 className="placeName">{title}</h1>
+{/*               <h3 className="building">{building}</h3> */}
+              <h4 className="floor">{"Floor " + floor}</h4>
             </div>
           </div>
         </div>
         <div className="header-right">
-          <RatingBar results={results} style={{ width: "100%" }} />
+          <RatingBar result={result} style={{ width: "100%" }} />
         </div>
       </div>
 
@@ -68,11 +78,9 @@ const PlaceDetails = ({ results }) => {
         <div className="location">
           <a
               className="location-link"
-              href={getGoogleMapsUrl(result.latitude, result.longitude)} // Link with latitude and longitude
-              rel="noopener noreferrer"
-              target="_blank"
+              href={getGoogleMapsUrl(latitude, longitude)} target="_blank" rel="noopener noreferrer"
           >
-            📍{result.location}
+            📍{result.locName}
           </a>
           <div className="map">
             <iframe
@@ -82,19 +90,19 @@ const PlaceDetails = ({ results }) => {
               style={{ border: 0 }}
               loading="lazy"
               allowFullScreen
-              src={`https://www.google.com/maps/embed/v1/place?&q=${result.latitude},${result.longitude}&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs&zoom=17`}
+              src={`https://www.google.com/maps/embed/v1/place?&q=${longitude},${latitude}&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs&zoom=17`}
             ></iframe>
           </div>
         </div>
         <div className="Image">
-          <UserImages results={results} />
+          <UserImages/>
         </div>
       </div>
       <div className="tag-level">
         <div className="tag-level-l">
           <div className="tags">
-            <TopRatings results={results} />
-            {/* <UserComments results={results}/> */}
+{/*             <TopRatings results={result} /> */}
+{/*             <UserComments results={results}/> */}
             {/* {result.top_tags.map((tag, index) => (
         <span key={index}>{tag}</span>
       ))} */}
