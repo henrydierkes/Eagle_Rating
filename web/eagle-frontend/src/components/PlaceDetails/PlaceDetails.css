@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Align contents vertically */
-  margin-left: 60px; /* Increase left margin */
+  margin-left: 5.5em; /* Increase left margin */
 }
 
 .header {
@@ -60,7 +60,8 @@
 }
 
 .mainInfo {
-  margin-left: 5px;
+  margin-left: 1em;
+  margin-bottom: 1.5em;
 }
 
 .placeName {
@@ -75,14 +76,14 @@
 }
 
 .rating-number-details {
-  font-size: 4em;
+  font-size: 5em;
   font-weight: 800;
   color: #ffffff;
 }
 
 .rating-amount {
-  margin-top: 0px;
-  margin-left: 70px;
+  margin-top: 10px;
+  margin-left: 5.5em;
 }
 
 .location-link {
@@ -91,16 +92,21 @@
   font-weight: normal;
 }
 .location {
-  margin-top: 20px;
-  margin-left: 25px;
-  width: 50%;
+  margin-top: 30px;
+  margin-left: 7em;
 }
 .Image {
-  width: 50%;
+  width: 100%;
   display: flex;
   align-items: center;
   position: relative; /* Ensure positioning works relative to this container */
+  justify-content: center;
 }
+.Image img {
+  max-width: 100%; /* Ensure the image does not exceed the container's width */
+  max-height: auto; /* Ensure the image does not exceed the container's height */
+}
+
 .locationAndImage {
   display: flex;
   flex-direction: row;
@@ -111,10 +117,6 @@
   margin-top: -37.5px;
 }
 
-.tags {
-  font-weight: bold;
-  margin-left: 30px;
-}
 
 .rating-button-container {
   display: flex;
@@ -127,7 +129,7 @@
   background-color: #333;
   color: ghostwhite;
   border: none;
-  padding: 1.8rem 4rem;
+  padding: 1.8rem 2rem;
   border-radius: 3rem; /* more circle */
   cursor: pointer;
   transition: background-color 0.3s ease;
