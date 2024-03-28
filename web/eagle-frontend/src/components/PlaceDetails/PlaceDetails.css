@@ -6,6 +6,7 @@
   margin-top: 40px; /* Increase top margin */
   margin-left: -50px; /* Increase left margin */
   margin-right: 50px; /* Increase right margin */
+  width: 100%;
 }
 .header-left,
 .location {
