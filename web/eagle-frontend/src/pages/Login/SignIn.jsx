@@ -65,24 +65,6 @@ export default function SignIn() {
   return (
       <div className="Signin">
         <ThemeProvider theme={defaultTheme}>
-          <style>
-            {`
-            #bg {
-              filter: blur(var(--blur));
-            }
-            #bg_mask {
-              mask-image: linear-gradient(
-                transparent,
-                transparent calc(var(--y) - var(--focus-range) - var(--blur-range)),
-                black calc(var(--y) - var(--focus-range)),
-                black var(--y),
-                black calc(var(--y) + var(--focus-range)),
-                transparent calc(var(--y) + var(--focus-range) + var(--blur-range)),
-                transparent
-              );
-            }
-          `}
-          </style>
           <div id="bg"></div>
           <div id="bg_mask"></div>
           <div className="loginHolder">

@@ -33,21 +33,23 @@
     );
 }
 
-.Signin {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Ensure full height of the viewport */
-}
+
 
 /* Since .loginHolder is not explicitly used in your JSX, you might want to apply these styles directly to the Box component via sx prop or create a custom style */
 .loginHolder {
     background-color: white;
     width: 40%;
-    height: 25%;
+    height: 65%;
     border-radius: 20px;
 }
 
 .muititle {
     margin-top: 32px;
+}
+
+.Signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure full height of the viewport */
 }
