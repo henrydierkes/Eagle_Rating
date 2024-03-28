@@ -18,6 +18,7 @@ public class User implements Serializable {
     @Field("_id")
     @ApiModelProperty(value = "Primary Key")
     private ObjectId userId;
+    private String userIdStr;
     @Field("username")
     @ApiModelProperty(value = "username")
     private String username;
