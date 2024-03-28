@@ -33,7 +33,6 @@ const ResultList = ({ results }) => {
         <div className="result-list">
             {results.map((result, index) => (
                 <div key={result.locId || index} className="result-item">
-                    onClick={() => handleResultItemClick(result)}
                     <div
                         className="rating-box"
                         style={{ backgroundColor: getRatingColor(result.averageRating?.overall) }}
