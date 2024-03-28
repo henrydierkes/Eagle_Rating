@@ -8,6 +8,7 @@ const NavBar = () => {
   const navigate = useNavigate(); 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [userId, setUserId] = useState(null);
 
 
@@ -19,7 +20,7 @@ const NavBar = () => {
       setUserEmail(email);
       try {
         const userData = await getUserByEmail(email); // Fetch user data
-        setUserId(userData ? userData.userId.timestamp : null); // Set userId if user data is available
+        setUserName(userData ? userData.name : null); // Set userId if user data is available
       } catch (error) {
         console.error('Failed to fetch user data:', error);
       }
@@ -74,8 +75,11 @@ const NavBar = () => {
       <div className="nav-links">
         {isLoggedIn ? (
           <>
-          <div className="user-email">{userEmail}</div>
-          <div className="user-id">{userId ? `User ID: ${userId}` : 'User ID: N/A'}</div> {/* Display 'N/A' if userId is null */}
+          {userName ? (
+        <div className="user-email">{userName}</div>
+          ) : (
+        <div className="user-email">{userEmail}</div>
+          )}
           <button className="signup-btn" onClick={handleLogoutClick}>Log Out</button>
           </>
         ) : (
