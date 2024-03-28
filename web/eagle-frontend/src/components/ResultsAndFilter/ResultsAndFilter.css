@@ -6,7 +6,7 @@
 
 .resultseparator {
   width: 1px;
-  background-color: #bd5a5a; /* Grey color for the line */
-  margin: 0 30px;
+  background-color: #00000020; /* Grey color for the line */
+  margin: 0 70px;
   height: 100vh;
 }
