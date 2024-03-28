@@ -31,12 +31,16 @@ export default function SignUp() {
     return String(email)
       .toLowerCase()
       .match(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i
+        /^[a-zA-Z0-9._-]+@emory\.edu$/
       );
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid Emory University email address.');
+      return; // Stop the form submission
+    }
     try {
       const response = await axios.post('http://localhost:8080/auth/sign-up', { email, password });
       console.log('Sign up successful:', response.data);
