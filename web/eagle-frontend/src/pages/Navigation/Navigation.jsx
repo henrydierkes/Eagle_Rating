@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'; // Import useLocation
 import NavBar from "../../components/NavBar/NavBar";
 import ResultsAndFilter from "../../components/ResultsAndFilter/ResultsAndFilter";
 import Footer from "../../components/Footer/Footer";
+import useAutoRefresh from "../../components/Misc/useAutoRefresh.jsx";
 import "./Navigation.css";
 
 function Navigation() {
