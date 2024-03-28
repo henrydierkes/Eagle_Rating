@@ -31,6 +31,13 @@ const PlaceDetails = ({ results }) => {
   };
 
   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
+
+  // Function to generate Google Maps URL with latitude and longitude
+  const getGoogleMapsUrl = (latitude, longitude) => {
+    return `https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`;
+  };
+
+
   return (
     <div className="place-details">
       <div className="header">
@@ -60,10 +67,10 @@ const PlaceDetails = ({ results }) => {
       <div className="locationAndImage">
         <div className="location">
           <a
-            className="location-link"
-            href={result.url}
-            rel="noopener noreferrer"
-            target="_blank"
+              className="location-link"
+              href={getGoogleMapsUrl(result.latitude, result.longitude)} // Link with latitude and longitude
+              rel="noopener noreferrer"
+              target="_blank"
           >
             📍{result.location}
           </a>
@@ -75,7 +82,7 @@ const PlaceDetails = ({ results }) => {
               style={{ border: 0 }}
               loading="lazy"
               allowFullScreen
-              src={`https://www.google.com/maps/embed/v1/place?q=place_id:ChIJHU-KgPcG9YgRVZzdN2J61Vg&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs`}
+              src={`https://www.google.com/maps/embed/v1/place?&q=${result.latitude},${result.longitude}&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs&zoom=17`}
             ></iframe>
           </div>
         </div>
