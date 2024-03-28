@@ -37,6 +37,8 @@ public class Place implements Serializable {
     @Field("_id")
     private ObjectId locId;
 
+    private String locationId;
+
     @Field("locName")
     private String locName;
 
