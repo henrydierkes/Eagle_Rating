@@ -86,8 +86,8 @@ const CommentForm = () => {
 
         // Prepare the data object based on your database schema
         const ratingData = {
-            userId: "65d574294bb7330ced78f1ba", // Replace with actual userId from authentication context
-            placeId: "65ea0d2312a27f0061751baa", // Replace with actual placeId relevant to the rating
+            userId: "65f63e365aaca164fc0ddb41", // Replace with actual userId from authentication context
+            placeId: "6604b1127700f2702d1ca9ed", // Replace with actual placeId relevant to the rating
             comment: comment,
             date: new Date(), // Set the current date/time for the rating
             likes: 0, // Initialize likes and dislikes as zero

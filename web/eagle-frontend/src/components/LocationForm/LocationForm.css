@@ -27,7 +27,7 @@
 
 .location-form button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: linear-gradient(to right, #5ea5fc, #6379fe); 
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -35,7 +35,7 @@
 }
 
 .location-form button:hover {
-  background-color: #0056b3;
+  background-color: linear-gradient(to right, #5ea5fc, #6379fe); 
 }
 
 .location-form .toggle-comment-form-button {

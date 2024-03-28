@@ -65,8 +65,6 @@ const LocationForm = ({ location }) => {
       setLongitude(location.longitude);
     }
   }, [location]);
-
-  // 新增的状态和设置这个状态的函数
   const [isRatingVisible, setIsRatingVisible] = useState(false);
 
   const [ratingType, setRatingType] = useState("total"); // 初始值为 "total"

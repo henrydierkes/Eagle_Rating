@@ -151,7 +151,7 @@
 }
 
 .rating-button {
-  padding: 10px 15px; /* Adjust padding for better ergonomics */
+  padding: 20px 15px; /* Adjust padding for better ergonomics */
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none; /* Remove default border */
   border-radius: 25px; /* Rounded corners */
@@ -170,5 +170,5 @@
 
 .rating-button:active {
   transform: scale(0.98); /* Slight decrease in size on active to simulate a press effect */
-  opacity: 2;
+  opacity: 1;
 }
