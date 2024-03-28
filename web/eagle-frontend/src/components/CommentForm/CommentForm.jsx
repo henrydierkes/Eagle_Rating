@@ -46,9 +46,9 @@ const CommentForm = () => {
     const [ratingType, setRatingType] = useState('total'); // 'total' or 'sub'
     const [formData, setFormData] = useState({
         rating: 0,
-        size: 0,
-        cleanliness: 0,
-        quietness: 0,
+        subrating1: 0,
+        subrating2: 0,
+        subrating3: 0,
     });
     const handleRatingChange = (name, newValue) => {
         setFormData(prevState => ({
@@ -94,9 +94,9 @@ const CommentForm = () => {
             dislikes: 0,
             overallRating: {
                 overall: rating,
-                rating1: cleanliness,
-                rating2: quietness,
-                rating3: size,
+                subrating1: cleanliness,
+                subrating2: quietness,
+                subrating3: size,
             },
             tags: tagsObject,
             floor: 2, // Set the floor number if applicable, otherwise remove this line
@@ -156,28 +156,28 @@ const CommentForm = () => {
           )}
           {ratingType === 'sub' && (
               <>
-                  <div className='size'>
+                  <div className='subrating1'>
                       <Typography component="legend">Size:</Typography>
                       <Rating
                           name="size"
-                          value={formData.size}
-                          onChange={(event, newValue) => handleRatingChange('size', newValue)}
+                          value={formData.subrating1}
+                          onChange={(event, newValue) => handleRatingChange('subrating1', newValue)}
                       />
                   </div>
-                  <div className='cleanliness'>
+                  <div className='subrating2'>
                       <Typography component="legend">Cleanliness:</Typography>
                       <Rating
                           name="cleanliness"
-                          value={formData.cleanliness}
-                          onChange={(event, newValue) => handleRatingChange('cleanliness', newValue)}
+                          value={formData.subrating2}
+                          onChange={(event, newValue) => handleRatingChange('subrating2', newValue)}
                       />
                   </div>
-                  <div className='quietness'>
+                  <div className='subrating3'>
                       <Typography component="legend">Quietness:</Typography>
                       <Rating
                           name="quietness"
-                          value={formData.quietness}
-                          onChange={(event, newValue) => handleRatingChange('quietness', newValue)}
+                          value={formData.subrating3}
+                          onChange={(event, newValue) => handleRatingChange('subrating3', newValue)}
                       />
                   </div>
               </>

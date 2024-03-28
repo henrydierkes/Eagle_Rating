@@ -17,15 +17,15 @@ const results = [
     location: "540 Asbury Cir, Atlanta, GA 30307",
     top_tags: ["tables", "chairs", "restroom"],
     details: {
-      cleanliness: {
+      subrating1: {
         name: "Cleanliness",
         rating: 5,
       },
-      service: {
+      subrating2: {
         name: "Service",
         rating: 2,
       },
-      location: {
+      subrating3: {
         name: "Location",
         rating: 3,
       },
@@ -61,9 +61,9 @@ const comments = [
     datePosted: "2024-03-05",
     overallRating: 3.8,
     specificRatings: {
-      sizeRating: 3,
-      cleanlinessRating: 4,
-      quietnessRating: 4,
+      subrating1: 3,
+      subrating2: 4,
+      subrating3: 4,
     },
     upvotes: 5,
     downvotes: 1,
