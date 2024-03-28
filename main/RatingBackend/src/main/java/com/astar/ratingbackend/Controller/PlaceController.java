@@ -128,7 +128,7 @@ public class PlaceController {
      */
     @GetMapping("/search")
     @CrossOrigin
-    public ResponseEntity<List<Place>> searchPlacesByName(
+    public ResponseEntity<List<Place>> searchPlaces(
             @RequestParam(required = false) String locName,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) List<String> tags,
