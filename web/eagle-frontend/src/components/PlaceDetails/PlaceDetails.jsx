@@ -23,14 +23,23 @@ const getRatingColor = (rating) => {
 };
 const goToPage = () => {};
 
-const PlaceDetails = ({ results }) => {
+const PlaceDetails = ({ result }) => {
 
   const navigate = useNavigate();
+    const ratingColor = getRatingColor(result?.averageRating?.overall ?? 0);
+    const rating = result?.averageRating?.overall ?? 'N/A';
+    const numRate = result?.num_rate ?? 'N/A';
+    const title = result?.title ?? 'Unknown Title';
+    const building = result?.building ?? 'Unknown Building';
+    const floor = result?.floor ?? 'Unknown Floor';
+    const location = result?.location ?? 'Unknown Location';
+    const latitude = result?.latitude ?? '';
+    const longitude = result?.longitude ?? '';
   const handleAddCommentClick = () => {
     navigate("/addComment");
   };
 
-  const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
+//   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
 
   // Function to generate Google Maps URL with latitude and longitude
   const getGoogleMapsUrl = (latitude, longitude) => {
@@ -45,7 +54,7 @@ const PlaceDetails = ({ results }) => {
           <div className="header-left-l">
             <div
               className="rating-box-details"
-              style={{ backgroundColor: getRatingColor(result.rating) }}
+              style={{ backgroundColor: getRatingColor(result.averageRating) }}
             >
               <span className="rating-number-details">{result.rating}</span>
             </div>
@@ -60,7 +69,7 @@ const PlaceDetails = ({ results }) => {
           </div>
         </div>
         <div className="header-right">
-          <RatingBar results={results} style={{ width: "100%" }} />
+          <RatingBar results={result} style={{ width: "100%" }} />
         </div>
       </div>
 
@@ -68,11 +77,9 @@ const PlaceDetails = ({ results }) => {
         <div className="location">
           <a
               className="location-link"
-              href={getGoogleMapsUrl(result.latitude, result.longitude)} // Link with latitude and longitude
-              rel="noopener noreferrer"
-              target="_blank"
+              href={getGoogleMapsUrl(latitude, longitude)} target="_blank" rel="noopener noreferrer"
           >
-            📍{result.location}
+            📍{result.locName}
           </a>
           <div className="map">
             <iframe
@@ -87,22 +94,22 @@ const PlaceDetails = ({ results }) => {
           </div>
         </div>
         <div className="Image">
-          <UserImages results={results} />
+          <UserImages/>
         </div>
       </div>
-      <div className="tag-level">
-        <div className="tag-level-l">
-          <div className="tags">
-            <TopRatings results={results} />
-            {/* <UserComments results={results}/> */}
-            {/* {result.top_tags.map((tag, index) => (
-        <span key={index}>{tag}</span>
-      ))} */}
-          </div>
-        </div>
-        <div className="tag-level-r"></div>{" "}
-        {/* Add the .tag-level-r if needed */}
-      </div>
+//       <div className="tag-level">
+//         <div className="tag-level-l">
+//           <div className="tags">
+// {/*             <TopRatings results={results} /> */}
+//             {/* <UserComments results={results}/> */}
+//             {/* {result.top_tags.map((tag, index) => (
+//         <span key={index}>{tag}</span>
+//       ))} */}
+//           </div>
+//         </div>
+//         <div className="tag-level-r"></div>{" "}
+//         {/* Add the .tag-level-r if needed */}
+//       </div>
 
       <div className="rating-button-container">
         <button className="rating-button" onClick={handleAddCommentClick}>

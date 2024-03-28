@@ -28,11 +28,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.bson.types.ObjectId;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -171,4 +169,20 @@ public class PlaceController {
 //        }
 //        return ResponseEntity.ok(places);
 //    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Place> getPlaceById(@PathVariable String id) {
+        // Convert the string ID to an ObjectId
+        ObjectId objectId;
+        try {
+            objectId = new ObjectId(id);
+        } catch (IllegalArgumentException e) {
+            // If the string cannot be converted to an ObjectId, return bad request
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Place> place = placeService.findById(objectId);
+        return place.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }
