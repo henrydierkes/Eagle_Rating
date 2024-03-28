@@ -37,10 +37,9 @@
   transition: background-color 0.3s ease; /* Smooth transition */
   position: relative;
   background: rgba( 255, 255, 255, 0.25 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
   backdrop-filter: blur( 9px );
   -webkit-backdrop-filter: blur( 9px );
-  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  border: 1px solid rgba(255, 255, 255, 0);
   margin: 10px;
 }
 
@@ -60,7 +59,7 @@
 }
 
 .TrendPlaces .buttons button:hover {
-  background-color: #c9c9c51a;;
+  background-color: #c9c9c500;;
 }
 
 .TrendPlace {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ResultList.css';
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,28 @@ const getRatingColor = (averageRating) => {
 const ResultList = ({ results }) => {
     const navigate = useNavigate();
     const [highlightedIndex, setHighlightedIndex] = useState(null);
+
+    useEffect(() => {
+        const resultItems = document.querySelectorAll('.result-item');
+
+        const clickHandler = (e) => {
+            e.currentTarget.classList.add('bounce');
+            setTimeout(() => {
+                e.currentTarget.classList.remove('bounce');
+            }, 500); // Match the duration of the bounce animation
+        };
+
+        resultItems.forEach(item => {
+            item.addEventListener('click', clickHandler);
+        });
+
+        // Cleanup
+        return () => {
+            resultItems.forEach(item => {
+                item.removeEventListener('click', clickHandler);
+            });
+        };
+    }, [results]); // Re-apply when `results` changes
 
     const handleAddLocationClick = () => {
         navigate('/addLocation');
@@ -35,7 +57,7 @@ const ResultList = ({ results }) => {
                     <div className="rating-box" style={{ background: getRatingColor(result.averageRating?.overall) }}>
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                     </div>
-                    <div className="highlight-tag" onClick={() => toggleHighlight(index)}>
+                    <div className="highlight-tag" onClick={(e) => { e.stopPropagation(); toggleHighlight(index); }}>
                         {highlightedIndex === index ? (
                             <span className="star" style={{ background: 'linear-gradient(to right, #5ea5fc, #6379fe)' }}>&#9733;</span>
                         ) : (
