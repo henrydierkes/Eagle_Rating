@@ -27,14 +27,16 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const isValidEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i
+      );
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // Check if passwords match
-    if (password !== confirmPassword) {
-      setError('Passwords do not match. Please try again.'); // Set error message
-      return;
-    }
     try {
       const response = await axios.post('http://localhost:8080/auth/sign-up', { email, password });
       console.log('Sign up successful:', response.data);
