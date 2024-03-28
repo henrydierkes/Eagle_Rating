@@ -14,25 +14,24 @@
   border-radius: 5px;
   padding: 20px;
   margin-bottom: 20px;
-  background-color: #f5f5f5bd; /* light gray background */
+  background-color: #f5f5f55b; /* light gray background */
   width: 100%;
 }
 
 .result-item .rating-box {
   color: white;
   padding: 20px 30px; /* size of the box */
-  margin-right: 10px;
-  margin-top: 10px;
+  margin-right: 40px;
   margin-left: 5px;
   font-weight: bold;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 1.3em;
 }
 
 .rating-box .rating-number {
   font-size: 1.2em; 
   font-weight: 800;
-  color: #1a1a1a;
+  color: #ffffff;
 }
 
 
@@ -45,25 +44,25 @@
 .highlight-tag {
   position: absolute;
   top: 10px; /* 调整为所需的值 */
-  right: 10px; /* 调整为所需的值 */
+  right: 20px; /* 调整为所需的值 */
   cursor: pointer; /* 更改鼠标样式为指针 */
 }
 
 .result-item h3 {
   margin: 0;
-  font-size: 1.2em; /* slightly larger font for the title */
+  font-size: 1.5em; /* slightly larger font for the title */
 }
 
 .result-item p {
   margin: 0;
   color: #e8e5e569; /* dark gray color for the descripti.footer {
   background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
-  color: white;
+  color: rgb(255, 255, 255);
   display: flex;
   width: 100%;
   justify-content: space-between;
   padding-top: 0px;
-  font-size: 12px;
+ font-size: 1em;
 }
 
 .footer-section {
@@ -147,6 +146,7 @@
   font-size: 0.8em;
   color: #999; /* lighter gray color */
   margin-top: 4px; /* space between main description and this line */
+  font-size: 1em;
 }
 
 .rating-button {
@@ -176,4 +176,36 @@
   transform: scale(0.98); /* Slight decrease in size on active to simulate a press effect */
   opacity: 1;
 }
+.gg-bookmark,
+.gg-bookmark::after {
+    display: block;
+    box-sizing: border-box;
+    border-top-right-radius: 3px
+}
+.gg-bookmark {
+    border: 2px solid;
+    border-bottom: 0;
+    border-top-left-radius: 3px;
+    overflow: hidden;
+    position: relative;
+    transform: scale(var(--ggs,1));
+    width: 14px;
+    height: 16px
+}
+.gg-bookmark::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-top: 2px solid;
+    border-right: 2px solid;
+    transform: rotate(-45deg);
+    top: 9px;
+    left: -1px
+}
+.highlight-tag.bookmark-active .gg-bookmark,
+.highlight-tag.bookmark-active .gg-bookmark::after {
+    border-color: #ff4500; /* Example active color */
+}
+
 

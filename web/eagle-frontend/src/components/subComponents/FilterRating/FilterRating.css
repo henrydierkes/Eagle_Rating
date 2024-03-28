@@ -42,14 +42,14 @@
     height: 24px;
     width: 24px;
     border-radius: 50%;
-    background: #000000; /* Dark green */
+    background: #b2b1b1; /* Dark green */
     cursor: pointer;
     transition: background 0.3s ease-in-out;
 }
 
 .range-slider__range:active::-webkit-slider-thumb,
 .range-slider__range:focus::-webkit-slider-thumb {
-    background: #000000; /* Darker shade for active state */
+    background: #8d8c8c; /* Darker shade for active state */
 }
 
 .range-slider__value {
@@ -59,7 +59,7 @@
     transform: translateX(-50%);
     background-color: #000000; /* Dark background for contrast */
     color: #fff; /* White text for readability */
-    padding: 12px 45px; /* Adjusted padding to make the box taller */
+    padding: 12px 50px; /* Adjusted padding to make the box taller */
     border-radius: 4px;
     font-size: 20px; /* Adjust if you want the text bigger */
     white-space: nowrap;
