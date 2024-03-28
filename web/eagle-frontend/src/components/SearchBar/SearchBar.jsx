@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
-import './SearchBar.css';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -16,41 +13,44 @@ const SearchBar = () => {
   // Function to fetch suggestions
   const fetchSuggestions = async (query) => {
     try {
-      console.log('Fetching suggestions for query:', query);
       const response = await Axios.get(`http://localhost:8080/api/place/search`, {
-        params: { locName: query } // Adjust the parameter based on what your API expects
+        params: { locName: query }
       });
-      console.log('Suggestions:', response.data);
-      setOptions(response.data); // Assuming the API returns an array of place objects
+      setOptions(response.data);
     } catch (error) {
       console.error('Error fetching suggestions: ', error);
     }
   };
-  const handleKeyPress = (event) => {
-    // Check if the 'Enter' key was pressed
-    if (event.key === 'Enter') {
-      // Navigate to the navigation page with the current input value
-      navigate(`/navigation?search=${inputValue}`);
+
+  const onInputChange = (event, newInputValue) => {
+    setInputValue(newInputValue);
+    if (newInputValue.length > 2) {
+      fetchSuggestions(newInputValue);
+    } else {
+      setOptions([]);
     }
   };
+
+  const onKeyDown = (event) => {
+    if (event.key === 'Enter' && inputValue.trim()) {
+      // Prevent the default form submission if inside a form
+      event.preventDefault();
+      navigate(`/navigation?search=${inputValue.trim()}`);
+    }
+  };
+
   return (
     <div className="search-bar" style={{ display: 'flex', width: '100%', justifyContent: 'flex-start' }}>
       <Autocomplete
         freeSolo
         id="search-bar"
         options={options}
-        getOptionLabel={(option) => option.locName}
-        onInputChange={(event, newInputValue) => {
-          setInputValue(newInputValue);
-          if (newInputValue.length > 2) { // Fetch suggestions when the user has typed more than 2 characters
-            fetchSuggestions(newInputValue);
-          } else {
-            setOptions([]); // Clear suggestions if the input is cleared or too short
-          }
-        }}
+        getOptionLabel={(option) => option.locName || ''}
+        onInputChange={onInputChange}
         onChange={(event, newValue) => {
-          if (newValue && newValue.locName) {
+          if (newValue && typeof newValue === 'object' && newValue.locName) {
             setInputValue(newValue.locName);
+            navigate(`/navigation?search=${newValue.locName}`);
           }
         }}
         renderInput={(params) => (
@@ -58,7 +58,7 @@ const SearchBar = () => {
             {...params}
             variant="outlined"
             placeholder="Start typing to look for places..."
-            onKeyPress={handleKeyPress}
+            onKeyDown={onKeyDown}
             InputProps={{
               ...params.InputProps,
               endAdornment: <SearchIcon position="end" />,
