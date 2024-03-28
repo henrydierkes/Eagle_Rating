@@ -70,7 +70,7 @@ function TrendPlaces() {
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
                     {images.map(({ url, name, rating }, index) => (
-                        <TrendPlace key={index} placeName={name} imageUrl={url} placeRating={rating} />
+                        <TrendPlace key={index} placeName={name} imageUrl={url} placeRating={rating.toFixed(1)} />
                     ))}
                 </Slider>
             </div>

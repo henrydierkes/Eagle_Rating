@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -12,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { useState } from 'react';
 import './SignIn.css';
 
 const defaultTheme = createTheme();
@@ -25,11 +25,15 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+
+      console.log('Request data:', { email, password });
       const response = await axios.post('http://localhost:8080/auth/sign-in', {
         email,
         password,
       });
       console.log('Login successful:', response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      navigate('/dashboard');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {
       console.error('Login failed:', error.response.data);
@@ -62,24 +66,6 @@ export default function SignIn() {
   return (
       <div className="Signin">
         <ThemeProvider theme={defaultTheme}>
-          <style>
-            {`
-            #bg {
-              filter: blur(var(--blur));
-            }
-            #bg_mask {
-              mask-image: linear-gradient(
-                transparent,
-                transparent calc(var(--y) - var(--focus-range) - var(--blur-range)),
-                black calc(var(--y) - var(--focus-range)),
-                black var(--y),
-                black calc(var(--y) + var(--focus-range)),
-                transparent calc(var(--y) + var(--focus-range) + var(--blur-range)),
-                transparent
-              );
-            }
-          `}
-          </style>
           <div id="bg"></div>
           <div id="bg_mask"></div>
           <div className="loginHolder">
@@ -88,7 +74,7 @@ export default function SignIn() {
               <CssBaseline />
               <Box
                   sx={{
-                    marginTop: 5,
+                    marginTop: 3,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -97,7 +83,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5" className='muititle'>
                   Sign In
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
                   <TextField
                       margin="normal"
                       required
@@ -161,7 +147,7 @@ export default function SignIn() {
 }
 <Box
   sx={{
-    marginTop: 8,
+    marginTop: 5,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
