@@ -116,7 +116,8 @@ public class RatingServiceImpl implements IRatingService {
         // Check if user already rated the place
         if (user.getRatings() != null) {
             for (String ratingId : user.getRatings()) {
-                if (ratingId.equals(rating.getPlaceId())) {
+                Rating previousRating = getRateById(new ObjectId(ratingId)).orElse(null);
+                if (previousRating != null && previousRating.getPlaceId().equals(rating.getPlaceId())) {
                     throw new IllegalArgumentException("User has already rated this place.");
                 }
             }
