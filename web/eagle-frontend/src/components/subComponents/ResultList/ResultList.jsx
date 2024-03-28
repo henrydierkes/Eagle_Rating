@@ -98,15 +98,15 @@ const ResultList = ({ results }) => {
     };
 
     // Function to navigate to the details page of a location
-    const navigateToLocationDetail = (id) => {
-        console.log("Navigating to id:", id);
-        navigate(`/ratingpage/${id}`);
+    const navigateToLocationDetail = (locationId) => {
+        console.log("Navigating to locationId:", locationId);
+        navigate(`/ratingpage/${locationId}`);
     };
 
     return (
         <div className="result-list">
             {results.map((result, index) => (
-                <div key={result.locId || index} className="result-item" onClick={() => navigateToLocationDetail(result.locId)}>
+                <div key={result.locationId || index} className="result-item" onClick={() => navigateToLocationDetail(result.locationId)}>
                     <div
                         className="rating-box"
                         style={{ backgroundColor: getRatingColor(result.averageRating?.overall) }}
