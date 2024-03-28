@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Axios from 'axios';
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import PlaceDetails from "../../components/PlaceDetails/PlaceDetails.jsx";
 import CommentFilter from "../../components/CommentFilter/CommentFilter.jsx";

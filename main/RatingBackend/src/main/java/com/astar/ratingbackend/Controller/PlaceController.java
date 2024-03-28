@@ -30,10 +30,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -142,17 +139,6 @@ public class PlaceController {
             placeService.sortRatingsDescending(places);
         }
         return ResponseEntity.ok(places);
-    }
-    @GetMapping("/getPlaceById")
-    @CrossOrigin
-    public ResponseEntity<Place> getPlaceById(@RequestParam("placeId") String placeId){
-        Optional<Place> placeOptional = placeService.findById(new ObjectId(placeId));
-
-        if (placeOptional.isPresent()) {
-            return ResponseEntity.ok(placeOptional.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     /**

@@ -4,7 +4,7 @@ import Login from "./pages/Login/SignIn.jsx"
 import Navigation from "./pages/Navigation/Navigation";
 import RatingPage from "./pages/RatingPage/RatingPage.jsx";
 import AddLocation from "./pages/AddLocation/AddLocation.jsx";
-import AddComment from "./pages/AddComment/AddComment.jsx"
+import AddRating from "./pages/AddRating/AddRating.jsx";
 import SignUp from "./pages/Login/SignUp.jsx";
 import SignIn from "./pages/Login/SignIn.jsx";
 import ScrollToTop from './ScrollToTop';
