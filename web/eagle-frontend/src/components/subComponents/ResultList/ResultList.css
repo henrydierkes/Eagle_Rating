@@ -204,8 +204,8 @@
     left: -1px
 }
 .highlight-tag.bookmark-active .gg-bookmark,
-.highlight-tag.bookmark-active .gg-bookmark::after {
-    border-color: #ff4500; /* Example active color */
+.highlight-tag.bookmark-active .gg-bookmark{
+   background: linear-gradient(to right, #5ea5fc, #6379fe);
 }
 
 
