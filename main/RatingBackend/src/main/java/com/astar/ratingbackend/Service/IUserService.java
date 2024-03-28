@@ -22,6 +22,9 @@ public interface IUserService {
 
     void addUser(User user);
     void addRating(Rating rating);
+
+    User getUserByEmail(String email);
+
     boolean deleteRating(Rating rating);
     public User validateUser(String userId);
 }
