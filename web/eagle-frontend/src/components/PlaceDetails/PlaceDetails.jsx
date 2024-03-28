@@ -27,7 +27,7 @@ const PlaceDetails = ({ results }) => {
 
   const navigate = useNavigate();
   const handleAddCommentClick = () => {
-    navigate("/addComment");
+    navigate("/addRating");
   };
 
   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
