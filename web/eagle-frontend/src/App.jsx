@@ -7,6 +7,8 @@ import AddLocation from "./pages/AddLocation/AddLocation.jsx";
 import AddRating from "./pages/AddRating/AddRating.jsx"
 import SignUp from "./pages/Login/SignUp.jsx";
 import SignIn from "./pages/Login/SignIn.jsx";
+import ScrollToTop from './ScrollToTop';
+
 
 
 import SmoothScroll from 'smooth-scroll';
@@ -20,6 +22,7 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
