@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
+
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -88,7 +89,7 @@ export default function SignIn() {
               <CssBaseline />
               <Box
                   sx={{
-                    marginTop: 5,
+                    marginTop: 9,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -97,7 +98,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5" className='muititle'>
                   Sign In
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
                   <TextField
                       margin="normal"
                       required
@@ -161,7 +162,7 @@ export default function SignIn() {
 }
 <Box
   sx={{
-    marginTop: 8,
+    marginTop: 5,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
