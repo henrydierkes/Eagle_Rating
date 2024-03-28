@@ -23,9 +23,10 @@ const goToPage = () => {};
 
 const PlaceDetails = ({ result }) => {
 
-  const navigate = useNavigate();
-    const ratingColor = getRatingColor(result?.averageRating?.overall ?? 0);
-    const rating = result?.averageRating?.overall ?? 'N/A';
+    const navigate = useNavigate();
+    const rawRating = result?.averageRating?.overall;
+    const rating = rawRating ? Math.ceil(rawRating * 10) / 10 : 'N/A';
+    const ratingColor = getRatingColor(rawRating ?? 0);
     const numRate = result?.ratingCount ?? 'N/A';
     const title = result?.locName ?? 'Unknown Title';
     const building = result?.building ?? 'Unknown Building';

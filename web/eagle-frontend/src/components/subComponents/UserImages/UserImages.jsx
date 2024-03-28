@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import './UserImages.css';
-import fakedata1 from '../../../../public/images/fakedata1.png';
-import fakedata2 from '../../../../public/images/fakedata2.png';
-import fakedata3 from '../../../../public/images/fakedata3.png';
-import fakedata4 from '../../../../public/images/fakedata4.png';
-import fakedata5 from '../../../../public/images/fakedata5.png';
+import fakedata1 from '../../../../public/images/fakedata1.jpeg';
+import fakedata2 from '../../../../public/images/fakedata2.jpeg';
+import fakedata3 from '../../../../public/images/fakedata3.jpeg';
+import fakedata4 from '../../../../public/images/fakedata4.jpeg';
+import fakedata5 from '../../../../public/images/fakedata5.jpeg';
 
 const UserImages = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
