@@ -33,8 +33,6 @@ const tags = [
   'Charging Ports',
   'Quiet Space',
   'Water Fountain',
-  'Among us',
-  'Sussy imposter'
 ];
 
 const toggleRatingVisibility = () => {
@@ -67,7 +65,7 @@ const LocationForm = ({ location }) => {
   }, [location]);
   const [isRatingVisible, setIsRatingVisible] = useState(false);
 
-  const [ratingType, setRatingType] = useState("total"); // 初始值为 "total"
+  const [ratingType, setRatingType] = useState("total");
 
 
 
