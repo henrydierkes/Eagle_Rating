@@ -42,14 +42,14 @@
     height: 24px;
     width: 24px;
     border-radius: 50%;
-    background: #006400; /* Dark green */
+    background: #000000; /* Dark green */
     cursor: pointer;
     transition: background 0.3s ease-in-out;
 }
 
 .range-slider__range:active::-webkit-slider-thumb,
 .range-slider__range:focus::-webkit-slider-thumb {
-    background: #004d00; /* Darker shade for active state */
+    background: #000000; /* Darker shade for active state */
 }
 
 .range-slider__value {
@@ -57,7 +57,7 @@
     top: -10px; /* Move up to accommodate larger text */
     left: 50%;
     transform: translateX(-50%);
-    background-color: #006400; /* Dark green */
+    background-color: #000000; /* Dark green */
     color: #fff;
     padding: 6px 16px; /* Increase padding for larger text */
     border-radius: 4px;

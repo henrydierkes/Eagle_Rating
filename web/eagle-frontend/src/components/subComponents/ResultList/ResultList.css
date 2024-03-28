@@ -10,18 +10,17 @@
   position: relative;
   display: flex;
   align-items: center; /* aligns the text and the box vertically */
-  border: 1px solid #ccc; /* light gray border */
+  border: 1px solid #cccccc18; /* light gray border */
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #f5f5f5; /* light gray background */
+  background-color: #f5f5f5bd; /* light gray background */
   width: 100%;
 }
 
 .result-item .rating-box {
-  background-color: #4CAF50; /* example color */
   color: white;
-  padding: 12px 16px; /* size of the box */
+  padding: 20px 30px; /* size of the box */
   margin-right: 10px;
   margin-top: -5px;
   margin-left: 5px;
@@ -57,7 +56,7 @@
 
 .result-item p {
   margin: 0;
-  color: #666; /* dark gray color for the descripti.footer {
+  color: #e8e5e569; /* dark gray color for the descripti.footer {
   background: linear-gradient(to right, #b0cff4, #c1c9f6); /* Gradient background */
   color: white;
   display: flex;
@@ -106,7 +105,7 @@
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   color: #fff;
   padding: 9px 30px;
-  margin: 0 0;
+  margin: 0 0 10px; /* Adjusted bottom margin */
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -151,17 +150,21 @@
 }
 
 .rating-button {
-  padding: 20px 15px; /* Adjust padding for better ergonomics */
+  padding: 20px 200px; /* Increased horizontal padding for a longer button */
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none; /* Remove default border */
-  border-radius: 25px; /* Rounded corners */
+  border-radius: 10px; /* Rounded corners */
   color: #fff; /* White text color for contrast */
   font-size: 1rem; /* Appropriate font size */
   cursor: pointer; /* Cursor pointer to indicate clickability */
   transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
   outline: none; /* Remove outline to maintain the style */
   margin-top: 20px; /* Space from the last result item */
+  margin-bottom: 20px;
+  margin-left: 15px; /* Shift the button to the right */
+  display: block; /* Ensure the button is treated as a block-level element */
 }
+
 
 .rating-button:hover, .rating-button:focus {
   background-image: linear-gradient(to right, #5ea5fc, #6379fe); /* Slightly change the gradient on hover/focus for visual feedback */
@@ -172,3 +175,4 @@
   transform: scale(0.98); /* Slight decrease in size on active to simulate a press effect */
   opacity: 1;
 }
+
