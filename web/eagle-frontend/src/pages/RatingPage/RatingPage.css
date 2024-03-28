@@ -4,12 +4,10 @@
     justify-content: center;
     align-items: center;
     background-color: white;
-}
-
-.divider {
-    margin: 20px 0; /* Adjust the margin as needed */
-    border: none;
-    border-top: 1px solid #ffffff; /* Set the color and style of the divider */
-    margin-top: 90px;
+  }
+  
+  .divider {
+    margin-top: 90px; /* Adjust spacing above the divider */
+    border-top: 1px solid #ddd; /* Light gray divider line */
   }
   
