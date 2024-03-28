@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -13,7 +13,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { useState } from 'react';
 import './SignIn.css';
 
 const defaultTheme = createTheme();
@@ -26,11 +25,15 @@ export default function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+
+      console.log('Request data:', { email, password });
       const response = await axios.post('http://localhost:8080/auth/sign-in', {
         email,
         password,
       });
       console.log('Login successful:', response.data);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      navigate('/dashboard');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {
       console.error('Login failed:', error.response.data);
