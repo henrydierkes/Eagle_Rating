@@ -14,22 +14,8 @@ const results = [
     description: "Description for Result 1",
     rating: 4.5,
     num_rate: 33,
-    location: "540 Asbury Cir, Atlanta, GA 30307",
+    location: "Location of Some Building",
     top_tags: ["tables", "chairs", "restroom"],
-    details: {
-      subrating1: {
-        name: "Cleanliness",
-        rating: 5,
-      },
-      subrating2: {
-        name: "Service",
-        rating: 2,
-      },
-      subrating3: {
-        name: "Location",
-        rating: 3,
-      },
-    },
     url: "https://www.google.com/maps/place/Goizueta+Business+Library/@33.7904374,-84.322938,21z/data=!4m6!3m5!1s0x88f506f074593dc1:0xddb21bb8ce50833c!8m2!3d33.7905688!4d-84.3229201!16s%2Fg%2F1hm3lswk1?entry=ttu",
     building: "Goizueta Business School's Library",
     floor: "2nd floor",

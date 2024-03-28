@@ -122,6 +122,19 @@ public class UserServiceImpl implements IUserService {
             mongoTemplate.updateFirst(query, update, User.class); // Assuming you have a method to save the updated user object
         }
     }
+    @Override
+    public User getUserByEmail(String email) {
+        // Check if the email exists
+        Query query = new Query(Criteria.where("email").is(email));
+        List<User> users = mongoTemplate.find(query, User.class);
+        if (users.isEmpty()) {
+            throw new IllegalArgumentException("User with email " + email + " not found.");
+        } else if (users.size() > 1) {
+            throw new IllegalArgumentException("Multiple users found with email " + email + ". Email should be unique.");
+        } else {
+            return users.get(0);
+        }
+    }
 
     @Override
     public boolean deleteRating(Rating rating) {
