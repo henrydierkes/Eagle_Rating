@@ -12,8 +12,8 @@
   align-items: center; /* aligns the text and the box vertically */
   border: 1px solid #cccccc18; /* light gray border */
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
   background-color: #f5f5f5bd; /* light gray background */
   width: 100%;
 }
@@ -22,7 +22,7 @@
   color: white;
   padding: 20px 30px; /* size of the box */
   margin-right: 10px;
-  margin-top: -5px;
+  margin-top: 10px;
   margin-left: 5px;
   font-weight: bold;
   border-radius: 5px;
@@ -38,7 +38,7 @@
 
 .rating-description-below {
   font-size: 0.8em; /* smaller font size for the rating description */
-  color: #999; /* light gray color for the text */
+  color: #000000; /* light gray color for the text */
   margin-top: 4px; /* space between the rating number and this text */
 }
 
@@ -150,7 +150,7 @@
 }
 
 .rating-button {
-  padding: 20px 200px; /* Increased horizontal padding for a longer button */
+  padding: 20px 250px; /* Increased horizontal padding for a longer button */
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none; /* Remove default border */
   border-radius: 10px; /* Rounded corners */
@@ -161,7 +161,8 @@
   outline: none; /* Remove outline to maintain the style */
   margin-top: 20px; /* Space from the last result item */
   margin-bottom: 20px;
-  margin-left: 15px; /* Shift the button to the right */
+  margin-left: 35px; /* Shift the button to the right */
+  margin-right: 0px;
   display: block; /* Ensure the button is treated as a block-level element */
 }
 
