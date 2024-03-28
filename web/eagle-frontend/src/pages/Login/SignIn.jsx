@@ -37,8 +37,8 @@ export default function SignIn() {
       navigate('/home');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {
+      setError('Invalid email or password. Please try again.');
       console.error('Login failed:', error.response.data);
-      setError(error.response.data.message);
     }
   };
 
