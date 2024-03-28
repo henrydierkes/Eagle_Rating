@@ -290,10 +290,7 @@ const LocationForm = ({ location }) => {
                       </div>
                     </>
                 )}
-              </>
-          )}
-
-          <div>
+                <div>
             <div className='rating-tags'>
               <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
                 <InputLabel id="tags-label">Tags</InputLabel>
@@ -329,6 +326,10 @@ const LocationForm = ({ location }) => {
                 onChange={handleInputChange}
             />
           </div>
+              </>
+          )}
+
+          
           <div className="upload-images">
             <label htmlFor="upload" className="upload-label">
               <span>Upload Image</span>
