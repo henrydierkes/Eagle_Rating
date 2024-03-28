@@ -3,6 +3,8 @@ import './ResultList.css';
 import { useNavigate } from "react-router-dom";
 
 const ResultList = ({ results }) => {
+    // console.log(results)
+    const [highlights, setHighlights] = useState({});
     const navigate = useNavigate();
 
     const handleAddLocationClick = () => {

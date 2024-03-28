@@ -132,7 +132,9 @@ public class UserServiceImpl implements IUserService {
         } else if (users.size() > 1) {
             throw new IllegalArgumentException("Multiple users found with email " + email + ". Email should be unique.");
         } else {
-            return users.get(0);
+            User user=users.get(0);
+            user.setUserIdStr(user.getUserId().toString());
+            return user;
         }
     }
 

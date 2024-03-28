@@ -2,32 +2,46 @@ import React, { useState, useEffect } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import './NavBar.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const NavBar = () => {
   const navigate = useNavigate(); 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
+  const [userId, setUserId] = useState(null);
 
 
-  const checkLoggedInStatus = () => {
+  const checkLoggedInStatus = async () => {
     const token = localStorage.getItem('token');
     if (token) {
-      // User is logged in
       setIsLoggedIn(true);
       const email = localStorage.getItem('email');
-      console.log('Retrieved email from local storage:', email);
       setUserEmail(email);
+      try {
+        const userData = await getUserByEmail(email); // Fetch user data
+        setUserId(userData ? userData.userId.timestamp : null); // Set userId if user data is available
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
     } else {
-      // User is not logged in
       setIsLoggedIn(false);
       setUserEmail(null);
+    }
+  };
+
+  const getUserByEmail = async (email) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/user/getByEmail?email=${email}`);
+      console.log(response)
+      return response.data;
+    } catch (error) {
+      throw error;
     }
   };
 
   useEffect(() => {
     checkLoggedInStatus();
   }, []);
-
    
     const navigateToFrontPage = () => {
       navigate('/home'); 
@@ -61,6 +75,7 @@ const NavBar = () => {
         {isLoggedIn ? (
           <>
           <div className="user-email">{userEmail}</div>
+          <div className="user-id">{userId ? `User ID: ${userId}` : 'User ID: N/A'}</div> {/* Display 'N/A' if userId is null */}
           <button className="signup-btn" onClick={handleLogoutClick}>Log Out</button>
           </>
         ) : (
