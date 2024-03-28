@@ -15,6 +15,7 @@ const getRatingColor = (averageRating) => {
 };
 
 const ResultList = ({ results }) => {
+    // console.log(results)
     const [highlights, setHighlights] = useState({});
     const navigate = useNavigate();
 
