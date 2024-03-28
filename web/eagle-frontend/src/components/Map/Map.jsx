@@ -9,11 +9,11 @@ function Map({ setLatitude, setLongitude }) {
     // const [longitude, setLongitude] = useState(null);
 
     function initMap() {
-      const haightAshbury = { lat: 37.769, lng: -122.446 };
+      const emoryCoords = { lat: 33.797028, lng: -84.323242 };
 
       map = new window.google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: haightAshbury,
+        zoom: 16,
+        center: emoryCoords,
         mapTypeId: "terrain",
       });
 
@@ -34,7 +34,7 @@ function Map({ setLatitude, setLongitude }) {
       //   .addEventListener("click", deleteMarkers);
 
       // Adds a marker at the center of the map.
-      addMarker(haightAshbury);
+      addMarker(emoryCoords);
     }
 
     // Adds a marker to the map and push to the array.
