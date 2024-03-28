@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const getRatingColor = (averageRating) => {
     if (averageRating >= 4) {
-        return '#4CAF50'; // green
+        return 'linear-gradient(to right, #5ea5fc, #6379fe)'; /* Gradient background */; // green
     } else if (averageRating >= 3) {
         return '#CDDC39'; // lime
     } else if (averageRating >= 2) {
