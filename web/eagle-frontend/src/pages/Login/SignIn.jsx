@@ -32,8 +32,8 @@ export default function SignIn() {
         password,
       });
       console.log('Login successful:', response.data);
-      localStorage.setItem('user', JSON.stringify(response.data));
-      navigate('/dashboard');
+      localStorage.setItem('token', response.data.token);
+      navigate('/home');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {
       console.error('Login failed:', error.response.data);
