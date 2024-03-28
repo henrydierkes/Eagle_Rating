@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import './CommentForm.css';
+import './ratingForm.css';
 import axios from 'axios';
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -35,11 +35,11 @@ const tags = [
   'Water Fountain'
 ];
 
-const CommentForm = () => {
+const RatingForm = () => {
   const [rating, setRating] = useState(0);
-  const [size, setSize] = useState(0);
-  const [cleanliness, setCleanliness] = useState(0);
-  const [quietness, setQuietness] = useState(0);
+  const [subRating1, setSubRating1] = useState(0);
+  const [subRating2, setSubRating2] = useState(0);
+  const [subRating3, setSubRating3] = useState(0);
   const [tag, setTag] = React.useState([]);
   const [uploadedImages, setUploadedImages] = useState([]);
   const [comment, setComment] = useState('');
@@ -94,9 +94,9 @@ const CommentForm = () => {
             dislikes: 0,
             overallRating: {
                 overall: rating,
-                subrating1: cleanliness,
-                subrating2: quietness,
-                subrating3: size,
+                subrating1: subRating1,
+                subrating2: subRating2,
+                subrating3: subRating3,
             },
             tags: tagsObject,
             floor: 2, // Set the floor number if applicable, otherwise remove this line
@@ -142,7 +142,6 @@ const CommentForm = () => {
                   Subrating
               </ToggleButton>
           </ToggleButtonGroup>
-
 
           {ratingType === 'total' && (
               <div className='overall-rating'>
@@ -226,11 +225,10 @@ const CommentForm = () => {
           <img className='uploaded-image'key={index} src={image} alt={`Uploaded Image ${index + 1}`} />
           ))}
         </div>
-
         <button className='submit-button' type="submit">Submit</button>
       </form>
     </div>
   );
 };
 
-export default CommentForm;
+export default RatingForm;

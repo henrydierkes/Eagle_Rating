@@ -4,7 +4,7 @@ import Login from "./pages/Login/SignIn.jsx"
 import Navigation from "./pages/Navigation/Navigation";
 import RatingPage from "./pages/RatingPage/RatingPage.jsx";
 import AddLocation from "./pages/AddLocation/AddLocation.jsx";
-import AddComment from "./pages/AddComment/AddComment.jsx"
+import AddRating from "./pages/AddRating/AddRating.jsx"
 import SignUp from "./pages/Login/SignUp.jsx";
 import SignIn from "./pages/Login/SignIn.jsx";
 
@@ -25,8 +25,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/navigation" element={<Navigation />} />
           <Route path="/ratingpage/:Some Building" element={<RatingPage />} />
+          {/*hard coded */}
           <Route path="/addLocation" element={<AddLocation />} />
-          <Route path="/addComment" element={<AddComment />} />
+          <Route path="/addRating" element={<AddRating/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/Home" element={<Home />} />
