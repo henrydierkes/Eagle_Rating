@@ -42,7 +42,7 @@ const PlaceDetails = ({ result }) => {
 //   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
 
   // Function to generate Google Maps URL with latitude and longitude
-  const getGoogleMapsUrl = (latitude, longitude) => {
+  const getGoogleMapsUrl = (longitude, latitude) => {
     return `https://www.google.com/maps/search/?api=1&query=${longitude}%2C${latitude}`;
   };
 
@@ -77,7 +77,7 @@ const PlaceDetails = ({ result }) => {
         <div className="location">
           <a
               className="location-link"
-              href={getGoogleMapsUrl(latitude, longitude)} target="_blank" rel="noopener noreferrer"
+              href={getGoogleMapsUrl(longitude, latitude)} target="_blank" rel="noopener noreferrer"
           >
             📍{result.locName}
           </a>
