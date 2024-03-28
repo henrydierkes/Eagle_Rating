@@ -17,7 +17,6 @@
 }
 
 .range-slider {
-    margin: 20px 0;
     position: relative;
 }
 
@@ -29,6 +28,7 @@
 
 .range-slider__range {
     -webkit-appearance: none;
+    margin-top: 20px;
     width: 85%;
     margin: 20px;
     height: 8px;
@@ -54,18 +54,25 @@
 
 .range-slider__value {
     position: absolute;
-    top: -10px; /* Move up to accommodate larger text */
+    top: 60px; /* Adjusted to move the box up to create more space between the box and the slider */
     left: 50%;
     transform: translateX(-50%);
-    background-color: #000000; /* Dark green */
-    color: #fff;
-    padding: 6px 16px; /* Increase padding for larger text */
+    background-color: #000000; /* Dark background for contrast */
+    color: #fff; /* White text for readability */
+    padding: 12px 45px; /* Adjusted padding to make the box taller */
     border-radius: 4px;
-    font-size: 20px; /* Significantly larger font size */
+    font-size: 20px; /* Adjust if you want the text bigger */
     white-space: nowrap;
-    box-shadow: 0 3px 6px rgba(0, 64, 0, 0.3); /* Shadow for depth */
-    z-index: 2; /* Ensure it's above other elements */
+    box-shadow: 0 3px 6px rgba(0, 64, 0, 0.3); /* Subtle shadow for depth */
+    z-index: 2;
+    display: flex; /* Added for flexbox layout */
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    height: 40px; /* Fixed height to better control the size and centering of the content */
 }
+
+
+
 
 .master-toggle, .subratings-toggle {
     display: flex;

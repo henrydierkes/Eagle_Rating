@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import './FilterRating.css';
 
 const FilterRating = () => {
     const [rangeValue, setRangeValue] = useState({
         overall: 4.6,
-    });
-
-    const sliderRef = useRef({
-        overall: null,
     });
 
     const getRatingColor = (averageRating) => {
@@ -28,43 +24,37 @@ const FilterRating = () => {
         }));
     };
 
-    useEffect(() => {
-        // Adjust the position of value indicator upon initial render and when value changes
-        const key = 'overall';
-        const slider = sliderRef.current[key];
-        if (slider) {
-            const valueIndicator = slider.nextSibling.nextSibling; // Adjusted to skip over the min label span
-            const newValue = rangeValue[key];
-            const max = slider.max;
-            const min = slider.min;
-            const percentage = ((newValue - min) / (max - min)) * 100;
-            valueIndicator.style.left = `calc(${percentage}% + (${(20 - percentage * 0.4)}px))`; // Adjust based on slider thumb width
-        }
-    }, [rangeValue]);
-
     return (
         <div className="filter-rating">
             <h2 className="filterhead">Filter by Overall Rating</h2>
             <div className="range-slider">
-                <span className="zero">0.0</span>
+                {/* Positioned value box */}
+                <div
+                    className="range-slider__value"
+                    style={{
+                        backgroundColor: getRatingColor(rangeValue.overall),
+                        // Additional styles for positioning above the slider
+                        position: 'absolute',
+                        left: '50%', // Center horizontally relative to the slider
+                        bottom: '100%', // Position at the bottom of the slider, effectively placing it above due to container's position
+                        transform: 'translate(-50%, -10px)', // Adjust vertically and horizontally to center and lift above the slider
+                        zIndex: 2, // Ensure it's above the slider
+                    }}
+                >
+                    {rangeValue.overall}
+                </div>
+                <span className="zero"></span>
                 <input
-                    ref={el => sliderRef.current['overall'] = el}
                     name="overall"
                     type="range"
                     min="0"
                     max="5.0"
-                    step="0.1"
+                    step="0.5"
                     value={rangeValue.overall}
                     onChange={handleInputChange}
                     className="range-slider__range"
                 />
-                <span className="zero">5.0</span>
-                <div
-                    className="range-slider__value"
-                    style={{ backgroundColor: getRatingColor(rangeValue.overall) }}
-                >
-                    {rangeValue.overall}
-                </div>
+                <span className="zero"></span>
             </div>
         </div>
     );
