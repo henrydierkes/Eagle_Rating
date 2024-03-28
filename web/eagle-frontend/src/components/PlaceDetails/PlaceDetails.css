@@ -1,9 +1,11 @@
 .place-details {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-right: auto;
-  font-size: 20px;
+  justify-content: center;
+  background-color: white;
+  margin-top: 40px; /* Increase top margin */
+  margin-left: -50px; /* Increase left margin */
+  margin-right: 50px; /* Increase right margin */
 }
 .header-left,
 .location {
@@ -12,6 +14,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Align contents vertically */
+  margin-left: 60px; /* Increase left margin */
 }
 
 .header {
@@ -73,7 +76,7 @@
 .rating-number-details {
   font-size: 4em;
   font-weight: 800;
-  color: #1a1a1a;
+  color: #ffffff;
 }
 
 .rating-amount {
@@ -94,7 +97,6 @@
 .Image {
   width: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
   position: relative; /* Ensure positioning works relative to this container */
 }

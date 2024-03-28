@@ -12,13 +12,11 @@ import { useNavigate } from "react-router-dom";
 
 const getRatingColor = (rating) => {
   if (rating >= 4) {
-    return "#4CAF50"; // green
-  } else if (rating >= 3) {
-    return "#CDDC39"; // lime
+    return 'rgba(0, 128, 255, 0.7)';
   } else if (rating >= 2) {
-    return "#FFC107"; // amber
+    return 'rgba(255, 193, 7, 0.7)';
   } else {
-    return "#F44336"; // red
+    return '#F44336';
   }
 };
 const goToPage = () => {};
