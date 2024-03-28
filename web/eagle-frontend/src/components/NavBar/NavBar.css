@@ -51,3 +51,11 @@
   background-color: #ccc;
   margin: 0 10px;
 }
+
+.user-email {
+  margin-top: .5vh;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-right: 10px; /* Adjust spacing as needed */
+}
