@@ -3,7 +3,7 @@ import './FilterRating.css';
 
 const FilterRating = () => {
     const [rangeValue, setRangeValue] = useState({
-        overall: 4.6,
+        overall: 2.5,
     });
 
     const getRatingColor = (averageRating) => {
