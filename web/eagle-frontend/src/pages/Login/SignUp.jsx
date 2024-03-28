@@ -1,20 +1,23 @@
 import React, { useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import { useState } from 'react';
-import './SignUp.css'; // Ensure this imports your CSS with the background styles
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  createTheme,
+  ThemeProvider,
+} from '@mui/material';
+import './SignUp.css'; // Make sure this imports your CSS with the background styles
 
 const defaultTheme = createTheme();
 
@@ -30,7 +33,7 @@ export default function SignUp() {
     try {
       const response = await axios.post('http://localhost:8080/auth/sign-up', { email, password });
       console.log('Sign up successful:', response.data);
-      navigate('/signin'); // Assuming you want to navigate to the signin page on successful signup
+      navigate('/signin'); // Navigate to the signin page on successful signup
     } catch (error) {
       console.error('Sign up failed:', error.response.data);
       setError(error.response.data.message);
@@ -41,9 +44,25 @@ export default function SignUp() {
     navigate('/home');
   };
 
+  useEffect(() => {
+    const root = document.querySelector(":root");
+    
+    const handlePointer = (e) => {
+      root.style.setProperty("--y", `${e.clientY}px`);
+    };
+
+    window.addEventListener("pointermove", handlePointer);
+    window.addEventListener("pointerdown", handlePointer);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointer);
+      window.removeEventListener("pointerdown", handlePointer);
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={defaultTheme}>
-      <div className="Signin"> {/* Use this class for flexbox alignment */}
+      <div className="Signin">
         <div id="bg"></div> {/* Background with blur */}
         <div id="bg_mask"></div> {/* Mask for focus effect */}
         <Container component="main" maxWidth="xs">
@@ -54,17 +73,16 @@ export default function SignUp() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              backgroundColor: 'white', // Optionally set a background color here or ensure .loginHolder is used
-              padding: 3, // Apply some padding
-              borderRadius: 2, // And perhaps a slight border-radius
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Optional: add a shadow for better contrast
+              backgroundColor: 'white',
+              padding: 3,
+              borderRadius: 2,
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             }}
           >
             <Typography component="h1" variant="h5">
               Sign Up
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              {/* Your form fields */}
               <TextField
                 margin="normal"
                 required
@@ -124,8 +142,22 @@ export default function SignUp() {
             </Box>
           </Box>
         </Container>
-        <h1 className="logo button" onClick={navigateToFrontPage} style={{ marginTop: '25px', fontSize: '25px', position: 'absolute', top: 0 }}>EagleRating</h1>
+        <h1 className="logo button" onClick={navigateToFrontPage} style={{ marginTop: '25px', fontSize: '25px', position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)' }}>EagleRating</h1>
       </div>
     </ThemeProvider>
   );
 }
+<Box
+  sx={{
+    marginTop: 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white', // Ensures white background
+    padding: 3, // Consistent padding
+    borderRadius: 2, // Consistent border radius
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Consistent shadow for depth
+    width: '100%', // Ensures the Box takes up the width it needs based on its parent (Container maxWidth="xs")
+    maxWidth: 400, // Optional: Ensures the Box does not grow beyond 400px, adjust as needed
+  }}
+></Box>
