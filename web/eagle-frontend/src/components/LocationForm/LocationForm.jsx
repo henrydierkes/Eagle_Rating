@@ -192,6 +192,7 @@ const LocationForm = ({ location }) => {
             name="buildingName"
             value={formData.buildingName}
             onChange={handleInputChange}
+            required
         />
         <div>
           <label>Select Location on Map:</label>
@@ -206,7 +207,7 @@ const LocationForm = ({ location }) => {
         </div>
         <TextField
             sx={{ mt: 2, mb: 1}}
-            className='floo'
+            className='floor'
             id="outlined-basic"
             label="Enter Floor"
             variant="outlined"
@@ -223,6 +224,7 @@ const LocationForm = ({ location }) => {
             name="categoryName"
             value={formData.categoryName}
             onChange={handleInputChange}
+            required
         />
 
         <form onSubmit={handleSubmit}>
