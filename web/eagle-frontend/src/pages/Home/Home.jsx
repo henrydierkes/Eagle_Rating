@@ -20,7 +20,7 @@ const Home = () => {
     }
   };
   
-  const data = useAutoRefresh(fetchDataFunction, 5000); // Fetch data every 5 seconds
+  // const data = useAutoRefresh(fetchDataFunction, 5000); // Fetch data every 5 seconds
 
   return (
     <div className="Home">

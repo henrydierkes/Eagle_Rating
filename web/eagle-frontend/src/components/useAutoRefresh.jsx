@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 
 const useAutoRefresh = (fetchDataFunction, interval = 10000) => {

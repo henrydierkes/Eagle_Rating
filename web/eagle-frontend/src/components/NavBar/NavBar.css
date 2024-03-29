@@ -73,3 +73,11 @@
   color: #333;
   margin-right: 10px; /* Adjust spacing as needed */
 }
+.logo {
+  font-size: 25px;
+  margin-left: 20px;
+  position: relative;
+  display: inline-block; /* Ensures that the pseudo-element aligns correctly */
+  color: #000000; /* Assuming white text to contrast with the blue shine */
+}
+

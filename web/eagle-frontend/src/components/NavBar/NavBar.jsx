@@ -70,7 +70,7 @@ const NavBar = () => {
 
   return (
     <div className="nav-bar">
-       <h1 className="logo button" onClick={navigateToFrontPage}>EagleRating</h1>
+      <h1 className="logo button effect-shine" onClick={navigateToFrontPage}>EagleRating</h1>
       <SearchBar />
       <div className="nav-links">
         {isLoggedIn ? (
