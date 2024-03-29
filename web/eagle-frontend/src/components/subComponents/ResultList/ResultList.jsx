@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './ResultList.css';
 import { useNavigate } from "react-router-dom";
 
+// Assuming these imports are correct based on your project structure
+import bookmarkIcon from '../Misc/bookmark.png';
+import bookmarkHighlightIcon from '../Misc/bookmark highlight.png';
+
 const getRatingColor = (averageRating) => {
     if (averageRating >= 4) {
         return 'rgba(0, 128, 255, 0.7)';
@@ -14,36 +18,15 @@ const getRatingColor = (averageRating) => {
 
 const ResultList = ({ results }) => {
     const navigate = useNavigate();
-    const [highlightedIndex, setHighlightedIndex] = useState(null);
+    const [bookmarked, setBookmarked] = useState({}); // State to track bookmarked items
 
     useEffect(() => {
-        const resultItems = document.querySelectorAll('.result-item');
+        // Your existing useEffect logic...
+    }, [results]);
 
-        const clickHandler = (e) => {
-            e.currentTarget.classList.add('bounce');
-            setTimeout(() => {
-                e.currentTarget.classList.remove('bounce');
-            }, 500); // Match the duration of the bounce animation
-        };
-
-        resultItems.forEach(item => {
-            item.addEventListener('click', clickHandler);
-        });
-
-        // Cleanup
-        return () => {
-            resultItems.forEach(item => {
-                item.removeEventListener('click', clickHandler);
-            });
-        };
-    }, [results]); // Re-apply when `results` changes
-
-    const handleAddLocationClick = () => {
-        navigate('/addLocation');
-    };
-
-    const toggleHighlight = (index) => {
-        setHighlightedIndex(index === highlightedIndex ? null : index);
+    const toggleBookmark = (index, e) => {
+        e.stopPropagation(); // Prevent the click from reaching the result item
+        setBookmarked(prev => ({ ...prev, [index]: !prev[index] }));
     };
 
     const navigateToLocationDetail = (locationId) => {
@@ -57,11 +40,11 @@ const ResultList = ({ results }) => {
                     <div className="rating-box" style={{ background: getRatingColor(result.averageRating?.overall) }}>
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                     </div>
-                    <div className="highlight-tag" onClick={(e) => { e.stopPropagation(); toggleHighlight(index); }}>
-                        {highlightedIndex === index ? (
-                            <span className="star" style={{ background: 'linear-gradient(to right, #5ea5fc, #6379fe)' }}>&#9733;</span>
+                    <div className="highlight-tag" onClick={(e) => toggleBookmark(index, e)}>
+                        {bookmarked[index] ? (
+                            <img src={bookmarkHighlightIcon} alt="Bookmarked" />
                         ) : (
-                            <i className="gg-bookmark"></i>
+                            <img src={bookmarkIcon} alt="Bookmark" />
                         )}
                     </div>
                     <div>
@@ -70,7 +53,7 @@ const ResultList = ({ results }) => {
                     </div>
                 </div>
             ))}
-            <button className="rating-button" onClick={handleAddLocationClick}>Add Location</button>
+            <button className="rating-button" onClick={() => navigate('/addLocation')}>Add Location</button>
         </div>
     );
 };

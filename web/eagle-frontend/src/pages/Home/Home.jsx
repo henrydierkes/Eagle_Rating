@@ -4,7 +4,6 @@ import Background from "../../components/Background/Background";
 import Trending from "../../components/Trending/Trending";
 import Category from "../../components/Category/Category";
 import Footer from "../../components/Footer/Footer";
-import useAutoRefresh from "../../components/Misc/useAutoRefresh.jsx";
 import "./Home.css";
 
 const Home = () => {
