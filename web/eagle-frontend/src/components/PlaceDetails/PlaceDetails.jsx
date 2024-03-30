@@ -25,7 +25,7 @@ const PlaceDetails = ({ result }) => {
 
     const navigate = useNavigate();
     const rawRating = result?.averageRating?.overall;
-    const rating = rawRating ? Math.ceil(rawRating * 10) / 10 : 'N/A';
+    const rating = rawRating ? Math.floor(rawRating * 10) / 10 : 'N/A';
     const ratingColor = getRatingColor(rawRating ?? 0);
     const numRate = result?.ratingCount ?? 'N/A';
     const title = result?.locName ?? 'Unknown Title';
