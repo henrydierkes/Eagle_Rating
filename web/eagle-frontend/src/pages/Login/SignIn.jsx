@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import './SignIn.css';
+import { useAuth } from '../../contexts/AuthContext.jsx';
 
 const defaultTheme = createTheme();
 
@@ -21,7 +22,7 @@ export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const { login } = useAuth();
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -32,8 +33,7 @@ export default function SignIn() {
         password,
       });
       console.log('Login successful:', { email });
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('email', email);
+      login(response.data.token, email); // Update the context with the token
       navigate('/home');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {
