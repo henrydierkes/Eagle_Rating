@@ -1,12 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/SignIn.jsx"
-import Navigation from "./pages/Navigation/Navigation";
-import RatingPage from "./pages/RatingPage/RatingPage.jsx";
-import AddLocation from "./pages/AddLocation/AddLocation.jsx";
-import AddRating from "./pages/AddRating/AddRating.jsx";
-import SignUp from "./pages/Login/SignUp.jsx";
-import SignIn from "./pages/Login/SignIn.jsx";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import Navigation from './pages/Navigation/Navigation';
+import RatingPage from './pages/RatingPage/RatingPage.jsx';
+import AddLocation from './pages/AddLocation/AddLocation.jsx';
+import AddRating from './pages/AddRating/AddRating.jsx';
+import SignUp from './pages/Login/SignUp.jsx';
+import SignIn from './pages/Login/SignIn.jsx';
 import ScrollToTop from './ScrollToTop';
 import axios from 'axios';
 import { AuthProvider } from './contexts/AuthContext.jsx';
@@ -38,7 +38,6 @@ function App() {
           <ScrollToTop />
           <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
               <Route path="/navigation" element={<Navigation />} />
               <Route path="/ratingpage/:locId" element={<RatingPage />} />
                 <Route path="/addLocation" element={

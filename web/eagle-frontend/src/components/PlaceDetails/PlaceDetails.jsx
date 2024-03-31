@@ -34,16 +34,17 @@ const PlaceDetails = ({ result }) => {
     const location = result?.location ?? 'Unknown Location';
     const latitude = result?.location.latitude ?? '';
     const longitude = result?.location.longitude ?? '';
+    console.log(longitude);
     console.log(latitude);
   const handleAddCommentClick = () => {
-    navigate("/addRating");
+      navigate("/addRating", { state: { placeDetails: result } });
   };
 
 //   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
 
   // Function to generate Google Maps URL with latitude and longitude
-  const getGoogleMapsUrl = (longitude, latitude) => {
-    return `https://www.google.com/maps/search/?api=1&query=${longitude}%2C${latitude}`;
+  const getGoogleMapsUrl = (latitude, longitude) => {
+    return `https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`;
   };
 
 
@@ -77,7 +78,7 @@ const PlaceDetails = ({ result }) => {
         <div className="location">
           <a
               className="location-link"
-              href={getGoogleMapsUrl(longitude, latitude)} target="_blank" rel="noopener noreferrer"
+              href={getGoogleMapsUrl(latitude, longitude)} target="_blank" rel="noopener noreferrer"
           >
             📍{result.locName}
           </a>
@@ -89,7 +90,7 @@ const PlaceDetails = ({ result }) => {
               style={{ border: 0 }}
               loading="lazy"
               allowFullScreen
-              src={`https://www.google.com/maps/embed/v1/place?&q=${longitude},${latitude}&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs&zoom=17`}
+              src={`https://www.google.com/maps/embed/v1/place?&q=${latitude},${longitude}&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs&zoom=17`}
             ></iframe>
           </div>
         </div>

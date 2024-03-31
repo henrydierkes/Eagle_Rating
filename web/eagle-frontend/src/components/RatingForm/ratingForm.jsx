@@ -13,6 +13,8 @@ import './ratingForm.css';
 import axios from 'axios';
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
+import { useAuth } from '../../contexts/AuthContext'; // Import useAuth hook
+import { useLocation } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -25,9 +27,7 @@ const MenuProps = {
   },
 };
 
-const results = [
-  { id: 1, title: "Place 567", description: "Description for Result 1", rating: 4.5, num_rate: 33, location: '1400 Emory Street', top_tags: ['tables', 'chairs'], size: 5, clean: 5, quiet: 5, building: 'Building A', floor: '2nd floor'},
-];
+
 
 const tags = [
   'Charging Ports',
@@ -36,6 +36,12 @@ const tags = [
 ];
 
 const RatingForm = () => {
+    const { currentUser } = useAuth();
+    const location = useLocation();
+    const placeDetails = location.state?.placeDetails;
+    console.log(placeDetails);
+    const placeName = placeDetails?.locName;
+    const placeId=placeDetails?.locationId;
   const [rating, setRating] = useState(0);
   const [subRating1, setSubRating1] = useState(0);
   const [subRating2, setSubRating2] = useState(0);
@@ -86,8 +92,8 @@ const RatingForm = () => {
 
         // Prepare the data object based on your database schema
         const ratingData = {
-            userId: "65f63e365aaca164fc0ddb41", // Replace with actual userId from authentication context
-            placeId: "6604b1127700f2702d1ca9ed", // Replace with actual placeId relevant to the rating
+            userId: currentUser.userId, // Replace with actual userId from authentication context
+            placeId: placeId,
             comment: comment,
             date: new Date(), // Set the current date/time for the rating
             likes: 0, // Initialize likes and dislikes as zero
@@ -126,7 +132,7 @@ const RatingForm = () => {
 
   return (
     <div className="rating-form">
-      <h2>Rate {results[0].title}</h2>
+      <h2>Rate {placeName}</h2>
       <form onSubmit={handleSubmit}>
           <ToggleButtonGroup
               value={ratingType}

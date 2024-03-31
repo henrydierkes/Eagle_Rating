@@ -1,6 +1,7 @@
 // src/contexts/AuthContext.jsx
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext(null);
 
@@ -12,20 +13,23 @@ export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const email = localStorage.getItem('email');
+    const token = Cookies.get('token');
+    const email = Cookies.get('email');
+    const userId=Cookies.get('userId');
     if (token && email) {
-      setCurrentUser({ token, email });
+      setCurrentUser({ token, email, userId});
     }
   }, []);
+
   const login = (token, email) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('email', email);
+    Cookies.set('token', token);
+    Cookies.set('email', email);
     setCurrentUser({ token, email });
   };
+
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
+    Cookies.remove('token');
+    Cookies.remove('email');
     setCurrentUser(null);
   };
 
