@@ -20,6 +20,9 @@ public class Util {
         this.mongoTemplate = mongoTemplate;
         this.ratingService = ratingService;
     }
+    public String convert(ObjectId objectId) {
+        return objectId != null ? objectId.toHexString() : null;
+    }
 
     public void refreshPlace(Place place) {
         List<String> ratingIds = place.getRatingIds();

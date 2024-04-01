@@ -68,9 +68,6 @@ public class PlaceServiceImpl implements IPlaceService {
     @Override
     public List<Place> searchPlacesByName(String name) {
         List<Place> lis= placeRepository.findByLocNameContainingIgnoreCase(name);
-        for(Place place :lis){
-            place.setLocationId(place.getLocId().toString());
-        }
         return lis;
     }
     /**
@@ -466,9 +463,6 @@ public class PlaceServiceImpl implements IPlaceService {
             }
         }
         List<Place> places=mongoTemplate.find(query, Place.class);
-        for(Place place:places){
-            place.setLocationId(place.getLocId().toString());
-        }
         // Execute the query
         return places;
     }

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -18,7 +19,13 @@ public class User implements Serializable {
     @Field("_id")
     @ApiModelProperty(value = "Primary Key")
     private ObjectId userId;
+
     private String userIdStr;
+    @PersistenceConstructor
+    public User(ObjectId userId) {
+        this.userId = userId;
+        this.userIdStr = userId != null ? userId.toHexString() : null;
+    }
     @Field("username")
     @ApiModelProperty(value = "username")
     private String username;
