@@ -13,9 +13,13 @@ const ResultsAndFilter = ({ results, tagsParam, onPlaceClick }) => {
     setFilteredResults(results);
   }, [results]);
 
-  const handleFilterChange = (filters) => {
-    console.log('Filters applied:', filters);
-  };
+    const handleRatingChange = (newRating) => {
+        // 假设每个result对象都有一个averageRating属性，我们将基于这个属性来进行过滤
+        const updatedFilteredResults = results.filter(result => result.averageRating.overall >= newRating);
+        setFilteredResults(updatedFilteredResults);
+        console.log(filteredResults)
+    };
+
 
   return (
     <div className="resultsandfilter">
@@ -23,7 +27,7 @@ const ResultsAndFilter = ({ results, tagsParam, onPlaceClick }) => {
         <ResultList results={filteredResults} tagsParam={tagsParam} onPlaceClick={onPlaceClick} />
         <div className="resultseparator"></div>
         {/*<Filter onFilterChange={handleFilterChange} />*/}
-        <FilterRating onFilterChange={handleFilterChange} />
+        <FilterRating onRatingChange={handleRatingChange} />
     </div>
   );
 };

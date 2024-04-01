@@ -3,7 +3,7 @@ import './FilterRating.css';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-const FilterRating = () => {
+const FilterRating = ({ onRatingChange }) => {
     const [rangeValue, setRangeValue] = useState({
         overall: 2.5,
     });
@@ -44,13 +44,19 @@ const FilterRating = () => {
         }
     };
 
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+        const newRangeValue = parseFloat(value);
         setRangeValue(prevValue => ({
             ...prevValue,
-            [name]: parseFloat(value).toFixed(1)
+            [name]: newRangeValue
         }));
+        // 调用父组件传递过来的回调函数，将新的评分值传回父组件
+        onRatingChange(newRangeValue);
     };
+
+
 
     return (
         <div className="filter-rating">
