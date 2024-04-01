@@ -1,12 +1,12 @@
 package com.astar.ratingbackend.Service.util;
 
 // File path: src/main/java/com/astar/ratingbackend/util/JwtUtil.java
+
 import com.astar.ratingbackend.Entity.User;
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.Verification;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -21,6 +21,8 @@ public class JwtUtil {
 
         return JWT.create()
                 .withSubject(user.getEmail())
+                .withClaim("username", user.getUsername())
+                .withClaim("userIdStr", user.getUserIdStr())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))
                 .withIssuer("eaglerating.com")
                 .sign(Algorithm.HMAC256(SECRET_KEY));

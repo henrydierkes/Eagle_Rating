@@ -32,6 +32,7 @@ public class AuthServiceImpl implements IAuthService {
     public String signIn(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println(jwtUtil.generateToken(user));
             return jwtUtil.generateToken(user);
         } else {
             throw new BadCredentialsException("Invalid email/password supplied");

@@ -26,6 +26,7 @@ public class User implements Serializable {
         this.userId = userId;
         this.userIdStr = userId != null ? userId.toHexString() : null;
     }
+    public User(){}
     @Field("username")
     @ApiModelProperty(value = "username")
     private String username;

@@ -45,7 +45,7 @@ public class Place implements Serializable {
         this.locIdStr = locId != null ? locId.toHexString() : null;
     }
 
-
+    public Place(){}
     @Field("locName")
     private String locName;
 

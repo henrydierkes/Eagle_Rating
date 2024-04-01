@@ -36,7 +36,7 @@ const PlaceDetails = ({ result }) => {
     const longitude = result?.location.longitude ?? '';
     console.log(longitude);
     console.log(latitude);
-  const handleAddCommentClick = () => {
+  const handleAddRatingClick = () => {
       navigate("/addRating", { state: { placeDetails: result } });
   };
 
@@ -113,7 +113,7 @@ const PlaceDetails = ({ result }) => {
       </div>
 
       <div className="rating-button-container">
-        <button className="rating-button" onClick={handleAddCommentClick}>
+        <button className="rating-button" onClick={handleAddRatingClick}>
           Add Rating
         </button>
       </div>

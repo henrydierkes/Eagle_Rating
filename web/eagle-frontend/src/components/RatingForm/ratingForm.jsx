@@ -41,14 +41,14 @@ const RatingForm = () => {
     const placeDetails = location.state?.placeDetails;
     console.log(placeDetails);
     const placeName = placeDetails?.locName;
-    const placeId=placeDetails?.locationId;
-  const [rating, setRating] = useState(0);
-  const [subRating1, setSubRating1] = useState(0);
-  const [subRating2, setSubRating2] = useState(0);
-  const [subRating3, setSubRating3] = useState(0);
-  const [tag, setTag] = React.useState([]);
-  const [uploadedImages, setUploadedImages] = useState([]);
-  const [comment, setComment] = useState('');
+    const placeId=placeDetails?.locIdStr;
+      const [rating, setRating] = useState(0);
+      const [subRating1, setSubRating1] = useState(0);
+      const [subRating2, setSubRating2] = useState(0);
+      const [subRating3, setSubRating3] = useState(0);
+      const [tag, setTag] = React.useState([]);
+      const [uploadedImages, setUploadedImages] = useState([]);
+      const [comment, setComment] = useState('');
     const [ratingType, setRatingType] = useState('total'); // 'total' or 'sub'
     const [formData, setFormData] = useState({
         rating: 0,
@@ -89,24 +89,27 @@ const RatingForm = () => {
             obj[item] = tag.includes(item);
             return obj;
         }, {});
+        console.log(currentUser);
+        console.log(placeDetails);
 
         // Prepare the data object based on your database schema
         const ratingData = {
             userId: currentUser.userId, // Replace with actual userId from authentication context
-            placeId: placeId,
+            placeId: placeDetails.locIdStr,
             comment: comment,
             date: new Date(), // Set the current date/time for the rating
             likes: 0, // Initialize likes and dislikes as zero
             dislikes: 0,
             overallRating: {
-                overall: rating,
-                subrating1: subRating1,
-                subrating2: subRating2,
-                subrating3: subRating3,
+                overall: formData.rating,
+                subrating1: formData.subrating1,
+                subrating2: formData.subrating2,
+                subrating3: formData.subrating3,
             },
             tags: tagsObject,
             floor: 2, // Set the floor number if applicable, otherwise remove this line
         };
+        console.log(ratingData);
 
         try {
             const response = await axios.post('http://localhost:8080/api/rating/addRating', ratingData);

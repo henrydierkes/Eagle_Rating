@@ -33,7 +33,8 @@ export default function SignIn() {
         password,
       });
       console.log('Login successful:', { email });
-      login(response.data.token, email); // Update the context with the token
+      console.log(response.data);
+      login(response.data, email); // Update the context with the token
       navigate('/home');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {

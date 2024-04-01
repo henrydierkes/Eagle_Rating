@@ -122,9 +122,6 @@ public class RatingServiceImpl implements IRatingService {
                 }
             }
         }
-        if(rating.getRatingId()==null){
-
-        }
         if (rating.getTags() == null) {
             rating.setTags(new HashMap<>());  // Empty list as default value
         }
@@ -157,13 +154,14 @@ public class RatingServiceImpl implements IRatingService {
         if(overall==null&&(rating1==null||rating2==null||rating3==null)){
             throw new IllegalArgumentException("ratings is invalid");
         }
-        if (overall==0){
-            overallRating.setOverall((rating1+rating2+rating3)/3.0);
-        }else{
+        if(overall!=null){
             overallRating.setRating1(overall);
             overallRating.setRating2(overall);
             overallRating.setRating3(overall);
+        }else {
+            overallRating.setOverall((rating1+rating2+rating3)/3.0);
         }
+
         rating.setOverallRating(overallRating);
 
         return ratingRepository.save(rating);

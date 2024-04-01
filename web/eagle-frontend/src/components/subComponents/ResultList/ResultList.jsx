@@ -36,7 +36,7 @@ const ResultList = ({ results }) => {
     return (
         <div className="result-list">
             {results.map((result, index) => (
-                <div key={result.locationId || index} className="result-item" onClick={() => navigateToLocationDetail(result.locationId)}>
+                <div key={result.locIdStr || index} className="result-item" onClick={() => navigateToLocationDetail(result.locIdStr)}>
                     <div className="rating-box" style={{ background: getRatingColor(result.averageRating?.overall) }}>
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                     </div>
