@@ -22,6 +22,7 @@ package com.astar.ratingbackend.Entity;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -35,13 +36,19 @@ public class Comment implements Serializable {
     @Id // This annotation is used to specify the primary key
     @Field("_id")
     private ObjectId commentId; // Changed to commentId
+    private String commentIdStr;
+    @PersistenceConstructor
+    public Comment(ObjectId commentId) {
+        this.commentId = commentId;
+        this.commentIdStr = commentId != null ? commentId.toHexString() : null;
+    }
 
     @Field("ratingId")
-    private ObjectId ratingId; // Changed to commentId
+    private String ratingId; // Changed to commentId
 
 
     @Field("userId")
-    private ObjectId userId; // Added for linking the comment to a user
+    private String userId; // Added for linking the comment to a user
 
     @Field("text")
     private String text; // The actual comment text

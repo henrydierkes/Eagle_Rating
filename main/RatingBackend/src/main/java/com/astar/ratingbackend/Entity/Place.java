@@ -22,6 +22,7 @@ package com.astar.ratingbackend.Entity;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -37,7 +38,13 @@ public class Place implements Serializable {
     @Field("_id")
     private ObjectId locId;
 
-    private String locationId;
+    private String locIdStr;
+    @PersistenceConstructor
+    public Place(ObjectId locId) {
+        this.locId = locId;
+        this.locIdStr = locId != null ? locId.toHexString() : null;
+    }
+
 
     @Field("locName")
     private String locName;

@@ -21,6 +21,7 @@ package com.astar.ratingbackend.Entity;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -36,6 +37,14 @@ public class Rating implements Serializable {
     @Id
     @Field("_id")
     private ObjectId ratingId;
+
+    private String ratingIdStr;
+    @PersistenceConstructor
+    public Rating(ObjectId ratingId) {
+        this.ratingId = ratingId;
+        this.ratingIdStr = ratingId != null ? ratingId.toHexString() : null;
+    }
+    public Rating(){}
 
     @Field("userId")
     private String userId;
