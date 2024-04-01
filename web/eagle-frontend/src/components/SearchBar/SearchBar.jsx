@@ -1,22 +1,49 @@
 import React, { useState } from 'react';
+import Axios from 'axios'; // Ensure Axios is used for future expansions, such as fetching from an API.
+import { useNavigate } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router-dom';
-import Axios from 'axios';
+
+// Categories array for the dropdown and search suggestions.
+const categories = [
+  { title: 'Library', category: 'Educational' },
+  { title: 'Study Spaces', category: 'Educational' },
+  { title: 'Parking Lot', category: 'Facilities' },
+  { title: 'Dorms', category: 'Accommodations' },
+  { title: 'Bathrooms', category: 'Facilities' },
+];
+
+function Grouped() {
+  // Using the full category name for grouping, decreased width to 180px.
+  const options = categories.map((option) => ({
+    ...option,
+    category: option.category,
+  }));
+
+  return (
+    <Autocomplete
+      id="grouped-demo"
+      options={options.sort((a, b) => -b.category.localeCompare(a.category))}
+      groupBy={(option) => option.category}
+      getOptionLabel={(option) => option.title}
+      sx={{ width: 180 }} // Decreased width for categories
+      renderInput={(params) => <TextField {...params} label="Select Category" />}
+    />
+  );
+}
 
 const SearchBar = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
 
-  // Function to fetch suggestions
   const fetchSuggestions = async (query) => {
     try {
-      const response = await Axios.get(`http://localhost:8080/api/place/search`, {
-        params: { locName: query }
-      });
-      setOptions(response.data);
+      const filteredOptions = categories.filter((option) =>
+        option.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setOptions(filteredOptions);
     } catch (error) {
       console.error('Error fetching suggestions: ', error);
     }
@@ -33,40 +60,38 @@ const SearchBar = () => {
 
   const onKeyDown = (event) => {
     if (event.key === 'Enter' && inputValue.trim()) {
-      // Prevent the default form submission if inside a form
       event.preventDefault();
       navigate(`/navigation?search=${inputValue.trim()}`);
     }
   };
 
   return (
-    <div className="search-bar" style={{ display: 'flex', width: '100%', justifyContent: 'flex-start' }}>
-      <Autocomplete
-        freeSolo
-        id="search-bar"
-        options={options}
-        getOptionLabel={(option) => option.locName || ''}
-        onInputChange={onInputChange}
-        onChange={(event, newValue) => {
-          if (newValue && typeof newValue === 'object' && newValue.locName) {
-            setInputValue(newValue.locName);
-            navigate(`/navigation?search=${newValue.locName}`);
-          }
-        }}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            placeholder="Start typing to look for places..."
-            onKeyDown={onKeyDown}
-            InputProps={{
-              ...params.InputProps,
-              endAdornment: <SearchIcon position="end" />,
-            }}
-          />
-        )}
-        sx={{ width: '100%', height: '80%', marginLeft: '20px', marginRight: '20px' }}
-      />
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '47em' }}>
+      <div className="search-bar" style={{ flexGrow: 1, maxWidth: '100%' }}> 
+        <Autocomplete
+          freeSolo
+          id="search-bar"
+          options={options.map(option => option.title)}
+          onInputChange={onInputChange}
+          onChange={(event, newValue) => {
+            navigate(`/navigation?search=${newValue}`);
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="outlined"
+              placeholder="Start typing to look for places..."
+              onKeyDown={onKeyDown}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: <SearchIcon />,
+              }}
+            />
+          )}
+          sx={{ width: '1020%' }} 
+        />
+      </div>
+      <Grouped />
     </div>
   );
 };
