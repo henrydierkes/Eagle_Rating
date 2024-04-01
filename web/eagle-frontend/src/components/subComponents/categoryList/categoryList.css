@@ -28,17 +28,17 @@
   min-width: 30px;
   min-height: 30px;
   border: none;
-  background-color: #7cc8ff; /* Retained original color; adjust as needed */
+  background-color: #c9c9c500; /* Retained original color; adjust as needed */
   color: black;
   font-size: 14px;
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 0.3s ease;
   position: relative;
-  background: rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(9px);
   -webkit-backdrop-filter: blur(9px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.037);
   margin: 10px;
 }
 
