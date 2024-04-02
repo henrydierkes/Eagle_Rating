@@ -184,5 +184,13 @@ public class PlaceController {
         return place.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @GetMapping("/getTrendy")
+    public ResponseEntity<List<Place>> getTrendyPlace(@RequestParam(required = false) Integer num){
+        if(num==null){
+            return ResponseEntity.ok(placeService.findTopPlaces());
+        }else{
+            return ResponseEntity.ok(placeService.findTopPlaces(num));
+        }
+    }
 
 }
