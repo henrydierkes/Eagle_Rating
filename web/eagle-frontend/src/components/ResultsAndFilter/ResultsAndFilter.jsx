@@ -14,7 +14,6 @@ const ResultsAndFilter = ({ results, tagsParam, onPlaceClick }) => {
   }, [results]);
 
     const handleRatingChange = (newRating) => {
-        // 假设每个result对象都有一个averageRating属性，我们将基于这个属性来进行过滤
         const updatedFilteredResults = results.filter(result => result.averageRating.overall >= newRating);
         setFilteredResults(updatedFilteredResults);
         console.log(filteredResults)
