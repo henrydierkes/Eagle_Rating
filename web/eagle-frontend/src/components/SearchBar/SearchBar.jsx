@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Axios from 'axios'; // Ensure Axios is used for future expansions, such as fetching from an API.
 import { useNavigate } from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-// Categories array for the dropdown and search suggestions.
 const categories = [
   { title: 'Library', category: 'Educational' },
   { title: 'Study Spaces', category: 'Educational' },
@@ -15,7 +15,6 @@ const categories = [
 ];
 
 function Grouped() {
-  // Using the full category name for grouping, decreased width to 180px.
   const options = categories.map((option) => ({
     ...option,
     category: option.category,
@@ -27,8 +26,9 @@ function Grouped() {
       options={options.sort((a, b) => -b.category.localeCompare(a.category))}
       groupBy={(option) => option.category}
       getOptionLabel={(option) => option.title}
-      sx={{ width: 180 }} // Decreased width for categories
-      renderInput={(params) => <TextField {...params} label="Select Category" />}
+      // Increased width for better visibility and alignment with the search bar
+      sx={{ width: '100%', maxWidth: '100%', mr: '1em' }}
+      renderInput={(params) => <TextField {...params} label="Select Category" fullWidth />}
     />
   );
 }
@@ -37,16 +37,14 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const fetchSuggestions = async (query) => {
-    try {
-      const filteredOptions = categories.filter((option) =>
-        option.title.toLowerCase().includes(query.toLowerCase())
-      );
-      setOptions(filteredOptions);
-    } catch (error) {
-      console.error('Error fetching suggestions: ', error);
-    }
+    const filteredOptions = categories.filter((option) =>
+      option.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setOptions(filteredOptions);
   };
 
   const onInputChange = (event, newInputValue) => {
@@ -66,8 +64,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '47em' }}>
-      <div className="search-bar" style={{ flexGrow: 1, maxWidth: '100%' }}> 
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: isMobile ? '0.5rem' : '1rem', padding: isMobile ? '0 10px' : '0', width: '100%' }}>      <div className="search-bar" style={{ width: '500%', maxWidth: '500%' }}> 
         <Autocomplete
           freeSolo
           id="search-bar"
@@ -86,9 +83,9 @@ const SearchBar = () => {
                 ...params.InputProps,
                 endAdornment: <SearchIcon />,
               }}
+              fullWidth
             />
           )}
-          sx={{ width: '1020%' }} 
         />
       </div>
       <Grouped />
