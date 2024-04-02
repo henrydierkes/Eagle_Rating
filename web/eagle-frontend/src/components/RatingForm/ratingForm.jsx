@@ -15,6 +15,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import { useAuth } from '../../contexts/AuthContext'; // Import useAuth hook
 import { useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -89,13 +90,11 @@ const RatingForm = () => {
             obj[item] = tag.includes(item);
             return obj;
         }, {});
-        console.log(currentUser);
-        console.log(placeDetails);
 
         // Prepare the data object based on your database schema
         const ratingData = {
             userId: currentUser.userId, // Replace with actual userId from authentication context
-            placeId: placeDetails.locIdStr,
+            placeId: placeId, // use the placeId from state
             comment: comment,
             date: new Date(), // Set the current date/time for the rating
             likes: 0, // Initialize likes and dislikes as zero
@@ -108,19 +107,36 @@ const RatingForm = () => {
             },
             tags: tagsObject,
             floor: 2, // Set the floor number if applicable, otherwise remove this line
+            images: uploadedImages, // assuming you want to upload images as well
         };
-        console.log(ratingData);
 
-        try {
-            const response = await axios.post('http://localhost:8080/api/rating/addRating', ratingData);
+        // Retrieve the JWT token from cookies
+        const token = Cookies.get('token');
 
-            console.log(response.data);
-            alert('Rating successfully added!');
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Failed to submit rating.');
+        // If there's a token, proceed with the API call
+        if (token) {
+            // Create the authorization header using the token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            };
+
+            try {
+                const response = await axios.post('http://localhost:8080/api/rating/addRating', ratingData, config);
+                console.log(response.data);
+                alert('Rating successfully added!');
+                // Clear the form fields here if needed
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to submit rating.');
+            }
+        } else {
+            // Handle the case where the token is not found
+            alert('You must be logged in to submit a rating.');
         }
     };
+
 
 
 
