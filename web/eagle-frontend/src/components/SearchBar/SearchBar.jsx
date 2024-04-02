@@ -13,9 +13,9 @@ const categories = [
   { title: 'Dorms', category: 'Accommodations' },
   { title: 'Bathrooms', category: 'Facilities' },
   { title: 'Buildings', category: 'Facilities' },
-  { title: 'Classroom', category: 'Edducational' },
-  {title: 'Coffee', category: 'Dining'},
-  {title: 'Cafeteria', category: 'Dining'}
+  { title: 'Classroom', category: 'Educational' },
+  // { title: 'Coffee', category: 'Dining'},
+  // { title: 'Cafeteria', category: 'Dining'}
 ];
 
 function Grouped() {
