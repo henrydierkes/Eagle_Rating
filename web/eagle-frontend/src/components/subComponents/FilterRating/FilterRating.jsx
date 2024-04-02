@@ -3,7 +3,7 @@ import './FilterRating.css';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-const FilterRating = ({ onRatingChange }) => {
+const FilterRating = ({ onRatingChange, onTagSelect }) => {
     const [rangeValue, setRangeValue] = useState({
         overall: 0.0,
     });
@@ -18,21 +18,35 @@ const FilterRating = ({ onRatingChange }) => {
     ];
 
     const [chips, setChips] = useState(initialChips);
+    const [selectedTags, setSelectedTags] = useState({});
 
-    // Function to handle click on any chip
-    const handleClick = (index) => {
-        // Toggle variant of the clicked chip
+    // Function to handle click on a rating chip
+    // Function to handle click on a tag chip
+    const handleTagClick = (index) => {
+        const chipName = chips[index].name;
+
+        // Determine the new selection state for this tag
+        const isSelected = !selectedTags[chipName];
+
+        // Update the selectedTags state
+        setSelectedTags(prevSelectedTags => ({
+            ...prevSelectedTags,
+            [chipName]: isSelected
+        }));
+
+        // Now we call onTagSelect with all selected tags
+        onTagSelect({ ...selectedTags, [chipName]: isSelected });
+
+        // Update the chips to reflect the new state
         const newChips = chips.map((chip, i) => {
             if (i === index) {
-                return {
-                    ...chip,
-                    variant: chip.variant === 'outlined' ? '' : 'outlined'
-                };
+                return { ...chip, variant: isSelected ? 'filled' : 'outlined' };
             }
             return chip;
         });
         setChips(newChips);
     };
+
 
     const getRatingColor = (averageRating) => {
         if (averageRating >= 4) {
@@ -92,7 +106,7 @@ const FilterRating = ({ onRatingChange }) => {
                         label={chip.name}
                         variant={chip.variant}
                         color="primary"
-                        onClick={() => handleClick(index)}
+                        onClick={() => handleTagClick(index)} // Renamed to handleTagClick
                         style={{ marginRight: '1.5em' }}
                     />
                 ))}
