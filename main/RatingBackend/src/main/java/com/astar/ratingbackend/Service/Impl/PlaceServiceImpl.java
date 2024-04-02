@@ -6,13 +6,18 @@ import com.astar.ratingbackend.Model.PlaceRepository;
 import com.astar.ratingbackend.Service.IPlaceService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service
 public class PlaceServiceImpl implements IPlaceService {
@@ -474,6 +479,25 @@ public class PlaceServiceImpl implements IPlaceService {
                 return Double.compare(p2.getAverageRating().getOverall(), p1.getAverageRating().getOverall());
             }
         });
+    }
+
+    public List<Place> findTopPlaces(int limit) {
+        // Ensure the limit is at least 1
+        limit = Math.max(5, limit);
+
+        Aggregation aggregation = newAggregation(
+                // Sort documents by AverageRating.overall in descending order and ratingCount in descending order
+                sort(Sort.Direction.DESC, "averageRating.overall", "ratingCount"),
+                // Limit the results based on the provided limit
+                limit(limit)
+        );
+
+        // Execute the aggregation pipeline and retrieve the results
+        AggregationResults<Place> results = mongoTemplate.aggregate(aggregation, "Places", Place.class);
+        return results.getMappedResults();
+    }
+    public List<Place> findTopPlaces() {
+        return findTopPlaces(8); // Default limit is 9
     }
 
 }

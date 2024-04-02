@@ -15,7 +15,7 @@ import axios from 'axios';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Map from "../Map/Map";
-
+import Cookies from 'js-cookie';
 
 
 const ITEM_HEIGHT = 48;
@@ -112,38 +112,50 @@ const LocationForm = ({ location }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Latitude on submit:", latitude);
-    console.log("Longitude on submit:", longitude);
-    const userId = '65f63e365aaca164fc0ddb41';// hard code userID; need to retrive from website later.
-    const tagsObject = formData.tags.reduce((obj, item) => {
-      obj[item] = 1; // You can set any value, here I've used 1 as an example
-      return obj;
-    }, {});
-    const placeForm={
-      locName: formData.placeName + '-' + formData.buildingName,
-      category: formData.categoryName,
-      floor: formData.floor,
-      location: {
-        longitude,
-        latitude,
-      },
-      images: formData.uploadedImages.map(image => ({data: image})),
-      totalRating: {
-        overall: formData.rating,
-        rating1: formData.subRating1,
-        rating2: formData.subRating2,
-        rating3: formData.subRating3,
-      },
-      tags:tagsObject,
-      isDeleted: false,
-      deletedDate: null,
-    }
-    const finalForm={
-      'place':placeForm,
-      'userId': userId,
-      'comment': formData.comment.toString(),
-    }
-    axios.post('http://localhost:8080/api/place/add', finalForm)
+
+    // Retrieve the JWT token from cookies
+    const token = Cookies.get('token');
+
+    if (token) {
+      // Set up headers with the JWT token for authorization
+      const config = {
+        headers: { Authorization: `Bearer ${token}` }
+      };
+
+      // The rest of your data preparation continues here...
+      const tagsObject = formData.tags.reduce((obj, item) => {
+        obj[item] = 1; // You can set any value, here I've used 1 as an example
+        return obj;
+      }, {});
+
+      const placeForm = {
+        locName: formData.placeName + '-' + formData.buildingName,
+        category: formData.categoryName,
+        floor: formData.floor,
+        location: {
+          longitude: longitude,
+          latitude: latitude,
+        },
+        images: formData.uploadedImages.map(image => ({ data: image })),
+        totalRating: {
+          overall: formData.rating,
+          rating1: formData.subRating1,
+          rating2: formData.subRating2,
+          rating3: formData.subRating3,
+        },
+        tags: tagsObject,
+        isDeleted: false,
+        deletedDate: null,
+      };
+
+      const finalForm = {
+        'place': placeForm,
+        'userId': '65f63e365aaca164fc0ddb41', // Replace with actual user ID retrieved from context or cookies
+        'comment': formData.comment.toString(),
+      };
+
+      // Make the Axios POST request with the configuration
+      axios.post('http://localhost:8080/api/place/add', finalForm, config)
         .then(response => {
           console.log('Place added successfully:', response.data);
           // Reset form data after successful submission
@@ -159,14 +171,21 @@ const LocationForm = ({ location }) => {
             tags: [],
             comment: '',
             uploadedImages: [],
-            selectedLocation: location ? location : null,
+            selectedLocation: null,
           });
-
+          // Here, you might want to navigate to another page or give the user feedback
         })
         .catch(error => {
           console.error('Error adding place:', error);
+          // Handle the error by notifying the user, for example
         });
+    } else {
+      // Handle the case where there is no token available
+      console.error('No token found. User must be logged in to submit.');
+      // Here you may want to redirect the user to the login page or show a message
+    }
   };
+
 
   return (
       <div className="rating-form">

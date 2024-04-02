@@ -26,4 +26,6 @@ public interface IPlaceService {
 
     List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags);
     void sortRatingsDescending(List<Place> places);
+    public List<Place> findTopPlaces();
+    public List<Place> findTopPlaces(int limit);
 }

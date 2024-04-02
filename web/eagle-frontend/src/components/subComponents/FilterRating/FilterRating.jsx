@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 
 const FilterRating = ({ onRatingChange }) => {
     const [rangeValue, setRangeValue] = useState({
-        overall: 2.5,
+        overall: 0.0,
     });
 
     // Initial state for chips with unique names and outlined variants
@@ -52,7 +52,6 @@ const FilterRating = ({ onRatingChange }) => {
             ...prevValue,
             [name]: newRangeValue
         }));
-        // 调用父组件传递过来的回调函数，将新的评分值传回父组件
         onRatingChange(newRangeValue);
     };
 

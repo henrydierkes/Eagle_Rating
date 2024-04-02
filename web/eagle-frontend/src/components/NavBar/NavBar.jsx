@@ -4,9 +4,11 @@ import './NavBar.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext.jsx'; // Adjust the path as needed
 import axios from 'axios';
+
 const NavBar = () => {
   const navigate = useNavigate();
-  const { currentUser, logout } = useAuth(); // Use the currentUser and logout from AuthContext
+  const { logout } = useAuth(); // Use the currentUser and logout from AuthContext
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     // Now that you're using AuthContext, you don't need to check the logged-in status here.
@@ -38,7 +40,10 @@ const NavBar = () => {
       <div className="nav-links">
         {currentUser ? (
           <>
-            <div className="user-email">{currentUser.email}</div>
+            <div className="user-name">
+              {currentUser.username}
+              {console.log(currentUser)}
+              </div>
             <button className="signup-btn" onClick={handleLogoutClick}>Log Out</button>
           </>
         ) : (
