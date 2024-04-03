@@ -46,37 +46,46 @@ const CommentList = ({ comments }) => {
         }
     };
 
-  return (
-    <div className="comment-list">
-      {comments.map((comment, index) => (
-        <div key={index} className="comment">
-          <div className="comment-header">
-            <div className="comment-rating-box" style={{ backgroundColor: getRatingColor(comment.overallRating) }}>
-                        <span className="comment-rating-number">{comment.overallRating}</span>
+    // The render method
+    return (
+        <div className="comment-list">
+            {comments.filter(comment => !comment.deleted).map((comment, index) => (
+                <div key={comment.ratingIdStr || index} className="comment">
+                    <div className="comment-header">
+                        <div className="comment-rating-box" style={{ backgroundColor: getRatingColor(comment.overallRating.overall) }}>
+                            <span className="comment-rating-number">{comment.overallRating.overall}</span>
+                        </div>
+                        <div className="profile">
+                            {/* Add a check to ensure comment.user is not undefined before accessing properties */}
+                            <img
+                                className='profile-picture'
+                                src={comment.user?.profilePicture || "/path/to/default/avatar.png"}
+                                alt={`Avatar of ${comment.user?.name || "User"}`}
+                            />
+                            <p className="profile-name">{comment.user?.name || "Anonymous"}</p>
+                        </div>
+                        <p className="date">{new Date(comment.date).toLocaleDateString()}</p>
                     </div>
-                    <div className="profile">
-                      <div className='picAndName'>
-                        <img className='profile-picture' src={comment.user.profilePicture} alt={`Avatar of ${comment.user.name}`} />
-                        <p className="profile-name">{comment.user.name}</p>
-                      </div>
+                    <div className="comment-body">
+                        <p className="comment-text">{comment.text}</p>
                     </div>
-            <p className="date">{comment.datePosted}</p>
-          </div>
-          <div className="comment-body">
-          </div>
-            <div className="ratings">
-            <p className="comment-text">{comment.comment}</p>
-          </div>
-          <div className="comment-footer">
-            <button className="upvote" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ThumbUpIcon sx={{ color: 'success.main' }} /></button>
-            <button className="downvote" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ThumbDownIcon sx={{ color: 'error.main' }} /></button>
-            {/* <button className="addComment" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><AddCommentIcon sx={{ color: 'primary.main' }} /></button> */}
-            <button className="share" sx={{ border: 'none', background: 'none', cursor: 'pointer', outline: 'none', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.2)' } }}><ShareIcon sx={{ color: 'secondary.main' }} /></button>
-          </div>
+                    <div className="comment-footer">
+                        <button className="upvote">
+                            <ThumbUpIcon />
+                            <span>{comment.likes}</span>
+                        </button>
+                        <button className="downvote">
+                            <ThumbDownIcon />
+                            <span>{comment.dislikes}</span>
+                        </button>
+                        <button className="share">
+                            <ShareIcon />
+                        </button>
+                    </div>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 
 export default CommentList;

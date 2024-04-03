@@ -33,6 +33,10 @@ const NavBar = () => {
     navigate('/');
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile'); // Adjust the URL as needed
+  };
+
   return (
     <div className="nav-bar">
       <h1 className="logo button effect-shine" onClick={navigateToFrontPage}>EagleRating</h1>
@@ -40,10 +44,9 @@ const NavBar = () => {
       <div className="nav-links">
         {currentUser ? (
           <>
-            <div className="user-name">
+            <a href="/profile" className="user-name" onClick={handleProfileClick}>
               {currentUser.username}
-              {console.log(currentUser)}
-              </div>
+            </a>
             <button className="signup-btn" onClick={handleLogoutClick}>Log Out</button>
           </>
         ) : (
