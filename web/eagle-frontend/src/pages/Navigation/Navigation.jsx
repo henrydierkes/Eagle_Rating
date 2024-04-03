@@ -13,10 +13,31 @@ function Navigation() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const searchQuery = searchParams.get('search');
-
-    if (searchQuery) {
+    const searchQuery = searchParams.get('locName');
+    const categoryQuery = searchParams.get('category');
+  
+    if (searchQuery && categoryQuery) {
+      const apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}&category=${categoryQuery}`;
+      Axios.get(apiUrl)
+        .then(response => {
+          console.log('Data fetched:', response.data);
+          setResults(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching search results: ', error);
+        });
+    } else if (searchQuery) {
       const apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}`;
+      Axios.get(apiUrl)
+        .then(response => {
+          console.log('Data fetched:', response.data);
+          setResults(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching search results: ', error);
+        });
+    } else if (categoryQuery) {
+      const apiUrl = `http://localhost:8080/api/place/search?category=${categoryQuery}`;
       Axios.get(apiUrl)
         .then(response => {
           console.log('Data fetched:', response.data);
@@ -35,6 +56,7 @@ function Navigation() {
         });
     }
   }, [location.search]);
+  
 
   // Function to handle place click
   const handlePlaceClick = (placeId) => {
