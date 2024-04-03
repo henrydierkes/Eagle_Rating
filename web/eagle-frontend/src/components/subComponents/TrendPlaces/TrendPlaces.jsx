@@ -76,7 +76,7 @@ function TrendPlaces() {
                         <TrendPlace
                             key={place.locIdStr}
                             placeName={place.locName}
-                            imageUrl={place.images[0].data!=null ? place.images[0].data : 'images/building.jpeg'}  // Assuming the first image is used as a thumbnail
+                            imageUrl={place.images.length>0 ? place.images[0].data : 'images/building.jpeg'}  // Assuming the first image is used as a thumbnail
                             placeRating={place.averageRating.overall.toFixed(1)}
                             locId={place.locIdStr}
                         />
