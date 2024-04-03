@@ -1,40 +1,43 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
+import axios from 'axios';
 
 const CommentList = ({ comments }) => {
+    const [usersInfo, setUsersInfo] = useState({});
 
+    useEffect(() => {
+        const fetchUsersInfo = async () => {
+            const userIds = comments.map(comment => comment.userId);
+            const userInfoPromises = userIds.map(userId =>
+                axios.get(`http://localhost:8080/api/user/get?userID=${userId}`)
+            );
 
-  useEffect(() => {
-    const handleScroll = (event) => {
-      const commentText = event.target;
-      const comment = commentText.parentElement;
-      if (commentText.scrollHeight - commentText.scrollTop === commentText.clientHeight) {
-        comment.style.height = commentText.scrollHeight + 'px';
-      }
-    };
+            try {
+                const userInfoResponses = await Promise.all(userInfoPromises);
+                const usersInfo = userInfoResponses.reduce((acc, response) => {
+                    const user = response.data;
+                    acc[user.userIdStr] = {
+                        username: user.username || user.email || 'Anonymous',
+                        avatar: user.avatar || null
+                    };
+                    return acc;
+                }, {});
+                setUsersInfo(usersInfo);
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        };
 
-    const comments = document.querySelectorAll('.comment');
+        fetchUsersInfo();
+    }, [comments]);
 
-    comments.forEach((comment) => {
-      const commentText = comment.querySelector('.comment-text');
-      commentText.addEventListener('scroll', handleScroll);
-    });
+    const getPercentage = rating => `${(rating / 5) * 100}%`;
 
-    return () => {
-      comments.forEach((comment) => {
-        const commentText = comment.querySelector('.comment-text');
-        commentText.removeEventListener('scroll', handleScroll);
-      });
-    };
-  }, []);
-
-  const getPercentage = (rating) => `${(rating / 5) * 100}%`;
-
-  const getRatingColor = (rating) => {
+    const getRatingColor = rating => {
         if (rating >= 4) {
             return '#4CAF50'; // green
         } else if (rating >= 3) {
@@ -49,41 +52,62 @@ const CommentList = ({ comments }) => {
     // The render method
     return (
         <div className="comment-list">
-            {comments.filter(comment => !comment.deleted).map((comment, index) => (
-                <div key={comment.ratingIdStr || index} className="comment">
-                    <div className="comment-header">
-                        <div className="comment-rating-box" style={{ backgroundColor: getRatingColor(comment.overallRating.overall) }}>
-                            <span className="comment-rating-number">{comment.overallRating.overall}</span>
+            {comments
+                .filter(comment => !comment.deleted)
+                .map((comment, index) => (
+                    <div key={comment.ratingIdStr || index} className="comment">
+                        <div className="comment-header">
+                            <div
+                                className="comment-rating-box"
+                                style={{
+                                    backgroundColor: getRatingColor(
+                                        comment.overallRating.overall
+                                    )
+                                }}
+                            >
+                <span className="comment-rating-number">
+                  {comment.overallRating.overall}
+                </span>
+                            </div>
+                            <div className="profile">
+                                <img
+                                    className="profile-picture"
+                                    src={
+                                        usersInfo[comment.userId]?.avatar ||
+                                        '/path/to/default/avatar.png'
+                                    }
+                                    alt={`Avatar of ${
+                                        usersInfo[comment.userId]?.username || 'Anonymous'
+                                    }`}
+                                />
+                                <p className="profile-name">
+                                    {usersInfo[comment.userId]?.username || 'Anonymous'}
+                                </p>
+                            </div>
+                            <p className="date">
+                                {new Date(comment.date).toLocaleDateString()}
+                            </p>
                         </div>
-                        <div className="profile">
-                            {/* Add a check to ensure comment.user is not undefined before accessing properties */}
-                            <img
-                                className='profile-picture'
-                                src={comment.user?.profilePicture || "/path/to/default/avatar.png"}
-                                alt={`Avatar of ${comment.user?.name || "User"}`}
-                            />
-                            <p className="profile-name">{comment.user?.name || "Anonymous"}</p>
+                        <div className="comment-body">
+                            <p className="comment-text" style={{ textAlign: 'center' }}>
+                                {comment.comment}
+                            </p>
                         </div>
-                        <p className="date">{new Date(comment.date).toLocaleDateString()}</p>
+                        <div className="comment-footer">
+                            <button className="upvote">
+                                <ThumbUpIcon />
+                                <span>{comment.likes}</span>
+                            </button>
+                            <button className="downvote">
+                                <ThumbDownIcon />
+                                <span>{comment.dislikes}</span>
+                            </button>
+                            <button className="share">
+                                <ShareIcon />
+                            </button>
+                        </div>
                     </div>
-                    <div className="comment-body">
-                        <p className="comment-text">{comment.text}</p>
-                    </div>
-                    <div className="comment-footer">
-                        <button className="upvote">
-                            <ThumbUpIcon />
-                            <span>{comment.likes}</span>
-                        </button>
-                        <button className="downvote">
-                            <ThumbDownIcon />
-                            <span>{comment.dislikes}</span>
-                        </button>
-                        <button className="share">
-                            <ShareIcon />
-                        </button>
-                    </div>
-                </div>
-            ))}
+                ))}
         </div>
     );
 };

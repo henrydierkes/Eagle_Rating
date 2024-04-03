@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
@@ -43,10 +43,6 @@ const RatingForm = () => {
     console.log(placeDetails);
     const placeName = placeDetails?.locName;
     const placeId=placeDetails?.locIdStr;
-      const [rating, setRating] = useState(0);
-      const [subRating1, setSubRating1] = useState(0);
-      const [subRating2, setSubRating2] = useState(0);
-      const [subRating3, setSubRating3] = useState(0);
       const [tag, setTag] = React.useState([]);
       const [uploadedImages, setUploadedImages] = useState([]);
       const [comment, setComment] = useState('');
@@ -57,11 +53,27 @@ const RatingForm = () => {
         subrating2: 0,
         subrating3: 0,
     });
+    useEffect(() => {
+        console.log('formData changed:', formData);
+    }, [formData]);
     const handleRatingChange = (name, newValue) => {
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: newValue,
-        }));
+        if (ratingType === 'total') {
+            // If the rating type is 'Total Rating', clear subratings and update total rating
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: newValue,
+                subrating1: 0,
+                subrating2: 0,
+                subrating3: 0
+            }));
+        } else {
+            // If the rating type is 'Subrating', clear total rating and update subrating
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: newValue,
+                rating: 0
+            }));
+        }
     };
 
     const handleImageChange = (e) => {
@@ -101,15 +113,14 @@ const RatingForm = () => {
             dislikes: 0,
             overallRating: {
                 overall: formData.rating,
-                subrating1: formData.subrating1,
-                subrating2: formData.subrating2,
-                subrating3: formData.subrating3,
+                rating1: formData.subrating1,
+                rating2: formData.subrating2,
+                rating3: formData.subrating3,
             },
             tags: tagsObject,
             floor: 2, // Set the floor number if applicable, otherwise remove this line
             images: uploadedImages, // assuming you want to upload images as well
         };
-
         // Retrieve the JWT token from cookies
         const token = Cookies.get('token');
 

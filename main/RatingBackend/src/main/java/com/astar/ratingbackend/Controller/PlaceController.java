@@ -76,14 +76,6 @@ public class PlaceController {
         Integer floor = place.getFloor();
         String comment=addPlaceRequest.getComment();
         Place addedPlace = placeService.addPlace(place);
-//          Place.TotalRating totalRating=place.getTotalRating();
-//          Integer floor = place.getFloor();
-//          String campus = place.getCampus();
-//            Map<String, Boolean> tagsMap = new HashMap<>();
-//            for (String tag : tags) {
-//                tagsMap.put(tag, true); // Assuming all tags are selected
-//            }
-//          Place addedPlace = placeService.addPlace(place);
         if(totalRating.getOverall()!=0||(totalRating.getRating1()+totalRating.getRating2()+ totalRating.getRating3())!=0||comment!=null){
             Rating rating=new Rating();
             rating.setUserId(userId);

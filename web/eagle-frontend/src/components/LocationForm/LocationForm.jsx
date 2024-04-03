@@ -16,6 +16,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Map from "../Map/Map";
 import Cookies from 'js-cookie';
+import {useAuth} from "../../contexts/AuthContext.jsx";
 
 
 const ITEM_HEIGHT = 48;
@@ -40,6 +41,7 @@ const toggleRatingVisibility = () => {
 };
 
 const LocationForm = ({ location }) => {
+  const { currentUser } = useAuth();
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [formData, setFormData] = useState({
@@ -150,9 +152,10 @@ const LocationForm = ({ location }) => {
 
       const finalForm = {
         'place': placeForm,
-        'userId': '65f63e365aaca164fc0ddb41', // Replace with actual user ID retrieved from context or cookies
+        'userId': currentUser.userId, // Replace with actual user ID retrieved from context or cookies
         'comment': formData.comment.toString(),
       };
+      console.log(finalForm);
 
       // Make the Axios POST request with the configuration
       axios.post('http://localhost:8080/api/place/add', finalForm, config)
