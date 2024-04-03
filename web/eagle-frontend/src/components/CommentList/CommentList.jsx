@@ -17,11 +17,17 @@ const CommentList = ({ comments }) => {
 
             try {
                 const userInfoResponses = await Promise.all(userInfoPromises);
-                const newUsersInfo = userInfoResponses.reduce((acc, response) => {
+                const newUsersInfo = userInfoResponses.reduce((acc, response, index) => {
                     const user = response.data;
-                    acc[user.userIdStr] = {
-                        username: user.username || user.email,
-                        avatar: user.avatar || '/images/default-avatar.png' // Use default avatar if none is provided
+                    let username = 'deactivated_user';
+                    let avatar = '/images/deactivated-avatar.png';
+                    if (user && !user.isDeleted) {
+                        username = user.username || user.email;
+                        avatar = user.avatar || '/images/default-avatar.png';
+                    }
+                    acc[userIds[index]] = {
+                        username: username,
+                        avatar: avatar
                     };
                     return acc;
                 }, {});
