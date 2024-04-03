@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
-import { useAuth } from "../../contexts/AuthContext"; // Import useAuth hook to access user token
+import { useAuth } from "../../contexts/AuthContext";
 import "./Profile.css";
 
 const Profile = () => {
-  const { currentUser } = useAuth(); // Access user token from AuthContext
+  const { currentUser } = useAuth();
 
   useEffect(() => {
-    // Your useEffect logic here, if needed
-  }, [currentUser]); // Add currentUser to the dependency array if you want to trigger the effect when it changes
-
+  }, [currentUser]);
   return (
     <div className="Profile">
       <NavBar />
-      <h1>User Email: {currentUser ? currentUser.token : ""}</h1> {/* Display user email */}
+      <h1>This page needs a lot of work, but at least it exists now!</h1>
       <Footer />
     </div>
   );

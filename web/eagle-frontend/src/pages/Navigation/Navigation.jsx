@@ -8,6 +8,9 @@ import "./Navigation.css";
 
 function Navigation() {
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [displayedResults, setDisplayedResults] = useState(5); // Number of results to display initially
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -15,48 +18,29 @@ function Navigation() {
     const searchParams = new URLSearchParams(location.search);
     const searchQuery = searchParams.get('locName');
     const categoryQuery = searchParams.get('category');
-  
-    if (searchQuery && categoryQuery) {
-      const apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}&category=${categoryQuery}`;
-      Axios.get(apiUrl)
-        .then(response => {
-          console.log('Data fetched:', response.data);
-          setResults(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching search results: ', error);
-        });
-    } else if (searchQuery) {
-      const apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}`;
-      Axios.get(apiUrl)
-        .then(response => {
-          console.log('Data fetched:', response.data);
-          setResults(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching search results: ', error);
-        });
-    } else if (categoryQuery) {
-      const apiUrl = `http://localhost:8080/api/place/search?category=${categoryQuery}`;
-      Axios.get(apiUrl)
-        .then(response => {
-          console.log('Data fetched:', response.data);
-          setResults(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching search results: ', error);
-        });
-    } else {
-      Axios.get(`http://localhost:8080/api/place/get`)
-        .then(response => {
-          setResults(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data: ', error);
-        });
-    }
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        let apiUrl = 'http://localhost:8080/api/place/get';
+        if (searchQuery && categoryQuery) {
+          apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}&category=${categoryQuery}`;
+        } else if (searchQuery) {
+          apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}`;
+        } else if (categoryQuery) {
+          apiUrl = `http://localhost:8080/api/place/search?category=${categoryQuery}`;
+        }
+        const response = await Axios.get(apiUrl);
+        setResults(response.data);
+        setError(null);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('Failed to fetch data. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [location.search]);
-  
 
   // Function to handle place click
   const handlePlaceClick = (placeId) => {
@@ -64,11 +48,24 @@ function Navigation() {
     navigate(`/ratingpage/${placeId}`);
   };
 
+  // Function to load more results
+  const loadMoreResults = () => {
+    setDisplayedResults(prev => prev + 5); // Increase the number of displayed results by 10
+  };
+
   return (
     <div className="Navigation">
       <NavBar />
-      {/* Assuming ResultsAndFilter can accept an onClick handler for each result */}
-      <ResultsAndFilter results={results} onPlaceClick={handlePlaceClick} />
+      {loading ? (
+        <p>Loading...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <ResultsAndFilter results={results.slice(0, displayedResults)} onPlaceClick={handlePlaceClick} />
+      )}
+      {results.length > displayedResults && (
+        <button className='load-more-button'onClick={loadMoreResults}>Load More</button> // Show load more button if there are more results to load
+      )}
       <Footer />
     </div>
   );
