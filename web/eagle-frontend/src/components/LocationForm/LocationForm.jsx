@@ -80,11 +80,23 @@ const LocationForm = ({ location }) => {
   };
 
   const handleRatingChange = (name, newValue) => {
-    console.log(name, newValue); // This should log the name of the rating and the new value
-    setFormData({
-      ...formData,
-      [name]: newValue
-    });
+    if (ratingType === 'total') {
+      // If the rating type is 'Total Rating', clear subratings and update total rating
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: newValue,
+        subrating1: 0,
+        subrating2: 0,
+        subrating3: 0
+      }));
+    } else {
+      // If the rating type is 'Subrating', clear total rating and update subrating
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: newValue,
+        rating: 0
+      }));
+    }
   };
 
   const handleTagsChange = (event) => {
