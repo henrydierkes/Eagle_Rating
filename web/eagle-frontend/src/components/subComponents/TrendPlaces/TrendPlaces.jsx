@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./TrendPlaces.css";
 import TrendPlace from "../TrendPlace/TrendPlace";
-import $ from "jquery"; // Import jQuery if not already done
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick';
 
 const images = [
     {url: "images/Woodruff_Library.jpeg", name: 'Woodruff Library', rating: 4.9},
@@ -20,28 +18,22 @@ const images = [
     {url: "images/quad.jpeg", name: 'Quad', rating: 4.2}
 ];
 
+// Sort the images array by rating in descending order
+const sortedImages = [...images].sort((a, b) => b.rating - a.rating);
+
 function TrendPlaces() {
     const slider = useRef(null);
-
-    // State to hold the current value of slidesToShow
     const [slidesToShow, setSlidesToShow] = useState(6);
 
-    // Adjust slidesToShow based on screen width
     const updateSlidesToShow = () => {
         const screenWidth = window.innerWidth;
-        // Calculate number of slides based on screen width, with a maximum of 6
         let slides = Math.min(Math.max(1, Math.floor(screenWidth / 200)), 6);
         setSlidesToShow(slides);
     };
 
     useEffect(() => {
-        // Call once to set initial state
         updateSlidesToShow();
-
-        // Add event listener for window resize
         window.addEventListener('resize', updateSlidesToShow);
-
-        // Cleanup function to remove the event listener
         return () => {
             window.removeEventListener('resize', updateSlidesToShow);
         };
@@ -69,7 +61,7 @@ function TrendPlaces() {
             </div>
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
-                    {images.map(({ url, name, rating }, index) => (
+                    {sortedImages.map(({ url, name, rating }, index) => (
                         <TrendPlace key={index} placeName={name} imageUrl={url} placeRating={rating.toFixed(1)} />
                     ))}
                 </Slider>
