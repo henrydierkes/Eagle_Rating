@@ -13,52 +13,64 @@ import "./RatingPage.css";
 
 // Define the RatingPage functional component
 function RatingPage() {
-  // Extract locId (location ID) from the URL parameters
-  const { locId } = useParams();
-  // Initialize state for place details, comments, and loading status
-  const [placeDetails, setPlaceDetails] = useState(null);
-  const [placeComments, setPlaceComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+    const { locId } = useParams();
+    const [placeDetails, setPlaceDetails] = useState(null);
+    const [placeComments, setPlaceComments] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect hook to fetch place details when component mounts or locId changes
-  useEffect(() => {
-    const fetchPlaceDetails = async () => {
-      setIsLoading(true); // Indicate loading state
-      try {
-        // Make a GET request to fetch details of the place based on locId
-        const response = await Axios.get(`http://localhost:8080/api/place/${locId}`);
-        setPlaceDetails(response.data); // Update placeDetails state with fetched data
-        console.log(response.data); // Log the fetched data for debugging
-      } catch (error) {
-        console.error('Error fetching place details:', error); // Log errors if any
-      } finally {
-        setIsLoading(false); // Reset loading state
-      }
+    useEffect(() => {
+        setIsLoading(true);
+        // Fetch place details first
+        const fetchPlaceDetails = async () => {
+            try {
+                const detailsResponse = await Axios.get(`http://localhost:8080/api/place/${locId}`);
+                setPlaceDetails(detailsResponse.data);
+                // Now fetch comments for each rating ID
+                fetchComments(detailsResponse.data.ratingIds);
+            } catch (error) {
+                console.error('Error fetching place details:', error);
+                setIsLoading(false); // Stop loading if there is an error
+            }
+        };
+
+        fetchPlaceDetails();
+    }, [locId]);
+
+    // Function to fetch comments based on ratingIds
+    const fetchComments = async (ratingIds) => {
+        const commentRequests = ratingIds.map(ratingId =>
+            Axios.get(`http://localhost:8080/api/rating/get`, { params: { ratingId } })
+        );
+
+        try {
+            const commentsResponses = await Promise.all(commentRequests);
+            const comments = commentsResponses.map(res => res.data);
+            setPlaceComments(comments.flat()); // Flatten in case of nested arrays
+            setIsLoading(false); // Stop loading when comments are fetched
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+            setIsLoading(false); // Stop loading if there is an error
+        }
     };
 
-    fetchPlaceDetails();
-  }, [locId]); // Dependency array ensures this effect runs when locId changes
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
-  // Conditional rendering based on isLoading and placeDetails state
-  if (isLoading) {
-    return <div>Loading...</div>; // Display loading message
-  }
+    if (!placeDetails) {
+        return <div>Place not found or error loading details.</div>;
+    }
 
-  if (!placeDetails) {
-    return <div>Place not found or error loading details.</div>; // Display error message
-  }
-
-  // Render the main content of the page
-  return (
-      <div className="RatingPage">
-        <NavBar /> {/* Display the navigation bar */}
-        <PlaceDetails result={placeDetails} /> {/* Pass placeDetails to PlaceDetails component */}
-        <hr className="divider" /> {/* Visual divider */}
-        <CommentFilter /> {/* Component for filtering comments (not yet implemented) */}
-        <CommentList comments={placeComments} /> {/* Pass placeComments to CommentList component */}
-        <Footer /> {/* Display the footer */}
-      </div>
-  );
+    return (
+        <div className="RatingPage">
+            <NavBar />
+            <PlaceDetails result={placeDetails} />
+            <hr className="divider" />
+            <CommentFilter />
+            <CommentList comments={placeComments} />
+            <Footer />
+        </div>
+    );
 }
 
-export default RatingPage; // Export the component for use in other parts of the app
+export default RatingPage;
