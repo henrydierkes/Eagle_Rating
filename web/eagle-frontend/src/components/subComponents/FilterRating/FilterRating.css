@@ -12,6 +12,7 @@
 .filterhead {
     color: #333;
     margin-bottom: 30px;
+    margin-left: -30px;
     top: 30px;
     text-align: center;
 }
@@ -44,7 +45,7 @@
     border-radius: 50%;
     background: #b2b1b1; /* Dark green */
     cursor: pointer;
-    transition: background 0.3s ease-in-out;
+    transition: background 0.1s ease-in-out;
 }
 
 .range-slider__range:active::-webkit-slider-thumb,

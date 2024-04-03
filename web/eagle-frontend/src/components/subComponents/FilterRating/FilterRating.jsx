@@ -80,7 +80,7 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
                 style={{
                     backgroundColor: getRatingColor(rangeValue.overall),
                     position: 'absolute',
-                    left: '50%',
+                    left: '45%',
                     bottom: '100%',
                     transform: 'translate(-50%, -10px)',
                     zIndex: 2,

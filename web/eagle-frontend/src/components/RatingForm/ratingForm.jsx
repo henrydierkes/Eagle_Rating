@@ -208,7 +208,7 @@ const RatingForm = () => {
           )}
       <div>
     <div className='rating-tags'>
-      <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
+      <FormControl sx={{ mt: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
         <InputLabel id="tags-label">Tags</InputLabel>
         <Select
           labelId="tags-label"
