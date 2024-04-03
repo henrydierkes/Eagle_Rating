@@ -73,45 +73,46 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
 
     return (
         <div className="filter-rating">
-            <h2 className="filterhead">Filter by Overall Rating</h2>
-            <div className="range-slider">
-                <div
-                    className="range-slider__value"
-                    style={{
-                        backgroundColor: getRatingColor(rangeValue.overall),
-                        position: 'absolute',
-                        left: '50%',
-                        bottom: '100%',
-                        transform: 'translate(-50%, -10px)',
-                        zIndex: 2,
-                    }}
-                >
-                    {rangeValue.overall}
-                </div>
-                <input
-                    name="overall"
-                    type="range"
-                    min="0"
-                    max="5.0"
-                    step="0.5"
-                    value={rangeValue.overall}
-                    onChange={handleInputChange}
-                    className="range-slider__range"
-                />
+        <h2 className="filterhead">Filter by Overall Rating</h2>
+        <div className="range-slider">
+            <div
+                className="range-slider__value"
+                style={{
+                    backgroundColor: getRatingColor(rangeValue.overall),
+                    position: 'absolute',
+                    left: '45%',
+                    bottom: '100%',
+                    transform: 'translate(-50%, -10px)',
+                    zIndex: 2,
+                }}
+            >
+                {/* Format the range value to always have two decimal places */}
+                {Number(rangeValue.overall).toFixed(1)}
             </div>
-            <Stack direction="row" spacing={1} style={{ marginTop: '10em' }}>
-                {chips.map((chip, index) => (
-                    <Chip
-                        key={index}
-                        label={chip.name}
-                        variant={chip.variant}
-                        color="primary"
-                        onClick={() => handleTagClick(index)} // Renamed to handleTagClick
-                        style={{ marginRight: '1.5em' }}
-                    />
-                ))}
-            </Stack>
+            <input
+                name="overall"
+                type="range"
+                min="0"
+                max="5.0"
+                step="0.5"
+                value={rangeValue.overall}
+                onChange={handleInputChange}
+                className="range-slider__range"
+            />
         </div>
+        <Stack direction="row" spacing={1} style={{ marginTop: '10em' }}>
+            {chips.map((chip, index) => (
+                <Chip
+                    key={index}
+                    label={chip.name}
+                    variant={chip.variant}
+                    color="primary"
+                    onClick={() => handleTagClick(index)} // Renamed to handleTagClick
+                    style={{ marginRight: '1.5em' }}
+                />
+            ))}
+        </Stack>
+    </div>
     );
 };
 

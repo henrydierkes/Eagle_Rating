@@ -10,15 +10,13 @@ const categories = [
   { title: 'Library', category: 'Educational' },
   { title: 'Study Spaces', category: 'Educational' },
   { title: 'Parking Lot', category: 'Facilities' },
-  { title: 'Dorms', category: 'Accommodations' },
+  { title: 'Dorm', category: 'Accommodations' },
   { title: 'Bathrooms', category: 'Facilities' },
-  { title: 'Buildings', category: 'Facilities' },
+  { title: 'Building', category: 'Facilities' },
   { title: 'Classroom', category: 'Educational' },
-  // { title: 'Coffee', category: 'Dining'},
-  // { title: 'Cafeteria', category: 'Dining'}
 ];
 
-function Grouped() {
+function Grouped({ onCategoryChange }) {
   const options = categories.map((option) => ({
     ...option,
     category: option.category,
@@ -30,7 +28,7 @@ function Grouped() {
       options={options.sort((a, b) => -b.category.localeCompare(a.category))}
       groupBy={(option) => option.category}
       getOptionLabel={(option) => option.title}
-      // Increased width for better visibility and alignment with the search bar
+      onChange={onCategoryChange}
       sx={{ width: '100%', maxWidth: '100%', mr: '1em' }}
       renderInput={(params) => <TextField {...params} label="Select Category" fullWidth />}
     />
@@ -41,6 +39,7 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null); // Updated to null instead of an empty object
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -61,21 +60,34 @@ const SearchBar = () => {
   };
 
   const onKeyDown = (event) => {
-    if (event.key === 'Enter' && inputValue.trim()) {
+    if (event.key === 'Enter' && (inputValue.trim() || selectedCategory)) {
       event.preventDefault();
-      navigate(`/navigation?search=${inputValue.trim()}`);
+      let queryParams = '';
+      if (inputValue.trim()) {
+        queryParams += `locName=${inputValue.trim()}&`;
+      }
+      if (selectedCategory) {
+        queryParams += `category=${selectedCategory.title}`; // Accessing the title of the selected category
+      }
+      navigate(`/navigation?${queryParams}`);
     }
   };
 
+  const onCategoryChange = (event, newValue) => {
+    setSelectedCategory(newValue);
+    console.log("Selected category:", newValue);
+  };
+
   return (
-    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: isMobile ? '0.5rem' : '1rem', padding: isMobile ? '0 10px' : '0', width: '100%' }}>      <div className="search-bar" style={{ width: '500%', maxWidth: '500%' }}> 
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: isMobile ? '0.5rem' : '1rem', padding: isMobile ? '0 10px' : '0', width: '100%' }}>
+      <div className="search-bar" style={{ width: '500%', maxWidth: '500%' }}>
         <Autocomplete
           freeSolo
           id="search-bar"
           options={options.map(option => option.title)}
           onInputChange={onInputChange}
           onChange={(event, newValue) => {
-            navigate(`/navigation?search=${newValue}`);
+            navigate(`/navigation?locName=${newValue}`);
           }}
           renderInput={(params) => (
             <TextField
@@ -92,7 +104,7 @@ const SearchBar = () => {
           )}
         />
       </div>
-      <Grouped />
+      <Grouped onCategoryChange={onCategoryChange} />
     </div>
   );
 };

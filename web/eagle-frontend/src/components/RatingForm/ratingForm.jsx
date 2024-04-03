@@ -153,20 +153,26 @@ const RatingForm = () => {
     <div className="rating-form">
       <h2>Rate {placeName}</h2>
       <form onSubmit={handleSubmit}>
-          <ToggleButtonGroup
-              value={ratingType}
-              exclusive
-              onChange={(event, newRatingType) => setRatingType(newRatingType)}
-              aria-label="rating type"
-              sx={{ mb: 1 }}
+        <ToggleButtonGroup
+          value={ratingType}
+          exclusive
+          onChange={(event, newRatingType) => {
+              // Check if newRatingType is null or undefined (i.e., if user tries to unclick)
+              if (newRatingType !== null && newRatingType !== undefined) {
+                  setRatingType(newRatingType);
+              }
+          }}
+          aria-label="rating type"
+          sx={{ mb: 1 }}
           >
-              <ToggleButton value="total" aria-label="left aligned" sx={{ width: '15.5rem' }} >
-                  Total Rating
-              </ToggleButton>
-              <ToggleButton value="sub" aria-label="centered" sx={{ width: '15.5rem' }}>
-                  Subrating
-              </ToggleButton>
-          </ToggleButtonGroup>
+          <ToggleButton value="total" aria-label="left aligned" sx={{ width: '15.5rem' }} >
+              Total Rating
+          </ToggleButton>
+          <ToggleButton value="sub" aria-label="centered" sx={{ width: '15.5rem' }}>
+              Subrating
+          </ToggleButton>
+        </ToggleButtonGroup>
+
 
           {ratingType === 'total' && (
               <div className='overall-rating'>
@@ -208,7 +214,7 @@ const RatingForm = () => {
           )}
       <div>
     <div className='rating-tags'>
-      <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
+      <FormControl sx={{ mt: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
         <InputLabel id="tags-label">Tags</InputLabel>
         <Select
           labelId="tags-label"

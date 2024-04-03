@@ -166,7 +166,7 @@
 }
 
 .rating-button {
-  padding: 20px 250px; /* Increased horizontal padding for a longer button */
+  padding: 20px 300px; /* Increased horizontal padding for a longer button */
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none; /* Remove default border */
   border-radius: 10px; /* Rounded corners */
@@ -177,7 +177,7 @@
   outline: none; /* Remove outline to maintain the style */
   margin-top: 20px; /* Space from the last result item */
   margin-bottom: 20px;
-  margin-left: 35px; /* Shift the button to the right */
+  margin-left: 30px; /* Shift the button to the right */
   margin-right: 0px;
   display: block; /* Ensure the button is treated as a block-level element */
 }
