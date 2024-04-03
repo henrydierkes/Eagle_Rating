@@ -20,7 +20,7 @@ const CommentList = ({ comments }) => {
                 const newUsersInfo = userInfoResponses.reduce((acc, response) => {
                     const user = response.data;
                     acc[user.userIdStr] = {
-                        username: user.username || 'Anonymous',
+                        username: user.username || user.email,
                         avatar: user.avatar || '/images/default-avatar.png' // Use default avatar if none is provided
                     };
                     return acc;
