@@ -7,7 +7,8 @@
 .resultseparator {
   width: 1px;
   background-color: #00000009; /* Grey color for the line */
-  margin: 0 70px;
+  margin: 0 5em;
+  margin-top: 2em;
   height: 90vh;
   margin-bottom: 10vh;
 }
