@@ -16,7 +16,9 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
   outline: none;
   margin-top: 20px;
-  margin-left: 30px;
+  margin-bottom: 20px;
+  position: relative; /* Add position relative */
+  left: -26%; /* Position 25% from the left */
   display: inline-block;
 }
 
