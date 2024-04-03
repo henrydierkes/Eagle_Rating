@@ -57,6 +57,7 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
             return '#F44336';
         }
     };
+    
 
 
     const handleInputChange = (event) => {

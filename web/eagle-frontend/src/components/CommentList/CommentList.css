@@ -1,3 +1,8 @@
+.profile-picture {
+  transform: scale(0.6); /* Example scale, reduces size to 75% of the original */
+  display: inline-block; /* Ensures transform applies correctly */
+}
+
 .comment-list {
   display: flex;
   flex-direction: column;

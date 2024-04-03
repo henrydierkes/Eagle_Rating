@@ -1,74 +1,73 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Make sure Axios is imported
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import AddCommentIcon from '@mui/icons-material/AddComment';
 import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
 
 const CommentList = ({ comments }) => {
     const [usersInfo, setUsersInfo] = useState({});
 
-  useEffect(() => {
-      const fetchUsersInfo = async () => {
-          const userIds = comments.map(comment => comment.userId);
-          const userInfoPromises = userIds.map(userId =>
-              axios.get(`http://localhost:8080/api/user/get?userID=${userId}`)
-          );
+    useEffect(() => {
+        const fetchUsersInfo = async () => {
+            const userIds = comments.map(comment => comment.userId);
+            const userInfoPromises = userIds.map(userId =>
+                axios.get(`http://localhost:8080/api/user/get?userID=${userId}`)
+            );
 
-          try {
-              const userInfoResponses = await Promise.all(userInfoPromises);
-              const usersInfo = userInfoResponses.reduce((acc, response) => {
-                  const user = response.data;
-                  acc[user.userIdStr] = {
-                      username: user.username || user.email || 'Anonymous',
-                      avatar: user.avatar || null
-                  };
-                  return acc;
-              }, {});
-              setUsersInfo(usersInfo);
-          } catch (error) {
-              console.error('Error fetching user info:', error);
-          }
-      };
-      // console.log(userInfo);
-    const handleScroll = (event) => {
-      const commentText = event.target;
-      const comment = commentText.parentElement;
-      if (commentText.scrollHeight - commentText.scrollTop === commentText.clientHeight) {
-        comment.style.height = commentText.scrollHeight + 'px';
-      }
-    };
+            try {
+                const userInfoResponses = await Promise.all(userInfoPromises);
+                const newUsersInfo = userInfoResponses.reduce((acc, response) => {
+                    const user = response.data;
+                    acc[user.userIdStr] = {
+                        username: user.username || 'Anonymous',
+                        avatar: user.avatar || '/images/default-avatar.png' // Use default avatar if none is provided
+                    };
+                    return acc;
+                }, {});
+                setUsersInfo(newUsersInfo);
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        };
 
-    const comments = document.querySelectorAll('.comment');
+        fetchUsersInfo();
 
-    comments.forEach((comment) => {
-      const commentText = comment.querySelector('.comment-text');
-      commentText.addEventListener('scroll', handleScroll);
-    });
+        // Cleanup for the useEffect related to adding and removing event listeners
+        const handleScroll = (event) => {
+            const commentText = event.target;
+            const comment = commentText.parentElement;
+            if (commentText.scrollHeight - commentText.scrollTop === commentText.clientHeight) {
+                comment.style.height = commentText.scrollHeight + 'px';
+            }
+        };
 
-    return () => {
-      comments.forEach((comment) => {
-        const commentText = comment.querySelector('.comment-text');
-        commentText.removeEventListener('scroll', handleScroll);
-      });
-    };
-  }, []);
+        const commentElements = document.querySelectorAll('.comment');
 
-  const getPercentage = (rating) => `${(rating / 5) * 100}%`;
+        commentElements.forEach((comment) => {
+            const commentText = comment.querySelector('.comment-text');
+            commentText.addEventListener('scroll', handleScroll);
+        });
 
-  const getRatingColor = (rating) => {
+        return () => {
+            commentElements.forEach((comment) => {
+                const commentText = comment.querySelector('.comment-text');
+                commentText.removeEventListener('scroll', handleScroll);
+            });
+        };
+    }, [comments]); // Ensure useEffect is only re-run if comments change
+
+    const getRatingColor = (rating) => {
         if (rating >= 4) {
-            return '#4CAF50'; // green
-        } else if (rating >= 3) {
-            return '#CDDC39'; // lime
+            return 'rgba(0, 128, 255, 0.7)'; // blue
         } else if (rating >= 2) {
-            return '#FFC107'; // amber
+            return 'rgba(255, 193, 7, 0.7)'; // yellow
         } else {
             return '#F44336'; // red
         }
     };
 
-    // The render method
+    // Render method
     return (
         <div className="comment-list">
             {comments.filter(comment => !comment.deleted).map((comment, index) => (
@@ -80,16 +79,11 @@ const CommentList = ({ comments }) => {
                         <div className="profile">
                             <img
                                 className="profile-picture"
-                                src={
-                                    usersInfo[comment.userId]?.avatar ||
-                                    '/eagle-frontend/images/default-avatar.jpeg'
-                                }
-                                alt={`Avatar of ${
-                                    usersInfo[comment.userId]?.username || 'Anonymous'
-                                }`}
+                                src={usersInfo[comment.userId]?.avatar}
+                                alt={`Avatar of ${usersInfo[comment.userId]?.username}`}
                             />
                             <p className="profile-name">
-                                {usersInfo[comment.userId]?.username || 'Anonymous'}
+                                {usersInfo[comment.userId]?.username}
                             </p>
                         </div>
                         <p className="date">{new Date(comment.date).toLocaleDateString()}</p>
