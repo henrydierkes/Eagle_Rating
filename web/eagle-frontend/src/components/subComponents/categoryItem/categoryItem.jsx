@@ -13,7 +13,7 @@ function CategoryItem({ name, imageUrl }) {
 
     const handleClick = () => {
         console.log("clicked");
-        window.location.href = `/navigation?search=${encodeURIComponent(name)}`;
+        window.location.href = `/navigation?category=${encodeURIComponent(name)}`;
     };
 
     return (
