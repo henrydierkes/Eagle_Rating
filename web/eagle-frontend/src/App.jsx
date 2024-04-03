@@ -7,6 +7,7 @@ import AddLocation from './pages/AddLocation/AddLocation.jsx';
 import AddRating from './pages/AddRating/AddRating.jsx';
 import SignUp from './pages/Login/SignUp.jsx';
 import SignIn from './pages/Login/SignIn.jsx';
+import Profile from './pages/Profile/Profile.jsx'
 import ScrollToTop from './ScrollToTop';
 import axios from 'axios';
 import { AuthProvider } from './contexts/AuthContext.jsx';
@@ -53,6 +54,7 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/Home" element={<Home />} />
+              <Route path="/Profile" element={<Profile />} />
           </Routes>
         </Router>
       </AuthProvider>
