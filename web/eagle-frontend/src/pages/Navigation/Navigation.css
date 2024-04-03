@@ -5,3 +5,27 @@
   align-items: center;
   background-color: white;
 }
+.load-more-button {
+  padding: 15px 30px;
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe);
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  outline: none;
+  margin-top: 20px;
+  margin-left: 30px;
+  display: inline-block;
+}
+
+.load-more-button:hover,
+.load-more-button:focus {
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe);
+  transform: scale(1.01);
+}
+
+.load-more-button:active {
+  transform: scale(0.98);
+}
