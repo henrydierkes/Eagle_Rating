@@ -6,7 +6,7 @@ import CategoryList from "../subComponents/categoryList/categoryList";
 function Category() {
 
   const things = [
-    {  category: "Study Spaces", url: "images/studys.webp" },
+    {  category: "Study Space", url: "images/studys.webp" },
     {  category: "Parking Lot", url: "images/parking.jpg"},
     {  category: "Dorm", url: "images/dorm.jpeg"},
     {  category: "Bathroom", url: "images/bathroom.jpeg"},

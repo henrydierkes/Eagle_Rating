@@ -8,10 +8,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 const categories = [
   { title: 'Library', category: 'Educational' },
-  { title: 'Study Spaces', category: 'Educational' },
+  { title: 'Study Space', category: 'Educational' },
   { title: 'Parking Lot', category: 'Facilities' },
   { title: 'Dorm', category: 'Accommodations' },
-  { title: 'Bathrooms', category: 'Facilities' },
+  { title: 'Bathroom', category: 'Facilities' },
   { title: 'Building', category: 'Facilities' },
   { title: 'Classroom', category: 'Educational' },
 ];
