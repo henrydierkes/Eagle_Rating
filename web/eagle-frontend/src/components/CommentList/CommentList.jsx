@@ -23,7 +23,7 @@ const CommentList = ({ comments }) => {
                     let avatar = '/images/deactivated-avatar.png';
                     if (user && !user.isDeleted) {
                         username = user.username || user.email;
-                        avatar = user.avatar || '/images/default-avatar.png';
+                        avatar = user.avatar || '/images/default-avatar.jpg';
                     }
                     acc[userIds[index]] = {
                         username: username,
