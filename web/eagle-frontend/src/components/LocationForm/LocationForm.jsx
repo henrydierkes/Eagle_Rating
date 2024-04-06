@@ -16,6 +16,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Map from "../Map/Map";
 import Cookies from 'js-cookie';
+import {useAuth} from "../../contexts/AuthContext.jsx";
 
 
 const ITEM_HEIGHT = 48;
@@ -40,6 +41,7 @@ const toggleRatingVisibility = () => {
 };
 
 const LocationForm = ({ location }) => {
+  const { currentUser } = useAuth();
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [formData, setFormData] = useState({
@@ -78,11 +80,23 @@ const LocationForm = ({ location }) => {
   };
 
   const handleRatingChange = (name, newValue) => {
-    console.log(name, newValue); // This should log the name of the rating and the new value
-    setFormData({
-      ...formData,
-      [name]: newValue
-    });
+    if (ratingType === 'total') {
+      // If the rating type is 'Total Rating', clear subratings and update total rating
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: newValue,
+        subrating1: 0,
+        subrating2: 0,
+        subrating3: 0
+      }));
+    } else {
+      // If the rating type is 'Subrating', clear total rating and update subrating
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: newValue,
+        rating: 0
+      }));
+    }
   };
 
   const handleTagsChange = (event) => {
@@ -150,9 +164,10 @@ const LocationForm = ({ location }) => {
 
       const finalForm = {
         'place': placeForm,
-        'userId': '65f63e365aaca164fc0ddb41', // Replace with actual user ID retrieved from context or cookies
+        'userId': currentUser.userId, // Replace with actual user ID retrieved from context or cookies
         'comment': formData.comment.toString(),
       };
+      console.log(finalForm);
 
       // Make the Axios POST request with the configuration
       axios.post('http://localhost:8080/api/place/add', finalForm, config)
@@ -256,17 +271,22 @@ const LocationForm = ({ location }) => {
           {isRatingVisible && (
               <>
                 <ToggleButtonGroup
-                    value={ratingType}
-                    exclusive
-                    onChange={(event, newRatingType) => setRatingType(newRatingType)}
-                    aria-label="rating type"
-                    sx={{ mb: 1 }}
-                >
-              <ToggleButton value="total" aria-label="left aligned" sx={{ width: '15.5rem' }} >
-                    Total Rating
+                  value={ratingType}
+                  exclusive
+                  onChange={(event, newRatingType) => {
+                      // Check if newRatingType is null or undefined (i.e., if user tries to unclick)
+                      if (newRatingType !== null && newRatingType !== undefined) {
+                          setRatingType(newRatingType);
+                      }
+                  }}
+                  aria-label="rating type"
+                  sx={{ mb: 1 }}
+                  >
+                  <ToggleButton value="total" aria-label="left aligned" sx={{ width: '15.5rem' }} >
+                      Total Rating
                   </ToggleButton>
                   <ToggleButton value="sub" aria-label="centered" sx={{ width: '15.5rem' }}>
-                    Subrating
+                      Subrating
                   </ToggleButton>
                 </ToggleButtonGroup>
 

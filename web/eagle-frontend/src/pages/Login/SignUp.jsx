@@ -17,7 +17,7 @@ import {
   createTheme,
   ThemeProvider,
 } from '@mui/material';
-import './SignUp.css'; // Make sure this imports your CSS with the background styles
+import './SignUp.css';
 
 const defaultTheme = createTheme();
 

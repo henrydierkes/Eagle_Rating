@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './ResultList.css';
 import { useNavigate } from "react-router-dom";
 
-// Assuming these imports are correct based on your project structure
 import bookmarkIcon from '../Misc/bookmark.png';
 import bookmarkHighlightIcon from '../Misc/bookmark highlight.png';
 
@@ -18,11 +17,13 @@ const getRatingColor = (averageRating) => {
 
 const ResultList = ({ results }) => {
     const navigate = useNavigate();
-    const [bookmarked, setBookmarked] = useState({}); // State to track bookmarked items
+    const [bookmarked, setBookmarked] = useState({});
 
-    useEffect(() => {
-        // Your existing useEffect logic...
-    }, [results]);
+    // Sort results in descending order based on overall rating
+    // We're doing a shallow copy of results and sorting that copy
+    const sortedResults = [...results].sort((a, b) => {
+        return b.averageRating?.overall - a.averageRating?.overall;
+    });
 
     const toggleBookmark = (index, e) => {
         e.stopPropagation(); // Prevent the click from reaching the result item
@@ -35,7 +36,7 @@ const ResultList = ({ results }) => {
 
     return (
         <div className="result-list">
-            {results.map((result, index) => (
+            {sortedResults.map((result, index) => (
                 <div key={result.locIdStr || index} className="result-item" onClick={() => navigateToLocationDetail(result.locIdStr)}>
                     <div className="rating-box" style={{ background: getRatingColor(result.averageRating?.overall) }}>
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>

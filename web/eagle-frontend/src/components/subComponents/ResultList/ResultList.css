@@ -59,9 +59,9 @@
 
 .highlight-tag {
   position: absolute;
-  top: 10px; /* 调整为所需的值 */
-  right: 20px; /* 调整为所需的值 */
-  cursor: pointer; /* 更改鼠标样式为指针 */
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
 }
 
 .result-item h3 {
@@ -166,20 +166,22 @@
 }
 
 .rating-button {
-  padding: 20px 300px; /* Increased horizontal padding for a longer button */
+  width: 96%;
+  height: 5rem; 
+  padding: 2% 10%;
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
-  border: none; /* Remove default border */
-  border-radius: 10px; /* Rounded corners */
-  color: #fff; /* White text color for contrast */
-  font-size: 1rem; /* Appropriate font size */
-  cursor: pointer; /* Cursor pointer to indicate clickability */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effect */
-  outline: none; /* Remove outline to maintain the style */
-  margin-top: 20px; /* Space from the last result item */
-  margin-bottom: 20px;
-  margin-left: 30px; /* Shift the button to the right */
-  margin-right: 0px;
-  display: block; /* Ensure the button is treated as a block-level element */
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  outline: none;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 5%;
+  margin-right: 0;
+  display: block;
 }
 
 
@@ -197,6 +199,3 @@
   height: auto;
   cursor: pointer;
 }
-
-
-

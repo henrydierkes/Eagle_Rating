@@ -34,9 +34,9 @@ public class UserController {
      * @param userID The ID of the user to retrieve.
      * @return The user matching the provided ID.
      */
-    @PostMapping("/find")
-    public User getUserById(@RequestParam ObjectId userID){
-        return userService.findUserById(userID);
+    @GetMapping("/get")
+    public User getUserById(@RequestParam String userID){
+        return userService.findUserById(new ObjectId(userID));
     }
 
     /**

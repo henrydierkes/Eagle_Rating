@@ -6,13 +6,13 @@
 
     <groupId>com.astar</groupId>
     <artifactId>RatingBackend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>RatingBackend</name>
     <description>RatingBackend</description>
 
     <properties>
-        <java.version>1.8</java.version>
-        <spring-boot.version>2.6.13</spring-boot.version>
+        <java.version>19</java.version>
+        <spring-boot.version>2.6.4</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -88,11 +88,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+<release>19</release>
                 </configuration>
             </plugin>
 
@@ -101,12 +99,8 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-                <configuration>
-                    <mainClass>com.astar.ratingbackend.RatingBackendApplication</mainClass>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>repackage</id>
                         <goals>
                             <goal>repackage</goal>
                         </goals>

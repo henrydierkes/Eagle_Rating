@@ -1,53 +1,79 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'; // Make sure Axios is imported
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import AddCommentIcon from '@mui/icons-material/AddComment';
 import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
 
 const CommentList = ({ comments }) => {
-    // Inside your CommentList component, before the return statement
-    console.log(comments);
+    const [usersInfo, setUsersInfo] = useState({});
 
     useEffect(() => {
-    const handleScroll = (event) => {
-      const commentText = event.target;
-      const comment = commentText.parentElement;
-      if (commentText.scrollHeight - commentText.scrollTop === commentText.clientHeight) {
-        comment.style.height = commentText.scrollHeight + 'px';
-      }
-    };
+        const fetchUsersInfo = async () => {
+            const userIds = comments.map(comment => comment.userId);
+            const userInfoPromises = userIds.map(userId =>
+                axios.get(`http://localhost:8080/api/user/get?userID=${userId}`)
+            );
 
-    const comments = document.querySelectorAll('.comment');
+            try {
+                const userInfoResponses = await Promise.all(userInfoPromises);
+                const newUsersInfo = userInfoResponses.reduce((acc, response, index) => {
+                    const user = response.data;
+                    let username = 'deactivated_user';
+                    let avatar = '/images/deactivated-avatar.png';
+                    if (user && !user.isDeleted) {
+                        username = user.username || user.email;
+                        avatar = user.avatar || '/images/default-avatar.jpg';
+                    }
+                    acc[userIds[index]] = {
+                        username: username,
+                        avatar: avatar
+                    };
+                    return acc;
+                }, {});
+                setUsersInfo(newUsersInfo);
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        };
 
-    comments.forEach((comment) => {
-      const commentText = comment.querySelector('.comment-text');
-      commentText.addEventListener('scroll', handleScroll);
-    });
+        fetchUsersInfo();
 
-    return () => {
-      comments.forEach((comment) => {
-        const commentText = comment.querySelector('.comment-text');
-        commentText.removeEventListener('scroll', handleScroll);
-      });
-    };
-  }, []);
+        // Cleanup for the useEffect related to adding and removing event listeners
+        const handleScroll = (event) => {
+            const commentText = event.target;
+            const comment = commentText.parentElement;
+            if (commentText.scrollHeight - commentText.scrollTop === commentText.clientHeight) {
+                comment.style.height = commentText.scrollHeight + 'px';
+            }
+        };
 
-  const getPercentage = (rating) => `${(rating / 5) * 100}%`;
+        const commentElements = document.querySelectorAll('.comment');
 
-  const getRatingColor = (rating) => {
+        commentElements.forEach((comment) => {
+            const commentText = comment.querySelector('.comment-text');
+            commentText.addEventListener('scroll', handleScroll);
+        });
+
+        return () => {
+            commentElements.forEach((comment) => {
+                const commentText = comment.querySelector('.comment-text');
+                commentText.removeEventListener('scroll', handleScroll);
+            });
+        };
+    }, [comments]); // Ensure useEffect is only re-run if comments change
+
+    const getRatingColor = (rating) => {
         if (rating >= 4) {
-            return '#4CAF50'; // green
-        } else if (rating >= 3) {
-            return '#CDDC39'; // lime
+            return 'rgba(0, 128, 255, 0.7)'; // blue
         } else if (rating >= 2) {
-            return '#FFC107'; // amber
+            return 'rgba(255, 193, 7, 0.7)'; // yellow
         } else {
             return '#F44336'; // red
         }
     };
 
-    // The render method
+    // Render method
     return (
         <div className="comment-list">
             {comments.filter(comment => !comment.deleted).map((comment, index) => (
@@ -57,18 +83,19 @@ const CommentList = ({ comments }) => {
                             <span className="comment-rating-number">{comment.overallRating.overall}</span>
                         </div>
                         <div className="profile">
-                            {/* Add a check to ensure comment.user is not undefined before accessing properties */}
                             <img
-                                className='profile-picture'
-                                src={comment.user?.profilePicture || "/path/to/default/avatar.png"}
-                                alt={`Avatar of ${comment.user?.name || "User"}`}
+                                className="profile-picture"
+                                src={usersInfo[comment.userId]?.avatar}
+                                alt={`Avatar of ${usersInfo[comment.userId]?.username}`}
                             />
-                            <p className="profile-name">{comment.user?.name || "Anonymous"}</p>
+                            <p className="profile-name">
+                                {usersInfo[comment.userId]?.username}
+                            </p>
                         </div>
                         <p className="date">{new Date(comment.date).toLocaleDateString()}</p>
                     </div>
                     <div className="comment-body">
-                        <p className="comment-text">{comment.text}</p>
+                        <p className="comment-text" style={{ textAlign: 'center' }}>{comment.comment}</p>
                     </div>
                     <div className="comment-footer">
                         <button className="upvote">

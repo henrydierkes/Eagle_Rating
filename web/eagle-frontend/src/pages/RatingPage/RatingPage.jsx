@@ -62,6 +62,7 @@ function RatingPage() {
     if (!placeDetails) {
         return <div>Place not found or error loading details.</div>;
     }
+    console.log(placeComments);
 
     return (
         <div className="RatingPage">
