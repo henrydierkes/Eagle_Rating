@@ -6,9 +6,10 @@ import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
 
 const CommentList = ({ comments }) => {
+    // Inside your CommentList component, before the return statement
+    console.log(comments);
 
-
-  useEffect(() => {
+    useEffect(() => {
     const handleScroll = (event) => {
       const commentText = event.target;
       const comment = commentText.parentElement;

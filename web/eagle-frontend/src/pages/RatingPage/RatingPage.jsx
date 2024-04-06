@@ -1,6 +1,6 @@
 // Import necessary hooks and components from React, React Router, and Axios for making HTTP requests
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {json, useParams} from "react-router-dom";
 import Axios from 'axios';
 // Import custom components used on this page
 import NavBar from "../../components/NavBar/NavBar.jsx";
@@ -10,6 +10,8 @@ import CommentList from "../../components/CommentList/CommentList.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 // Import specific CSS for styling this page
 import "./RatingPage.css";
+//import subrating
+import "../../../public/jsons/Subrating.json"
 
 // Define the RatingPage functional component
 function RatingPage() {
