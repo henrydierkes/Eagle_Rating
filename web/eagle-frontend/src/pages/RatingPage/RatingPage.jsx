@@ -13,7 +13,7 @@ import "./RatingPage.css";
 import axios from "axios";
 import axiosConfig from "../../axiosConfig.jsx";
 //import subrating
-import "../../../public/jsons/Subrating.json"
+
 
 // Define the RatingPage functional component
 function RatingPage() {

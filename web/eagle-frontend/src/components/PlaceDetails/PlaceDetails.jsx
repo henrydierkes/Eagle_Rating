@@ -5,6 +5,7 @@ import TopRatings from "../subComponents/TopRatings/TopRatings.jsx";
 import UserImages from "../subComponents/UserImages/UserImages.jsx";
 import UserComments from "../subComponents/UserComments/UserComments.jsx";
 import { useNavigate } from "react-router-dom";
+import SubratingData from "../../../public/jsons/Subrating.json";
 
 // const handleAddCommentClick = () => {
 //   navigate("/addComment"); // Navigate to comment page
@@ -21,6 +22,8 @@ const getRatingColor = (rating) => {
 };
 const goToPage = () => {};
 
+
+
 const PlaceDetails = ({ result }) => {
 
     const navigate = useNavigate();
@@ -36,6 +39,10 @@ const PlaceDetails = ({ result }) => {
     const longitude = result?.location.longitude ?? '';
     console.log(longitude);
     console.log(latitude);
+    // find subratings to each category
+    const category = result.category; // 例如，这里可能会是 "Library"
+    console.log(result.category + "aaaaaaaaaaaaaaaa")
+    const matchingSubratings = SubratingData.categories.find(cat => cat.category === category)?.subratings || {};
     const handleAddRatingClick = () => {
         navigate("/addRating", { state: { placeDetails: result } });
     };
@@ -70,7 +77,7 @@ const PlaceDetails = ({ result }) => {
                     </div>
                 </div>
                 <div className="header-right">
-                    <RatingBar result={result} style={{ width: "100%" }} />
+                    <RatingBar result={result} subratings={matchingSubratings} style={{ width: "100%" }} />
                 </div>
             </div>
 
