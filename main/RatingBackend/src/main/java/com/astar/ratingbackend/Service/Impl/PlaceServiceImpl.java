@@ -12,8 +12,10 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 
@@ -197,6 +199,25 @@ public class PlaceServiceImpl implements IPlaceService {
             place.setDeletedDate(new Date());
             this.placeRepository.save(place);
         });
+    }
+    public List<String> deletePlace(String userId, String placeId, boolean trueDelete) {
+        Optional<Place> findPlace = findById(new ObjectId(placeId));
+        if (!findPlace.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Place not found");
+        } else {
+            Place place = findPlace.get();
+            List<String> ratingIds=place.getRatingIds();
+            if (place.isDeleted()) {
+//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Place is already deleted");
+                return ratingIds;
+            }
+            if(trueDelete){
+                deletePlaceT(new ObjectId(placeId));
+            }else{
+                deletePlace(new ObjectId(placeId));
+            }
+            return ratingIds;
+        }
     }
     /**
      * Adds a rating to a specific place and updates its overall ratings.

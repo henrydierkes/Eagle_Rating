@@ -57,14 +57,13 @@ public class PlaceController {
 
     /**
      * Adds a new place to the database.
-     * @param place The Place entity to be added.
+     * @param addPlaceRequest The Place entity to be added.
      * @return A response entity indicating the operation's status (CREATED).
      */
     @PostMapping("/add")
     @CrossOrigin
     @Transactional
     public ResponseEntity<Place> addPlace(@RequestBody AddPlaceRequest addPlaceRequest) {
-//    public ResponseEntity<Place> addPlace(@RequestBody Place place, @RequestParam("userId") String userId, @RequestParam("comment")String comment, @RequestParam("tags")List<String> tags) {
         Place place=addPlaceRequest.getPlace();
         String userId=addPlaceRequest.getUserId();
         Place.TotalRating totalRating=place.getTotalRating();
@@ -95,23 +94,25 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addedPlace);
 
     }
+    @PostMapping("/delete")
+    @CrossOrigin
+    @Transactional
+    public ResponseEntity<String> deletePlace(@RequestParam("userId") String userId, @RequestParam("placeId") String placeId, @RequestParam(required = false)Boolean trueDelete) {
+        if (trueDelete == null) {
+            trueDelete = true;
+        }
+        try {
+            List<String> ratingIds = placeService.deletePlace(userId, placeId, trueDelete);
+            ratingService.cleanRatings(ratingIds, trueDelete);
 
-    /**
-     * Adds a rating to a specific place based on the place's ID.
-     * @param rating The Rating entity to be added to the place.
-     * @return A response entity containing the updated place with the new rating or an error status.
-     */
-//    @PostMapping("/addRating")
-//    public ResponseEntity<Place> addRating(@RequestBody Rating rating) {
-//        String placeId = rating.getPlaceId();
-//        ResponseEntity<Place> response = placeService.addRating(placeId, rating);
-//        ratingService.addRating(rating,);
-//        if (response.getStatusCode() == HttpStatus.OK) {
-//            return ResponseEntity.ok(response.getBody());
-//        } else {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
+            // Return a success response
+            return ResponseEntity.ok("Place and associated ratings deleted successfully");
+        } catch (Exception e) {
+            // Handle the exception and return an appropriate error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
 
     /**
      * Searches for places based on location name, category, and tags. All parameters are optional.
@@ -133,34 +134,7 @@ public class PlaceController {
         return ResponseEntity.ok(places);
     }
 
-    /**
-     * Searches for places by name and category.
-     * @param name The name of the location to search for.
-     * @param category The category of the places to search for.
-     * @return A list of places that match the name and category.
-     */
-//    @GetMapping("/search/category")
-//    public ResponseEntity<List<Place>> searchPlacesByNameAndCategory(@RequestParam String name, @RequestParam String category,@RequestParam(required = false) Boolean desc) {
-//        List<Place> places= placeService.searchPlacesByNameAndCategory(name, category);
-//        if(desc!=null&&desc){
-//            placeService.sortRatingsDescending(places);
-//        }
-//        return ResponseEntity.ok(places);
-//    }
 
-//    /**
-//     * Searches for places by tags.
-//     * @param tags The list of tags to filter the places.
-//     * @return A response entity containing a list of places that match the tags.
-//     */
-//    @GetMapping("/search/tags")
-//    public ResponseEntity<List<Place>> searchByTags(@RequestParam List<String> tags,@RequestParam(required = false) Boolean desc) {
-//        List<Place> places = placeService.searchByTags(tags);
-//        if(desc!=null&&desc){
-//            placeService.sortRatingsDescending(places);
-//        }
-//        return ResponseEntity.ok(places);
-//    }
     @GetMapping("/{id}")
     public ResponseEntity<Place> getPlaceById(@PathVariable String id) {
         // Convert the string ID to an ObjectId

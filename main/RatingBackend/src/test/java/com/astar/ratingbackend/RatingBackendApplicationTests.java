@@ -1,22 +1,17 @@
 package com.astar.ratingbackend;
-import com.astar.ratingbackend.Entity.Place;
-import com.astar.ratingbackend.Entity.Rating;
-import com.astar.ratingbackend.Entity.User;
+
 import com.astar.ratingbackend.Model.UserRepository;
 import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import com.astar.ratingbackend.Service.IUserService;
 import com.astar.ratingbackend.Service.util.Util;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @SpringBootTest
 class RatingBackendApplicationTests {
@@ -35,6 +30,12 @@ class RatingBackendApplicationTests {
     @Autowired
     private Util util;
 
+    @Test
+    public void testRatingDelete(){
+        List<String> ratingIds=new ArrayList<>();
+        ratingIds.add("6612dc796c40577e66379ad8");
+        ratingService.cleanRatings(ratingIds, false);
+    }
 //    @Test
 //    public void test1() {
 //        List<User> userList = mongoTemplate.findAll(User.class);

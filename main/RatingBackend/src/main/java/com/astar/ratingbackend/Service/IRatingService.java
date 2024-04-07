@@ -18,8 +18,9 @@ public interface IRatingService {
     public Optional<Rating> getRateById(ObjectId id);
     public Rating updateRate(ObjectId id, Rating rateDetails);
     public boolean deleteRatingDb(String id);
+    public ResponseEntity<String> cleanRatings(List<String> ids, boolean trueDelete);
     public void deleteRatingDbT(ObjectId id);
-    public ResponseEntity<String> deleteRating(String id);
+    public ResponseEntity<String> deleteRating(String id, Boolean trueDelete);
     public List<Rating> getRatingByFilter(Rating.OverallRating rating, int floor);
     public List<Rating> getRatingByFilterDesc(Rating.OverallRating rating, int floor);
 }

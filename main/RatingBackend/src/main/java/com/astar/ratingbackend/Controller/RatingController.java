@@ -67,8 +67,11 @@ public class RatingController {
      * @return A ResponseEntity indicating the outcome of the operation.
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteRatingById(@RequestParam String ratingId) {
-        return ratingService.deleteRating(ratingId);
+    public ResponseEntity<String> deleteRatingById(@RequestParam String ratingId, @RequestParam(required = false) Boolean trueDelete) {
+        if(trueDelete==null){
+            trueDelete=true;
+        }
+        return ratingService.deleteRating(ratingId,trueDelete);
 
     }
 

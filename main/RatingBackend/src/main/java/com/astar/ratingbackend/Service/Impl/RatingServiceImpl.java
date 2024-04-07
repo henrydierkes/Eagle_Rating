@@ -240,19 +240,53 @@ public class RatingServiceImpl implements IRatingService {
         }
     }
     @Transactional
+    public ResponseEntity<String> cleanRatings(List<String> ids, boolean trueDelete){
+        try {
+            for (String id : ids) {
+                Rating rating=validateRating(id);
+                User user = userService.validateUser(rating.getUserId());
+                if(!trueDelete) {
+                    boolean ratingDeleted = deleteRatingDb(id);
+                    boolean userDeleted = userService.deleteRating(rating);
+                    if (!ratingDeleted || !userDeleted) {
+                        String errorMessage = "deleteError";
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                    }
+                }else{
+                    deleteRatingDbT(new ObjectId(id));
+                    userService.deleteRating(rating);
+                }
+
+            }
+            return ResponseEntity.ok("Ratings deleted successfully");
+        } catch (IllegalArgumentException e) {
+            String errorMessage = "Invalid parameter: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
+    }
+    @Transactional
     @Override
-    public ResponseEntity<String> deleteRating(String id){
+    public ResponseEntity<String> deleteRating(String id, Boolean trueDelete){
+        if(trueDelete==null){
+            trueDelete=false;
+        }
         try {
             Rating rating=validateRating(id);
             User user = userService.validateUser(rating.getUserId());
             Place place = placeService.validatePlace(rating.getPlaceId());
-            boolean ratingDeleted = deleteRatingDb(id);
-            boolean userDeleted = userService.deleteRating(rating);
-            boolean placeDeleted = placeService.deleteRating(rating);
-            if (!ratingDeleted || !userDeleted || !placeDeleted) {
-                // If any deletion fails, return an INTERNAL_SERVER_ERROR response
-                String errorMessage = "deleteError";
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            if(!trueDelete) {
+                boolean ratingDeleted = deleteRatingDb(id);
+                boolean userDeleted = userService.deleteRating(rating);
+                boolean placeDeleted = placeService.deleteRating(rating);
+                if (!ratingDeleted || !userDeleted || !placeDeleted) {
+                    // If any deletion fails, return an INTERNAL_SERVER_ERROR response
+                    String errorMessage = "deleteError";
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+                }
+            }else{
+                deleteRatingDbT(new ObjectId(id));
+                userService.deleteRating(rating);
+                placeService.deleteRating(rating);
             }
             // If deletion is successful, return an OK response
             return ResponseEntity.ok("Rating deleted successfully");
