@@ -12,7 +12,7 @@ import Footer from "../../components/Footer/Footer.jsx";
 import "./RatingPage.css";
 import axios from "axios";
 import axiosConfig from "../../axiosConfig.jsx";
-//import subrating
+
 
 
 // Define the RatingPage functional component

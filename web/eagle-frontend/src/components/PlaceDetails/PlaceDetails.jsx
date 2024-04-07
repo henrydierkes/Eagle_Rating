@@ -5,6 +5,7 @@ import TopRatings from "../subComponents/TopRatings/TopRatings.jsx";
 import UserImages from "../subComponents/UserImages/UserImages.jsx";
 import UserComments from "../subComponents/UserComments/UserComments.jsx";
 import { useNavigate } from "react-router-dom";
+//import subrating
 import SubratingData from "../../../public/jsons/Subrating.json";
 
 // const handleAddCommentClick = () => {

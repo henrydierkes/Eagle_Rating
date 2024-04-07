@@ -17,6 +17,9 @@ import { useAuth } from '../../contexts/AuthContext'; // Import useAuth hook
 import { useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axiosConfig from "../../axiosConfig.jsx";
+//import subrating
+import SubratingData from "../../../public/jsons/Subrating.json";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,16 +34,14 @@ const MenuProps = {
 
 
 
-const tags = [
-  'Charging Ports',
-  'Quiet Space',
-  'Water Fountain'
-];
+
 
 const RatingForm = () => {
     const { currentUser } = useAuth();
     const location = useLocation();
     const placeDetails = location.state?.placeDetails;
+    const currentSubratings = SubratingData.categories.find(cat => cat.category === placeDetails?.category)?.subratings || {};
+    const tagsFromSubratings = Object.values(currentSubratings);
     console.log(placeDetails);
     const placeName = placeDetails?.locName;
     const placeId=placeDetails?.locIdStr;
@@ -198,30 +199,19 @@ const RatingForm = () => {
           )}
           {ratingType === 'sub' && (
               <>
-                  <div className='subrating1'>
-                      <Typography component="legend">Size:</Typography>
-                      <Rating
-                          name="size"
-                          value={formData.subrating1}
-                          onChange={(event, newValue) => handleRatingChange('subrating1', newValue)}
-                      />
-                  </div>
-                  <div className='subrating2'>
-                      <Typography component="legend">Cleanliness:</Typography>
-                      <Rating
-                          name="cleanliness"
-                          value={formData.subrating2}
-                          onChange={(event, newValue) => handleRatingChange('subrating2', newValue)}
-                      />
-                  </div>
-                  <div className='subrating3'>
-                      <Typography component="legend">Quietness:</Typography>
-                      <Rating
-                          name="quietness"
-                          value={formData.subrating3}
-                          onChange={(event, newValue) => handleRatingChange('subrating3', newValue)}
-                      />
-                  </div>
+                  {Object.entries(currentSubratings).map(([key, label], index) => {
+                      const subratingKey = `subrating${index + 1}`; // Construct the state key for formData
+                      return (
+                          <div key={key} className={`subrating${index + 1}`}>
+                              <Typography component="legend">{label}:</Typography>
+                              <Rating
+                                  name={label.toLowerCase()}
+                                  value={formData[subratingKey]}
+                                  onChange={(event, newValue) => handleRatingChange(subratingKey, newValue)}
+                              />
+                          </div>
+                      );
+                  })}
               </>
           )}
       <div>
@@ -238,11 +228,11 @@ const RatingForm = () => {
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
         >
-          {tags.map((name) => (
-            <MenuItem key={name} value={name}>
-              <Checkbox checked={tag.indexOf(name) > -1} />
-              <ListItemText primary={name} />
-            </MenuItem>
+            {tagsFromSubratings.map((name) => (
+                <MenuItem key={name} value={name}>
+                    <Checkbox checked={tag.indexOf(name) > -1} />
+                    <ListItemText primary={name} />
+                </MenuItem>
           ))}
         </Select>
       </FormControl>
