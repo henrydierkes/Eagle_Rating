@@ -16,6 +16,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import { useAuth } from '../../contexts/AuthContext'; // Import useAuth hook
 import { useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import axiosConfig from "../../axiosConfig.jsx";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -134,7 +135,7 @@ const RatingForm = () => {
             };
 
             try {
-                const response = await axios.post('http://localhost:8080/api/rating/addRating', ratingData, config);
+                const response = await axios.post(`${axiosConfig.baseURL}/api/rating/addRating`, ratingData, config);
                 console.log(response.data);
                 alert('Rating successfully added!');
                 // Clear the form fields here if needed

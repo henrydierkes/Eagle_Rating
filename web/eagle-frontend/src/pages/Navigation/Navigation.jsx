@@ -5,6 +5,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import ResultsAndFilter from "../../components/ResultsAndFilter/ResultsAndFilter";
 import Footer from "../../components/Footer/Footer";
 import "./Navigation.css";
+import axiosConfig from "../../axiosConfig.jsx";
 
 function Navigation() {
   const [results, setResults] = useState([]);
@@ -21,13 +22,13 @@ function Navigation() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        let apiUrl = 'http://localhost:8080/api/place/get';
+        let apiUrl = `${axiosConfig.baseURL}/api/place/get`;
         if (searchQuery && categoryQuery) {
-          apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}&category=${categoryQuery}`;
+          apiUrl = `${axiosConfig.baseURL}/api/place/search?locName=${searchQuery}&category=${categoryQuery}`;
         } else if (searchQuery) {
-          apiUrl = `http://localhost:8080/api/place/search?locName=${searchQuery}`;
+          apiUrl = `${axiosConfig.baseURL}/api/place/search?locName=${searchQuery}`;
         } else if (categoryQuery) {
-          apiUrl = `http://localhost:8080/api/place/search?category=${categoryQuery}`;
+          apiUrl = `${axiosConfig.baseURL}/api/place/search?category=${categoryQuery}`;
         }
         const response = await Axios.get(apiUrl);
         setResults(response.data);

@@ -17,6 +17,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Map from "../Map/Map";
 import Cookies from 'js-cookie';
 import {useAuth} from "../../contexts/AuthContext.jsx";
+import axiosConfig from "../../axiosConfig.jsx";
 
 
 const ITEM_HEIGHT = 48;
@@ -170,7 +171,7 @@ const LocationForm = ({ location }) => {
       console.log(finalForm);
 
       // Make the Axios POST request with the configuration
-      axios.post('http://localhost:8080/api/place/add', finalForm, config)
+      axios.post(`${axiosConfig.baseURL}/api/place/add`, finalForm, config)
         .then(response => {
           console.log('Place added successfully:', response.data);
           // Reset form data after successful submission

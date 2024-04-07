@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import axios from "axios";
+import axiosConfig from "../../../axiosConfig.jsx";
 
 // const images = [
 //     {url: "images/Woodruff_Library.jpeg", name: 'Woodruff Library', rating: 4.9},
@@ -41,7 +42,7 @@ function TrendPlaces() {
         };
     }, []);
     useEffect(() => {
-        axios.get('http://localhost:8080/api/place/getTrendy')
+        axios.get(`${axiosConfig.baseURL}/api/place/getTrendy`)
             .then(response => {
                 setTrendyPlaces(response.data);
             })

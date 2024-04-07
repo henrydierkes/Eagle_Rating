@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import './SignIn.css';
 import { useAuth } from '../../contexts/AuthContext.jsx';
+import axiosConfig from "../../axiosConfig.jsx";
 
 const defaultTheme = createTheme();
 
@@ -28,7 +29,7 @@ export default function SignIn() {
     try {
 
       // console.log('Request data:', { email, password });
-      const response = await axios.post('http://localhost:8080/auth/sign-in', {
+      const response = await axios.post(`${axiosConfig.baseURL}/auth/sign-in`, {
         email,
         password,
       });

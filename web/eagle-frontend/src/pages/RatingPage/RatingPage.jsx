@@ -10,6 +10,8 @@ import CommentList from "../../components/CommentList/CommentList.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 // Import specific CSS for styling this page
 import "./RatingPage.css";
+import axios from "axios";
+import axiosConfig from "../../axiosConfig.jsx";
 
 // Define the RatingPage functional component
 function RatingPage() {
@@ -23,7 +25,7 @@ function RatingPage() {
         // Fetch place details first
         const fetchPlaceDetails = async () => {
             try {
-                const detailsResponse = await Axios.get(`http://localhost:8080/api/place/${locId}`);
+                const detailsResponse = await axios.get(`${axiosConfig.baseURL}/api/place/${locId}`);
                 setPlaceDetails(detailsResponse.data);
                 // Now fetch comments for each rating ID
                 fetchComments(detailsResponse.data.ratingIds);
@@ -39,7 +41,7 @@ function RatingPage() {
     // Function to fetch comments based on ratingIds
     const fetchComments = async (ratingIds) => {
         const commentRequests = ratingIds.map(ratingId =>
-            Axios.get(`http://localhost:8080/api/rating/get`, { params: { ratingId } })
+            Axios.get(`${axiosConfig.baseURL}/api/rating/get`, { params: { ratingId } })
         );
 
         try {

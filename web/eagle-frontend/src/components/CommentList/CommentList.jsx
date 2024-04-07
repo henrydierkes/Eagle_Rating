@@ -4,6 +4,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
+import axiosConfig from "../../axiosConfig.jsx";
 
 const CommentList = ({ comments }) => {
     const [usersInfo, setUsersInfo] = useState({});
@@ -12,7 +13,8 @@ const CommentList = ({ comments }) => {
         const fetchUsersInfo = async () => {
             const userIds = comments.map(comment => comment.userId);
             const userInfoPromises = userIds.map(userId =>
-                axios.get(`http://localhost:8080/api/user/get?userID=${userId}`)
+
+                axios.get(`${axiosConfig.baseURL}/api/user/get?userID=${userId}`)
             );
 
             try {
