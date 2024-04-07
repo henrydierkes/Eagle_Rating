@@ -19,7 +19,8 @@ test('safe-array-concat', function (t) {
 	);
 
 	t.deepEqual(
-		safeConcat([1, 2], [3, 4], 'foo', 5, 6, [[7]]),
+		// eslint-disable-next-line no-extra-parens
+		safeConcat(/** @type {(string | number | number[])[]} */ ([1, 2]), [3, 4], 'foo', 5, 6, [[7]]),
 		[1, 2, 3, 4, 'foo', 5, 6, [7]],
 		'works with flat and nested arrays'
 	);

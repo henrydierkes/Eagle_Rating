@@ -18,6 +18,7 @@ import {
   ThemeProvider,
 } from '@mui/material';
 import './SignUp.css';
+import axiosConfig from "../../axiosConfig.jsx"; // Make sure this imports your CSS with the background styles
 
 const defaultTheme = createTheme();
 
