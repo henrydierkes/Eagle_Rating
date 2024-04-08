@@ -93,15 +93,15 @@ const RatingForm = () => {
     }
   };
     const handleCheckboxChange = (event) => {
-        setTags({ ...tags, [event.target.name]: event.target.checked });
+        setTag({ ...tag, [event.target.name]: event.target.checked }); // Change setTags to setTag
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         // Convert the selected tags array to an object with boolean values
-        const tagsObject = tags.reduce((obj, item) => {
-            obj[item] = tag.includes(item);
+        const tagsObject = tag.reduce((obj, item) => {
+            obj[item] = tag.includes(item); // <-- Should be 'tag' instead of 'tags'
             return obj;
         }, {});
 
