@@ -87,7 +87,7 @@ const LocationForm = ({ location }) => {
       ...formData,
       categoryName: event.target.value
     });
-    console.log(formData);
+    console.log(formData);//formData.categoryName
   };
 
   const handleRatingChange = (name, newValue) => {
