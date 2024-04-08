@@ -48,6 +48,11 @@ public interface PlaceRepository extends MongoRepository<Place, ObjectId> {
     @Query("{ '_id' : ?0, 'isDeleted' : false }")
     Optional<Place> findByIdAndNotDeleted(ObjectId id);
 
+
+    List<Place> findByVerified(boolean verified);
+
+    List<Place> findByCategoryAndVerified(String category, boolean verified);
+
     /**
      * Finds a place by its ID.
      * @param id The ID of the place to find.

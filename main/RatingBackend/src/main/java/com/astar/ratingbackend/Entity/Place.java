@@ -85,6 +85,9 @@ public class Place implements Serializable {
     @Field("deletedDate")
     private Date deletedDate;
 
+    @Field("verified")
+    private boolean verified;
+
 
 
     @Data

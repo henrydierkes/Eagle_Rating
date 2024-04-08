@@ -29,4 +29,7 @@ public interface IPlaceService {
     void sortRatingsDescending(List<Place> places);
     public List<Place> findTopPlaces();
     public List<Place> findTopPlaces(int limit);
+    public Place verifyPlace(String id);
+    public List<Place> verifyPlaces(List<String> ids);
+    public List<Place> findUnverified(String category);
 }
