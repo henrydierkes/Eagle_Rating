@@ -37,6 +37,8 @@ const MenuProps = {
 
 
 const RatingForm = () => {
+    // define a constant array of your hardcoded tags
+    const staticTags = ["Water Fountain", "Charging Port", "Busy", "Quiet", "Parking Space"];
     const { currentUser } = useAuth();
     const location = useLocation();
     const placeDetails = location.state?.placeDetails;
@@ -100,8 +102,8 @@ const RatingForm = () => {
         event.preventDefault();
 
         // Convert the selected tags array to an object with boolean values
-        const tagsObject = tag.reduce((obj, item) => {
-            obj[item] = tag.includes(item); // <-- Should be 'tag' instead of 'tags'
+        const tagsObject = staticTags.reduce((obj, tagName) => {
+            obj[tagName] = tag.includes(tagName);
             return obj;
         }, {});
 
@@ -218,22 +220,22 @@ const RatingForm = () => {
     <div className='rating-tags'>
       <FormControl sx={{ mt: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
         <InputLabel id="tags-label">Tags</InputLabel>
-        <Select
-          labelId="tags-label"
-          id="tags-select"
-          multiple
-          value={tag}
-          onChange={handleTagsChange}
-          input={<OutlinedInput label="Tag" />}
-          renderValue={(selected) => selected.join(', ')}
-          MenuProps={MenuProps}
-        >
-            {tagsFromSubratings.map((name) => (
+          <Select
+              labelId="tags-label"
+              id="tags-select"
+              multiple
+              value={tag}
+              onChange={handleTagsChange}
+              input={<OutlinedInput label="Tag" />}
+              renderValue={(selected) => selected.join(', ')}
+              MenuProps={MenuProps}
+          >
+            {staticTags.map((name) => (
                 <MenuItem key={name} value={name}>
                     <Checkbox checked={tag.indexOf(name) > -1} />
                     <ListItemText primary={name} />
                 </MenuItem>
-          ))}
+            ))}
         </Select>
       </FormControl>
     </div>
