@@ -42,7 +42,7 @@ const RatingForm = () => {
     const placeDetails = location.state?.placeDetails;
     const currentSubratings = SubratingData.categories.find(cat => cat.category === placeDetails?.category)?.subratings || {};
     const tagsFromSubratings = Object.values(currentSubratings);
-    console.log(placeDetails);
+    console.log(currentSubratings);
     const placeName = placeDetails?.locName;
     const placeId=placeDetails?.locIdStr;
       const [tag, setTag] = React.useState([]);

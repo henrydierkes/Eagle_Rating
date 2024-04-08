@@ -78,6 +78,14 @@ const LocationForm = ({ location }) => {
       ...formData,
       [name]: value
     });
+
+  };
+  const handleCategoryChange = (event) => {
+    setFormData({
+      ...formData,
+      categoryName: event.target.value
+    });
+    console.log(formData);
   };
 
   const handleRatingChange = (name, newValue) => {
@@ -205,6 +213,22 @@ const LocationForm = ({ location }) => {
 
   return (
       <div className="rating-form">
+        <FormControl sx={{ mt: 2, mb: 1 }} className='category-name' variant="outlined" required>
+          <InputLabel id="category-select-label">Select Category</InputLabel>
+          <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={formData.categoryName}
+              onChange={handleCategoryChange}
+              label="Select Category"
+          >
+            <MenuItem value={"Dorm"}>Dorm</MenuItem>
+            <MenuItem value={"Library"}>Library</MenuItem>
+            <MenuItem value={"Parking Lot"}>Parking Lot</MenuItem>
+            <MenuItem value={"Study Space"}>Study Space</MenuItem>
+            <MenuItem value={"Bathroom"}>Bathroom</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
             sx={{ mt: 2, mb: 1}}
             className='place-name'
@@ -247,17 +271,6 @@ const LocationForm = ({ location }) => {
             name="floor"
             value={formData.floor}
             onChange={handleInputChange}
-        />
-        <TextField
-            sx={{ mt: 2, mb: 1}}
-            className='category-name'
-            id="outlined-basic"
-            label="Enter Category"
-            variant="outlined"
-            name="categoryName"
-            value={formData.categoryName}
-            onChange={handleInputChange}
-            required
         />
 
         <form onSubmit={handleSubmit}>
