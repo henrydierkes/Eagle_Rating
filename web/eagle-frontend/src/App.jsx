@@ -39,6 +39,7 @@ function App() {
           <ScrollToTop />
           <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/Home" element={<Home />} />
               <Route path="/navigation" element={<Navigation />} />
               <Route path="/ratingpage/:locId" element={<RatingPage />} />
                 <Route path="/addLocation" element={
@@ -53,7 +54,6 @@ function App() {
               } />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
-              <Route path="/Home" element={<Home />} />
               <Route path="/Profile" element={<Profile />} />
           </Routes>
         </Router>
