@@ -86,9 +86,6 @@ const SearchBar = () => {
           id="search-bar"
           options={options.map(option => option.title)}
           onInputChange={onInputChange}
-          onChange={(event, newValue) => {
-            navigate(`/navigation?locName=${newValue}`);
-          }}
           renderInput={(params) => (
             <TextField
               {...params}
