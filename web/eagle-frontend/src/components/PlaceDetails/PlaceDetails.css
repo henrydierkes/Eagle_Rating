@@ -129,15 +129,14 @@
   background-color: #333;
   color: ghostwhite;
   border: none;
-  padding: 1.8rem 2rem;
+  padding: 1rem 2rem;
   border-radius: 3rem; /* more circle */
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 2rem;
-  width: 500px;
-  height: 150px;
-  font-size: 60px;
-  margin-top: 70px;
+  width: 7em;
+  height: 2em;
+  font-size: 3em;
 }
 
 .rating-button-container .rating-button:hover {
