@@ -18,6 +18,8 @@ import Map from "../Map/Map";
 import Cookies from 'js-cookie';
 import {useAuth} from "../../contexts/AuthContext.jsx";
 import axiosConfig from "../../axiosConfig.jsx";
+//import subrating
+import SubratingData from "../../../public/jsons/Subrating.json";
 
 
 const ITEM_HEIGHT = 48;
@@ -71,6 +73,8 @@ const LocationForm = ({ location }) => {
   const [ratingType, setRatingType] = useState("total");
 
 
+  const currentSubratings = SubratingData.categories.find(cat => cat.category === formData.categoryName)?.subratings || {};
+
 
   const handleInputChange = (e) => {
     const {name, value} = e.target;
@@ -78,20 +82,26 @@ const LocationForm = ({ location }) => {
       ...formData,
       [name]: value
     });
+
+  };
+  const handleCategoryChange = (event) => {
+    setFormData({
+      ...formData,
+      categoryName: event.target.value
+    });
+    console.log(formData);//formData.categoryName
   };
 
   const handleRatingChange = (name, newValue) => {
     if (ratingType === 'total') {
-      // If the rating type is 'Total Rating', clear subratings and update total rating
       setFormData(prevState => ({
         ...prevState,
         [name]: newValue,
-        subrating1: 0,
-        subrating2: 0,
-        subrating3: 0
+        subRating1: 0,
+        subRating2: 0,
+        subRating3: 0
       }));
     } else {
-      // If the rating type is 'Subrating', clear total rating and update subrating
       setFormData(prevState => ({
         ...prevState,
         [name]: newValue,
@@ -99,6 +109,7 @@ const LocationForm = ({ location }) => {
       }));
     }
   };
+
 
   const handleTagsChange = (event) => {
     setFormData({
@@ -172,29 +183,29 @@ const LocationForm = ({ location }) => {
 
       // Make the Axios POST request with the configuration
       axios.post(`${axiosConfig.baseURL}/api/place/add`, finalForm, config)
-        .then(response => {
-          console.log('Place added successfully:', response.data);
-          // Reset form data after successful submission
-          setFormData({
-            placeName: '',
-            buildingName: '',
-            floor: 1,
-            categoryName: '',
-            rating: 0,
-            subRating1: 0,
-            subRating2: 0,
-            subRating3: 0,
-            tags: [],
-            comment: '',
-            uploadedImages: [],
-            selectedLocation: null,
+          .then(response => {
+            console.log('Place added successfully:', response.data);
+            // Reset form data after successful submission
+            setFormData({
+              placeName: '',
+              buildingName: '',
+              floor: 1,
+              categoryName: '',
+              rating: 0,
+              subRating1: 0,
+              subRating2: 0,
+              subRating3: 0,
+              tags: [],
+              comment: '',
+              uploadedImages: [],
+              selectedLocation: null,
+            });
+            // Here, you might want to navigate to another page or give the user feedback
+          })
+          .catch(error => {
+            console.error('Error adding place:', error);
+            // Handle the error by notifying the user, for example
           });
-          // Here, you might want to navigate to another page or give the user feedback
-        })
-        .catch(error => {
-          console.error('Error adding place:', error);
-          // Handle the error by notifying the user, for example
-        });
     } else {
       // Handle the case where there is no token available
       console.error('No token found. User must be logged in to submit.');
@@ -205,6 +216,22 @@ const LocationForm = ({ location }) => {
 
   return (
       <div className="rating-form">
+        <FormControl sx={{ mt: 2, mb: 1 }} className='category-name' variant="outlined" required>
+          <InputLabel id="category-select-label">Select Category</InputLabel>
+          <Select
+              labelId="category-select-label"
+              id="category-select"
+              value={formData.categoryName}
+              onChange={handleCategoryChange}
+              label="Select Category"
+          >
+            <MenuItem value={"Dorm"}>Dorm</MenuItem>
+            <MenuItem value={"Library"}>Library</MenuItem>
+            <MenuItem value={"Parking Lot"}>Parking Lot</MenuItem>
+            <MenuItem value={"Study Space"}>Study Space</MenuItem>
+            <MenuItem value={"Bathroom"}>Bathroom</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
             sx={{ mt: 2, mb: 1}}
             className='place-name'
@@ -248,17 +275,6 @@ const LocationForm = ({ location }) => {
             value={formData.floor}
             onChange={handleInputChange}
         />
-        <TextField
-            sx={{ mt: 2, mb: 1}}
-            className='category-name'
-            id="outlined-basic"
-            label="Enter Category"
-            variant="outlined"
-            name="categoryName"
-            value={formData.categoryName}
-            onChange={handleInputChange}
-            required
-        />
 
         <form onSubmit={handleSubmit}>
           {/* Toggle Button for Ratings Visibility */}
@@ -272,22 +288,22 @@ const LocationForm = ({ location }) => {
           {isRatingVisible && (
               <>
                 <ToggleButtonGroup
-                  value={ratingType}
-                  exclusive
-                  onChange={(event, newRatingType) => {
+                    value={ratingType}
+                    exclusive
+                    onChange={(event, newRatingType) => {
                       // Check if newRatingType is null or undefined (i.e., if user tries to unclick)
                       if (newRatingType !== null && newRatingType !== undefined) {
-                          setRatingType(newRatingType);
+                        setRatingType(newRatingType);
                       }
-                  }}
-                  aria-label="rating type"
-                  sx={{ mb: 1 }}
-                  >
+                    }}
+                    aria-label="rating type"
+                    sx={{ mb: 1 }}
+                >
                   <ToggleButton value="total" aria-label="left aligned" sx={{ width: '15.5rem' }} >
-                      Total Rating
+                    Total Rating
                   </ToggleButton>
                   <ToggleButton value="sub" aria-label="centered" sx={{ width: '15.5rem' }}>
-                      Subrating
+                    Subrating
                   </ToggleButton>
                 </ToggleButtonGroup>
 
@@ -304,72 +320,63 @@ const LocationForm = ({ location }) => {
                 )}
                 {ratingType === 'sub' && (
                     <>
-                      <div className='subRating1'>
-                        <Typography component="legend">Size:</Typography>
-                        <Rating
-                            name="size"
-                            value={formData.subRating1}
-                            onChange={(event, newValue) => handleRatingChange('subRating1', newValue)}
-                        />
-                      </div>
-                      <div className='subRating2'>
-                        <Typography component="legend">Cleanliness:</Typography>
-                        <Rating
-                            name="cleanliness"
-                            value={formData.subRating2}
-                            onChange={(event, newValue) => handleRatingChange('subRating2', newValue)}
-                        />
-                      </div>
-                      <div className='subRating3'>
-                        <Typography component="legend">Quietness:</Typography>
-                        <Rating
-                            name="quietness"
-                            value={formData.subRating3}
-                            onChange={(event, newValue) => handleRatingChange('subRating3', newValue)}
-                        />
-                      </div>
+                      {Object.entries(currentSubratings).map(([key, label], index) => {
+                        const subratingKey = `subRating${index + 1}`;
+                        // Ensure that you provide a default value if formData[subratingKey] is undefined.
+                        const ratingValue = formData[subratingKey] !== undefined ? formData[subratingKey] : 0;
+                        return (
+                            <div key={key} className={`subrating-${index + 1}`}>
+                              <Typography component="legend">{label}:</Typography>
+                              <Rating
+                                  name={subratingKey}
+                                  value={ratingValue}
+                                  onChange={(event, newValue) => handleRatingChange(subratingKey, newValue)}
+                              />
+                            </div>
+                        );
+                      })}
                     </>
                 )}
                 <div>
-            <div className='rating-tags'>
-              <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
-                <InputLabel id="tags-label">Tags</InputLabel>
-                <Select
-                    labelId="tags-label"
-                    id="tags-select"
-                    multiple
-                    value={formData.tags}
-                    onChange={handleTagsChange}
-                    input={<OutlinedInput label="Tag" />}
-                    renderValue={(selected) => selected.join(', ')}
-                    MenuProps={MenuProps}
-                >
-                  {tags.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        <Checkbox checked={formData.tags.indexOf(name) > -1} />
-                        <ListItemText primary={name} />
-                      </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <div className='comment-rating'>
-            <TextField
-                id="filled-textarea"
-                label="Comment"
-                placeholder="Type comment here"
-                multiline
-                variant="filled"
-                name="comment"
-                value={formData.comment}
-                onChange={handleInputChange}
-            />
-          </div>
+                  <div className='rating-tags'>
+                    <FormControl sx={{ m: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
+                      <InputLabel id="tags-label">Tags</InputLabel>
+                      <Select
+                          labelId="tags-label"
+                          id="tags-select"
+                          multiple
+                          value={formData.tags}
+                          onChange={handleTagsChange}
+                          input={<OutlinedInput label="Tag" />}
+                          renderValue={(selected) => selected.join(', ')}
+                          MenuProps={MenuProps}
+                      >
+                        {tags.map((name) => (
+                            <MenuItem key={name} value={name}>
+                              <Checkbox checked={formData.tags.indexOf(name) > -1} />
+                              <ListItemText primary={name} />
+                            </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </div>
+                </div>
+                <div className='comment-rating'>
+                  <TextField
+                      id="filled-textarea"
+                      label="Comment"
+                      placeholder="Type comment here"
+                      multiline
+                      variant="filled"
+                      name="comment"
+                      value={formData.comment}
+                      onChange={handleInputChange}
+                  />
+                </div>
               </>
           )}
 
-          
+
           <div className="upload-images">
             <label htmlFor="upload" className="upload-label">
               <span>Upload Image</span>

@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 @Service
 public class PlaceServiceImpl implements IPlaceService {
@@ -45,6 +46,7 @@ public class PlaceServiceImpl implements IPlaceService {
         place.setTotalRating(new Place.TotalRating(0,0,0,0));
         place.setRatingIds(new ArrayList<String>());
         place.setTags(new LinkedHashMap<String,Integer>());
+        place.setVerified(false);
         if(place.getFloor()==null){
             place.setFloor(null);
         }
@@ -67,6 +69,33 @@ public class PlaceServiceImpl implements IPlaceService {
     public Optional<Place> findById(ObjectId id) {
         return Optional.ofNullable(this.mongoTemplate.findById(id, Place.class));
     }
+
+    public Place verifyPlace(String id){
+        Optional<Place> optionalPlace = findById(new ObjectId(id));
+        if(optionalPlace.isPresent()){
+            Place place=optionalPlace.get();
+            place.setVerified(true);
+            return placeRepository.save(place);
+        }else{
+            throw new IllegalArgumentException("Place with ID " + id + " not found");
+        }
+    }
+
+    public List<Place> verifyPlaces(List<String> ids){
+        List<Place> places=new ArrayList<>();
+        for(String id: ids){
+            places.add(verifyPlace(id));
+        }
+        return places;
+    }
+
+    public List<Place> findUnverified(String category){
+        if (category == null) {
+            return placeRepository.findByVerified(false);
+        } else {
+            return placeRepository.findByCategoryAndVerified(category, false);
+        }
+    }
     /**
      * Searches for places by name, ignoring case sensitivity.
      * @param name The name to search for in place entities.
@@ -77,6 +106,8 @@ public class PlaceServiceImpl implements IPlaceService {
         List<Place> lis= placeRepository.findByLocNameContainingIgnoreCase(name);
         return lis;
     }
+
+
     /**
      * Searches for places by name and category, ignoring case sensitivity.
      * @param name The name to search for.
@@ -432,7 +463,7 @@ public class PlaceServiceImpl implements IPlaceService {
      */
     public List<Place> searchByTagsAndCategory(List<String> tags, String category) {
         Query query = new Query();
-
+        query.addCriteria(Criteria.where("verified").is(true));
         // Create a map to keep track of added tags
         Map<String, Boolean> addedTags = new HashMap<>();
 
@@ -440,7 +471,7 @@ public class PlaceServiceImpl implements IPlaceService {
         for (String tag : tags) {
             // Check if the tag has already been added
             if (!addedTags.containsKey(tag)) {
-                Criteria criteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                Criteria criteria = where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
                 query.addCriteria(criteria);
                 addedTags.put(tag, true); // Mark the tag as added
             }
@@ -448,7 +479,7 @@ public class PlaceServiceImpl implements IPlaceService {
 
         // Add category criteria if provided
         if (category != null) {
-            query.addCriteria(Criteria.where("category").is(category));
+            query.addCriteria(where("category").is(category));
         }
 
         // Execute the query
@@ -464,14 +495,15 @@ public class PlaceServiceImpl implements IPlaceService {
     public List<Place> searchByLocNameAndCategoryAndTagsAll(String locName, String category, List<String> tags) {
 
         Query query = new Query();
+        query.addCriteria(Criteria.where("verified").is(true));
 
         if (locName != null) {
-            Criteria locNameCriteria = Criteria.where("locName").regex(locName, "i"); // Case-insensitive regex match for locName
+            Criteria locNameCriteria = where("locName").regex(locName, "i"); // Case-insensitive regex match for locName
             query.addCriteria(locNameCriteria);
         }
 
         if (category != null) {
-            Criteria categoryCriteria = Criteria.where("category").regex(category, "i"); // Case-insensitive regex match for category
+            Criteria categoryCriteria = where("category").regex(category, "i"); // Case-insensitive regex match for category
             query.addCriteria(categoryCriteria);
         }
         if (tags != null) {
@@ -482,7 +514,7 @@ public class PlaceServiceImpl implements IPlaceService {
             for (String tag : tags) {
                 // Check if the tag has already been added
                 if (!addedTags.containsKey(tag)) {
-                    Criteria tagCriteria = Criteria.where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
+                    Criteria tagCriteria = where("tags." + tag).exists(true).gt(0); // Check if the tag exists and its value is greater than 0
                     query.addCriteria(tagCriteria);
                     addedTags.put(tag, true); // Mark the tag as added
                 }
@@ -507,6 +539,8 @@ public class PlaceServiceImpl implements IPlaceService {
         limit = Math.max(5, limit);
 
         Aggregation aggregation = newAggregation(
+                // Match documents where verified is true
+                match(where("verified").is(true)),
                 // Sort documents by AverageRating.overall in descending order and ratingCount in descending order
                 sort(Sort.Direction.DESC, "averageRating.overall", "ratingCount"),
                 // Limit the results based on the provided limit

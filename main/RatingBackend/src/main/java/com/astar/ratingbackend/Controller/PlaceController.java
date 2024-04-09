@@ -94,6 +94,22 @@ public class PlaceController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addedPlace);
 
     }
+    @GetMapping("/places/getUnverified")
+    public ResponseEntity<List<Place>> getUnverified(@RequestParam(required = false) String category) {
+        List<Place> unverifiedPlaces = placeService.findUnverified(category);
+        return new ResponseEntity<>(unverifiedPlaces, HttpStatus.OK);
+    }
+    @PostMapping("/places/verifyPlaces")
+    public ResponseEntity<List<Place>> verifyPlaces(@RequestParam("ids") List<String> ids){
+        List<Place> place=placeService.verifyPlaces(ids);
+        return new ResponseEntity<>(place,HttpStatus.OK);
+    }
+    @PostMapping("/places/verifyPlace")
+    public ResponseEntity<Place> verifyPlace(@RequestParam("id") String id){
+        Place place=placeService.verifyPlace(id);
+        return new ResponseEntity<>(place,HttpStatus.OK);
+    }
+
     @PostMapping("/delete")
     @CrossOrigin
     @Transactional
