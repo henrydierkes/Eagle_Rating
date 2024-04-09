@@ -25,18 +25,29 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const classes = useStyles();
-  const { currentUser } = useAuth();
+  const { currentUser} = useAuth();
+  const { updateUsername } = useAuth();
 
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
   const handleUsernameChange = async () => {
     try {
-      await axios.post(`${axiosConfig.baseURL}/api/user/updateUsername`, {
-        userId: currentUser.userId,
-        newUsername: newUsername,
+      console.log(currentUser.userId);
+      updateUsername(newUsername);
+      console.log(newUsername);
+      console.log(currentUser); // Log the updated currentUser here
+      await axios.post(`${axiosConfig.baseURL}/api/user/updateUsername`,null,{
+        params:{
+          userId: currentUser.userId,
+          newUsername: newUsername,
+        }
       });
+
       setNewUsername("");
     } catch (error) {
       setError("Failed to update username");
@@ -45,9 +56,11 @@ const Profile = () => {
 
   const handlePasswordChange = async () => {
     try {
-      await axios.post("/api/user/updatePassword", {
-        userId: currentUser.userId, // Replace with the user's ID
-        newPassword: newPassword,
+      await axios.post(`${axiosConfig.baseURL}/api/user/updatePassword`, null,{
+        params:{
+          userId: currentUser.userId, // Replace with the user's ID
+          newPassword: newPassword,
+        }
       });
       setNewPassword("");
     } catch (error) {

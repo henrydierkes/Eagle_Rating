@@ -105,7 +105,7 @@ public class UserController {
      * @return A ResponseEntity indicating the operation's outcome, with a message.
      */
     @PostMapping("/updateUsername")
-    public ResponseEntity<String> updateUsername(@RequestParam String userId, @RequestParam String newUsername) {
+    public ResponseEntity<String> updateUsername(@RequestParam("userId") String userId, @RequestParam("newUsername") String newUsername) {
         try {
             userService.updateUsername(new ObjectId(userId), newUsername);
             return ResponseEntity.status(HttpStatus.OK).body("Username updated successfully");
@@ -120,7 +120,7 @@ public class UserController {
      * @return A ResponseEntity indicating the operation's outcome, with a message.
      */
     @PostMapping("/updatePassword")
-    public ResponseEntity<String> updatePassword(@RequestParam String userId, @RequestParam String newPassword) {
+    public ResponseEntity<String> updatePassword(@RequestParam("userId") String userId, @RequestParam("newPassword") String newPassword) {
         try {
             userService.updateUserPassword(new ObjectId(userId), newPassword);
             return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");

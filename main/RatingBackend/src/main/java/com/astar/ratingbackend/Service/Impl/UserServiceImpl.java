@@ -11,12 +11,16 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -64,7 +68,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void updateUserPassword(ObjectId id, String newPassword) {
         Query query = new Query(Criteria.where("_id").is(id));
-        Update update = Update.update("password", newPassword);
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        Update update = Update.update("password", encodedPassword);
         mongoTemplate.updateFirst(query, update, User.class);
     }
     @Override
