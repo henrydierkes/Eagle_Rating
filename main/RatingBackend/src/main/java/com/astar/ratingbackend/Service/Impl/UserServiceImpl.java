@@ -52,7 +52,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void updateUsername(ObjectId id, String newName) {
         Query query = new Query(Criteria.where("_id").is(id));
-        Update update = Update.update("name", newName);
+        Update update = Update.update("username", newName);
         mongoTemplate.updateFirst(query, update, User.class);
     }
     @Override
