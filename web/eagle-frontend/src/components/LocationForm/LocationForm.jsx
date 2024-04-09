@@ -73,6 +73,8 @@ const LocationForm = ({ location }) => {
   const [ratingType, setRatingType] = useState("total");
 
 
+  const currentSubratings = SubratingData.categories.find(cat => cat.category === formData.categoryName)?.subratings || {};
+
 
   const handleInputChange = (e) => {
     const {name, value} = e.target;
@@ -92,16 +94,14 @@ const LocationForm = ({ location }) => {
 
   const handleRatingChange = (name, newValue) => {
     if (ratingType === 'total') {
-      // If the rating type is 'Total Rating', clear subratings and update total rating
       setFormData(prevState => ({
         ...prevState,
         [name]: newValue,
-        subrating1: 0,
-        subrating2: 0,
-        subrating3: 0
+        subRating1: 0,
+        subRating2: 0,
+        subRating3: 0
       }));
     } else {
-      // If the rating type is 'Subrating', clear total rating and update subrating
       setFormData(prevState => ({
         ...prevState,
         [name]: newValue,
@@ -109,6 +109,7 @@ const LocationForm = ({ location }) => {
       }));
     }
   };
+
 
   const handleTagsChange = (event) => {
     setFormData({
@@ -319,30 +320,21 @@ const LocationForm = ({ location }) => {
                 )}
                 {ratingType === 'sub' && (
                     <>
-                      <div className='subRating1'>
-                        <Typography component="legend">Size:</Typography>
-                        <Rating
-                            name="size"
-                            value={formData.subRating1}
-                            onChange={(event, newValue) => handleRatingChange('subRating1', newValue)}
-                        />
-                      </div>
-                      <div className='subRating2'>
-                        <Typography component="legend">Cleanliness:</Typography>
-                        <Rating
-                            name="cleanliness"
-                            value={formData.subRating2}
-                            onChange={(event, newValue) => handleRatingChange('subRating2', newValue)}
-                        />
-                      </div>
-                      <div className='subRating3'>
-                        <Typography component="legend">Quietness:</Typography>
-                        <Rating
-                            name="quietness"
-                            value={formData.subRating3}
-                            onChange={(event, newValue) => handleRatingChange('subRating3', newValue)}
-                        />
-                      </div>
+                      {Object.entries(currentSubratings).map(([key, label], index) => {
+                        const subratingKey = `subRating${index + 1}`;
+                        // Ensure that you provide a default value if formData[subratingKey] is undefined.
+                        const ratingValue = formData[subratingKey] !== undefined ? formData[subratingKey] : 0;
+                        return (
+                            <div key={key} className={`subrating-${index + 1}`}>
+                              <Typography component="legend">{label}:</Typography>
+                              <Rating
+                                  name={subratingKey}
+                                  value={ratingValue}
+                                  onChange={(event, newValue) => handleRatingChange(subratingKey, newValue)}
+                              />
+                            </div>
+                        );
+                      })}
                     </>
                 )}
                 <div>
