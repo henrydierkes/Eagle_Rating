@@ -40,6 +40,11 @@ function RatingPage() {
         fetchPlaceDetails();
     }, [locId]);
 
+    //go through when sort require changes
+    const handleSortChange = (sortedComments) => {
+        setPlaceComments(sortedComments); // 使用排序后的评论更新placeComments状态
+    };
+
     // Function to fetch comments based on ratingIds
     const fetchComments = async (ratingIds) => {
         const commentRequests = ratingIds.map(ratingId =>
@@ -48,6 +53,8 @@ function RatingPage() {
 
         try {
             const commentsResponses = await Promise.all(commentRequests);
+
+
             const comments = commentsResponses.map(res => res.data);
             setPlaceComments(comments.flat()); // Flatten in case of nested arrays
             setIsLoading(false); // Stop loading when comments are fetched
@@ -64,14 +71,14 @@ function RatingPage() {
     if (!placeDetails) {
         return <div>Place not found or error loading details.</div>;
     }
-    console.log(placeComments);
+
 
     return (
         <div className="RatingPage">
             <NavBar />
             <PlaceDetails result={placeDetails} />
             <hr className="divider" />
-            <CommentFilter />
+            <CommentFilter comments={placeComments} onSortChange={handleSortChange} />
             <CommentList comments={placeComments} />
             <Footer />
         </div>
