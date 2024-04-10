@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import './SignUp.css';
 import axiosConfig from "../../axiosConfig.jsx"; // Make sure this imports your CSS with the background styles
+import Cookies from 'js-cookie';
 
 const defaultTheme = createTheme();
 
@@ -45,7 +46,9 @@ export default function SignUp() {
     try {
       const response = await axios.post('http://localhost:8080/auth/sign-up', { email, password });
       console.log('Sign up successful:', response.data);
-      navigate('/signin'); // Navigate to the signin page on successful signup
+      Cookies.set('email', email, { expires: 1 }); // Expires in 1 day
+
+      navigate('/verify', { state: { email } });
     } catch (error) {
       console.error('Sign up failed:', error.response.data);
       setError(error.response.data.message);

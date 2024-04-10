@@ -1,6 +1,7 @@
 package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.User;
+import com.astar.ratingbackend.Model.dto.VerificationRequest;
 import com.astar.ratingbackend.Service.IUserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +98,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get user by email");
         }
     }
+
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestBody VerificationRequest verificationRequest) {
+        boolean isVerified = userService.verifyUser(verificationRequest.getEmail(), verificationRequest.getCode());
+        if (isVerified) {
+            return ResponseEntity.ok("Email verified successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Verification failed. Invalid code or email.");
+        }
+    }
+
 //    @PostMapping("/login")
 //    public ResponseEntity<String> userLogin(@RequestParam("email")String email, @RequestParam("password")String password) {
 //        try {
