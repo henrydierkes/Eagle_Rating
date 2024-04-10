@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.astar.ratingbackend.Model.dto.VerificationRequest;
 import java.util.List;
 
 /**
@@ -126,6 +126,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password");
+        }
+    }
+
+
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestBody VerificationRequest verificationRequest) {
+        boolean isVerified = userService.verifyUser(verificationRequest.getEmail(), verificationRequest.getCode());
+        if (isVerified) {
+            return ResponseEntity.ok("Email verified successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Verification failed. Invalid code or email.");
         }
     }
 

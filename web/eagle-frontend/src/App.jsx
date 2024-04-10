@@ -12,6 +12,7 @@ import ScrollToTop from './ScrollToTop';
 import axios from 'axios';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
+import EmailVerification from './pages/Login/EmailVerification.jsx'; // Adjust the import path as necessary
 
 
 import SmoothScroll from 'smooth-scroll';
@@ -55,6 +56,8 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/Profile" element={<Profile />} />
+              <Route path="/verify" element={<EmailVerification />} />
+
           </Routes>
         </Router>
       </AuthProvider>
