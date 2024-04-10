@@ -60,4 +60,11 @@ public class User implements Serializable {
     @ApiModelProperty(value = "deletedDate")
     private Date deletedDate;
 
+    @Field("authCode")
+    @ApiModelProperty(value = "Authentication Code")
+    private String authCode;
+
+    @Field("isVerified")
+    @ApiModelProperty(value = "Verification Status")
+    private boolean isVerified = false;
 }

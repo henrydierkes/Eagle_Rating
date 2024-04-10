@@ -129,6 +129,17 @@ public class UserController {
         }
     }
 
+
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestBody VerificationRequest verificationRequest) {
+        boolean isVerified = userService.verifyUser(verificationRequest.getEmail(), verificationRequest.getCode());
+        if (isVerified) {
+            return ResponseEntity.ok("Email verified successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Verification failed. Invalid code or email.");
+        }
+    }
+
 //    @PostMapping("/login")
 //    public ResponseEntity<String> userLogin(@RequestParam("email")String email, @RequestParam("password")String password) {
 //        try {

@@ -175,5 +175,16 @@ public class UserServiceImpl implements IUserService {
             return false;
         }
     }
+    @Override
+    public boolean verifyUser(String email, String code) {
+        User user = getUserByEmail(email);
+        if (user != null && user.getAuthCode().equals(code)) {
+            user.setVerified(true);
+            user.setAuthCode(null); // Clear the auth code after successful verification
+            mongoTemplate.save(user);
+            return true;
+        }
+        return false;
+    }
 
 }
