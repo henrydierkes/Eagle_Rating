@@ -1,14 +1,11 @@
-// Import necessary hooks and components from React, React Router, and Axios for making HTTP requests
 import React, { useState, useEffect } from "react";
 import {json, useParams} from "react-router-dom";
 import Axios from 'axios';
-// Import custom components used on this page
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import PlaceDetails from "../../components/PlaceDetails/PlaceDetails.jsx";
 import CommentFilter from "../../components/CommentFilter/CommentFilter.jsx";
 import CommentList from "../../components/CommentList/CommentList.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
-// Import specific CSS for styling this page
 import "./RatingPage.css";
 import axios from "axios";
 import axiosConfig from "../../axiosConfig.jsx";
@@ -42,7 +39,7 @@ function RatingPage() {
 
     //go through when sort require changes
     const handleSortChange = (sortedComments) => {
-        setPlaceComments(sortedComments); // 使用排序后的评论更新placeComments状态
+        setPlaceComments(sortedComments);
     };
 
     // Function to fetch comments based on ratingIds
