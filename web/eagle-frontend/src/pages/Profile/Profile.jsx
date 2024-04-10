@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -6,11 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import NavBar from "../../components/NavBar/NavBar";
-import Footer from "../../components/Footer/Footer";
 import { useAuth } from "../../contexts/AuthContext";
 import axiosConfig from "../../axiosConfig.jsx";
 import axios from "axios";
+import NavBar from "../../components/NavBar/NavBar";
+import Footer from "../../components/Footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
   profileContainer: {
@@ -25,52 +25,59 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const classes = useStyles();
-  const { currentUser} = useAuth();
+  const { currentUser } = useAuth();
   const { updateUsername } = useAuth();
 
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
   const handleUsernameChange = async () => {
     try {
-      console.log(currentUser.userId);
       updateUsername(newUsername);
-      console.log(newUsername);
-      console.log(currentUser); // Log the updated currentUser here
-      await axios.post(`${axiosConfig.baseURL}/api/user/updateUsername`,null,{
-        params:{
+      await axios.post(`${axiosConfig.baseURL}/api/user/updateUsername`, null, {
+        params: {
           userId: currentUser.userId,
           newUsername: newUsername,
-        }
+        },
       });
-
       setNewUsername("");
+      setSuccessMessage("Username updated successfully.");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000); // Clear message after 3 seconds
     } catch (error) {
       setError("Failed to update username");
+      setTimeout(() => {
+        setError("");
+      }, 3000); // Clear message after 3 seconds
     }
   };
 
   const handlePasswordChange = async () => {
     try {
-      await axios.post(`${axiosConfig.baseURL}/api/user/updatePassword`, null,{
-        params:{
-          userId: currentUser.userId, // Replace with the user's ID
+      if (newPassword !== confirmPassword) {
+        setError("Passwords do not match");
+        return;
+      }
+      await axios.post(`${axiosConfig.baseURL}/api/user/updatePassword`, null, {
+        params: {
+          userId: currentUser.userId,
           newPassword: newPassword,
-        }
+        },
       });
       setNewPassword("");
+      setConfirmPassword("");
+      setSuccessMessage("Password updated successfully.");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000); // Clear message after 3 seconds
     } catch (error) {
       setError("Failed to update password");
     }
   };
-
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
 
   return (
     <div>
@@ -112,6 +119,15 @@ const Profile = () => {
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="Confirm New Password"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
         <Button
           variant="contained"
           color="primary"
@@ -120,6 +136,7 @@ const Profile = () => {
           Change Password
         </Button>
         {error && <Typography color="error">{error}</Typography>}
+        {successMessage && <Typography style={{ color: "green" }}>{successMessage}</Typography>}
       </Container>
       <Footer />
     </div>

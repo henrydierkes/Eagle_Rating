@@ -65,13 +65,18 @@ public class AuthServiceImpl implements IAuthService {
         mailSender.send(message);
     }
     @Override
-    public String signIn(String email, String password) {
-        User user = userRepository.findByEmail(email);
+    public String signIn(String usernameOrEmail, String password) {
+        User user = userRepository.findByEmail(usernameOrEmail);
+        if (user == null) {
+            // If user is not found by email, try to find by username
+            user = userRepository.findByUsername(usernameOrEmail);
+        }
+
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             System.out.println(jwtUtil.generateToken(user));
             return jwtUtil.generateToken(user);
         } else {
-            throw new BadCredentialsException("Invalid email/password supplied");
+            throw new BadCredentialsException("Invalid username/email or password supplied");
         }
     }
 }
