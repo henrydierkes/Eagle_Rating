@@ -5,7 +5,8 @@
   align-items: center;
   background-color: white;
 }
-.load-more-button {
+
+.load-more-button, .load-all-button {
   padding: 15px 30px;
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none;
@@ -22,12 +23,11 @@
   display: inline-block;
 }
 
-.load-more-button:hover,
-.load-more-button:focus {
+.load-more-button:hover, .load-more-button:focus, .load-all-button:hover, .load-all-button:focus {
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   transform: scale(1.01);
 }
 
-.load-more-button:active {
+.load-more-button:active, .load-all-button:active {
   transform: scale(0.98);
 }

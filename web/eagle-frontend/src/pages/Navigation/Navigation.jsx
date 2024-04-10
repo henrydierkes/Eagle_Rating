@@ -49,9 +49,12 @@ function Navigation() {
     navigate(`/ratingpage/${placeId}`);
   };
 
-  // Function to load more results
   const loadMoreResults = () => {
     setDisplayedResults(prev => prev + 5); // Increase the number of displayed results by 10
+  };
+
+  const loadAllResults = () => {
+    setDisplayedResults(results.length); // Display all results
   };
 
   return (
@@ -65,7 +68,10 @@ function Navigation() {
         <ResultsAndFilter results={results.slice(0, displayedResults)} onPlaceClick={handlePlaceClick} />
       )}
       {results.length > displayedResults && (
-        <button className='load-more-button'onClick={loadMoreResults}>Load More</button> // Show load more button if there are more results to load
+        <>
+          <button className='load-more-button' onClick={loadMoreResults}>Load More</button>
+          <button className='load-all-button' onClick={loadAllResults}>Load All</button> 
+        </>
       )}
       <Footer />
     </div>

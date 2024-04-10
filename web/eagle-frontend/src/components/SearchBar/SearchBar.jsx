@@ -39,7 +39,7 @@ const SearchBar = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null); // Updated to null instead of an empty object
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -60,14 +60,19 @@ const SearchBar = () => {
   };
 
   const onKeyDown = (event) => {
-    if (event.key === 'Enter' && (inputValue.trim() || selectedCategory)) {
+    if (event.key === 'Enter') {
       event.preventDefault();
       let queryParams = '';
-      if (inputValue.trim()) {
-        queryParams += `locName=${inputValue.trim()}&`;
-      }
-      if (selectedCategory) {
-        queryParams += `category=${selectedCategory.title}`; // Accessing the title of the selected category
+      if (inputValue.trim() || selectedCategory) {
+        if (inputValue.trim()) {
+          queryParams += `locName=${inputValue.trim()}&`;
+        }
+        if (selectedCategory) {
+          queryParams += `category=${selectedCategory.title}`;
+        }
+      } else {
+        // No input or category selected, return all places
+        queryParams = '';
       }
       navigate(`/navigation?${queryParams}`);
     }
@@ -75,7 +80,6 @@ const SearchBar = () => {
 
   const onCategoryChange = (event, newValue) => {
     setSelectedCategory(newValue);
-    console.log("Selected category:", newValue);
   };
 
   return (
