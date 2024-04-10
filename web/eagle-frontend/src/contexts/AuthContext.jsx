@@ -41,6 +41,13 @@ export const AuthProvider = ({ children }) => {
     // console.log(userIdStr);
     setCurrentUser({ token, email, userId,username});
   };
+  const updateUsername = (newUsername) => {
+    Cookies.set('username', newUsername);
+    setCurrentUser(prevUser => ({
+      ...prevUser,
+      username: newUsername
+    }));
+  }
 
   const logout = () => {
     Cookies.remove('token');
@@ -49,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
-  const value = { currentUser, login, logout };
+  const value = { currentUser, login, logout, updateUsername };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

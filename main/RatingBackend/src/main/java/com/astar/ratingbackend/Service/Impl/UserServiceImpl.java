@@ -11,12 +11,16 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -52,7 +56,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void updateUsername(ObjectId id, String newName) {
         Query query = new Query(Criteria.where("_id").is(id));
-        Update update = Update.update("name", newName);
+        Update update = Update.update("username", newName);
         mongoTemplate.updateFirst(query, update, User.class);
     }
     @Override
@@ -64,7 +68,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void updateUserPassword(ObjectId id, String newPassword) {
         Query query = new Query(Criteria.where("_id").is(id));
-        Update update = Update.update("password", newPassword);
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        Update update = Update.update("password", encodedPassword);
         mongoTemplate.updateFirst(query, update, User.class);
     }
     @Override
@@ -169,6 +174,17 @@ public class UserServiceImpl implements IUserService {
         } else {
             return false;
         }
+    }
+    @Override
+    public boolean verifyUser(String email, String code) {
+        User user = getUserByEmail(email);
+        if (user != null && user.getAuthCode().equals(code)) {
+            user.setVerified(true);
+            user.setAuthCode(null); // Clear the auth code after successful verification
+            mongoTemplate.save(user);
+            return true;
+        }
+        return false;
     }
 
 }

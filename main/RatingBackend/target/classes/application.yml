@@ -9,6 +9,17 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: eaglerating.astar@gmail.com  # Replace with your Gmail email address
+    password: prpriaikwvedneer
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 knife4j:
   enable: true  #是否开启Swagger
   cors: true

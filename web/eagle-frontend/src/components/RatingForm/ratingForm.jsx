@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
@@ -44,12 +45,12 @@ const RatingForm = () => {
     const placeDetails = location.state?.placeDetails;
     const currentSubratings = SubratingData.categories.find(cat => cat.category === placeDetails?.category)?.subratings || {};
     const tagsFromSubratings = Object.values(currentSubratings);
-    console.log(currentSubratings);
+    console.log(placeDetails.locIdStr);
     const placeName = placeDetails?.locName;
     const placeId=placeDetails?.locIdStr;
-      const [tag, setTag] = React.useState([]);
-      const [uploadedImages, setUploadedImages] = useState([]);
-      const [comment, setComment] = useState('');
+    const [tag, setTag] = React.useState([]);
+    const [uploadedImages, setUploadedImages] = useState([]);
+    const [comment, setComment] = useState('');
     const [ratingType, setRatingType] = useState('total'); // 'total' or 'sub'
     const [formData, setFormData] = useState({
         rating: 0,
@@ -98,6 +99,8 @@ const RatingForm = () => {
         setTag({ ...tag, [event.target.name]: event.target.checked }); // Change setTags to setTag
     };
 
+    const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -142,6 +145,8 @@ const RatingForm = () => {
                 console.log(response.data);
                 alert('Rating successfully added!');
                 // Clear the form fields here if needed
+
+                navigate(`/ratingpage/${placeDetails.locIdStr}`);
             } catch (error) {
                 console.error('Error:', error);
                 alert('Failed to submit rating.');

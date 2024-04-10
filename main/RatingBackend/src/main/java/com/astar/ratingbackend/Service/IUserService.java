@@ -27,4 +27,6 @@ public interface IUserService {
 
     boolean deleteRating(Rating rating);
     public User validateUser(String userId);
+
+    boolean verifyUser(String email, String code);
 }

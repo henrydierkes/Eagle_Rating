@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './ResultList.css';
 import { useNavigate } from "react-router-dom";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 import bookmarkIcon from '../Misc/bookmark.png';
 import bookmarkHighlightIcon from '../Misc/bookmark highlight.png';
@@ -18,12 +20,7 @@ const getRatingColor = (averageRating) => {
 const ResultList = ({ results }) => {
     const navigate = useNavigate();
     const [bookmarked, setBookmarked] = useState({});
-
-    // Sort results in descending order based on overall rating
-    // We're doing a shallow copy of results and sorting that copy
-    const sortedResults = [...results].sort((a, b) => {
-        return b.averageRating?.overall - a.averageRating?.overall;
-    });
+    const [sortingMethod, setSortingMethod] = useState('highestRating');
 
     const toggleBookmark = (index, e) => {
         e.stopPropagation(); // Prevent the click from reaching the result item
@@ -34,8 +31,57 @@ const ResultList = ({ results }) => {
         navigate(`/ratingpage/${locationId}`);
     };
 
+    const handleSortingChange = (event) => {
+        setSortingMethod(event.target.value);
+    };
+
+    const sortResults = (method) => {
+        switch (method) {
+            case 'highestRating':
+                return [...results].sort((a, b) => b.averageRating?.overall - a.averageRating?.overall);
+            case 'lowestRating':
+                return [...results].sort((a, b) => a.averageRating?.overall - b.averageRating?.overall);
+            case 'mostRatings':
+                return [...results].sort((a, b) => b.ratingCount - a.ratingCount);
+            default:
+                return results;
+        }
+    };
+
+    const sortedResults = sortResults(sortingMethod);
+
     return (
         <div className="result-list">
+<Select
+    value={sortingMethod}
+    onChange={handleSortingChange}
+    variant="outlined"
+    sx={{
+        width: '100%', // Scale to screen width
+        margin: '0 auto 20px', // Center horizontally and add margin on the bottom
+        '& .MuiOutlinedInput-root': {
+            borderRadius: '5px',
+            backgroundColor: '#fff',
+        },
+        '& .MuiOutlinedInput-input': {
+            padding: '10px',
+        },
+        '& .MuiInputLabel-outlined': {
+            color: '#555',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#ccc',
+        },
+        '& .MuiSelect-iconOutlined': {
+            color: '#555',
+        },
+    }}
+>
+    <MenuItem value="highestRating">Sort by Highest Rating</MenuItem>
+    <MenuItem value="lowestRating">Sort by Lowest Rating</MenuItem>
+    <MenuItem value="mostRatings">Sort by Most Ratings</MenuItem>
+</Select>
+
             {sortedResults.map((result, index) => (
                 <div key={result.locIdStr || index} className="result-item" onClick={() => navigateToLocationDetail(result.locIdStr)}>
                     <div className="rating-box" style={{ background: getRatingColor(result.averageRating?.overall) }}>

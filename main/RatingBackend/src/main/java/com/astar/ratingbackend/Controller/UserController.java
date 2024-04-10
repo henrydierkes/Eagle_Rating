@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.astar.ratingbackend.Model.dto.VerificationRequest;
 import java.util.List;
 
 /**
@@ -97,6 +97,49 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get user by email");
         }
     }
+
+    /**
+     * Updates the username of a user.
+     * @param userId The ID of the user to update.
+     * @param newUsername The new username to set.
+     * @return A ResponseEntity indicating the operation's outcome, with a message.
+     */
+    @PostMapping("/updateUsername")
+    public ResponseEntity<String> updateUsername(@RequestParam("userId") String userId, @RequestParam("newUsername") String newUsername) {
+        try {
+            userService.updateUsername(new ObjectId(userId), newUsername);
+            return ResponseEntity.status(HttpStatus.OK).body("Username updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update username");
+        }
+    }
+    /**
+     * Updates the password of a user.
+     * @param userId The ID of the user to update.
+     * @param newPassword The new password to set.
+     * @return A ResponseEntity indicating the operation's outcome, with a message.
+     */
+    @PostMapping("/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestParam("userId") String userId, @RequestParam("newPassword") String newPassword) {
+        try {
+            userService.updateUserPassword(new ObjectId(userId), newPassword);
+            return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password");
+        }
+    }
+
+
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestBody VerificationRequest verificationRequest) {
+        boolean isVerified = userService.verifyUser(verificationRequest.getEmail(), verificationRequest.getCode());
+        if (isVerified) {
+            return ResponseEntity.ok("Email verified successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Verification failed. Invalid code or email.");
+        }
+    }
+
 //    @PostMapping("/login")
 //    public ResponseEntity<String> userLogin(@RequestParam("email")String email, @RequestParam("password")String password) {
 //        try {

@@ -1,13 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import { useAuth } from "../../contexts/AuthContext";
-import "./Profile.css";
+import axiosConfig from "../../axiosConfig.jsx";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   profileContainer: {
@@ -22,11 +25,51 @@ const useStyles = makeStyles((theme) => ({
 
 const Profile = () => {
   const classes = useStyles();
-  const { currentUser } = useAuth();
-  console.log(currentUser)
+  const { currentUser} = useAuth();
+  const { updateUsername } = useAuth();
+
+  const [newUsername, setNewUsername] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    
+    console.log(currentUser);
+  }, [currentUser]);
+  const handleUsernameChange = async () => {
+    try {
+      console.log(currentUser.userId);
+      updateUsername(newUsername);
+      console.log(newUsername);
+      console.log(currentUser); // Log the updated currentUser here
+      await axios.post(`${axiosConfig.baseURL}/api/user/updateUsername`,null,{
+        params:{
+          userId: currentUser.userId,
+          newUsername: newUsername,
+        }
+      });
+
+      setNewUsername("");
+    } catch (error) {
+      setError("Failed to update username");
+    }
+  };
+
+  const handlePasswordChange = async () => {
+    try {
+      await axios.post(`${axiosConfig.baseURL}/api/user/updatePassword`, null,{
+        params:{
+          userId: currentUser.userId, // Replace with the user's ID
+          newPassword: newPassword,
+        }
+      });
+      setNewPassword("");
+    } catch (error) {
+      setError("Failed to update password");
+    }
+  };
+
+  useEffect(() => {
+    console.log(currentUser);
   }, [currentUser]);
 
   return (
@@ -36,18 +79,47 @@ const Profile = () => {
         <Grid container alignItems="center" spacing={2}>
           <Grid item>
             <Avatar className={classes.avatar}>
-              {/* You can replace the below line with the logic to display the user's profile picture */}
               {currentUser ? currentUser.username.toUpperCase() : ""}
             </Avatar>
           </Grid>
           <Grid item>
             <Typography variant="h4">
-              {/* You can replace the below line with the logic to display the user's profile name */}
               {currentUser ? currentUser.username : "Profile Name"}
             </Typography>
           </Grid>
         </Grid>
-        {/* Add any additional profile information here */}
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="New Username"
+          value={newUsername}
+          onChange={(e) => setNewUsername(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleUsernameChange}
+        >
+          Change Username
+        </Button>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          label="New Password"
+          type="password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handlePasswordChange}
+        >
+          Change Password
+        </Button>
+        {error && <Typography color="error">{error}</Typography>}
       </Container>
       <Footer />
     </div>
