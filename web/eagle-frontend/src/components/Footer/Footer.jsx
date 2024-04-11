@@ -72,7 +72,7 @@ const Footer = () => {
     <h4 style={{ fontSize: '18px' }}>About Us</h4>
     <p style={{ fontSize: '16px' }}>This project was created by a group in CS 370 Spring 2024. A* is Henry Dierkes, Tuan Vinh, Jonathan Wang, Wenzhuo Ma, and Tung Dinh.</p>
     <h4 style={{ fontSize: '18px' }}>Learn More</h4>
-    <a href="https://github.com/henrydierkes/Eagle_Rating" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline', color: 'blue', cursor: 'pointer' }}>
+    <a href="https://github.com/henrydierkes/Eagle_Rating" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline', color: 'white', cursor: 'pointer' }}>
         <p style={{ fontSize: '16px' }}>Github and Documentation</p>
     </a>
     <h4 style={{ fontSize: '18px' }}>Help Center</h4>
