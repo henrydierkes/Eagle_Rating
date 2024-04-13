@@ -8,7 +8,7 @@ function Map({ setLatitude, setLongitude }) {
     // const [latitude, setLatitude] = useState(null);
     // const [longitude, setLongitude] = useState(null);
 
-    function initMap() {
+    window.initMap = function() {
       const emoryCoords = { lat: 33.797028, lng: -84.323242 };
 
       map = new window.google.maps.Map(document.getElementById("map"), {

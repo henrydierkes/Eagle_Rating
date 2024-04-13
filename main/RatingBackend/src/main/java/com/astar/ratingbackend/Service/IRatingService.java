@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IRatingService {
+    public Rating addLike(String userID, String ratingId, boolean like);
     public ResponseEntity<String> addRating(Rating rating);
     public Rating validateNewRating(Rating rating);
     public Rating addRatingDb(Rating rating, User user) ;
@@ -23,4 +24,6 @@ public interface IRatingService {
     public ResponseEntity<String> deleteRating(String id, Boolean trueDelete);
     public List<Rating> getRatingByFilter(Rating.OverallRating rating, int floor);
     public List<Rating> getRatingByFilterDesc(Rating.OverallRating rating, int floor);
+
+    public int isLike(String userId, String ratingId);
 }

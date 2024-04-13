@@ -31,3 +31,4 @@
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Entity/Rating.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Controller/UserController.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Model/RatingRepository.java
+/Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Model/dto/VerificationRequest.java

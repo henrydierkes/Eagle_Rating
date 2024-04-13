@@ -44,7 +44,7 @@ export default function SignUp() {
       return; // Stop the form submission
     }
     try {
-      const response = await axios.post('http://localhost:8080/auth/sign-up', { email, password });
+      const response = await axios.post(`${axiosConfig.baseURL}/auth/sign-up`, { email, password });
       console.log('Sign up successful:', response.data);
       Cookies.set('email', email, { expires: 1 }); // Expires in 1 day
 

@@ -43,6 +43,7 @@ public class RatingController {
         return ratingService.getAllRatings();
     }
 
+
     /**
      * Retrieves a specific rating by its ID.
      * @param ratingId The ID of the rating to retrieve.
@@ -59,6 +60,25 @@ public class RatingController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Other errors
         }
+    }
+    @PostMapping("/like")
+    public ResponseEntity<Rating> likeRating(@RequestParam("userId") String userId, @RequestParam("ratingId") String ratingId, boolean like){
+        try {
+            // Call the service method to add like to the rating
+            Rating updatedRating = ratingService.addLike(userId, ratingId, like);
+            // Return a success response with the updated rating
+            return ResponseEntity.ok(updatedRating);
+        } catch (IllegalArgumentException e) {
+            // Return a not found response if the rating ID doesn't exist
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            // Return a bad request response for any other exceptions
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/isLike")
+    public int isLike(@RequestParam("userId") String userId, @RequestParam("ratingId") String ratingId){
+        return ratingService.isLike(userId, ratingId);
     }
 
     /**

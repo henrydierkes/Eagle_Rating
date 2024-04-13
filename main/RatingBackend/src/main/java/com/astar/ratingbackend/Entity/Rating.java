@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @Document(collection = "Ratings")
@@ -62,10 +63,15 @@ public class Rating implements Serializable {
     @Field("floor")
     private Integer floor;
     @Field("likes")
-    private Integer likes;
+    private Set<String> likes;
 
     @Field("dislikes")
-    private Integer dislikes;
+    private Set<String> dislikes;
+
+    @Field("likeNum")
+    private Integer likeNum;
+    @Field("dislikeNum")
+    private Integer dislikeNum;
 
     @Field("comments")
     private List<ObjectId> comments;

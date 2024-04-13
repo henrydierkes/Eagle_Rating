@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "category": "Parking Lot",
+      "subratings": {
+        "subrating1": "Parking Lot1",
+        "subrating2": "Parking Lot2",
+        "subrating3": "Parking Lot3"
+      }
+    },
+    {
+      "category": "Study Spaces",
+      "subratings": {
+        "subrating1": "Study Space1",
+        "subrating2": "Study Space2",
+        "subrating3": "Study Space3"
+      }
+    },
+    {
+      "category": "Library",
+      "subratings": {
+        "subrating1": "Library1",
+        "subrating2": "Library2",
+        "subrating3": "Library3"
+      }
+    },
+    {
+      "category": "Bathroom",
+      "subratings": {
+        "subrating1": "Bathroom1",
+        "subrating2": "Bathroom2",
+        "subrating3": "Bathroom3"
+      }
+    },
+    {
+      "category": "Dorm",
+      "subratings": {
+        "subrating1": "Dorm1",
+        "subrating2": "Dorm2",
+        "subrating3": "Dorm3"
+      }
+    }
+  ]
+}

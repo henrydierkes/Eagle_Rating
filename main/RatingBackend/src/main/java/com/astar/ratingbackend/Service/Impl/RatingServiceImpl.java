@@ -85,6 +85,45 @@ public class RatingServiceImpl implements IRatingService {
         }
         return rating;
     }
+
+    @Override
+    public Rating addLike(String userID, String ratingId, boolean like) {
+        Optional<Rating> optionalRating = getRateById(new ObjectId(ratingId));
+        if (optionalRating.isPresent()) {
+            Rating rating = optionalRating.get();
+            Set<String> likes = rating.getLikes();
+            Set<String> dislikes = rating.getDislikes();
+            if (like) {
+                if (dislikes.contains(userID)) {
+                    // If the user previously disliked the rating, remove the dislike
+                    dislikes.remove(userID);
+                    likes.add(userID);
+                }else if(likes.contains(userID)){
+                    likes.remove(userID);
+                }else{
+                    likes.add(userID);
+                }
+            } else {
+                if (likes.contains(userID)) {
+                    // If the user previously liked the rating, remove the like
+                    likes.remove(userID);
+                    dislikes.add(userID);
+                }else if(dislikes.contains(userID)) {
+                    dislikes.remove(userID);
+                }else{
+                    dislikes.add(userID);
+                }
+            }
+            rating.setLikeNum(likes.size());
+            rating.setDislikeNum(dislikes.size());
+            // Save the updated rating
+            return ratingRepository.save(rating);
+        } else {
+            // Throw an exception if the rating with the specified ID doesn't exist
+            throw new IllegalArgumentException("No rating found with ID: " + ratingId);
+        }
+    }
+
     /**
      * Saves a new rating to the repository, and updates user and place
      * @param rating The rating entity to be saved.
@@ -135,10 +174,12 @@ public class RatingServiceImpl implements IRatingService {
             rating.setDate(new Date()); // Current date as default value
         }
         if (rating.getLikes() == null) {
-            rating.setLikes(0); // 0 as default value
+            rating.setLikes(new HashSet<>()); // empty set as default value
+            rating.setLikeNum(0);
         }
         if (rating.getDislikes() == null) {
-            rating.setDislikes(0); // 0 as default value
+            rating.setDislikes(new HashSet<>());
+            rating.setDislikeNum(0);
         }
         if (rating.getComments() == null) {
             rating.setComments(Collections.emptyList()); // Empty list as default value
@@ -206,6 +247,8 @@ public class RatingServiceImpl implements IRatingService {
                 .set("date", rateDetails.getDate())
                 .set("likes", rateDetails.getLikes())
                 .set("dislikes", rateDetails.getDislikes())
+                .set("likeNum", rateDetails.getLikeNum())
+                .set("dislikeNum",rateDetails.getDislikeNum())
                 .set("comments", rateDetails.getComments());
         // Additional fields to be updated if needed
         mongoTemplate.updateFirst(query, update, Rating.class);
@@ -371,6 +414,34 @@ public class RatingServiceImpl implements IRatingService {
         sortRatingsDescending(ratings);
         return ratings;
     }
+
+    @Override
+    public int isLike(String userId, String ratingId) {
+        Optional<Rating> optionalRating = getRateById(new ObjectId(ratingId));
+        int res=0;
+        if (optionalRating.isPresent()) {
+            Rating rating = optionalRating.get();
+            Set<String> likes = rating.getLikes();
+            Set<String> dislikes = rating.getDislikes();
+            if (likes.contains(userId)) {
+                    // If the user previously disliked the rating, remove the dislike
+                    res=1;
+                    if(dislikes.contains(userId)){
+                        throw new IllegalStateException("User has both liked and disliked the rating");
+                    }
+            } else {
+                if (dislikes.contains(userId)) {
+                    // If the user previously liked the rating, remove the like
+                    res=2;
+                }
+            }
+            return res;
+        } else {
+            // Throw an exception if the rating with the specified ID doesn't exist
+            throw new IllegalArgumentException("No rating found with ID: " + ratingId);
+        }
+    }
+
     private void sortRatingsDescending(List<Rating> ratings) {
         Collections.sort(ratings, new Comparator<Rating>() {
             @Override

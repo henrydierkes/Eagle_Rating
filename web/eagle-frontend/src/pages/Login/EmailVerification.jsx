@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { CssBaseline, TextField, Box, Typography, Container, Button, ThemeProvider, createTheme } from '@mui/material';
 import Cookies from 'js-cookie';
+import axiosConfig from "../../axiosConfig.jsx";
 
 const defaultTheme = createTheme();
 
@@ -17,7 +18,7 @@ function EmailVerification() {
     console.log('Verifying email with code:', code); // Log the code being submitted
 
     try {
-      const response = await axios.post('http://localhost:8080/api/user/verify', { email, code });
+      const response = await axios.post(`${axiosConfig.baseURL}/api/user/verify`, { email, code });
       console.log(response.data);
       setMessage("Verification successful. You can now log in.");
       navigate('/signin'); // Redirect to sign-in page on successful verification
