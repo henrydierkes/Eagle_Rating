@@ -5,14 +5,18 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
 import axiosConfig from "../../axiosConfig.jsx";
+import {useAuth} from "../../contexts/AuthContext.jsx";
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comment, onThumbsClick }) => {
     const [usersInfo, setUsersInfo] = useState({});
     const [clickStates, setClickStates] = useState({});
-
+    const currentUserId = useAuth().currentUser.userId;
+    console.log(currentUserId)
+    console.log(comment[0])
+    console.log(onThumbsClick)
     useEffect(() => {
         const fetchUsersInfo = async () => {
-            const userIds = comments.map(comment => comment.userId);
+            const userIds = comment.map(comment => comment.userId);
             const userInfoPromises = userIds.map(userId =>
                 axios.get(`${axiosConfig.baseURL}/api/user/get?userID=${userId}`)
             );
@@ -63,22 +67,39 @@ const CommentList = ({ comments }) => {
                 commentText.removeEventListener('scroll', handleScroll);
             });
         };
-    }, [comments]); // Ensure useEffect is only re-run if comments change
+    }, [comment]); // Ensure useEffect is only re-run if comments change
 
-    const handleThumbsClick = (commentId, type) => {
-        setClickStates(prev => {
-            // Set the state of the clicked type to true and the other to false
+    // 直接调用父组件传递的 onThumbsClick 函数
+    const handleThumbsClickLocal = (commentId, type) => {
+        // 更新 clickStates 以反映新的点击状态
+        setClickStates((prev) => {
             const newState = {
                 ...prev,
                 [commentId]: {
                     ...prev[commentId],
                     upvote: type === 'upvote' ? !prev[commentId]?.upvote : false,
                     downvote: type === 'downvote' ? !prev[commentId]?.downvote : false,
-                }
+                },
             };
+
+            // 确保同时取消另一种状态
+            if (type === 'upvote' && newState[commentId].upvote) {
+                newState[commentId].downvote = false;
+            } else if (type === 'downvote' && newState[commentId].downvote) {
+                newState[commentId].upvote = false;
+            }
+
             return newState;
         });
+
+        // 调用父组件传递的 onThumbsClick 函数，以更新服务器上的数据
+        if (currentUserId) {
+            onThumbsClick(commentId, type, currentUserId);
+        } else {
+            // Handle the case where there is no logged-in user
+        }
     };
+
 
 
     const getRatingColor = (rating) => {
@@ -94,7 +115,7 @@ const CommentList = ({ comments }) => {
     // Render method
     return (
         <div className="comment-list">
-            {comments.filter(comment => !comment.deleted).map((comment, index) => (
+            {comment.filter(comment => !comment.deleted).map((comment, index) => (
                 <div key={comment.ratingIdStr || index} className="comment">
                     <div className="comment-header">
                         <div className="comment-rating-box" style={{ backgroundColor: getRatingColor(comment.overallRating.overall) }}>
@@ -116,13 +137,21 @@ const CommentList = ({ comments }) => {
                         <p className="comment-text" style={{ textAlign: 'center' }}>{comment.comment}</p>
                     </div>
                     <div className="comment-footer">
-                        <button className="upvote" onClick={() => handleThumbsClick(comment.ratingIdStr || index, 'upvote')}>
-                            <ThumbUpIcon style={{ color: clickStates[comment.ratingIdStr || index]?.upvote ? '#6B87FF' : 'inherit' }} />
-                            <span>{comment.likes}</span>
+                        <button
+                            className="upvote"
+                            onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'upvote')}
+                            style={{ color: comment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit' }}
+                        >
+                            <ThumbUpIcon />
+                            <span>{comment.likeNum}</span>
                         </button>
-                        <button className="downvote" onClick={() => handleThumbsClick(comment.ratingIdStr || index, 'downvote')}>
-                            <ThumbDownIcon style={{ color: clickStates[comment.ratingIdStr || index]?.downvote ? 'red' : 'inherit' }} />
-                            <span>{comment.dislikes}</span>
+                        <button
+                            className="downvote"
+                            onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'downvote')}
+                            style={{ color: comment.dislikes.includes(currentUserId) ? 'red' : 'inherit' }}
+                        >
+                            <ThumbDownIcon />
+                            <span>{comment.dislikeNum}</span>
                         </button>
                         <button className="share">
                             <ShareIcon />

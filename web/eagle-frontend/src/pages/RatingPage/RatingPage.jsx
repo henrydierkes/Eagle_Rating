@@ -36,6 +36,53 @@ function RatingPage() {
 
         fetchPlaceDetails();
     }, [locId]);
+// Function to update a single comment in placeComments
+    const updateComment = (updatedComment) => {
+        setPlaceComments(prevComments =>
+            prevComments.map(comment =>
+                comment.ratingId === updatedComment.ratingId ? updatedComment : comment
+            )
+        );
+    };
+
+// Function to handle the thumbs click within CommentList
+    const onThumbsClick = (commentId, type, userId) => {
+        setPlaceComments((currentComments) => {
+            return currentComments.map((comment) => {
+                if (comment.ratingIdStr === commentId) {
+                    let newLikes = [...comment.likes];
+                    let newDislikes = [...comment.dislikes];
+
+                    switch (type) {
+                        case 'upvote':
+                            if (!newLikes.includes(userId)) {
+                                newLikes.push(userId);
+                            }
+                            newDislikes = newDislikes.filter(id => id !== userId);
+                            break;
+                        case 'downvote':
+                            if (!newDislikes.includes(userId)) {
+                                newDislikes.push(userId);
+                            }
+                            newLikes = newLikes.filter(id => id !== userId);
+                            break;
+                        default:
+                        // Do nothing if the type is not recognized
+                    }
+
+                    return {
+                        ...comment,
+                        likes: newLikes,
+                        dislikes: newDislikes,
+                        likeNum: newLikes.length,
+                        dislikeNum: newDislikes.length
+                    };
+                } else {
+                    return comment;
+                }
+            });
+        });
+    };
 
     //go through when sort require changes
     const handleSortChange = (sortedComments) => {
@@ -76,7 +123,7 @@ function RatingPage() {
             <PlaceDetails result={placeDetails} />
             <hr className="divider" />
             <CommentFilter comments={placeComments} onSortChange={handleSortChange} />
-            <CommentList comments={placeComments} />
+            <CommentList comment={placeComments} onThumbsClick={onThumbsClick} />
             <Footer />
         </div>
     );
