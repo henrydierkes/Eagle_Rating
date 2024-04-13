@@ -8,12 +8,12 @@ import axiosConfig from "../../axiosConfig.jsx";
 
 const CommentList = ({ comments }) => {
     const [usersInfo, setUsersInfo] = useState({});
+    const [clickStates, setClickStates] = useState({});
 
     useEffect(() => {
         const fetchUsersInfo = async () => {
             const userIds = comments.map(comment => comment.userId);
             const userInfoPromises = userIds.map(userId =>
-
                 axios.get(`${axiosConfig.baseURL}/api/user/get?userID=${userId}`)
             );
 
@@ -65,6 +65,22 @@ const CommentList = ({ comments }) => {
         };
     }, [comments]); // Ensure useEffect is only re-run if comments change
 
+    const handleThumbsClick = (commentId, type) => {
+        setClickStates(prev => {
+            // Set the state of the clicked type to true and the other to false
+            const newState = {
+                ...prev,
+                [commentId]: {
+                    ...prev[commentId],
+                    upvote: type === 'upvote' ? !prev[commentId]?.upvote : false,
+                    downvote: type === 'downvote' ? !prev[commentId]?.downvote : false,
+                }
+            };
+            return newState;
+        });
+    };
+
+
     const getRatingColor = (rating) => {
         if (rating >= 4) {
             return 'rgba(0, 128, 255, 0.7)'; // blue
@@ -100,12 +116,12 @@ const CommentList = ({ comments }) => {
                         <p className="comment-text" style={{ textAlign: 'center' }}>{comment.comment}</p>
                     </div>
                     <div className="comment-footer">
-                        <button className="upvote">
-                            <ThumbUpIcon />
+                        <button className="upvote" onClick={() => handleThumbsClick(comment.ratingIdStr || index, 'upvote')}>
+                            <ThumbUpIcon style={{ color: clickStates[comment.ratingIdStr || index]?.upvote ? '#6B87FF' : 'inherit' }} />
                             <span>{comment.likes}</span>
                         </button>
-                        <button className="downvote">
-                            <ThumbDownIcon />
+                        <button className="downvote" onClick={() => handleThumbsClick(comment.ratingIdStr || index, 'downvote')}>
+                            <ThumbDownIcon style={{ color: clickStates[comment.ratingIdStr || index]?.downvote ? 'red' : 'inherit' }} />
                             <span>{comment.dislikes}</span>
                         </button>
                         <button className="share">
@@ -119,3 +135,4 @@ const CommentList = ({ comments }) => {
 };
 
 export default CommentList;
+
