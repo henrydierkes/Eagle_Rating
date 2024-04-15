@@ -47,18 +47,18 @@ function RatingPage() {
 
 // Function to handle the thumbs click within CommentList
     const onThumbsClick = async (commentId, type, userId) => {
-        // 定义点赞或点踩的状态
+        // define isLike state
         const isLike = type === 'upvote';
 
-        // 构建 POST 请求的 URL
+        // construct post request
         try {
             const response = await axios({
                 method: 'post',
                 url: `${axiosConfig.baseURL}/api/rating/like`,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded' // 确保头部类型正确
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                data: `like=${isLike}&ratingId=${commentId}&userId=${userId}` // 确保数据是 URL 编码的
+                data: `like=${isLike}&ratingId=${commentId}&userId=${userId}`
             });
             if (response.status === 200) {
                 setPlaceComments((currentComments) => {
@@ -68,18 +68,26 @@ function RatingPage() {
                             let newDislikes = [...comment.dislikes];
 
                             if (isLike) {
-                                // 如果是点赞，添加或移除用户 ID
-                                newLikes = newLikes.includes(userId)
-                                    ? newLikes.filter(id => id !== userId)
-                                    : [...newLikes, userId];
-                                // 如果用户在点踩列表里，同时移除
+                                // Check if user ID is in likes
+                                if (newLikes.includes(userId)) {
+                                    // If user ID is in likes, remove it
+                                    newLikes = newLikes.filter(id => id !== userId);
+                                } else {
+                                    // If user ID is not in likes, add it
+                                    newLikes.push(userId);
+                                }
+                                // Remove user ID from dislikes if present
                                 newDislikes = newDislikes.filter(id => id !== userId);
                             } else {
-                                // 如果是点踩，添加或移除用户 ID
-                                newDislikes = newDislikes.includes(userId)
-                                    ? newDislikes.filter(id => id !== userId)
-                                    : [...newDislikes, userId];
-                                // 如果用户在点赞列表里，同时移除
+                                // Check if user ID is in dislikes
+                                if (newDislikes.includes(userId)) {
+                                    // If user ID is in dislikes, remove it
+                                    newDislikes = newDislikes.filter(id => id !== userId);
+                                } else {
+                                    // If user ID is not in dislikes, add it
+                                    newDislikes.push(userId);
+                                }
+                                // Remove user ID from likes if present
                                 newLikes = newLikes.filter(id => id !== userId);
                             }
 
