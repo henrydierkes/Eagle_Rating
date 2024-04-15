@@ -116,4 +116,18 @@ public class RatingController {
         int floor = commentFilterRequest.getFloor() != null ? commentFilterRequest.getFloor() : -1;
         return ratingService.getRatingByFilter(overallRating, floor);
     }
+    @GetMapping("/userHasRated")
+    public ResponseEntity<?> userHasRated(
+            @RequestParam("userId") String userId,
+            @RequestParam("placeId") String placeId) {
+        Optional<Rating> ratingOpt = ratingService.findUserRatingForPlace(userId, placeId);
+        if (ratingOpt.isPresent()) {
+            // Return the found Rating object
+            return ResponseEntity.ok(ratingOpt.get());
+        } else {
+            // Return false or some indication that the user hasn't rated
+            return ResponseEntity.ok(false);
+        }
+    }
+
 }

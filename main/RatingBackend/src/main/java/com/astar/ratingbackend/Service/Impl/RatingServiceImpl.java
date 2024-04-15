@@ -450,5 +450,35 @@ public class RatingServiceImpl implements IRatingService {
             }
         });
     }
+    @Override
+    public Optional<Rating> findUserRatingForPlace(String userId, String placeId) {
+        // Convert userId and placeId to ObjectId
+        ObjectId userObjectId = new ObjectId(userId);
+        ObjectId placeObjectId = new ObjectId(placeId);
+
+        // Fetch the user by userId
+        User user = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(userObjectId)), User.class);
+        if (user == null || user.getRatings() == null) {
+            return Optional.empty();
+        }
+
+        // Fetch the place by placeId
+        Place place = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(placeObjectId)), Place.class);
+        if (place == null || place.getRatingIds() == null) {
+            return Optional.empty();
+        }
+
+        // Check if there's an intersection between the user's ratings and the place's ratings
+        for (String ratingId : user.getRatings()) {
+            if (place.getRatingIds().contains(ratingId)) {
+                // If there's an intersection, find the rating and return it
+                ObjectId ratingObjectId = new ObjectId(ratingId);
+                Rating rating = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(ratingObjectId)), Rating.class);
+                return Optional.ofNullable(rating);
+            }
+        }
+
+        return Optional.empty();
+    }
 
 }

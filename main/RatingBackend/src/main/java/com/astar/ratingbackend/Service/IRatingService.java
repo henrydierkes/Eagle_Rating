@@ -26,4 +26,5 @@ public interface IRatingService {
     public List<Rating> getRatingByFilterDesc(Rating.OverallRating rating, int floor);
 
     public int isLike(String userId, String ratingId);
+    Optional<Rating> findUserRatingForPlace(String userId, String placeId);
 }
