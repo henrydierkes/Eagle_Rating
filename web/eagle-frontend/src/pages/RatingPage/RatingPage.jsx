@@ -46,51 +46,58 @@ function RatingPage() {
     };
 
 // Function to handle the thumbs click within CommentList
-    const onThumbsClick = (commentId, type, userId) => {
-        setPlaceComments((currentComments) => {
-            return currentComments.map((comment) => {
-                if (comment.ratingIdStr === commentId) {
-                    let newLikes = [...comment.likes];
-                    let newDislikes = [...comment.dislikes];
+    const onThumbsClick = async (commentId, type, userId) => {
+        // 定义点赞或点踩的状态
+        const isLike = type === 'upvote';
 
-                    switch (type) {
-                        case 'upvote':
-                            if (newLikes.includes(userId)) {
-                                // 如果已经点过赞，移除点赞
-                                newLikes = newLikes.filter(id => id !== userId);
-                            } else {
-                                // 添加点赞，并移除点踩
-                                newLikes.push(userId);
-                                newDislikes = newDislikes.filter(id => id !== userId);
-                            }
-                            break;
-                        case 'downvote':
-                            if (newDislikes.includes(userId)) {
-                                // 如果已经点过踩，移除点踩
-                                newDislikes = newDislikes.filter(id => id !== userId);
-                            } else {
-                                // 添加点踩，并移除点赞
-                                newDislikes.push(userId);
-                                newLikes = newLikes.filter(id => id !== userId);
-                            }
-                            break;
-                        default:
-                            // 如果操作类型不是 'upvote' 或 'downvote'，不做任何操作
-                            break;
-                    }
-
-                    return {
-                        ...comment,
-                        likes: newLikes,
-                        dislikes: newDislikes,
-                        likeNum: newLikes.length,
-                        dislikeNum: newDislikes.length
-                    };
-                } else {
-                    return comment;
-                }
+        // 构建 POST 请求的 URL
+        try {
+            const response = await axios({
+                method: 'post',
+                url: `${axiosConfig.baseURL}/api/rating/like`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded' // 确保头部类型正确
+                },
+                data: `like=${isLike}&ratingId=${commentId}&userId=${userId}` // 确保数据是 URL 编码的
             });
-        });
+            if (response.status === 200) {
+                setPlaceComments((currentComments) => {
+                    return currentComments.map((comment) => {
+                        if (comment.ratingIdStr === commentId) {
+                            let newLikes = [...comment.likes];
+                            let newDislikes = [...comment.dislikes];
+
+                            if (isLike) {
+                                // 如果是点赞，添加或移除用户 ID
+                                newLikes = newLikes.includes(userId)
+                                    ? newLikes.filter(id => id !== userId)
+                                    : [...newLikes, userId];
+                                // 如果用户在点踩列表里，同时移除
+                                newDislikes = newDislikes.filter(id => id !== userId);
+                            } else {
+                                // 如果是点踩，添加或移除用户 ID
+                                newDislikes = newDislikes.includes(userId)
+                                    ? newDislikes.filter(id => id !== userId)
+                                    : [...newDislikes, userId];
+                                // 如果用户在点赞列表里，同时移除
+                                newLikes = newLikes.filter(id => id !== userId);
+                            }
+
+                            return {
+                                ...comment,
+                                likes: newLikes,
+                                dislikes: newDislikes,
+                                likeNum: newLikes.length,
+                                dislikeNum: newDislikes.length
+                            };
+                        }
+                        return comment;
+                    });
+                });
+            }
+        } catch (error) {
+            console.error('Error processing the thumbs click:', error);
+        }
     };
 
 
