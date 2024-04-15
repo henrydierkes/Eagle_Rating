@@ -55,19 +55,28 @@ function RatingPage() {
 
                     switch (type) {
                         case 'upvote':
-                            if (!newLikes.includes(userId)) {
+                            if (newLikes.includes(userId)) {
+                                // 如果已经点过赞，移除点赞
+                                newLikes = newLikes.filter(id => id !== userId);
+                            } else {
+                                // 添加点赞，并移除点踩
                                 newLikes.push(userId);
+                                newDislikes = newDislikes.filter(id => id !== userId);
                             }
-                            newDislikes = newDislikes.filter(id => id !== userId);
                             break;
                         case 'downvote':
-                            if (!newDislikes.includes(userId)) {
+                            if (newDislikes.includes(userId)) {
+                                // 如果已经点过踩，移除点踩
+                                newDislikes = newDislikes.filter(id => id !== userId);
+                            } else {
+                                // 添加点踩，并移除点赞
                                 newDislikes.push(userId);
+                                newLikes = newLikes.filter(id => id !== userId);
                             }
-                            newLikes = newLikes.filter(id => id !== userId);
                             break;
                         default:
-                        // Do nothing if the type is not recognized
+                            // 如果操作类型不是 'upvote' 或 'downvote'，不做任何操作
+                            break;
                     }
 
                     return {
@@ -83,6 +92,7 @@ function RatingPage() {
             });
         });
     };
+
 
     //go through when sort require changes
     const handleSortChange = (sortedComments) => {
