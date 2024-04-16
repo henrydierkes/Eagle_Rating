@@ -116,8 +116,8 @@ const RatingForm = () => {
             placeId: placeId, // use the placeId from state
             comment: comment,
             date: new Date(), // Set the current date/time for the rating
-            likes: 0, // Initialize likes and dislikes as zero
-            dislikes: 0,
+            // likes: 0, // Initialize likes and dislikes as zero
+            // dislikes: 0,
             overallRating: {
                 overall: formData.rating,
                 rating1: formData.subrating1,
@@ -139,57 +139,42 @@ const RatingForm = () => {
                     Authorization: `Bearer ${token}`
                 }
             };
-    try {
-        const userHasRatedResponse = await axios.get(`${axiosConfig.baseURL}/api/rating/userHasRated`, {
-            params: { userId: currentUser.userId, placeId: placeId },
-            ...config
-        });
-
-        let existingRatingId = null;
-
-        if (userHasRatedResponse.data) {
-            const update = window.confirm('You have already rated this place. Would you like to delete your old rating and add a new one?');
-            if (!update) return; // Exit if the user does not want to update
-            console.log("found rating");
-            console.log(userHasRatedResponse.data.ratingIdStr);
-            // Assuming the response contains the ID of the existing rating
-            existingRatingId = userHasRatedResponse.data.ratingIdStr;
-
-            // Make an API call to delete the existing rating
-        await axios.delete(`${axiosConfig.baseURL}/api/rating/delete`, {
-            params: { ratingId: existingRatingId },
-            ...config
-        });
-        }
-
-
-        // Call the add rating endpoint
-        const addResponse = await axios.post(`${axiosConfig.baseURL}/api/rating/addRating`, ratingData, config);
-        console.log(addResponse.data);
-        alert('Rating added successfully!');
-        navigate(`/ratingpage/${placeDetails.locIdStr}`);
-
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to submit rating.');
-    }
             try {
-                const response = await axios.post(`${axiosConfig.baseURL}/api/rating/addRating`, ratingData, config);
-                console.log(response.data);
-                alert('Rating successfully added!');
-                // Clear the form fields here if needed
+                const userHasRatedResponse = await axios.get(`${axiosConfig.baseURL}/api/rating/userHasRated`, {
+                    params: {userId: currentUser.userId, placeId: placeId},
+                    ...config
+                });
 
+                let existingRatingId = null;
+
+                if (userHasRatedResponse.data) {
+                    const update = window.confirm('You have already rated this place. Would you like to delete your old rating and add a new one?');
+                    if (!update) return; // Exit if the user does not want to update
+                    console.log("found rating");
+                    console.log(userHasRatedResponse.data.ratingIdStr);
+                    // Assuming the response contains the ID of the existing rating
+                    existingRatingId = userHasRatedResponse.data.ratingIdStr;
+
+                    // Make an API call to delete the existing rating
+                    await axios.delete(`${axiosConfig.baseURL}/api/rating/delete`, {
+                        params: {ratingId: existingRatingId},
+                        ...config
+                    });
+                }
+
+
+                // Call the add rating endpoint
+                const addResponse = await axios.post(`${axiosConfig.baseURL}/api/rating/addRating`, ratingData, config);
+                console.log(addResponse.data);
+                alert('Rating added successfully!');
                 navigate(`/ratingpage/${placeDetails.locIdStr}`);
+
             } catch (error) {
                 console.error('Error:', error);
                 alert('Failed to submit rating.');
             }
-        } else {
-            // Handle the case where the token is not found
-            alert('You must be logged in to submit a rating.');
         }
     };
-
 
 
 
