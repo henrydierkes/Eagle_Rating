@@ -6,7 +6,7 @@ const Footer = () => {
   const initialState = {
     email: "",
     message: "",
-    successMsg: "Message Sent Successfully!", // Add a state property for the success message
+    successMsg: "", 
   };
 
   const [state, setState] = useState(initialState);
@@ -23,26 +23,30 @@ const Footer = () => {
     e.preventDefault();
 
     // Ensure these are set up in your environment variables, not hard-coded
-    const serviceID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
-    const templateID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
-    const userID = process.env.REACT_APP_EMAILJS_USER_ID;
+    const serviceID = "service_xjz0v6s";
+    const templateID = "template_muvupib";
+    const userID = "npXAmGFIQA2IhWFf9";
 
     // Prepares the data to be sent
     const templateParams = {
-      email: state.email,
+      email_id: state.email,
       message: state.message,
     };
 
     emailjs.send(serviceID, templateID, templateParams, userID)
-      .then(
-        (result) => {
-          setState({ ...initialState, successMsg: "Message sent successfully!" }); // Display success message
-        },
-        (error) => {
-          setState({ ...state, successMsg: "Failed to send message. Please try again later." }); // Display error message
-        }
-      );
-  };
+    .then(
+      (response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        // Update state to show success message
+        setState({ ...initialState, successMsg: "Message sent successfully!" });
+      },
+      (error) => {
+        console.error('FAILED...', error);
+        // Update state to show error message
+        setState({ ...state, successMsg: "Failed to send message. Please try again later." });
+      }
+    );
+};
 
   return (
     <footer className="footer">
@@ -50,7 +54,6 @@ const Footer = () => {
         <h4 style={{ fontSize: '18px' }}>Get In Touch</h4>
         {successMsg && <div className="success-message">{successMsg}</div>} {/* Display success or error message here */}
         <form onSubmit={handleSubmit}>
-          {/* Omit the name input field */}
           <div className="input-group">
             <input
               type="email"
@@ -84,7 +87,6 @@ const Footer = () => {
     <h4 style={{ fontSize: '18px' }}>Help Center</h4>
     <p style={{ fontSize: '16px' }}>The project is currently maintained by Tuan Vinh (tvinh@emory.edu)</p>
 </div>
-      {/* Add more footer-sections here for additional content */}
     </footer>
   );
 }
