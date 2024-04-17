@@ -33,8 +33,15 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public User signUp(User user) {
         User existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser != null) {
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists.");
+        if (existingUser != null && existingUser.isVerified()) {
+            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists and is verified.");
+        }
+
+        if (existingUser != null && !existingUser.isVerified()) {
+            // Depending on your policy, you might want to notify the user to verify their account
+            // Or you could delete the existing unverified user and allow the new sign up
+            // Or possibly resend the verification for the existing user
+            throw new IllegalArgumentException("An account with that email already exists but is not verified. Please verify the account.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String authCode = UUID.randomUUID().toString();
@@ -72,11 +79,17 @@ public class AuthServiceImpl implements IAuthService {
             user = userRepository.findByUsername(usernameOrEmail);
         }
 
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+        if (user != null && user.isVerified() && passwordEncoder.matches(password, user.getPassword())) {
+            // Only generate token if the user is verified
             System.out.println(jwtUtil.generateToken(user));
             return jwtUtil.generateToken(user);
         } else {
-            throw new BadCredentialsException("Invalid username/email or password supplied");
+            // It could be useful to distinguish the type of authentication error
+            if (user != null && !user.isVerified()) {
+                throw new BadCredentialsException("User is not verified.");
+            } else {
+                throw new BadCredentialsException("Invalid username/email or password supplied");
+            }
         }
     }
 }
