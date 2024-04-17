@@ -1,39 +1,45 @@
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 import './Footer.css';
 
 const Footer = () => {
   const initialState = {
-    name: "",
     email: "",
     message: "",
+    successMsg: "Message Sent Successfully!", // Add a state property for the success message
   };
 
   const [state, setState] = useState(initialState);
-  const { name, email, message } = state;
+  const { email, message, successMsg } = state;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const clearState = () => setState({ ...initialState });
+  const clearState = () => setState(initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Replace with your own Service ID, Template ID, and Public Key from your EmailJS account
-    const YOUR_SERVICE_ID = "YOUR_SERVICE_ID";
-    const YOUR_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
-    const YOUR_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+    // Ensure these are set up in your environment variables, not hard-coded
+    const serviceID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+    const templateID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+    const userID = process.env.REACT_APP_EMAILJS_USER_ID;
 
-    emailjs.sendForm(YOUR_SERVICE_ID, YOUR_TEMPLATE_ID, e.target, YOUR_PUBLIC_KEY)
+    // Prepares the data to be sent
+    const templateParams = {
+      email: state.email,
+      message: state.message,
+    };
+
+    emailjs.send(serviceID, templateID, templateParams, userID)
       .then(
         (result) => {
-          console.log(result.text);
-          clearState();
+          setState({ ...initialState, successMsg: "Message sent successfully!" }); // Display success message
         },
         (error) => {
-          console.log(error.text);
+          setState({ ...state, successMsg: "Failed to send message. Please try again later." }); // Display error message
         }
       );
   };
@@ -41,19 +47,19 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-section contact-form">
-      <h4 style={{ fontSize: '18px' }}>Get In Touch</h4>
+        <h4 style={{ fontSize: '18px' }}>Get In Touch</h4>
+        {successMsg && <div className="success-message">{successMsg}</div>} {/* Display success or error message here */}
         <form onSubmit={handleSubmit}>
+          {/* Omit the name input field */}
           <div className="input-group">
-            <div className="email">
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={handleChange}
-                placeholder="Your Email"
-                required
-              />
-            </div>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+              placeholder="Your Email"
+              required
+            />
           </div>
           <div className="message">
             <textarea
