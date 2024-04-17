@@ -9,6 +9,7 @@ import SignUp from './pages/Login/SignUp.jsx';
 import SignIn from './pages/Login/SignIn.jsx';
 import Profile from './pages/Profile/Profile.jsx'
 import ScrollToTop from './ScrollToTop';
+import BookmarkPage from './pages/BookmarkPage/BookmarkPage.jsx';
 import axios from 'axios';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -42,6 +43,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/Home" element={<Home />} />
               <Route path="/navigation" element={<Navigation />} />
+              <Route path="/BookmarkPage" element={<BookmarkPage />} />
               <Route path="/ratingpage/:locId" element={<RatingPage />} />
                 <Route path="/addLocation" element={
                   <ProtectedRoute>
