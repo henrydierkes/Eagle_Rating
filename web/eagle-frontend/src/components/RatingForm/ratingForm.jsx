@@ -162,7 +162,6 @@ const RatingForm = () => {
                     });
                 }
 
-
                 // Call the add rating endpoint
                 const addResponse = await axios.post(`${axiosConfig.baseURL}/api/rating/addRating`, ratingData, config);
                 console.log(addResponse.data);

@@ -3,15 +3,16 @@ package com.astar.ratingbackend.Service.Impl;
 import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Model.UserRepository;
 import com.astar.ratingbackend.Service.IAuthService;
+import com.astar.ratingbackend.Service.IUserService;
+import com.astar.ratingbackend.Service.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import com.astar.ratingbackend.Service.util.JwtUtil;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
-import javax.mail.internet.MimeMessage;
 
 
 @Service
@@ -19,6 +20,8 @@ public class AuthServiceImpl implements IAuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private IUserService userService;
     private final JwtUtil jwtUtil;
     @Autowired
     private JavaMailSender mailSender;
@@ -34,7 +37,12 @@ public class AuthServiceImpl implements IAuthService {
     public User signUp(User user) {
         User existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser != null) {
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists.");
+            if(!existingUser.isVerified()){
+                userService.deleteUserT(existingUser.getUserId());
+            }else{
+                throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists.");
+            }
+
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String authCode = UUID.randomUUID().toString();
@@ -72,11 +80,18 @@ public class AuthServiceImpl implements IAuthService {
             user = userRepository.findByUsername(usernameOrEmail);
         }
 
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+        if (user != null && user.isVerified() && passwordEncoder.matches(password, user.getPassword())) {
+            // Only generate token if the user is verified
             System.out.println(jwtUtil.generateToken(user));
             return jwtUtil.generateToken(user);
         } else {
-            throw new BadCredentialsException("Invalid username/email or password supplied");
+            // It could be useful to distinguish the type of authentication error
+            if (user != null && !user.isVerified()) {
+                throw new BadCredentialsException("User is not verified.");
+            } else {
+                throw new BadCredentialsException("Invalid username/email or password supplied");
+            }
         }
     }
 }
+
