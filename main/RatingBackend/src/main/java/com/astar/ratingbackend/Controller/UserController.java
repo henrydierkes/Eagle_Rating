@@ -77,6 +77,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete user");
         }
     }
+    @DeleteMapping("/deleteT")
+    public ResponseEntity<String> userDeleteT(@RequestParam String userId){
+        try{
+            userService.deleteUserT(new ObjectId(userId));
+            return ResponseEntity.status(HttpStatus.OK).body("User hard delete successfully");
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete user");
+        }
+    }
     /**
      * Finds a user with email
      * @param email The user entity to be added.

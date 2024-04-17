@@ -3,15 +3,16 @@ package com.astar.ratingbackend.Service.Impl;
 import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Model.UserRepository;
 import com.astar.ratingbackend.Service.IAuthService;
+import com.astar.ratingbackend.Service.IUserService;
+import com.astar.ratingbackend.Service.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import com.astar.ratingbackend.Service.util.JwtUtil;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
-import javax.mail.internet.MimeMessage;
 
 
 @Service
@@ -19,6 +20,8 @@ public class AuthServiceImpl implements IAuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private IUserService userService;
     private final JwtUtil jwtUtil;
     @Autowired
     private JavaMailSender mailSender;
@@ -33,15 +36,13 @@ public class AuthServiceImpl implements IAuthService {
     @Override
     public User signUp(User user) {
         User existingUser = userRepository.findByEmail(user.getEmail());
-        if (existingUser != null && existingUser.isVerified()) {
-            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists and is verified.");
-        }
+        if (existingUser != null) {
+            if(!existingUser.isVerified()){
+                userService.deleteUserT(existingUser.getUserId());
+            }else{
+                throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists.");
+            }
 
-        if (existingUser != null && !existingUser.isVerified()) {
-            // Depending on your policy, you might want to notify the user to verify their account
-            // Or you could delete the existing unverified user and allow the new sign up
-            // Or possibly resend the verification for the existing user
-            throw new IllegalArgumentException("An account with that email already exists but is not verified. Please verify the account.");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         String authCode = UUID.randomUUID().toString();
@@ -93,3 +94,4 @@ public class AuthServiceImpl implements IAuthService {
         }
     }
 }
+

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -16,6 +17,8 @@ import java.util.Date;
 @Document("User")
 @ApiModel(value = "User",description = "User")
 public class User implements Serializable {
+
+    @Id
     @Field("_id")
     @ApiModelProperty(value = "Primary Key")
     private ObjectId userId;
