@@ -15,6 +15,7 @@
 }
 
 .comment {
+  min-height: 150px;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
@@ -67,19 +68,21 @@
 
 .profile-name {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 0px;
-  margin-top: 14px;
 }
 
 .date {
   color: #000000;
   margin-left: auto;
-  margin-bottom: 1rem;
+  margin-bottom: auto;
+  margin-top: 3em;
+  margin-right: 2rem
 }
 
 .comment-body {
   display: flex;
+  align-items: center; 
   margin-bottom: 10px;
 }
 
@@ -104,13 +107,10 @@
 }
 
 .comment-text {
-  position: relative;
-  max-width: 600px;
-  margin-top: 5px;
-  margin-left: 70px;
-  margin-bottom: 10px;
-  max-width: 650px;
-  font-size: 25px;
+  margin-top: 1em;  
+  margin-left: 12.5em;
+  margin-bottom: 1em;  
+  font-size: 19px;
 }
 
 .comment-footer {
