@@ -7,7 +7,7 @@ import Select from '@mui/material/Select';
 import './CommentFilter.css';
 
 const SORT_OPTIONS = [
-  { value: 'relevancy', label: 'Relevancy' },
+  // { value: 'relevancy', label: 'Relevancy' },
   { value: 'recency', label: 'Recency' },
   { value: 'popularity', label: 'Popularity' },
 ];
@@ -18,19 +18,16 @@ const CommentFilter = ({ comments, onSortChange }) => {
   // console.log("Comments:", JSON.stringify(comments, null, 2));
 
   const sortComments = (option) => {
-    // 你的排序逻辑应该在这里实现
-    // 一个基本的例子，根据选项对评论进行排序，确保评论数据结构支持这样的操作
     let sortedComments;
     switch(option) {
-      case 'relevancy':
-        // 例如，按照某个相关性标准进行排序
-        sortedComments = [...comments].sort(/* ... */);
-        break;
+      // case 'relevancy':
+      //   sortedComments = [...comments].sort(/* ... */);
+      //   break;
       case 'recency':
         sortedComments = [...comments].sort((a, b) => b.date - a.date);
         break;
       case 'popularity':
-        return comments.slice().sort((a, b) => b.likes - a.likes);
+        return comments.slice().sort((a, b) => b.likes.length - a.likes.length);
       default:
         sortedComments = [...comments];
     }
@@ -41,7 +38,7 @@ const CommentFilter = ({ comments, onSortChange }) => {
     const { value } = event.target;
     setSelectedSort(value);
     const newSortedComments = sortComments(value);
-    onSortChange(newSortedComments); // 这里传递排序后的评论数组
+    onSortChange(newSortedComments);
   };
 
 

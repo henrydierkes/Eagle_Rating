@@ -33,10 +33,6 @@ const MenuProps = {
   },
 };
 
-
-
-
-
 const RatingForm = () => {
     // define a constant array of your hardcoded tags
     const staticTags = ["Water Fountain", "Charging Port", "Busy", "Quiet", "Parking Space"];
