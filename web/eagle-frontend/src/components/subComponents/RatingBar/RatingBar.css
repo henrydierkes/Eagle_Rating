@@ -1,4 +1,4 @@
-.rating-bar {
+/* .rating-bar {
   font-family: Arial, sans-serif;
 }
 
@@ -14,8 +14,8 @@
 }
 .rating-bar-container {
   width: 60%; /* Set the width of the RatingBar container to 60% of header-right */
-}
-.rating-bar-background {
+
+/* .rating-bar-background {
   height: 20px;
   background-color: #ccc;
   border-radius: 10px;
@@ -27,4 +27,4 @@
   background-color: #000;
   border-radius: 10px 0 0 10px;
   transition: width 0.3s ease-in-out;
-}
+} */ */

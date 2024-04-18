@@ -59,26 +59,28 @@ const PlaceDetails = ({ result }) => {
     return (
         <div className="place-details">
             <div className="header">
-                <div className="header-left">
+            <div className="header-left">
                     <div className="header-left-l">
                         <div
                             className="rating-box-details"
-                            style={{ backgroundColor: getRatingColor(rating) }}
+                            style={{ backgroundColor: ratingColor }}
                         >
                             <span className="rating-number-details">{rating}</span>
                         </div>
-                        <p className="rating-amount">{numRate + " ratings"}</p >
+                        <p className="rating-amount">{numRate + " ratings"}</p>
                     </div>
                     <div className="header-left-r">
-                        <div className="mainInfo">
-                            <h1 className="placeName">{title}</h1>
-                            {/*               <h3 className="building">{building}</h3> */}
-                            <h4 className="floor">{"Floor " + floor}</h4>
-                        </div>
+                        <h1 className="placeName">{title}</h1>
+                        <h4 className="floor">{"Floor " + floor}</h4>
                     </div>
                 </div>
                 <div className="header-right">
                     <RatingBar result={result} subratings={matchingSubratings} style={{ width: "100%" }} />
+                    <div className="rating-button-container">
+                <button className="rating-button" onClick={handleAddRatingClick}>
+                    Add Rating
+                </button>
+            </div>
                 </div>
             </div>
 
@@ -118,12 +120,6 @@ const PlaceDetails = ({ result }) => {
                 </div>
                 <div className="tag-level-r"></div>{" "}
                 {/* Add the .tag-level-r if needed */}
-            </div>
-
-            <div className="rating-button-container">
-                <button className="rating-button" onClick={handleAddRatingClick}>
-                    Add Rating
-                </button>
             </div>
         </div>
     );

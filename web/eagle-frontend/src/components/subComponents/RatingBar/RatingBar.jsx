@@ -67,7 +67,7 @@ const RatingBar = ({ result, subratings }) => {
           return (
               <div key={adjustedKey} className="rating-container">
                 <label className="rating-label">
-                  {label ? label.toUpperCase() : "TOTAL RATING"}
+                  {label ? label.toUpperCase() : ""}
                 </label>
                 <div className="rating-bar-background">
                   <div

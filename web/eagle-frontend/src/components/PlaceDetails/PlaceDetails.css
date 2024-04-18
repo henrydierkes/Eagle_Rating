@@ -3,9 +3,9 @@
   flex-direction: column;
   justify-content: center;
   background-color: white;
-  margin-top: 40px; /* Increase top margin */
-  margin-left: -50px; /* Increase left margin */
-  margin-right: 50px; /* Increase right margin */
+  margin-top: 3em; /* Increase top margin */
+  margin-left: 1em; /* Increase left margin */
+  margin-right: 8em; /* Increase right margin */
   width: 100%;
 }
 .header-left,
@@ -28,13 +28,12 @@
   width: 50%;
 }
 .header-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  position: relative; /* Ensure positioning works relative to this container */
+    display: flex;
+    flex-direction: column;  /* or 'row' depending on how you want to organize the components */
+    justify-content: space-between;  /* Adjust alignment */
+    align-items: center;  /* Center align the items */
+    width: 50%;
 }
-
 .header-left-l {
   display: flex;
   flex-direction: column;
@@ -48,11 +47,11 @@
   height: 120px;
   color: white;
   padding: 12px 16px;
-  margin-right: 10px;
+  margin-right: 2em;
+  margin-left: 1em;
   margin-top: 15px;
-  margin-left: 20px;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 15px;
   font-size: 1.3em;
   align-items: center;
   justify-content: center;
@@ -93,18 +92,18 @@
 }
 .location {
   margin-top: 30px;
-  margin-left: 7em;
+  margin-left: 15em;
 }
 .Image {
-  width: 100%;
+  width: 2000px;
   display: flex;
   align-items: center;
   position: relative; /* Ensure positioning works relative to this container */
   justify-content: center;
 }
 .Image img {
-  max-width: 100%; /* Ensure the image does not exceed the container's width */
-  max-height: auto; /* Ensure the image does not exceed the container's height */
+  height: 1000px;  /* Set your desired fixed height */
+  object-fit: cover;  /* This will cover the area without distorting the ratio */
 }
 
 .locationAndImage {
@@ -114,7 +113,7 @@
 
 .ratings {
   margin-left: 20px;
-  margin-top: -37.5px;
+  margin-top: -37.--5px;
 }
 
 
@@ -122,7 +121,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 70px; /* Adjust the margin as needed */
+  margin-top: 6em; /* Adjust the margin as needed */
 }
 
 .rating-button-container .rating-button {
@@ -130,13 +129,16 @@
   color: ghostwhite;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 3rem; /* more circle */
+  border-radius: 25px; /* more circle */
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 2rem;
   width: 7em;
   height: 2em;
   font-size: 3em;
+}
+.rating-button {
+  margin-top: -4em;
 }
 
 .rating-button-container .rating-button:hover {
