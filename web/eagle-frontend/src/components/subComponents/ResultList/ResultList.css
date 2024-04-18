@@ -166,20 +166,20 @@
 }
 
 .rating-button {
-  width: 96%;
+  width: 98%;
   height: 5rem; 
-  padding: 2% 10%;
+  padding: 5% 10%;
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none;
   border-radius: 10px;
   color: #fff;
-  font-size: 1rem;
+  font-size: 2rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   outline: none;
   margin-top: 2%;
   margin-bottom: 2%;
-  margin-left: 5%;
+  margin-left: 3%;
   margin-right: 0;
   display: block;
 }
