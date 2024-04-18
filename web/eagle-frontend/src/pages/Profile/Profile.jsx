@@ -14,20 +14,34 @@ import Footer from "../../components/Footer/Footer";
 
 const useStyles = makeStyles((theme) => ({
   profileContainer: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(10),
+    padding: theme.spacing(3),
+
   },
   avatar: {
     width: theme.spacing(10),
     height: theme.spacing(10),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(5),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: theme.spacing(1),
   },
+  shiftedUpGrid: {
+    transform: 'translateY(-16px)', // Properly defining the transformation
+  },
+  avatarContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 }));
 
 const Profile = () => {
   const classes = useStyles();
   const { currentUser } = useAuth();
   const { updateUsername } = useAuth();
-
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -83,10 +97,12 @@ const Profile = () => {
     <div>
       <NavBar />
       <Container className={classes.profileContainer}>
-        <Grid container alignItems="center" spacing={2}>
+        <Grid container alignItems="center" spacing={2} className={classes.shiftedUpGrid}>
           <Grid item>
             <Avatar className={classes.avatar}>
+              <span style={{ margin: '15px' }}>
               {currentUser ? currentUser.username.toUpperCase() : ""}
+              </span>
             </Avatar>
           </Grid>
           <Grid item>
@@ -107,6 +123,7 @@ const Profile = () => {
           variant="contained"
           color="primary"
           onClick={handleUsernameChange}
+          style={{ marginTop: '20px', marginBottom: '20px', background: 'linear-gradient(to right, #5ea5fc, #6379fe)'}} 
         >
           Change Username
         </Button>
@@ -132,6 +149,7 @@ const Profile = () => {
           variant="contained"
           color="primary"
           onClick={handlePasswordChange}
+          style={{ marginTop: '20px', marginBottom: '20px', background: 'linear-gradient(to right, #5ea5fc, #6379fe)'}} 
         >
           Change Password
         </Button>
