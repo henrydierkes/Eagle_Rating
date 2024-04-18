@@ -14,7 +14,7 @@ import axios from 'axios';
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import EmailVerification from './pages/Login/EmailVerification.jsx'; // Adjust the import path as necessary
-
+ 
 
 import SmoothScroll from 'smooth-scroll';
 

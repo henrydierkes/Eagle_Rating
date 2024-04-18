@@ -57,8 +57,8 @@ const ResultList = ({ results }) => {
     onChange={handleSortingChange}
     variant="outlined"
     sx={{
-        width: '100%', // Scale to screen width
-        margin: '0 auto 20px', // Center horizontally and add margin on the bottom
+        width: '105.5%', // Scale to screen width
+        margin: '20px 10px 20px 0px', // Center horizontally and add margin on the bottom
         '& .MuiOutlinedInput-root': {
             borderRadius: '5px',
             backgroundColor: '#fff',
