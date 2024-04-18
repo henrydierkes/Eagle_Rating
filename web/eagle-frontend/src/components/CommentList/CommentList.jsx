@@ -47,7 +47,6 @@ const CommentList = ({ comment, onThumbsClick }) => {
 
         fetchUsersInfo();
 
-        // Cleanup for the useEffect related to adding and removing event listeners
         const handleScroll = (event) => {
             const commentText = event.target;
             const comment = commentText.parentElement;
