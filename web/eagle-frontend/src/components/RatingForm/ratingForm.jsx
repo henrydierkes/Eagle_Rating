@@ -77,20 +77,20 @@ const RatingForm = () => {
         }
     };
 
-    const handleImageChange = (e) => {
+const handleImageChange = (e) => {
     const files = e.target.files;
     const imagesArray = [];
     for (let i = 0; i < files.length; i++) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        imagesArray.push(event.target.result);
-        if (imagesArray.length === files.length) {
-          setUploadedImages(imagesArray);
-        }
-      };
-      reader.readAsDataURL(files[i]);
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            imagesArray.push(event.target.result);
+            if (imagesArray.length === files.length) {
+                setUploadedImages(imagesArray);
+            }
+        };
+        reader.readAsDataURL(files[i]);
     }
-  };
+};
     const handleCheckboxChange = (event) => {
         setTag({ ...tag, [event.target.name]: event.target.checked }); // Change setTags to setTag
     };
