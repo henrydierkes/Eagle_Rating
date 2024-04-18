@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // Make sure Axios is imported
+import axios from 'axios';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ShareIcon from '@mui/icons-material/Share';
 import './CommentList.css';
 import axiosConfig from "../../axiosConfig.jsx";
-import {useAuth} from "../../contexts/AuthContext.jsx";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 
 const CommentList = ({ comment, onThumbsClick }) => {
     const [usersInfo, setUsersInfo] = useState({});
@@ -36,6 +36,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         username: username,
                         avatar: avatar
                     };
+                    
                     return acc;
                 }, {});
                 setUsersInfo(newUsersInfo);
@@ -188,7 +189,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                             onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'upvote')}
                             style={{ color: comment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit' }}
                         >
-                            <ThumbUpIcon />
+                            <ThumbUpIcon sx={{ marginTop: '-5px', marginLeft: '5px', marginRight: '10px' }} />
                             <span>{comment.likeNum}</span>
                         </button>
                         <button
@@ -196,11 +197,11 @@ const CommentList = ({ comment, onThumbsClick }) => {
                             onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'downvote')}
                             style={{ color: comment.dislikes.includes(currentUserId) ? 'red' : 'inherit' }}
                         >
-                            <ThumbDownIcon />
+                            <ThumbDownIcon sx={{ marginTop: '-5px', marginLeft: '5px', marginRight: '10px' }} />
                             <span>{comment.dislikeNum}</span>
                         </button>
                         <button className="share">
-                            <ShareIcon />
+                        <ShareIcon sx={{ marginTop: '-5px', marginLeft: '5px' }} />
                         </button>
                     </div>
                 </div>
@@ -210,4 +211,5 @@ const CommentList = ({ comment, onThumbsClick }) => {
 };
 
 export default CommentList;
+
 

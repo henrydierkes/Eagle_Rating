@@ -26,11 +26,12 @@
 }
 .choose-campus-btn {
   margin-top: 1rem;
-  width: 190px;
+  height: 3rem;
+  width: 10rem;
   padding: 0.5rem 2rem;
   font-size: 1rem;
   border: none;
-  border-radius: 25px;
+  border-radius: 10px;
   background-image: linear-gradient(to right, #5ea5fc, #6379fe); /* Gradient background */
   color: #fff;
   cursor: pointer;
