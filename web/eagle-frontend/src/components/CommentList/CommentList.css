@@ -1,3 +1,4 @@
+
 .profile-picture {
   transform: scale(0.6); /* Example scale, reduces size to 75% of the original */
   display: inline-block; /* Ensures transform applies correctly */
@@ -72,8 +73,9 @@
 }
 
 .date {
-  color: #888;
+  color: #000000;
   margin-left: auto;
+  margin-bottom: 1rem;
 }
 
 .comment-body {

@@ -168,12 +168,12 @@
 .rating-button {
   width: 98%;
   height: 5rem; 
-  padding: 5% 10%;
+  padding: 0% 10%;
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none;
   border-radius: 10px;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.5em;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   outline: none;
