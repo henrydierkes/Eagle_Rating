@@ -10,7 +10,7 @@ import {useAuth} from "../../contexts/AuthContext.jsx";
 const CommentList = ({ comment, onThumbsClick }) => {
     const [usersInfo, setUsersInfo] = useState({});
     const [clickStates, setClickStates] = useState({});
-    const currentUserId = useAuth().currentUser.userId;
+    const currentUserId = useAuth().currentUser ? useAuth().currentUser.userId : null;    
     const userComment = comment.find(c => c.userId === currentUserId && !c.deleted);
     console.log(currentUserId)
     console.log(comment[0])
@@ -95,7 +95,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
         if (currentUserId) {
             onThumbsClick(commentId, type, currentUserId);
         } else {
-            // Handle the case where there is no logged-in user
+            console.log('No logged-in user');
         }
     };
 
