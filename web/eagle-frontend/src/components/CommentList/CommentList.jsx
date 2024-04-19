@@ -68,7 +68,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                 commentText.removeEventListener('scroll', handleScroll);
             });
         };
-    }, [comment]); // Ensure useEffect is only re-run if comments change
+    }, [comment]);
 
 
     const handleThumbsClickLocal = (commentId, type) => {
@@ -111,10 +111,8 @@ const CommentList = ({ comment, onThumbsClick }) => {
         }
     };
 
-    // Render method
     return (
         <div className="comment-list">
-            {/* Render the user's comment at the top if it exists */}
             {comment.filter(comment => comment.userId === currentUserId && !comment.deleted).map((userComment, index) => (
                 <div key={userComment.ratingIdStr || index} className="comment">
                     <div className="comment-header">

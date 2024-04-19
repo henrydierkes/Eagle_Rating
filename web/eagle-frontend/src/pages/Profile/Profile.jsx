@@ -47,6 +47,7 @@ const Profile = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  console.log(currentUser);
 
   const handleUsernameChange = async () => {
     try {
