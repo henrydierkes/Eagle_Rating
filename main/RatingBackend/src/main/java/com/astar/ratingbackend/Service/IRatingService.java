@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface IRatingService {
     public Rating addLike(String userID, String ratingId, boolean like);
-    public ResponseEntity<String> addRating(Rating rating);
+    public String addRating(Rating rating);
     public void uploadImage(String ratingId, MultipartFile[] images);
     public Rating validateNewRating(Rating rating);
     public Rating addRatingDb(Rating rating, User user) ;

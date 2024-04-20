@@ -122,15 +122,19 @@ const RatingForm = () => {
                 await deleteExistingRating(token, existingRatingId);
             }
 
+            // Assume you have a function submitRating that sends the rating to the backend and returns a ResponseEntity<String>.
             const ratingId = await submitRating(token, addRatingRequest);
+            console.log(ratingId)
+
+            // If the rating ID is returned successfully, check for uploaded images
             if (uploadedImages.length > 0) {
                 // Convert uploadedImages to an array if it's not already an array
                 const imagesArray = Array.isArray(uploadedImages) ? uploadedImages : Array.from(uploadedImages);
+                console.log(imagesArray);
 
-                // Call uploadImages with imagesArray
+                // Call the uploadImages function and pass the rating ID, images array, and token
                 await uploadImages(ratingId, imagesArray, token);
             }
-
             alert('Rating submitted successfully!');
             navigate(`/ratingpage/${placeId}`);
         } catch (error) {
@@ -189,21 +193,25 @@ const RatingForm = () => {
                 'Content-Type': 'application/json',
             },
         });
-        return response.data.ratingId;
+        console.log(response);
+        return response.data;
+
     };
 
     // Upload images associated with the rating
     const uploadImages = async (ratingId, images, token) => {
+        // Create a FormData object
+        const formData = new FormData();
+
+        // Append the ratingId as a field in the FormData object
+        formData.append('ratingId', ratingId);
+
+        // Append each image to the FormData object
+        images.forEach((image, index) => {
+            formData.append(`images`, image);
+        });
+
         try {
-            // Create a FormData object and append the ratingId and images
-            const formData = new FormData();
-            formData.append('ratingId', ratingId);
-
-            // Append each image to the FormData object
-            images.forEach((image, index) => {
-                formData.append(`images`, image, image.name);
-            });
-
             // Make a POST request to upload images
             const response = await axios.post(
                 `${axiosConfig.baseURL}/api/rating/uploadImage`,
@@ -222,11 +230,12 @@ const RatingForm = () => {
             console.error('Error uploading images:', error);
             if (error.response && error.response.data) {
                 console.error('Error response data:', error.response.data);
-                throw new Error(`Failed to upload images: ${error.response.data}`);
+                throw new Error(`Failed to upload images: ${error.response.data.message}`);
             }
             throw error;
         }
     };
+
 
 
 

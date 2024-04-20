@@ -105,12 +105,16 @@ public class RatingController {
     public ResponseEntity<String> addRating(@RequestBody Rating rating) {
         try {
             // Save the rating to the database
-            ratingService.addRating(rating);
-            // Return a success response
-            return ResponseEntity.ok("Rating added successfully!");
+            String ratingId = ratingService.addRating(rating);
+            System.out.println(ratingId);
+            // Return the rating ID in the response
+            return ResponseEntity.ok(ratingId);
+        } catch (IllegalArgumentException e) {
+            // Handle invalid parameter error
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            // Handle exceptions and return appropriate error response
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add rating: " + e.getMessage());
+            // Handle generic error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
     }
     /**

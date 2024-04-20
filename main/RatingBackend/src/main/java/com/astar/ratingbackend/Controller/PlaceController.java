@@ -25,7 +25,6 @@ import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -155,10 +154,10 @@ public class PlaceController {
     }
 
     @GetMapping("/{placeId}/images")
-    public ResponseEntity<List<ResponseEntity<GridFsResource>>> getPlaceImages(@PathVariable String placeId) {
+    public ResponseEntity<List<ResponseEntity<byte[]>>> getPlaceImages(@PathVariable String placeId) {
         try {
             // Call the PlaceService to retrieve the list of images for the given placeId
-            List<ResponseEntity<GridFsResource>> imageResponses = placeService.getPlaceImages(placeId);
+            List<ResponseEntity<byte[]>> imageResponses = placeService.getPlaceImages(placeId);
 
             // If the place or images are not found, return a 404 Not Found response
             if (imageResponses == null || imageResponses.isEmpty()) {

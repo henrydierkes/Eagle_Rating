@@ -138,13 +138,16 @@ public class RatingServiceImpl implements IRatingService {
         try {
             // Validate the rating
             Rating rating = validateRating(ratingId);
+            if (rating == null) {
+                throw new IllegalArgumentException("Invalid rating ID");
+            }
 
             // Process and save the images
             List<String> imageIds = new ArrayList<>();
             for (MultipartFile image : images) {
                 if (!image.isEmpty()) {
-                    String imageId = gridFsTemplate.store(image.getInputStream(), image.getOriginalFilename(), image.getContentType()).toString();
-                    imageIds.add(imageId);
+                    ObjectId imageId = gridFsTemplate.store(image.getInputStream(), image.getOriginalFilename(), image.getContentType());
+                    imageIds.add(imageId.toHexString());
                 }
             }
 
@@ -154,6 +157,9 @@ public class RatingServiceImpl implements IRatingService {
 
             // Update the place's image map
             Place place = placeService.validatePlace(rating.getPlaceId());
+            if (place == null) {
+                throw new IllegalArgumentException("Invalid place ID");
+            }
             Map<String, List<String>> imageMap = place.getImageMap();
             if (imageMap == null) {
                 imageMap = new HashMap<>();
@@ -161,10 +167,11 @@ public class RatingServiceImpl implements IRatingService {
             imageMap.put(ratingId, imageIds);
             place.setImageMap(imageMap);
             placeService.updatePlace(place.getLocId(), place);
-        }catch (Exception e){
-            throw new RuntimeException("upload image failed");
+        } catch (Exception e) {
+            throw new RuntimeException("Upload image failed: " + e.getMessage(), e);
         }
     }
+
 
     /**
      * Saves a new rating to the repository, and updates user and place
@@ -172,24 +179,34 @@ public class RatingServiceImpl implements IRatingService {
      * @return The saved rating entity.
      */
 
+
+
     @Transactional
-    public ResponseEntity<String> addRating(Rating rating){
+    public String addRating(Rating rating) {
         String placeId = rating.getPlaceId();
         try {
+            // Validate the user and place
             User user = userService.validateUser(rating.getUserId());
             Place place = placeService.validatePlace(placeId);
+
+            // Add the rating to the database and associate it with the user and place
             Rating addedRating = addRatingDb(rating, user);
             userService.addRating(addedRating);
             placeService.addRating(placeId, addedRating);
-            return ResponseEntity.ok("Rating added successfully");
+
+            // Return the rating ID as a string in the success case
+            return addedRating.getRatingId().toString();
+
         } catch (IllegalArgumentException e) {
-            String errorMessage = "Invalid parameter: " + e.getMessage();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
-        }catch (Exception e) {
-            String errorMessage = "An error occurred: " + e.getMessage();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            // Handle invalid parameter error
+            throw new IllegalArgumentException("Invalid parameter: " + e.getMessage());
+        } catch (Exception e) {
+            // Handle generic error
+            throw new RuntimeException("An error occurred: " + e.getMessage());
         }
     }
+
+
     /**
      * Saves a new rating to the repository, ensuring all necessary default values are set.
      * @param rating The rating entity to be saved.
