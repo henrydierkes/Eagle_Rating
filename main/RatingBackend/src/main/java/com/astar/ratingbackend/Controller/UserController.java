@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import com.astar.ratingbackend.Model.dto.VerificationRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -135,6 +137,16 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password");
+        }
+    }
+
+    @PostMapping("/uploadAvatar")
+    public ResponseEntity<String> uploadAvatar(@RequestParam("userId") String userId, @RequestBody byte[] avatarData) {
+        try {
+            userService.uploadAvatar(new ObjectId(userId), avatarData);
+            return ResponseEntity.status(HttpStatus.OK).body("Avatar uploaded successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");
         }
     }
 

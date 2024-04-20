@@ -45,8 +45,14 @@ const Profile = () => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [avatar, setAvatar] = useState(null);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  console.log(currentUser);
+
+  const handleAvatarChange = (e) => {
+    setAvatar(e.target.files[0]);
+  };
 
   const handleUsernameChange = async () => {
     try {
@@ -93,6 +99,38 @@ const Profile = () => {
     }
   };
 
+  const handleUploadAvatar = async () => {
+    try {
+      if (!avatar) {
+        setError("No avatar selected.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const binaryData = reader.result;
+        // Send binary data to the backend for storage in MongoDB
+        await axios.post(`${axiosConfig.baseURL}/api/user/uploadAvatar`, {
+          userId: currentUser.userId,
+          avatar: binaryData,
+        });
+        setSuccessMessage("Avatar uploaded successfully.");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000); // Clear message after 3 seconds
+      };
+      reader.onerror = () => {
+        setError("Failed to read the avatar file.");
+      };
+      reader.readAsArrayBuffer(avatar);
+    } catch (error) {
+      setError("Failed to upload avatar");
+      setTimeout(() => {
+        setError("");
+      }, 3000); // Clear message after 3 seconds
+    }
+  };
+  
+
   return (
     <div>
       <NavBar />
@@ -101,7 +139,7 @@ const Profile = () => {
           <Grid item>
             <Avatar className={classes.avatar}>
               <span style={{ margin: '15px' }}>
-              {currentUser ? currentUser.username.toUpperCase() : ""}
+                {currentUser ? currentUser.username.toUpperCase() : ""}
               </span>
             </Avatar>
           </Grid>
@@ -111,6 +149,39 @@ const Profile = () => {
             </Typography>
           </Grid>
         </Grid>
+        <input
+          accept="image/*"
+          id="contained-button-file"
+          type="file"
+          style={{ display: "none" }}
+          onChange={handleAvatarChange}
+        />
+        <label htmlFor="contained-button-file">
+          <Button variant="contained" color="primary" component="span">
+            Upload Avatar
+          </Button>
+        </label>
+        {/* Display the uploaded avatar if available */}
+        {avatar && (
+          <div className={classes.avatarContent}>
+            <Avatar alt="Uploaded Avatar" src={URL.createObjectURL(avatar)} className={classes.large} />
+            <Typography variant="body1" color="textSecondary">
+              Avatar ready to be stored.
+            </Typography>
+          </div>
+        )}
+        {/* Save Avatar Button */}
+        {avatar && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUploadAvatar}
+            style={{ marginTop: '20px', marginBottom: '20px', background: 'linear-gradient(to right, #5ea5fc, #6379fe)'}} 
+          >
+            Save Avatar
+          </Button>
+        )}
+        {/* Existing inputs for username and password */}
         <TextField
           variant="outlined"
           margin="normal"
@@ -119,6 +190,7 @@ const Profile = () => {
           value={newUsername}
           onChange={(e) => setNewUsername(e.target.value)}
         />
+        {/* Change Username Button */}
         <Button
           variant="contained"
           color="primary"
@@ -127,6 +199,7 @@ const Profile = () => {
         >
           Change Username
         </Button>
+        {/* New Password and Confirm Password Inputs */}
         <TextField
           variant="outlined"
           margin="normal"
@@ -145,6 +218,7 @@ const Profile = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
+        {/* Change Password Button */}
         <Button
           variant="contained"
           color="primary"
@@ -153,12 +227,14 @@ const Profile = () => {
         >
           Change Password
         </Button>
+        {/* Error and Success Messages */}
         {error && <Typography color="error">{error}</Typography>}
         {successMessage && <Typography style={{ color: "green" }}>{successMessage}</Typography>}
       </Container>
       <Footer />
     </div>
   );
+  
 };
 
 export default Profile;
