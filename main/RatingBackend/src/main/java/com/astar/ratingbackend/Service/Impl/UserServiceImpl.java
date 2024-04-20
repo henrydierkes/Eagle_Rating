@@ -187,4 +187,16 @@ public class UserServiceImpl implements IUserService {
         return false;
     }
 
+    @Override
+    public boolean uploadAvatar(ObjectId userId, byte[] avatarData) {
+        try {
+            Query query = new Query(Criteria.where("_id").is(userId));
+            Update update = Update.update("avatar", avatarData);
+            UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
+            return result.getModifiedCount() > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
