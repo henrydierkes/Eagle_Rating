@@ -84,6 +84,9 @@ public class Rating implements Serializable {
     @Field("deletedDate")
     private Date deletedDate;
 
+    @Field("ImageIds")
+    private List<String> imageIds;
+
     @Data
     public static class OverallRating implements Serializable {
         private Double overall;

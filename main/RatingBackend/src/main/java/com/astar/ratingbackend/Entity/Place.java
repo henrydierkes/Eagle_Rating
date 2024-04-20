@@ -69,8 +69,8 @@ public class Place implements Serializable {
     @Field("ratingIds")
     private List<String> ratingIds;
 
-    @Field("images")
-    private List<Image> images;
+    @Field("imageMap")
+    Map<String, List<String>> imageMap;
 
     @Field("totalRating")
     private TotalRating totalRating;

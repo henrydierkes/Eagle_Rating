@@ -29,10 +29,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -41,6 +43,8 @@ public class RatingServiceImpl implements IRatingService {
     private final com.astar.ratingbackend.Model.RatingRepository ratingRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private GridFsTemplate gridFsTemplate;
     @Autowired
     private IPlaceService placeService;
     @Autowired
@@ -123,6 +127,44 @@ public class RatingServiceImpl implements IRatingService {
             throw new IllegalArgumentException("No rating found with ID: " + ratingId);
         }
     }
+    /**
+     * Uploads images for a rating and updates the rating with the image IDs.
+     *
+     * @param ratingId The ID of the rating.
+     * @param images The array of images to be uploaded.
+     * @return The updated rating with the image IDs.
+     */
+    public void uploadImage(String ratingId, MultipartFile[] images) {
+        try {
+            // Validate the rating
+            Rating rating = validateRating(ratingId);
+
+            // Process and save the images
+            List<String> imageIds = new ArrayList<>();
+            for (MultipartFile image : images) {
+                if (!image.isEmpty()) {
+                    String imageId = gridFsTemplate.store(image.getInputStream(), image.getOriginalFilename(), image.getContentType()).toString();
+                    imageIds.add(imageId);
+                }
+            }
+
+            // Update the rating with the image IDs
+            rating.setImageIds(imageIds);
+            ratingRepository.save(rating);
+
+            // Update the place's image map
+            Place place = placeService.validatePlace(rating.getPlaceId());
+            Map<String, List<String>> imageMap = place.getImageMap();
+            if (imageMap == null) {
+                imageMap = new HashMap<>();
+            }
+            imageMap.put(ratingId, imageIds);
+            place.setImageMap(imageMap);
+            placeService.updatePlace(place.getLocId(), place);
+        }catch (Exception e){
+            throw new RuntimeException("upload image failed");
+        }
+    }
 
     /**
      * Saves a new rating to the repository, and updates user and place
@@ -136,13 +178,15 @@ public class RatingServiceImpl implements IRatingService {
         try {
             User user = userService.validateUser(rating.getUserId());
             Place place = placeService.validatePlace(placeId);
-//            rating=validateNewRating(rating);
             Rating addedRating = addRatingDb(rating, user);
             userService.addRating(addedRating);
             placeService.addRating(placeId, addedRating);
             return ResponseEntity.ok("Rating added successfully");
         } catch (IllegalArgumentException e) {
             String errorMessage = "Invalid parameter: " + e.getMessage();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }catch (Exception e) {
+            String errorMessage = "An error occurred: " + e.getMessage();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
         }
     }
@@ -152,7 +196,9 @@ public class RatingServiceImpl implements IRatingService {
      * @return The saved rating entity.
      */
     public Rating addRatingDb(Rating rating, User user) {
-        // Check if user already rated the place
+
+            // Check if user already rated the place
+
         if (user.getRatings() != null) {
             for (String ratingId : user.getRatings()) {
                 Rating previousRating = getRateById(new ObjectId(ratingId)).orElse(null);
@@ -205,6 +251,10 @@ public class RatingServiceImpl implements IRatingService {
 
         rating.setOverallRating(overallRating);
 
+        if(rating.getImageIds()==null){
+            List<String> imageIds = new ArrayList<>();
+            rating.setImageIds(imageIds);
+        }
         return ratingRepository.save(rating);
     }
 
@@ -480,5 +530,7 @@ public class RatingServiceImpl implements IRatingService {
 
         return Optional.empty();
     }
+
+
 
 }

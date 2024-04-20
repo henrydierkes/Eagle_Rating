@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 public class RatingBackendApplication {
 
     public static void main(String[] args) {
+//        ApplicationContext context = SpringApplication.run(RatingBackendApplication.class, args);
+//        System.out.println(Arrays.toString(context.getBeanDefinitionNames()));
         SpringApplication.run(RatingBackendApplication.class, args);
     }
     @Autowired
