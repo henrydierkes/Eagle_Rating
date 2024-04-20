@@ -31,4 +31,6 @@ public interface IUserService {
     boolean verifyUser(String email, String code);
 
     boolean uploadAvatar(ObjectId userId, byte[] avatarBytes);
+
+    byte[] getAvatar(ObjectId userId);
 }

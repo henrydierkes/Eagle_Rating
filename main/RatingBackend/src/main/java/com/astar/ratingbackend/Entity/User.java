@@ -11,7 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.Date;
+import java.util.Arrays;
 
 @Data
 @Document("User")
@@ -29,6 +31,14 @@ public class User implements Serializable {
         this.userId = userId;
         this.userIdStr = userId != null ? userId.toHexString() : null;
     }
+    public byte[] getAvatarData() {
+        if (avatar != null) {
+            return Base64.getDecoder().decode(avatar);
+        } else {
+            return null;
+        }
+    }
+
     public User(){}
     @Field("username")
     @ApiModelProperty(value = "username")
@@ -42,6 +52,9 @@ public class User implements Serializable {
     @Field("name")
     @ApiModelProperty(value = "name")
     private String name;
+    @Field("avatar")
+    @ApiModelProperty(value = "avatar")
+    private byte[] avatar;
     @Field("createDate")
     @ApiModelProperty(value = "created Date")
     private Date createDate;
