@@ -2,6 +2,15 @@ server:
   port: 8080
   servlet:
     context-path: /
+    max-file-size: 20MB
+    max-request-size: 20MB
+    multipart:
+        enabled: True
+        max-file-size: 20MB
+        max-request-size: 20MB
+  tomcat:
+    max-http-form-post-size: 20MB
+
 spring:
   data:
     mongodb:
