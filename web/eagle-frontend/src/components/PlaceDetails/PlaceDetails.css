@@ -10,7 +10,7 @@
 }
 .header-left,
 .location {
-  width: 50%; /* Set the width to 50% */
+  width: 50%; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,7 +25,8 @@
 .header-left {
   display: flex;
   flex-direction: row;
-  width: 50%;
+  width: 70%;
+  margin-left: 12%;
 }
 .header-right {
     display: flex;
@@ -43,12 +44,12 @@
   flex-direction: column;
 }
 .rating-box-details {
-  width: 160px;
+  width: 200px;
   height: 120px;
   color: white;
   padding: 12px 16px;
   margin-right: 2em;
-  margin-left: 1em;
+  margin-left: -3.5em;
   margin-top: 15px;
   font-weight: bold;
   border-radius: 15px;
@@ -82,33 +83,65 @@
 
 .rating-amount {
   margin-top: 10px;
-  margin-left: 5.5em;
+  margin-left: 1em;
 }
 
 .location-link {
-  /* margin-top: 20px; */
-  /* margin-left: 25px; */
-  font-weight: normal;
+  color: black;       
+  text-decoration: none; 
+  font-weight: normal;   
+}
+.location-link:hover,
+.location-link:focus {
+    text-decoration: none; /* Ensures there is no underline on hover/focus */
+    color: black;         /* Keeps the color black even on hover */
 }
 .location {
   margin-top: 30px;
   margin-left: 15em;
 }
 .Image {
-  width: 2000px;
   display: flex;
   align-items: center;
-  position: relative; /* Ensure positioning works relative to this container */
   justify-content: center;
+  position: relative;
+  width: 1000px;  /* Fixed width */
+  height: 500px;  
 }
+
 .Image img {
-  height: 1000px;  /* Set your desired fixed height */
-  object-fit: cover;  /* This will cover the area without distorting the ratio */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
+/* Adjust size on smaller screens */
+@media (max-width: 1200px) {
+  .Image {
+    width: 800px;  /* Smaller fixed width */
+    height: 400px;  /* Smaller fixed height */
+  }
+}
+
+@media (max-width: 768px) {
+  .Image {
+    width: 600px;  /* Even smaller fixed width */
+    height: 300px;  /* Even smaller fixed height */
+  }
+}
+
+@media (max-width: 480px) {
+  .Image {
+    width: 100%;  /* Use full container width */
+    height: auto;  /* Adjust height automatically */
+  }
+}
+
 
 .locationAndImage {
   display: flex;
   flex-direction: row;
+  margin-right: 12em;
 }
 
 .ratings {
@@ -117,14 +150,17 @@
 }
 
 
-.rating-button-container {
+.rating-buttona-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 6em; /* Adjust the margin as needed */
+  padding: 0;               
+  width: 100%;             
+  max-width: 100%;  
+  margin-bottom: 2em       
 }
 
-.rating-button-container .rating-button {
+.rating-button-containera .rating-buttona {
   background-color: #333;
   color: ghostwhite;
   border: none;
@@ -133,16 +169,35 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 2rem;
-  width: 7em;
+  width: 10em;
   height: 2em;
   font-size: 3em;
 }
-.rating-button {
-  margin-top: -4em;
+.rating-buttona {
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe); /* Gradient background */
+  color: white;
+  border: none;
+  padding: 0.75em 1.5em; /* Adjust padding for button size */
+  border-radius: 10px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+  font-size: 1.5em; /* Adjust font size as necessary */
+  width: 12em; /* Full width within container */
+  height: 3.5em; /* Fixed height */
+  display: block;
+  margin-top: -1em; /* No additional top margin needed */
+  margin-bottom: 20px; /* Space below the button */
+  margin-right: 5em ;
 }
 
-.rating-button-container .rating-button:hover {
-  background-color: #555555; /* suspension color on background */
+.rating-buttona:hover,
+.rating-buttona:focus {
+  transform: scale(1.01); /* Slight increase in size on hover/focus */
+}
+
+.rating-buttona:active {
+  transform: scale(0.98); /* Slight decrease in size on active to simulate a press effect */
+  opacity: 0.9; /* Slight transparency change */
 }
 
 .tag-level {
@@ -154,4 +209,10 @@
   display: flex;
   justify-content: center; /* Center contents horizontally */
   align-items: center; /* Center contents vertically */
+}
+@media (max-width: 768px) {
+  .rating-buttona {
+      padding: 0.5em 1em;   
+      font-size: 1em;      
+  }
 }
