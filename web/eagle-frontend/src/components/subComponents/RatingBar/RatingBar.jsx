@@ -34,25 +34,25 @@ const RatingBar = ({ result, subratings }) => {
 //   );
 
   //no category return default
-  if (!subratings) {
-    return (
-        <div className="rating-bar-container">
-          {Object.entries(result.averageRating).map(([aspect, rating]) => (
-              <div key={aspect} className="rating-container">
-                <label className="rating-label">
-                  {aspect.toUpperCase()}
-                </label>
-                <div className="rating-bar-background">
-                  <div
-                      className="rating-fill"
-                      style={{ width: getPercentage(rating) }}
-                  ></div>
-                </div>
-              </div>
-          ))}
-        </div>
-    );
-  }
+  // if (!subratings) {
+  //   return (
+  //       <div className="rating-bar-container">
+  //         {Object.entries(result.averageRating).map(([aspect, rating]) => (
+  //             <div key={aspect} className="rating-container">
+  //               <label className="rating-label">
+  //                 {aspect.toUpperCase()}
+  //               </label>
+  //               <div className="rating-bar-background">
+  //                 <div
+  //                     className="rating-fill"
+  //                     style={{ width: getPercentage(rating) }}
+  //                 ></div>
+  //               </div>
+  //             </div>
+  //         ))}
+  //       </div>
+  //   );
+  // }
 
   // Ensure the keys in averageRating match the subratings structure
   return (
@@ -63,20 +63,6 @@ const RatingBar = ({ result, subratings }) => {
           // Look up the label from subratings using the adjusted key
           const label = subratings[adjustedKey];
           const percentageWidth = getPercentage(rating);
-
-          return (
-              <div key={adjustedKey} className="rating-container">
-                <label className="rating-label">
-                  {label ? label.toUpperCase() : ""}
-                </label>
-                <div className="rating-bar-background">
-                  <div
-                      className="rating-fill"
-                      style={{ width: percentageWidth }}
-                  ></div>
-                </div>
-              </div>
-          );
         })}
       </div>
   );

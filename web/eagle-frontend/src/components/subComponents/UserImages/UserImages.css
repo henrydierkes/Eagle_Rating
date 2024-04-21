@@ -1,7 +1,7 @@
 .user-images {
   position: absolute; /* Positioning relative to .Image */
-  top: 50%; /* Move the top of .user-images to the vertical center */
-  left: 50%; /* Move the left of .user-images to the horizontal center */
+  top: 56%; /* Move the top of .user-images to the vertical center */
+  left: 40%; /* Move the left of .user-images to the horizontal center */
   transform: translate(
     -50%,
     -50%
@@ -9,26 +9,29 @@
 }
 
 .images-container img {
-  display: none;
-  width: 100%;
-  height: auto;
+  display: none;  /* Keeps images hidden until they have the 'active' class */
+  width: 550px;   /* Fixed width */
+  height: 448px;  /* Fixed height */
+  object-fit: cover;  /* Ensures the image covers the area, cropping as needed */
+  margin-left: 15em;
 }
 
 .images-container img.active {
-  display: block;
+  display: block;  /* Makes the active image visible */
 }
 
+
 .arrow-btn {
-  padding: 50px;
+  padding: 1em;  /* scalable padding */
   border: none;
   background-color: transparent;
   color: white;
   cursor: pointer;
-  font-size: 50px;
+  font-size: 2em;  /* Larger font size for better visibility */
   border-radius: 50%;
   transition: all 0.3s ease;
-  width: 50px;
-  height: 40px;
+  width: 1em;  /* Adjust width to be dynamic based on font size */
+  height: 1em;  /* Adjust height to be dynamic based on font size */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,6 +42,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   color: #fff;
 }
+
 
 .prev {
   position: absolute;
