@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Footer from "../../components/Footer/Footer.jsx";
 import "./BookmarkPage.css";
-import Slider from "react-slick"; 
+import Slider from "react-slick";
 
 function EditPreferencesModal({ isOpen, onClose }) {
     return (
@@ -15,17 +15,11 @@ function EditPreferencesModal({ isOpen, onClose }) {
                     <button className="delete" onClick={onClose} aria-label="close"></button>
                 </header>
                 <section className="modal-card-body">
-                    <div className="field">
-                        <label className="label">Name</label>
-                        <div className="control">
-                            <input className="input" type="text" placeholder="Text input" />
-                        </div>
-                        {/* Repeat for other fields */}
-                    </div>
+                    {/* Add form fields here */}
                 </section>
                 <footer className="modal-card-foot">
-                    <button className="button is-primary" onClick={onClose}>Save changes</button>
-                    <button className="button" onClick={onClose}>Cancel</button>
+                    <button className="modal-save-button" onClick={onClose}>Save changes</button>
+                    <button className="modal-cancel-button" onClick={onClose}>Cancel</button>
                 </footer>
             </div>
         </div>
@@ -38,15 +32,7 @@ function BookmarkPage() {
 
     const handleOpenModal = () => setModalOpen(true);
     const handleCloseModal = () => setModalOpen(false);
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />
-    };
+
     return (
         <div className="BookmarkPage">
             <NavBar />
@@ -54,50 +40,47 @@ function BookmarkPage() {
                 <section className="profile-heading">
                     <div className="columns is-multiline">
                         <div className="column is-12">
-                            <h1 className="title is-2">Tuan Vinh</h1>
-                            <p className="subtitle is-5">The users profile bio would go here, of course. It could be two lines or more or whatever. We should probably limit the amount of characters to ~500 at most though.</p>
-                            <button className="button is-primary is-outlined" onClick={handleOpenModal} style={{ margin: "5px 0" }}>Edit Preferences</button>
+                            <h1 className="profile-title">Tuan Vinh</h1>
+                            <p className="profile-subtitle">The user's profile bio goes here, limited to ~500 characters.</p>
+                            <button className="edit-preferences-button" onClick={handleOpenModal} style={{ margin: "5px 0" }}>Edit Preferences</button>
                         </div>
-                        <div className="column is-4">
-                            <p className="title">30</p>
-                            <p className="subtitle">Searches</p>
+                        <div className="column is-6">
+                            <p className="stat-label">Likes</p>
+                            <p className="stat-val">10</p>
                         </div>
-                        <div className="column is-4">
-                            <p className="title">10</p>
-                            <p className="subtitle">Likes</p>
-                        </div>
-                        <div className="column is-4">
-                            <p className="title">3</p>
-                            <p className="subtitle">Lists</p>
+                        <div className="column is-6">
+                            <p className="stat-label">Dislikes</p>
+                            <p className="stat-val">5</p>
                         </div>
                     </div>
                 </section>
             </div>
-            <EditPreferencesModal isOpen={isModalOpen} onClose={handleCloseModal} />
+            {isModalOpen && <EditPreferencesModal isOpen={isModalOpen} onClose={handleCloseModal} />}
             <Footer />
         </div>
     );
 }
+
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
         <div
-            className={className}
-            style={{ ...style, display: "block", background: "red" }}
-            onClick={onClick}
-        />
-    );
-}
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "green" }}
+            className={`${className} slider-arrow-next`}
+            style={{ ...style, background: "red" }}
             onClick={onClick}
         />
     );
 }
 
+function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+        <div
+            className={`${className} slider-arrow-prev`}
+            style={{ ...style, background: "green" }}
+            onClick={onClick}
+        />
+    );
+}
 
 export default BookmarkPage;
