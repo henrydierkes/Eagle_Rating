@@ -6,6 +6,7 @@
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2em;
 }
 
 .overall-rating,
@@ -64,11 +65,13 @@
 
 .submit-button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  height: 4em;
+  width: 37.5em;
 }
 
 .submit-button:hover {

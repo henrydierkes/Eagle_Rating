@@ -1,18 +1,4 @@
-/**
- * Project Name: Eagle_Rating
- * Package Name: com.astar.ratingbackend.Service
- *
- * Type: Service
- * Purpose: Service class for Rate Entity - Facilitates operations such as create, read, update, and delete (CRUD) for ratings in the system. This service acts as a bridge between the RateRepository and the controllers, ensuring that business logic and repository interactions are properly managed. It aims to provide a layer of abstraction to enhance maintenance and decouple the system's components.
- *
- * Created on: [2024-02-21]
- * Author: @Wenzhuo Ma
- *
- * History:
- * - [2024-02-21] Created by @Wenzhuo Ma
- * - [Additional dates] [Modifications] [Modifier]
- * ...
- */
+
 
 package com.astar.ratingbackend.Service.Impl;
 

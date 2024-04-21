@@ -3,8 +3,10 @@ package com.astar.ratingbackend.Service;
 import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,7 +19,8 @@ public interface IPlaceService {
     public List<String> deletePlace(String userId, String placeId, boolean trueDelete);
     public void deletePlaceT(ObjectId id);
     public ResponseEntity<Place> addRating(String id, Rating rating);
-    public List<ResponseEntity<byte[]>> getPlaceImages(String placeId);
+    public List<String> getPlaceImageUrls(String placeId);
+    public GridFsResource getImageById(String imageId) throws IOException;
     public Map<String, Double> getAverageRatingsMap(ObjectId id);
     public boolean deleteRating(Rating rating);
     Optional<Place> findById(ObjectId id);

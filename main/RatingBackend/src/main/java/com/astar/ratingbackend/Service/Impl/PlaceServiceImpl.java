@@ -19,13 +19,12 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.*;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -583,67 +582,33 @@ public class PlaceServiceImpl implements IPlaceService {
     public List<Place> findTopPlaces() {
         return findTopPlaces(8); // Default limit is 9
     }
-    public List<ResponseEntity<byte[]>> getPlaceImages(String placeId) {
-        try {
-            Optional<Place> optionalPlace = findById(new ObjectId(placeId));
-            if (!optionalPlace.isPresent()) {
-                return null;
-            }
-            Place place = optionalPlace.get();
-            // Retrieve the image map from the place
-            Map<String, List<String>> imageMap = place.getImageMap();
-            if (imageMap == null) {
-                return new ArrayList<>(); // Return empty list if image map is null
-            }
-            // Prepare a list to hold image responses
-            List<ResponseEntity<byte[]>> imageResponses = new ArrayList<>();
-            // Iterate over the image map
-            for (Map.Entry<String, List<String>> entry : imageMap.entrySet()) {
-                List<String> imageIds = entry.getValue();
-
-                // Retrieve each image from GridFS using its image ID
-                for (String imageId : imageIds) {
-                    GridFSFile file = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(imageId)));
-
-                    GridFsResource imageResource =  new GridFsResource(file, getGridFs().openDownloadStream(file.getObjectId()));
-
-                    // Retrieve the GridFsResource using the query
-
-                    if (imageResource != null) {
-                        // Get content type from resource
-                        String contentType = imageResource.getContentType();
-                        if (contentType == null || contentType.isEmpty()) {
-                            // Skip if content type is null or empty
-                            System.err.println("Skipping image with invalid content type for ID: " + imageId);
-                            continue;
-                        }
-
-                        // Set headers
-                        HttpHeaders headers = new HttpHeaders();
-                        headers.setContentType(MediaType.parseMediaType(contentType));
-                        headers.setContentLength(imageResource.contentLength());
-
-                        // Read image data
-                        byte[] imageData = imageResource.getInputStream().readAllBytes();
-
-                        // Create response entity
-                        ResponseEntity<byte[]> imageResponse = ResponseEntity.ok()
-                                .headers(headers)
-                                .body(imageData);
-
-                        imageResponses.add(imageResponse);
-                    } else {
-                        System.err.println("GridFsResource not found for ID: " + imageId);
-                    }
-                }
-            }
-
-            return imageResponses;
-        } catch (Exception e) {
-            throw new RuntimeException("Error while retrieving place images: " + e.getMessage(), e);
+    public List<String> getPlaceImageUrls(String placeId) {
+        Optional<Place> optionalPlace = findById(new ObjectId(placeId));
+        if (!optionalPlace.isPresent()) {
+            return new ArrayList<>(); // Return empty list if place not found
         }
-    }
+        Place place = optionalPlace.get();
+        Map<String, List<String>> imageMap = place.getImageMap();
 
+        // List to hold image URLs
+        List<String> imageUrls = new ArrayList<>();
+
+        // Iterate over the image map
+        for (List<String> imageIds : imageMap.values()) {
+            for (String imageId : imageIds) {
+                // Generate the image URL using the image ID
+                String imageUrl = "/api/place/image/" + imageId;
+                imageUrls.add(imageUrl);
+            }
+        }
+        return imageUrls;
+    }
+    public GridFsResource getImageById(String imageId) throws IOException {
+        GridFSFile file = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(imageId)));
+        GridFsResource imageResource =  new GridFsResource(file, getGridFs().openDownloadStream(file.getObjectId()));
+        return imageResource;
+
+    }
 
 
 }
