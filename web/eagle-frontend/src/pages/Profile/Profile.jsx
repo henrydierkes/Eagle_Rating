@@ -200,7 +200,12 @@ const [avatarPreview, setAvatarPreview] = useState(null);
           onChange={handleAvatarChange}
         />
         <label htmlFor="contained-button-file">
-          <Button variant="contained" color="primary" component="span">
+        <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUploadAvatar}
+            style={{ marginTop: '-20px', marginBottom: '20px', background: 'linear-gradient(to right, #5ea5fc, #6379fe)'}} 
+          >
             Upload Avatar
           </Button>
         </label>

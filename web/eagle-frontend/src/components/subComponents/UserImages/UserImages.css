@@ -13,7 +13,7 @@
   width: 550px;   /* Fixed width */
   height: 448px;  /* Fixed height */
   object-fit: cover;  /* Ensures the image covers the area, cropping as needed */
-  margin-left: 15em;
+  margin-left: 23em;
 }
 
 .images-container img.active {
@@ -46,7 +46,7 @@
 
 .prev {
   position: absolute;
-  left: 10px;
+  left: 12em;
   top: 50%;
   transform: translateY(-50%);
 }
