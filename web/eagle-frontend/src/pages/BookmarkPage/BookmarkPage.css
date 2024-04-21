@@ -1,6 +1,5 @@
 /* Base styling for the page */
 .BookmarkPage {
-  font-family: 'Arial', sans-serif;
   background-color: #f8f9fa; /* Light grey background for the whole page */
 }
 
@@ -14,6 +13,8 @@
   background-color: #ffffff; /* White background for the content area */
   box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
   border-radius: 8px;
+  margin-top: 3em;
+  margin-bottom: 3em;
 }
 
 /* Profile header */
