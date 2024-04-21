@@ -7,26 +7,11 @@ import 'slick-carousel/slick/slick.css';
 import axios from "axios";
 import axiosConfig from "../../../axiosConfig.jsx";
 
-// const images = [
-//     {url: "images/Woodruff_Library.jpeg", name: 'Woodruff Library', rating: 4.9},
-//     {url: "images/cand.jpeg", name: 'Candler', rating: 4.6},
-//     {url: "images/oxford.jpeg", name: 'Oxford Library', rating: 4.7},
-//     {url: "images/candler.jpeg", name: 'Candler Library', rating: 4.3},
-//     {url: "images/campus_background.jpeg", name: 'Campus', rating: 4.5},
-//     {url: "images/convocation-hall.png", name: 'Convo Hall', rating: 4.8},
-//     {url: "images/entrance.jpeg", name: 'Entrance', rating: 4.3},
-//     {url: "images/sign.jpeg", name: 'Sign', rating: 4.5},
-//     {url: "images/building.jpeg", name: 'Some Building', rating: 5.0},
-//     {url: "images/quad.jpeg", name: 'Quad', rating: 4.2}
-// ];
-
-// Sort the images array by rating in descending order
-// const sortedImages = [...images].sort((a, b) => b.rating - a.rating);
-
 function TrendPlaces() {
     const slider = useRef(null);
     const [slidesToShow, setSlidesToShow] = useState(6);
     const [trendyPlaces, setTrendyPlaces] = useState([]);
+    const [placeImages, setPlaceImages] = useState({});
 
     const updateSlidesToShow = () => {
         const screenWidth = window.innerWidth;
@@ -41,10 +26,28 @@ function TrendPlaces() {
             window.removeEventListener('resize', updateSlidesToShow);
         };
     }, []);
+
+    // Fetch trendy places and their images
     useEffect(() => {
         axios.get(`${axiosConfig.baseURL}/api/place/getTrendy`)
             .then(response => {
-                setTrendyPlaces(response.data);
+                const places = response.data;
+                setTrendyPlaces(places);
+
+                // Fetch images for each place
+                places.forEach(place => {
+                    axios.get(`${axiosConfig.baseURL}/api/place/${place.locIdStr}/images`)
+                        .then(response => {
+                            // Store the images in placeImages state using placeId as the key
+                            setPlaceImages(prevImages => ({
+                                ...prevImages,
+                                [place.locIdStr]: response.data
+                            }));
+                        })
+                        .catch(error => {
+                            console.error(`Error fetching images for place ${place.locIdStr}:`, error);
+                        });
+                });
             })
             .catch(error => {
                 console.error('Error fetching trendy places:', error);
@@ -52,7 +55,7 @@ function TrendPlaces() {
     }, []);
 
     const settings = {
-        dot: false,
+        dots: false,
         centerMode: true,
         speed: 300,
         infinite: true,
@@ -73,15 +76,30 @@ function TrendPlaces() {
             </div>
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
-                    {trendyPlaces.map(place => (// Assuming the first image is used as a thumbnail
-                        <TrendPlace
-                            key={place.locIdStr}
-                            placeName={place.locName}
-                            imageUrl={place.images.length>0 ? place.images[0].data : 'images/building.jpeg'}  // Assuming the first image is used as a thumbnail
-                            placeRating={place.averageRating.overall.toFixed(1)}
-                            locId={place.locIdStr}
-                        />
-                    ))}
+                {trendyPlaces.map(place => {
+    // Determine the image URL from the placeImages state
+    const images = placeImages[place.locIdStr];
+    let imageUrl = 'images/building.jpeg'; // Default image
+    if (images && images.length > 0) {
+        if (images[0] instanceof Blob) {
+            imageUrl = URL.createObjectURL(images[0]);
+        } else {
+            // Assuming images[0] is a path or URL
+            imageUrl = images[0];
+        }
+    }
+
+    return (
+        <TrendPlace
+            key={place.locIdStr}
+            placeName={place.locName}
+            imageUrl={imageUrl}
+            placeRating={place.averageRating ? place.averageRating.overall.toFixed(1) : "N/A"}
+            locId={place.locIdStr}
+        />
+    );
+})}
+
                 </Slider>
             </div>
         </div>

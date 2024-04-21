@@ -4,13 +4,15 @@ import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Entity.User;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IRatingService {
     public Rating addLike(String userID, String ratingId, boolean like);
-    public ResponseEntity<String> addRating(Rating rating);
+    public String addRating(Rating rating);
+    public void uploadImage(String ratingId, MultipartFile[] images);
     public Rating validateNewRating(Rating rating);
     public Rating addRatingDb(Rating rating, User user) ;
     public Rating validateRating(String ratingId);

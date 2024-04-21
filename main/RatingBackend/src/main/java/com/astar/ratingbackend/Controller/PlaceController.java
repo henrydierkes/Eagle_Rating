@@ -25,6 +25,7 @@ import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,8 @@ public class PlaceController {
     private IPlaceService placeService;
     @Autowired
     private IRatingService ratingService;
+    @Autowired
+    private GridFsTemplate gridFsTemplate;
 
     /**
      * Retrieves all places stored in the database.
@@ -148,6 +151,26 @@ public class PlaceController {
             placeService.sortRatingsDescending(places);
         }
         return ResponseEntity.ok(places);
+    }
+
+    @GetMapping("/{placeId}/images")
+    public ResponseEntity<List<ResponseEntity<byte[]>>> getPlaceImages(@PathVariable String placeId) {
+        try {
+            // Call the PlaceService to retrieve the list of images for the given placeId
+            List<ResponseEntity<byte[]>> imageResponses = placeService.getPlaceImages(placeId);
+
+            // If the place or images are not found, return a 404 Not Found response
+            if (imageResponses == null || imageResponses.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Return the list of image responses with a 200 OK status
+            return ResponseEntity.ok(imageResponses);
+        } catch (Exception e) {
+            // Handle any exceptions and return a 500 Internal Server Error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ArrayList<>()); // Return an empty list in case of error
+        }
     }
 
 

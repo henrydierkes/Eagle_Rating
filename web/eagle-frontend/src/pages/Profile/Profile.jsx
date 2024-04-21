@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   shiftedUpGrid: {
-    transform: 'translateY(-16px)', // Properly defining the transformation
+    transform: 'translateY(-16px)',
   },
   avatarContent: {
     display: 'flex',
@@ -45,9 +45,57 @@ const Profile = () => {
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [avatar, setAvatar] = useState(null);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  console.log(currentUser);
+  const [currentUserInitialized, setCurrentUserInitialized] = useState(false);
+
+
+  console.log("sigma", currentUser);
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axios.get(`${axiosConfig.baseURL}/api/user/avatar/${currentUser.userId}`, {
+        responseType: 'arraybuffer'
+      });
+      
+      if (response.status === 200) {
+        const contentType = response.headers['content-type'];
+        if (contentType.includes('image')) {
+          // Data received successfully, and it's an image
+          const blob = new Blob([response.data], { type: contentType });
+          const imageUrl = URL.createObjectURL(blob);
+          // Display the image or perform further processing
+          console.log('Image URL:', response.data);
+        } else {
+          console.error('Unexpected content type:', contentType);
+        }
+      } else {
+        console.error('Failed to fetch user profile:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUserProfile();
+    }
+  }, [currentUser]);
+
+const handleAvatarChange = (e) => {
+  const file = e.target.files[0];
+  setAvatar(file);
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    setAvatarPreview(event.target.result);
+  };
+  reader.readAsDataURL(file);
+};
+
+const [avatarPreview, setAvatarPreview] = useState(null);
 
   const handleUsernameChange = async () => {
     try {
@@ -94,17 +142,49 @@ const Profile = () => {
     }
   };
 
+  const handleUploadAvatar = async () => {
+    try {
+      if (!avatar) {
+        setError("No avatar selected.");
+        return;
+      }
+      const formData = new FormData();
+      formData.append("avatar", avatar);
+      formData.append("userId", currentUser.userId);
+      await axios.post(`${axiosConfig.baseURL}/api/user/uploadAvatar`, formData);
+      setSuccessMessage("Avatar uploaded successfully.");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
+      window.location.reload(); // Reload the page after successful upload
+    } catch (error) {
+      setError("Failed to upload avatar");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
+  };
+  
+
   return (
     <div>
       <NavBar />
       <Container className={classes.profileContainer}>
         <Grid container alignItems="center" spacing={2} className={classes.shiftedUpGrid}>
           <Grid item>
-            <Avatar className={classes.avatar}>
-              <span style={{ margin: '15px' }}>
-              {currentUser ? currentUser.username.toUpperCase() : ""}
-              </span>
-            </Avatar>
+          <Avatar className={classes.avatar}>
+            {currentUser && currentUser.avatar ? (
+              // If currentUser has an avatar in the database, display it
+              <img src={`data:image/jpeg;base64,${currentUser.avatar}`} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+            ) : (
+              // If currentUser doesn't have an avatar in the database, display a placeholder
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span style={{ margin: '15px' }}>
+                  {currentUser ? currentUser.username.toUpperCase() : ""}
+                </span>
+              </div>
+            )}
+          </Avatar>
           </Grid>
           <Grid item>
             <Typography variant="h4">
@@ -112,6 +192,43 @@ const Profile = () => {
             </Typography>
           </Grid>
         </Grid>
+        <input
+          accept="image/*"
+          id="contained-button-file"
+          type="file"
+          style={{ display: "none" }}
+          onChange={handleAvatarChange}
+        />
+        <label htmlFor="contained-button-file">
+          <Button variant="contained" color="primary" component="span">
+            Upload Avatar
+          </Button>
+        </label>
+        {/* Display the uploaded avatar if available */}
+        {avatar && (
+          <div className={classes.avatarContent}>
+            <Avatar 
+              alt="Uploaded Avatar" 
+              src={avatarPreview} // Use avatarPreview as the source for the Avatar
+              className={classes.large} 
+            />
+            <Typography variant="body1" color="textSecondary">
+              Avatar ready to be stored.
+            </Typography>
+          </div>
+        )}
+        {/* Save Avatar Button */}
+        {avatar && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleUploadAvatar}
+            style={{ marginTop: '20px', marginBottom: '20px', background: 'linear-gradient(to right, #5ea5fc, #6379fe)'}} 
+          >
+            Save Avatar
+          </Button>
+        )}
+        {/* Existing inputs for username and password */}
         <TextField
           variant="outlined"
           margin="normal"
@@ -120,6 +237,7 @@ const Profile = () => {
           value={newUsername}
           onChange={(e) => setNewUsername(e.target.value)}
         />
+        {/* Change Username Button */}
         <Button
           variant="contained"
           color="primary"
@@ -128,6 +246,7 @@ const Profile = () => {
         >
           Change Username
         </Button>
+        {/* New Password and Confirm Password Inputs */}
         <TextField
           variant="outlined"
           margin="normal"
@@ -146,6 +265,7 @@ const Profile = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
+        {/* Change Password Button */}
         <Button
           variant="contained"
           color="primary"
@@ -154,12 +274,14 @@ const Profile = () => {
         >
           Change Password
         </Button>
+        {/* Error and Success Messages */}
         {error && <Typography color="error">{error}</Typography>}
         {successMessage && <Typography style={{ color: "green" }}>{successMessage}</Typography>}
       </Container>
       <Footer />
     </div>
   );
+  
 };
 
 export default Profile;

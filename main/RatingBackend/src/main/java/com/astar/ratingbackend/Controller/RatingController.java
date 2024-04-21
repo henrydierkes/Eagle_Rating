@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,7 +103,35 @@ public class RatingController {
      */
     @PostMapping("/addRating")
     public ResponseEntity<String> addRating(@RequestBody Rating rating) {
-        return ratingService.addRating(rating);
+        try {
+            // Save the rating to the database
+            String ratingId = ratingService.addRating(rating);
+            System.out.println(ratingId);
+            // Return the rating ID in the response
+            return ResponseEntity.ok(ratingId);
+        } catch (IllegalArgumentException e) {
+            // Handle invalid parameter error
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            // Handle generic error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
+    /**
+     * Uploads images related to a rating.
+     *
+     * @param ratingId The ID of the rating to associate the images with.
+     * @param images The array of images to upload.
+     * @return ResponseEntity with a success or error message.
+     */
+    @PostMapping("/uploadImage")
+    public ResponseEntity<String> uploadImage(@RequestParam String ratingId, @RequestParam MultipartFile[] images) {
+        try {
+            ratingService.uploadImage(ratingId, images);
+            return ResponseEntity.ok("Images uploaded successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload images: " + e.getMessage());
+        }
     }
 
     /**

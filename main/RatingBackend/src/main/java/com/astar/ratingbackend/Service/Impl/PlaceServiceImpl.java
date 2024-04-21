@@ -4,15 +4,24 @@ import com.astar.ratingbackend.Entity.Place;
 import com.astar.ratingbackend.Entity.Rating;
 import com.astar.ratingbackend.Model.PlaceRepository;
 import com.astar.ratingbackend.Service.IPlaceService;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
+import com.mongodb.client.gridfs.model.GridFSFile;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -27,6 +36,14 @@ public class PlaceServiceImpl implements IPlaceService {
     private final PlaceRepository placeRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private GridFsTemplate gridFsTemplate;
+    @Autowired
+    private MongoDatabaseFactory mongoDbFactory;
+    private GridFSBucket getGridFs() {
+        MongoDatabase db = mongoDbFactory.getMongoDatabase();
+        return GridFSBuckets.create(db);
+    }
 
     @Autowired
     public PlaceServiceImpl(PlaceRepository placeRepository) {
@@ -53,8 +70,8 @@ public class PlaceServiceImpl implements IPlaceService {
         if(place.getTags()==null){
             place.setTags(new HashMap<String, Integer>());
         }
-        if(place.getImages()==null){
-            place.setImages(new ArrayList<Place.Image>());
+        if(place.getImageMap()==null){
+            place.setImageMap(new HashMap<String, List<String>>());
         }
         place.setDeleted(false);
         place.setDeletedDate(null);
@@ -147,7 +164,7 @@ public class PlaceServiceImpl implements IPlaceService {
         existingPlace.setTags(placeDetails.getTags());
         existingPlace.setRatingCount(placeDetails.getRatingCount());
         existingPlace.setRatingIds(placeDetails.getRatingIds());
-        existingPlace.setImages(placeDetails.getImages());
+        existingPlace.setImageMap(placeDetails.getImageMap());
         existingPlace.setTotalRating(placeDetails.getTotalRating());
         existingPlace.setRatingAspect(placeDetails.getRatingAspect());
         existingPlace.setDeletedDate(placeDetails.getDeletedDate());
@@ -175,6 +192,7 @@ public class PlaceServiceImpl implements IPlaceService {
                 // Place is already deleted
                 return false;
             }
+
             //update totalRating
             Place.TotalRating totalRatings = place.getTotalRating();
             totalRatings.setOverall(Math.max(totalRatings.getOverall() - overall,0));
@@ -207,6 +225,17 @@ public class PlaceServiceImpl implements IPlaceService {
             place.setRatingIds(ratings);
 
             // Save the updated place object back to the database
+            Map<String, List<String>> imageMap = place.getImageMap();
+            if (imageMap != null) {
+                List<String> imageIds = imageMap.remove(rating.getRatingId().toString());
+                // Delete the images using GridFsTemplate
+                if (imageIds != null) {
+                    for (String imageId : imageIds) {
+                        gridFsTemplate.delete(Query.query(Criteria.where("_id").is(imageId)));
+                    }
+                }
+                // Save the updated place
+            }
             this.updatePlace(id, place);
             return true; // Place found and updated successfully
         } else {
@@ -554,6 +583,68 @@ public class PlaceServiceImpl implements IPlaceService {
     public List<Place> findTopPlaces() {
         return findTopPlaces(8); // Default limit is 9
     }
+    public List<ResponseEntity<byte[]>> getPlaceImages(String placeId) {
+        try {
+            Optional<Place> optionalPlace = findById(new ObjectId(placeId));
+            if (!optionalPlace.isPresent()) {
+                return null;
+            }
+            Place place = optionalPlace.get();
+            // Retrieve the image map from the place
+            Map<String, List<String>> imageMap = place.getImageMap();
+            if (imageMap == null) {
+                return new ArrayList<>(); // Return empty list if image map is null
+            }
+            // Prepare a list to hold image responses
+            List<ResponseEntity<byte[]>> imageResponses = new ArrayList<>();
+            // Iterate over the image map
+            for (Map.Entry<String, List<String>> entry : imageMap.entrySet()) {
+                List<String> imageIds = entry.getValue();
+
+                // Retrieve each image from GridFS using its image ID
+                for (String imageId : imageIds) {
+                    GridFSFile file = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(imageId)));
+
+                    GridFsResource imageResource =  new GridFsResource(file, getGridFs().openDownloadStream(file.getObjectId()));
+
+                    // Retrieve the GridFsResource using the query
+
+                    if (imageResource != null) {
+                        // Get content type from resource
+                        String contentType = imageResource.getContentType();
+                        if (contentType == null || contentType.isEmpty()) {
+                            // Skip if content type is null or empty
+                            System.err.println("Skipping image with invalid content type for ID: " + imageId);
+                            continue;
+                        }
+
+                        // Set headers
+                        HttpHeaders headers = new HttpHeaders();
+                        headers.setContentType(MediaType.parseMediaType(contentType));
+                        headers.setContentLength(imageResource.contentLength());
+
+                        // Read image data
+                        byte[] imageData = imageResource.getInputStream().readAllBytes();
+
+                        // Create response entity
+                        ResponseEntity<byte[]> imageResponse = ResponseEntity.ok()
+                                .headers(headers)
+                                .body(imageData);
+
+                        imageResponses.add(imageResponse);
+                    } else {
+                        System.err.println("GridFsResource not found for ID: " + imageId);
+                    }
+                }
+            }
+
+            return imageResponses;
+        } catch (Exception e) {
+            throw new RuntimeException("Error while retrieving place images: " + e.getMessage(), e);
+        }
+    }
+
+
 
 }
 

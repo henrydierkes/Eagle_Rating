@@ -10,7 +10,7 @@ import { useAuth } from "../../contexts/AuthContext.jsx";
 const CommentList = ({ comment, onThumbsClick }) => {
     const [usersInfo, setUsersInfo] = useState({});
     const [clickStates, setClickStates] = useState({});
-    const currentUserId = useAuth().currentUser ? useAuth().currentUser.userId : null;    
+    const currentUserId = useAuth().currentUser ? useAuth().currentUser.userId : null;
     const userComment = comment.find(c => c.userId === currentUserId && !c.deleted);
     console.log(currentUserId)
     console.log(comment[0])

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
@@ -10,278 +10,355 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import './ratingForm.css';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
 import axios from 'axios';
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
-import { useAuth } from '../../contexts/AuthContext'; // Import useAuth hook
-import { useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import axiosConfig from "../../axiosConfig.jsx";
-//import subrating
-import SubratingData from "../../../public/jsons/Subrating.json";
-
+import axiosConfig from '../../axiosConfig.jsx';
+import { useAuth } from '../../contexts/AuthContext';
+import SubratingData from '../../../public/jsons/Subrating.json';
+import './ratingForm.css';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
     },
-  },
 };
 
+const MAX_FILE_SIZE_MB = 20;
+
 const RatingForm = () => {
-    // define a constant array of your hardcoded tags
-    const staticTags = ["Water Fountain", "Charging Port", "Busy", "Quiet", "Parking Space"];
+    const staticTags = ['Water Fountain', 'Charging Port', 'Busy', 'Quiet', 'Parking Space'];
     const { currentUser } = useAuth();
     const location = useLocation();
     const placeDetails = location.state?.placeDetails;
     const currentSubratings = SubratingData.categories.find(cat => cat.category === placeDetails?.category)?.subratings || {};
-    const tagsFromSubratings = Object.values(currentSubratings);
-    console.log(placeDetails.locIdStr);
     const placeName = placeDetails?.locName;
-    const placeId=placeDetails?.locIdStr;
-    const [tag, setTag] = React.useState([]);
+    const placeId = placeDetails?.locIdStr;
+
+    const [tag, setTag] = useState([]);
     const [uploadedImages, setUploadedImages] = useState([]);
     const [comment, setComment] = useState('');
-    const [ratingType, setRatingType] = useState('total'); // 'total' or 'sub'
+    const [ratingType, setRatingType] = useState('total');
     const [formData, setFormData] = useState({
         rating: 0,
         subrating1: 0,
         subrating2: 0,
         subrating3: 0,
     });
-    useEffect(() => {
-        console.log('formData changed:', formData);
-    }, [formData]);
-    const handleRatingChange = (name, newValue) => {
-        if (ratingType === 'total') {
-            // If the rating type is 'Total Rating', clear subratings and update total rating
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: newValue,
-                subrating1: 0,
-                subrating2: 0,
-                subrating3: 0
-            }));
-        } else {
-            // If the rating type is 'Subrating', clear total rating and update subrating
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: newValue,
-                rating: 0
-            }));
-        }
-    };
-
-const handleImageChange = (e) => {
-    const files = e.target.files;
-    const imagesArray = [];
-    for (let i = 0; i < files.length; i++) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            imagesArray.push(event.target.result);
-            if (imagesArray.length === files.length) {
-                setUploadedImages(imagesArray);
-            }
-        };
-        reader.readAsDataURL(files[i]);
-    }
-};
-    const handleCheckboxChange = (event) => {
-        setTag({ ...tag, [event.target.name]: event.target.checked }); // Change setTags to setTag
-    };
+    const [isLoading, setIsLoading] = useState(false);
+    const [uploadErrors, setUploadErrors] = useState([]);
+    const [submissionError, setSubmissionError] = useState('');
 
     const navigate = useNavigate();
 
+    // Handle changes in ratings
+    const handleRatingChange = (name, newValue) => {
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: newValue,
+            ...(ratingType === 'total' ? { subrating1: 0, subrating2: 0, subrating3: 0 } : { rating: 0 }),
+        }));
+    };
+
+    // Handle image changes
+    const handleImageChange = (e) => {
+        // Convert FileList to array
+        const files = Array.from(e.target.files);
+        const allowedFiles = [];
+        const errors = [];
+
+        // Validate files
+        files.forEach(file => {
+            if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+                errors.push(`File "${file.name}" exceeds the maximum file size limit of ${MAX_FILE_SIZE_MB} MB.`);
+            } else {
+                allowedFiles.push(file);
+            }
+        });
+
+        // Update state with allowed files and errors
+        setUploadedImages(allowedFiles);
+        setUploadErrors(errors);
+    };
+
+    // Handle changes in tags
+    const handleTagsChange = (event) => {
+        const { value } = event.target;
+        setTag(typeof value === 'string' ? value.split(',') : value);
+    };
+
+    // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!formData.rating && !formData.subrating1 && !formData.subrating2 && !formData.subrating3) {
+            alert('Please provide a rating.');
+            return;
+        }
 
-        // Convert the selected tags array to an object with boolean values
-        const tagsObject = staticTags.reduce((obj, tagName) => {
+        setIsLoading(true);
+        setSubmissionError('');
+
+        try {
+            const token = Cookies.get('token');
+            if (!token) {
+                throw new Error('Authentication error. Please log in and try again.');
+            }
+
+            const addRatingRequest = createRatingRequest();
+            const existingRatingId = await checkExistingRating(token);
+
+            if (existingRatingId) {
+                const update = window.confirm('You have already rated this place. Would you like to update your rating?');
+                if (!update) {
+                    setIsLoading(false);
+                    return;
+                }
+                await deleteExistingRating(token, existingRatingId);
+            }
+
+            // Assume you have a function submitRating that sends the rating to the backend and returns a ResponseEntity<String>.
+            const ratingId = await submitRating(token, addRatingRequest);
+            console.log(ratingId)
+
+            // If the rating ID is returned successfully, check for uploaded images
+            if (uploadedImages.length > 0) {
+                // Convert uploadedImages to an array if it's not already an array
+                const imagesArray = Array.isArray(uploadedImages) ? uploadedImages : Array.from(uploadedImages);
+                console.log(imagesArray);
+
+                // Call the uploadImages function and pass the rating ID, images array, and token
+                await uploadImages(ratingId, imagesArray, token);
+            }
+            alert('Rating submitted successfully!');
+            navigate(`/ratingpage/${placeId}`);
+        } catch (error) {
+            console.error('Error:', error);
+            setSubmissionError(error.message || 'Failed to submit rating. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+    // Create a rating request object
+    const createRatingRequest = () => ({
+        userId: currentUser.userId,
+        placeId: placeId,
+        comment,
+        date: new Date().toISOString(),
+        overallRating: {
+            overall: formData.rating,
+            rating1: formData.subrating1,
+            rating2: formData.subrating2,
+            rating3: formData.subrating3,
+        },
+        tags: staticTags.reduce((obj, tagName) => {
             obj[tagName] = tag.includes(tagName);
             return obj;
-        }, {});
+        }, {}),
+    });
 
-        // Prepare the data object based on your database schema
-        const ratingData = {
-            userId: currentUser.userId, // Replace with actual userId from authentication context
-            placeId: placeId, // use the placeId from state
-            comment: comment,
-            date: new Date(), // Set the current date/time for the rating
-            // likes: 0, // Initialize likes and dislikes as zero
-            // dislikes: 0,
-            overallRating: {
-                overall: formData.rating,
-                rating1: formData.subrating1,
-                rating2: formData.subrating2,
-                rating3: formData.subrating3,
+    // Check if user has already rated the place
+    const checkExistingRating = async (token) => {
+        const response = await axios.get(`${axiosConfig.baseURL}/api/rating/userHasRated`, {
+            params: { userId: currentUser.userId, placeId },
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
-            tags: tagsObject,
-            floor: 2, // Set the floor number if applicable, otherwise remove this line
-            images: uploadedImages, // assuming you want to upload images as well
-        };
-        // Retrieve the JWT token from cookies
-        const token = Cookies.get('token');
+        });
+        return response.data ? response.data.ratingIdStr : null;
+    };
 
-        // If there's a token, proceed with the API call
-        if (token) {
-            // Create the authorization header using the token
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`
+    // Delete existing rating
+    const deleteExistingRating = async (token, ratingId) => {
+        await axios.delete(`${axiosConfig.baseURL}/api/rating/delete`, {
+            params: { ratingId },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    };
+
+    // Submit the rating to the server
+    const submitRating = async (token, ratingRequest) => {
+        const response = await axios.post(`${axiosConfig.baseURL}/api/rating/addRating`, ratingRequest, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log(response);
+        return response.data;
+
+    };
+
+    // Upload images associated with the rating
+    const uploadImages = async (ratingId, images, token) => {
+        // Create a FormData object
+        const formData = new FormData();
+
+        // Append the ratingId as a field in the FormData object
+        formData.append('ratingId', ratingId);
+
+        // Append each image to the FormData object
+        images.forEach((image, index) => {
+            formData.append(`images`, image);
+        });
+
+        try {
+            // Make a POST request to upload images
+            const response = await axios.post(
+                `${axiosConfig.baseURL}/api/rating/uploadImage`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
                 }
-            };
-            try {
-                const userHasRatedResponse = await axios.get(`${axiosConfig.baseURL}/api/rating/userHasRated`, {
-                    params: {userId: currentUser.userId, placeId: placeId},
-                    ...config
-                });
+            );
 
-                let existingRatingId = null;
-
-                if (userHasRatedResponse.data) {
-                    const update = window.confirm('You have already rated this place. Would you like to delete your old rating and add a new one?');
-                    if (!update) return; // Exit if the user does not want to update
-                    console.log("found rating");
-                    console.log(userHasRatedResponse.data.ratingIdStr);
-                    // Assuming the response contains the ID of the existing rating
-                    existingRatingId = userHasRatedResponse.data.ratingIdStr;
-
-                    // Make an API call to delete the existing rating
-                    await axios.delete(`${axiosConfig.baseURL}/api/rating/delete`, {
-                        params: {ratingId: existingRatingId},
-                        ...config
-                    });
-                }
-
-                // Call the add rating endpoint
-                const addResponse = await axios.post(`${axiosConfig.baseURL}/api/rating/addRating`, ratingData, config);
-                console.log(addResponse.data);
-                alert('Rating added successfully!');
-                navigate(`/ratingpage/${placeDetails.locIdStr}`);
-
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to submit rating.');
+            console.log('Images uploaded successfully:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error uploading images:', error);
+            if (error.response && error.response.data) {
+                console.error('Error response data:', error.response.data);
+                throw new Error(`Failed to upload images: ${error.response.data.message}`);
             }
+            throw error;
         }
     };
 
 
 
-  const handleTagsChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setTag(
-      typeof value === 'string' ? value.split(',') : value,
+
+
+    return (
+        <div className="rating-form">
+            <h2>Rate {placeName}</h2>
+            <form onSubmit={handleSubmit}>
+                <ToggleButtonGroup
+                    value={ratingType}
+                    exclusive
+                    onChange={(event, newRatingType) => {
+                        if (newRatingType) {
+                            setRatingType(newRatingType);
+                        }
+                    }}
+                    aria-label="rating type"
+                    sx={{mb: 1}}
+                >
+                    <ToggleButton value="total" aria-label="total" sx={{width: '15.5rem'}}>
+                        Total Rating
+                    </ToggleButton>
+                    <ToggleButton value="sub" aria-label="sub" sx={{width: '15.5rem'}}>
+                        Subrating
+                    </ToggleButton>
+                </ToggleButtonGroup>
+
+                {ratingType === 'total' && (
+                    <div className="overall-rating">
+                        <Typography component="legend">Overall Rating:</Typography>
+                        <Rating
+                            name="rating"
+                            value={formData.rating}
+                            onChange={(event, newValue) => handleRatingChange('rating', newValue)}
+                        />
+                    </div>
+                )}
+                {ratingType === 'sub' && (
+                    <>
+                        {Object.entries(currentSubratings).map(([key, label], index) => {
+                            const subratingKey = `subrating${index + 1}`;
+                            return (
+                                <div key={key} className={`subrating${index + 1}`}>
+                                    <Typography component="legend">{label}:</Typography>
+                                    <Rating
+                                        name={label.toLowerCase()}
+                                        value={formData[subratingKey]}
+                                        onChange={(event, newValue) => handleRatingChange(subratingKey, newValue)}
+                                    />
+                                </div>
+                            );
+                        })}
+                    </>
+                )}
+
+                <div className="rating-tags">
+                    <FormControl sx={{mt: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
+                        <InputLabel id="tags-label">Tags</InputLabel>
+                        <Select
+                            labelId="tags-label"
+                            id="tags-select"
+                            multiple
+                            value={tag}
+                            onChange={handleTagsChange}
+                            input={<OutlinedInput label="Tag"/>}
+                            renderValue={(selected) => selected.join(', ')}
+                            MenuProps={MenuProps}
+                        >
+                            {staticTags.map((name) => (
+                                <MenuItem key={name} value={name}>
+                                    <Checkbox checked={tag.indexOf(name) > -1}/>
+                                    <ListItemText primary={name}/>
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                </div>
+
+                <div className="comment-rating">
+                    <TextField
+                        id="filled-textarea"
+                        label="Comment"
+                        placeholder="Type comment here"
+                        multiline
+                        variant="filled"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                    />
+                </div>
+
+                <div className="upload-images">
+                    <label htmlFor="upload" className="upload-label">
+                        <span>Upload Image</span>
+                        <input
+                            id="upload"
+                            type="file"
+                            multiple
+                            onChange={handleImageChange}
+                            className="upload-input"
+                        />
+                    </label>
+                    {uploadErrors.length > 0 && (
+                        <div className="error-message">
+                            {uploadErrors.join(', ')}
+                        </div>
+                    )}
+                    {uploadedImages.map((image, index) => (
+                        <div key={index} className="uploaded-image-wrapper">
+                            <img
+                                className="uploaded-image"
+                                src={URL.createObjectURL(image)}
+                                alt={`Uploaded Image ${index + 1}`}
+                            />
+                        </div>
+                    ))}
+                </div>
+
+                <button className="submit-button" type="submit" disabled={isLoading}>
+                    {isLoading ? 'Submitting...' : 'Submit'}
+                </button>
+            </form>
+        </div>
     );
-  };
-
-  return (
-    <div className="rating-form">
-      <h2>Rate {placeName}</h2>
-      <form onSubmit={handleSubmit}>
-        <ToggleButtonGroup
-          value={ratingType}
-          exclusive
-          onChange={(event, newRatingType) => {
-              // Check if newRatingType is null or undefined (i.e., if user tries to unclick)
-              if (newRatingType !== null && newRatingType !== undefined) {
-                  setRatingType(newRatingType);
-              }
-          }}
-          aria-label="rating type"
-          sx={{ mb: 1 }}
-          >
-          <ToggleButton value="total" aria-label="left aligned" sx={{ width: '15.5rem' }} >
-              Total Rating
-          </ToggleButton>
-          <ToggleButton value="sub" aria-label="centered" sx={{ width: '15.5rem' }}>
-              Subrating
-          </ToggleButton>
-        </ToggleButtonGroup>
-
-
-          {ratingType === 'total' && (
-              <div className='overall-rating'>
-                  <Typography component="legend">Overall Rating:</Typography>
-                  <Rating
-                      name="rating"
-                      value={formData.rating}
-                      onChange={(event, newValue) => handleRatingChange('rating', newValue)}
-                  />
-              </div>
-          )}
-          {ratingType === 'sub' && (
-              <>
-                  {Object.entries(currentSubratings).map(([key, label], index) => {
-                      const subratingKey = `subrating${index + 1}`; // Construct the state key for formData
-                      return (
-                          <div key={key} className={`subrating${index + 1}`}>
-                              <Typography component="legend">{label}:</Typography>
-                              <Rating
-                                  name={label.toLowerCase()}
-                                  value={formData[subratingKey]}
-                                  onChange={(event, newValue) => handleRatingChange(subratingKey, newValue)}
-                              />
-                          </div>
-                      );
-                  })}
-              </>
-          )}
-      <div>
-    <div className='rating-tags'>
-      <FormControl sx={{ mt: 1, width: 'auto', minWidth: 200, maxWidth: 450}}>
-        <InputLabel id="tags-label">Tags</InputLabel>
-          <Select
-              labelId="tags-label"
-              id="tags-select"
-              multiple
-              value={tag}
-              onChange={handleTagsChange}
-              input={<OutlinedInput label="Tag" />}
-              renderValue={(selected) => selected.join(', ')}
-              MenuProps={MenuProps}
-          >
-            {staticTags.map((name) => (
-                <MenuItem key={name} value={name}>
-                    <Checkbox checked={tag.indexOf(name) > -1} />
-                    <ListItemText primary={name} />
-                </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-    </div>
-    </div>
-        <div className='comment-rating'>
-            <TextField
-                id="filled-textarea"
-                label="Comment"
-                placeholder="Type comment here"
-                multiline
-                variant="filled"
-                value={comment} // Make sure to control the input with the state
-                onChange={(e) => setComment(e.target.value)} // Update the state when the input changes
-            />
-        </div>
-        <div className="upload-images">
-          <label htmlFor="upload" className="upload-label">
-            <span>Upload Image</span>
-            <input id="upload" type="file" multiple onChange={handleImageChange} className="upload-input" />
-          </label>
-          {uploadedImages.map((image, index) => (
-          <img className='uploaded-image'key={index} src={image} alt={`Uploaded Image ${index + 1}`} />
-          ))}
-        </div>
-        <button className='submit-button' type="submit">Submit</button>
-      </form>
-    </div>
-  );
 };
 
 export default RatingForm;

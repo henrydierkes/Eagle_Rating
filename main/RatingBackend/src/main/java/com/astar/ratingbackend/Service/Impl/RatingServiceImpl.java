@@ -29,10 +29,12 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -41,6 +43,8 @@ public class RatingServiceImpl implements IRatingService {
     private final com.astar.ratingbackend.Model.RatingRepository ratingRepository;
     @Autowired
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private GridFsTemplate gridFsTemplate;
     @Autowired
     private IPlaceService placeService;
     @Autowired
@@ -123,6 +127,51 @@ public class RatingServiceImpl implements IRatingService {
             throw new IllegalArgumentException("No rating found with ID: " + ratingId);
         }
     }
+    /**
+     * Uploads images for a rating and updates the rating with the image IDs.
+     *
+     * @param ratingId The ID of the rating.
+     * @param images The array of images to be uploaded.
+     * @return The updated rating with the image IDs.
+     */
+    public void uploadImage(String ratingId, MultipartFile[] images) {
+        try {
+            // Validate the rating
+            Rating rating = validateRating(ratingId);
+            if (rating == null) {
+                throw new IllegalArgumentException("Invalid rating ID");
+            }
+
+            // Process and save the images
+            List<String> imageIds = new ArrayList<>();
+            for (MultipartFile image : images) {
+                if (!image.isEmpty()) {
+                    ObjectId imageId = gridFsTemplate.store(image.getInputStream(), image.getOriginalFilename(), image.getContentType());
+                    imageIds.add(imageId.toHexString());
+                }
+            }
+
+            // Update the rating with the image IDs
+            rating.setImageIds(imageIds);
+            ratingRepository.save(rating);
+
+            // Update the place's image map
+            Place place = placeService.validatePlace(rating.getPlaceId());
+            if (place == null) {
+                throw new IllegalArgumentException("Invalid place ID");
+            }
+            Map<String, List<String>> imageMap = place.getImageMap();
+            if (imageMap == null) {
+                imageMap = new HashMap<>();
+            }
+            imageMap.put(ratingId, imageIds);
+            place.setImageMap(imageMap);
+            placeService.updatePlace(place.getLocId(), place);
+        } catch (Exception e) {
+            throw new RuntimeException("Upload image failed: " + e.getMessage(), e);
+        }
+    }
+
 
     /**
      * Saves a new rating to the repository, and updates user and place
@@ -130,29 +179,43 @@ public class RatingServiceImpl implements IRatingService {
      * @return The saved rating entity.
      */
 
+
+
     @Transactional
-    public ResponseEntity<String> addRating(Rating rating){
+    public String addRating(Rating rating) {
         String placeId = rating.getPlaceId();
         try {
+            // Validate the user and place
             User user = userService.validateUser(rating.getUserId());
             Place place = placeService.validatePlace(placeId);
-//            rating=validateNewRating(rating);
+
+            // Add the rating to the database and associate it with the user and place
             Rating addedRating = addRatingDb(rating, user);
             userService.addRating(addedRating);
             placeService.addRating(placeId, addedRating);
-            return ResponseEntity.ok("Rating added successfully");
+
+            // Return the rating ID as a string in the success case
+            return addedRating.getRatingId().toString();
+
         } catch (IllegalArgumentException e) {
-            String errorMessage = "Invalid parameter: " + e.getMessage();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+            // Handle invalid parameter error
+            throw new IllegalArgumentException("Invalid parameter: " + e.getMessage());
+        } catch (Exception e) {
+            // Handle generic error
+            throw new RuntimeException("An error occurred: " + e.getMessage());
         }
     }
+
+
     /**
      * Saves a new rating to the repository, ensuring all necessary default values are set.
      * @param rating The rating entity to be saved.
      * @return The saved rating entity.
      */
     public Rating addRatingDb(Rating rating, User user) {
-        // Check if user already rated the place
+
+            // Check if user already rated the place
+
         if (user.getRatings() != null) {
             for (String ratingId : user.getRatings()) {
                 Rating previousRating = getRateById(new ObjectId(ratingId)).orElse(null);
@@ -205,6 +268,10 @@ public class RatingServiceImpl implements IRatingService {
 
         rating.setOverallRating(overallRating);
 
+        if(rating.getImageIds()==null){
+            List<String> imageIds = new ArrayList<>();
+            rating.setImageIds(imageIds);
+        }
         return ratingRepository.save(rating);
     }
 
@@ -480,5 +547,7 @@ public class RatingServiceImpl implements IRatingService {
 
         return Optional.empty();
     }
+
+
 
 }

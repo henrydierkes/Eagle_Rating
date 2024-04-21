@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.Base64;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -186,5 +187,45 @@ public class UserServiceImpl implements IUserService {
         }
         return false;
     }
+
+    @Override
+    public boolean uploadAvatar(ObjectId userId, byte[] avatarData) {
+        try {
+            Query query = new Query(Criteria.where("_id").is(userId));
+            Update update = Update.update("avatar", avatarData);
+            System.out.print("Among us" + Arrays.toString(avatarData));
+            UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
+            return result.getModifiedCount() > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    @Override
+    public byte[] getAvatar(ObjectId userId) {
+        try {
+            // Query MongoDB to retrieve the user document based on userId
+            Query query = new Query(Criteria.where("_id").is(userId));
+            User user = mongoTemplate.findOne(query, User.class);
+
+            // Check if the user exists and if it has avatar data
+            if (user != null) {
+                byte[] avatarData = user.getAvatarData();
+                System.out.println(Arrays.toString(avatarData));
+                return avatarData;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            // Handle any exceptions, such as database errors
+            e.printStackTrace(); // Log the exception for debugging
+            return null;
+        }
+    }
+
+
+
+
 
 }

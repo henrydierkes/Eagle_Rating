@@ -4,11 +4,19 @@ import com.astar.ratingbackend.Entity.User;
 import com.astar.ratingbackend.Service.IUserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import com.astar.ratingbackend.Model.dto.VerificationRequest;
+import java.io.IOException;
 import java.util.List;
+import java.util.Arrays;
+
 
 /**
  * Controller for managing user entities.
@@ -37,6 +45,27 @@ public class UserController {
     @GetMapping("/get")
     public User getUserById(@RequestParam String userID){
         return userService.findUserById(new ObjectId(userID));
+    }
+
+    /**
+     * Retrieves the avatar of a user by user ID.
+     * @param userId The ID of the user whose avatar is to be retrieved.
+     * @return ResponseEntity with the avatar image data and appropriate content type.
+     */
+    @GetMapping("/avatar/{userId}")
+    public ResponseEntity<byte[]> getAvatar(@PathVariable String userId) {
+        try {
+            // Retrieve the avatar byte array using UserService
+            byte[] avatarData = userService.getAvatar(new ObjectId(userId));
+
+            // Return the avatar data with appropriate content type
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_PNG) // Assuming avatar is PNG format, adjust as needed
+                    .body(avatarData);
+        } catch (Exception e) {
+            // Handle exceptions appropriately
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     /**
@@ -135,6 +164,19 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Password updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update password");
+        }
+    }
+
+    @PostMapping("/uploadAvatar")
+    public ResponseEntity<String> uploadAvatar(@RequestParam("userId") String userId, @RequestParam("avatar") MultipartFile avatarFile) {
+        try {
+            byte[] avatarData = avatarFile.getBytes(); // Get the bytes of the uploaded file
+            userService.uploadAvatar(new ObjectId(userId), avatarData);
+            return ResponseEntity.status(HttpStatus.OK).body("Avatar uploaded successfully");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to read avatar file");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload avatar");
         }
     }
 
