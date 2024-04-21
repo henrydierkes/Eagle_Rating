@@ -120,4 +120,7 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:fluent-hc:4.5.13" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="2bbd828b-97f4-4d66-8a0f-ba1dd92ca917" />
+  </component>
 </module>

@@ -38,8 +38,8 @@ const PlaceDetails = ({ result }) => {
     const location = result?.location ?? 'Unknown Location';
     const latitude = result?.location.latitude ?? '';
     const longitude = result?.location.longitude ?? '';
-    console.log(longitude);
-    console.log(latitude);
+    // console.log(longitude);
+    // console.log(latitude);
     // find subratings to each category
     const category = result.category; // 例如，这里可能会是 "Library"
     console.log(result.category + "aaaaaaaaaaaaaaaa")
@@ -54,6 +54,7 @@ const PlaceDetails = ({ result }) => {
     const getGoogleMapsUrl = (latitude, longitude) => {
         return `https://www.google.com/maps/search/?api=1&query=${latitude}%2C${longitude}`;
     };
+    // console.log(result);
 
 
     return (
@@ -105,7 +106,7 @@ const PlaceDetails = ({ result }) => {
                     </div>
                 </div>
                 <div className="Image">
-                    <UserImages/>
+                    <UserImages placeId={result?.locIdStr}/>
                 </div>
             </div>
             <div className="tag-level">

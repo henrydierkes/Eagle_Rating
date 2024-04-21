@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -30,11 +29,17 @@ class RatingBackendApplicationTests {
     @Autowired
     private Util util;
 
+//    @Test
+//    public void testRatingDelete(){
+//        List<String> ratingIds=new ArrayList<>();
+//        ratingIds.add("6612dc796c40577e66379ad8");
+//        ratingService.cleanRatings(ratingIds, false);
+//    }
     @Test
-    public void testRatingDelete(){
-        List<String> ratingIds=new ArrayList<>();
-        ratingIds.add("6612dc796c40577e66379ad8");
-        ratingService.cleanRatings(ratingIds, false);
+    public void testGetImage(){
+        String placeId="65d51531fa7f55b417232cba";
+        List<String> response=placeService.getPlaceImageUrls(placeId);
+        System.out.println(response);
     }
 //    @Test
 //    public void test1() {

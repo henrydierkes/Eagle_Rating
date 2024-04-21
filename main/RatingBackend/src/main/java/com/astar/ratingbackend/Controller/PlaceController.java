@@ -25,8 +25,11 @@ import com.astar.ratingbackend.Service.IPlaceService;
 import com.astar.ratingbackend.Service.IRatingService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -154,10 +157,10 @@ public class PlaceController {
     }
 
     @GetMapping("/{placeId}/images")
-    public ResponseEntity<List<ResponseEntity<byte[]>>> getPlaceImages(@PathVariable String placeId) {
+    public ResponseEntity<List<String>> getPlaceImages(@PathVariable String placeId) {
         try {
             // Call the PlaceService to retrieve the list of images for the given placeId
-            List<ResponseEntity<byte[]>> imageResponses = placeService.getPlaceImages(placeId);
+            List<String> imageResponses = placeService.getPlaceImageUrls(placeId);
 
             // If the place or images are not found, return a 404 Not Found response
             if (imageResponses == null || imageResponses.isEmpty()) {
@@ -172,7 +175,32 @@ public class PlaceController {
                     .body(new ArrayList<>()); // Return an empty list in case of error
         }
     }
+    @GetMapping("/image/{imageId}")
+    public ResponseEntity<byte[]> getImage(@PathVariable String imageId) {
+        try {
+            GridFsResource imageResource=placeService.getImageById(imageId);
+            if (imageResource != null) {
+                // Create response headers
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.parseMediaType(imageResource.getContentType()));
+                headers.setContentLength(imageResource.contentLength());
 
+                // Read image data
+                byte[] imageData = imageResource.getInputStream().readAllBytes();
+
+                // Return image data as response
+                return ResponseEntity.ok()
+                        .headers(headers)
+                        .body(imageData);
+            } else {
+                // Return 404 Not Found if image is not found
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // Handle any exceptions and return 500 Internal Server Error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Place> getPlaceById(@PathVariable String id) {
