@@ -76,21 +76,30 @@ function TrendPlaces() {
             </div>
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
-                    {trendyPlaces.map(place => {
-                        // Determine the image URL from the placeImages state
-                        const images = placeImages[place.locIdStr];
-                        const imageUrl = images && images.length > 0 ? URL.createObjectURL(images[0].data) : 'images/building.jpeg';  // Use the first image if available
+                {trendyPlaces.map(place => {
+    // Determine the image URL from the placeImages state
+    const images = placeImages[place.locIdStr];
+    let imageUrl = 'images/building.jpeg'; // Default image
+    if (images && images.length > 0) {
+        if (images[0] instanceof Blob) {
+            imageUrl = URL.createObjectURL(images[0]);
+        } else {
+            // Assuming images[0] is a path or URL
+            imageUrl = images[0];
+        }
+    }
 
-                        return (
-                            <TrendPlace
-                                key={place.locIdStr}
-                                placeName={place.locName}
-                                imageUrl={imageUrl}
-                                placeRating={place.averageRating.overall.toFixed(1)}
-                                locId={place.locIdStr}
-                            />
-                        );
-                    })}
+    return (
+        <TrendPlace
+            key={place.locIdStr}
+            placeName={place.locName}
+            imageUrl={imageUrl}
+            placeRating={place.averageRating ? place.averageRating.overall.toFixed(1) : "N/A"}
+            locId={place.locIdStr}
+        />
+    );
+})}
+
                 </Slider>
             </div>
         </div>
