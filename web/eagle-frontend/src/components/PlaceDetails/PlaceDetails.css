@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   background-color: white;
-  margin-top: 3em; /* Increase top margin */
+  margin-top: 1em; /* Increase top margin */
   margin-left: 1em; /* Increase left margin */
   margin-right: 8em; /* Increase right margin */
   width: 100%;
@@ -21,11 +21,12 @@
 .header {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 .header-left {
   display: flex;
   flex-direction: row;
-  width: 70%;
+  width: 150%;
   margin-left: 12%;
 }
 .header-right {
@@ -34,14 +35,17 @@
     justify-content: space-between;  /* Adjust alignment */
     align-items: center;  /* Center align the items */
     width: 50%;
+    margin-left: 5em;
 }
 .header-left-l {
-  display: flex;
   flex-direction: column;
+  margin-left: 2em;
 }
 .header-left-r {
   display: flex;
+  width: 150%;
   flex-direction: column;
+  white-space: nowrap;
 }
 .rating-box-details {
   width: 200px;
@@ -49,7 +53,7 @@
   color: white;
   padding: 12px 16px;
   margin-right: 2em;
-  margin-left: -3.5em;
+  margin-left: 1em;
   margin-top: 15px;
   font-weight: bold;
   border-radius: 15px;
@@ -83,7 +87,7 @@
 
 .rating-amount {
   margin-top: 10px;
-  margin-left: 1em;
+  margin-left: 6.5em;
 }
 
 .location-link {
@@ -115,27 +119,7 @@
   object-fit: cover;
 }
 
-/* Adjust size on smaller screens */
-@media (max-width: 1200px) {
-  .Image {
-    width: 800px;  /* Smaller fixed width */
-    height: 400px;  /* Smaller fixed height */
-  }
-}
 
-@media (max-width: 768px) {
-  .Image {
-    width: 600px;  /* Even smaller fixed width */
-    height: 300px;  /* Even smaller fixed height */
-  }
-}
-
-@media (max-width: 480px) {
-  .Image {
-    width: 100%;  /* Use full container width */
-    height: auto;  /* Adjust height automatically */
-  }
-}
 
 
 .locationAndImage {
