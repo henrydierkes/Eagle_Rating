@@ -1,36 +1,155 @@
-/* BookmarkPage.css */
-body {
-  background: #ffffff;
+/* Base styling for the page */
+.BookmarkPage {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa; /* Light grey background for the whole page */
 }
 
-.stat-val {
-  font-size: 3em;
-  padding-top: 20px;
-  font-weight: bold;
-}
+/* Styling for the NavBar and Footer might be globally set, so no changes here unless needed */
 
-.stat-key {
-  font-size: 1.4em;
-  font-weight: 200;
-}
-
-
-.container.profile {
-  margin-top: 1%;
-}
-
-.control.is-pulled-left span.select {
-  margin-right: 5px;
-  border-radius: 2px;
-}
-
-.modal-card .content h1 {
-  padding: 40px 10px 10px;
-  border-bottom: 1px solid #dadada;
-}
-
-.container.profile .profile-options .tabs ul li.link a {
-  margin-bottom: 20px;
+/* Container and layout */
+.BookmarkPage .container.profile {
+  max-width: 960px;
+  margin: auto;
   padding: 20px;
-  background-color: #F1F1F1;
+  background-color: #ffffff; /* White background for the content area */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  border-radius: 8px;
+}
+
+/* Profile header */
+.BookmarkPage .profile-heading {
+  border-bottom: 1px solid #dee2e6; /* Light grey border for separation */
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.BookmarkPage .profile-title {
+  font-size: 28px; /* Larger font size for the main title */
+  color: #007bff; /* Bootstrap primary blue for title */
+  margin-bottom: 5px;
+}
+
+.BookmarkPage .profile-subtitle {
+  font-size: 18px;
+  color: #6c757d; /* Bootstrap secondary text color */
+}
+
+/* Columns for Likes and Dislikes */
+.BookmarkPage .column {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.BookmarkPage .stat-label {
+  font-size: 18px;
+  color: #343a40; /* Slightly darker gray for text */
+  font-weight: 400;
+}
+
+.BookmarkPage .stat-val {
+  font-size: 22px;
+  font-weight: bold;
+  color: #007bff; /* Reusing the primary blue for emphasis */
+}
+
+/* Buttons */
+.BookmarkPage .edit-preferences-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.BookmarkPage .edit-preferences-button:hover {
+  background-color: #0056b3;
+}
+
+/* Modal specific styles */
+.BookmarkPage .modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  z-index: 1050; /* High z-index to be on top */
+}
+
+.BookmarkPage .modal.is-active {
+  display: flex;
+}
+
+.BookmarkPage .modal-card {
+  width: 100%;
+  max-width: 500px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.BookmarkPage .modal-card-head {
+  padding: 16px;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.BookmarkPage .modal-card-title {
+  font-size: 20px;
+  color: #343a40;
+}
+
+.BookmarkPage .delete {
+  float: right;
+  font-size: 24px;
+  color: #dc3545; /* Bootstrap danger color */
+  border: none;
+  background: none;
+}
+
+.BookmarkPage .modal-save-button, .BookmarkPage .modal-cancel-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  border: none;
+}
+
+.BookmarkPage .modal-save-button {
+  background-color: #28a745; /* Bootstrap success green */
+  color: white;
+}
+
+.BookmarkPage .modal-save-button:hover {
+  background-color: #218838;
+}
+
+.BookmarkPage .modal-cancel-button {
+  background-color: #6c757d; /* Bootstrap secondary gray */
+  color: white;
+}
+
+.BookmarkPage .modal-cancel-button:hover {
+  background-color: #5a6268;
+}
+
+/* Slider arrows */
+.BookmarkPage .slider-arrow-next,
+.BookmarkPage .slider-arrow-prev {
+  cursor: pointer;
+  display: block;
+}
+
+.BookmarkPage .slider-arrow-next {
+  background-color: red;
+}
+
+.BookmarkPage .slider-arrow-prev {
+  background-color: green;
 }

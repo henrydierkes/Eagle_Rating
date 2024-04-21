@@ -54,7 +54,7 @@ public class User implements Serializable {
     private String name;
     @Field("avatar")
     @ApiModelProperty(value = "avatar")
-    private byte[] avatar;
+    private String avatar;
     @Field("createDate")
     @ApiModelProperty(value = "created Date")
     private Date createDate;

@@ -191,9 +191,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean uploadAvatar(ObjectId userId, byte[] avatarData) {
         try {
+            String encodedAvatarData = Base64.getEncoder().encodeToString(avatarData);
+
             Query query = new Query(Criteria.where("_id").is(userId));
-            Update update = Update.update("avatar", avatarData);
-            System.out.print("Among us" + Arrays.toString(avatarData));
+            Update update = Update.update("avatar", encodedAvatarData);
             UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
             return result.getModifiedCount() > 0;
         } catch (Exception e) {
@@ -201,31 +202,21 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-
     @Override
     public byte[] getAvatar(ObjectId userId) {
         try {
-            // Query MongoDB to retrieve the user document based on userId
             Query query = new Query(Criteria.where("_id").is(userId));
             User user = mongoTemplate.findOne(query, User.class);
 
-            // Check if the user exists and if it has avatar data
             if (user != null) {
-                byte[] avatarData = user.getAvatarData();
-                System.out.println(Arrays.toString(avatarData));
-                return avatarData;
+                return user.getAvatarData();
             } else {
                 return null;
             }
         } catch (Exception e) {
-            // Handle any exceptions, such as database errors
-            e.printStackTrace(); // Log the exception for debugging
+            e.printStackTrace();
             return null;
         }
     }
-
-
-
-
 
 }
