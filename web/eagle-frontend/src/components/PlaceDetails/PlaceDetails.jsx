@@ -76,8 +76,8 @@ const PlaceDetails = ({ result }) => {
                 </div>
                 <div className="header-right">
                     <RatingBar result={result} subratings={matchingSubratings} style={{ width: "100%" }} />
-                    <div className="rating-button-container">
-                <button className="rating-button" onClick={handleAddRatingClick}>
+                    <div className="rating-buttona-container">
+                <button className="rating-buttona" onClick={handleAddRatingClick}>
                     Add Rating
                 </button>
             </div>
