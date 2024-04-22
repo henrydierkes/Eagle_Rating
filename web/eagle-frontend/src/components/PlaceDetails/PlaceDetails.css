@@ -30,12 +30,21 @@
   margin-left: 10%;
 }
 .header-right {
-    display: flex;
-    flex-direction: column;  /* or 'row' depending on how you want to organize the components */
-    justify-content: space-between;  /* Adjust alignment */
-    align-items: center;  /* Center align the items */
-    width: 50%;
-    margin-left: 5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center child elements horizontally */
+  justify-content: flex-start; /* Adjust alignment as needed */
+  width: 50%; /* Width of the header-right container */
+  margin-left: 5em;
+  padding-top: 1em;
+}
+
+
+.rating-button-container {
+  width: 100%; /* Take full width */
+  display: flex;
+  justify-content: center; /* Center the button */
+  margin-bottom: 1.5em; /* Space below the button */
 }
 .header-left-l {
   flex-direction: column;
@@ -127,11 +136,11 @@
   flex-direction: row;
   margin-right: 12em;
 }
-
 .ratings {
   margin-left: 20px;
-  margin-top: -37.--5px;
+  margin-top: -37.5px;
 }
+
 
 
 .rating-buttona-container {

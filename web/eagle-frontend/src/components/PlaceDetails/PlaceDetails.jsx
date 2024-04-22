@@ -61,68 +61,69 @@ const PlaceDetails = ({ result }) => {
         <div className="place-details">
             <div className="header">
             <div className="header-left">
-                    <div className="header-left-l">
-                        <div
-                            className="rating-box-details"
-                            style={{ backgroundColor: ratingColor }}
-                        >
-                            <span className="rating-number-details">{rating}</span>
-                        </div>
-                        <p className="rating-amount">{numRate + " ratings"}</p>
-                    </div>
-                    <div className="header-left-r">
-                        <h1 className="placeName">{title}</h1>
-                        <h4 className="floor">{"Floor " + floor}</h4>
-                    </div>
-                </div>
-                <div className="header-right">
-                    <RatingBar result={result} subratings={matchingSubratings} style={{ width: "100%" }} />
-                    <div className="rating-buttona-container">
-                <button className="rating-buttona" onClick={handleAddRatingClick}>
-                    Add Rating
-                </button>
-            </div>
-                </div>
-            </div>
-
-            <div className="locationAndImage">
-                <div className="location">
-                    <a
-                        className="location-link"
-                        href= "_blank" rel="noopener noreferrer"
+                <div className="header-left-l">
+                    <div
+                        className="rating-box-details"
+                        style={{ backgroundColor: ratingColor }}
                     >
-                        📍{result.locName}
-                    </a >
-                    <div className="map">
-                        <iframe
-                            title="Google Map"
-                            width="600"
-                            height="450"
-                            style={{ border: 0 }}
-                            loading="lazy"
-                            allowFullScreen
-                            src={`https://www.google.com/maps/embed/v1/place?&q=${latitude},${longitude}&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs&zoom=17`}
-                        ></iframe>
+                        <span className="rating-number-details">{rating}</span>
                     </div>
+                    <p className="rating-amount">{numRate + " ratings"}</p>
                 </div>
-                <div className="Image">
-                    <UserImages placeId={result?.locIdStr}/>
+                <div className="header-left-r">
+                    <h1 className="placeName">{title}</h1>
+                    <h4 className="floor">{"Floor " + floor}</h4>
                 </div>
             </div>
-            <div className="tag-level">
-                <div className="tag-level-l">
-                    <div className="tags">
-                        {/*             <TopRatings results={result} /> */}
-                        {/*             <UserComments results={results}/> */}
-                        {/* {result.top_tags.map((tag, index) => (
-        <span key={index}>{tag}</span>
-      ))} */}
-                    </div>
+            <div className="header-right">
+                {/*<div className="rating-bar-container">*/}
+                    <RatingBar result={result} subratings={matchingSubratings} style={{ width: "100%" }} />
+                {/*</div>*/}
+                <div className="rating-button-container">
+                    <button className="rating-buttona" onClick={handleAddRatingClick}>
+                        Add Rating
+                    </button>
                 </div>
-                <div className="tag-level-r"></div>{" "}
-                {/* Add the .tag-level-r if needed */}
             </div>
         </div>
+        <div className="locationAndImage">
+            <div className="location">
+                <a
+                    className="location-link"
+                    href= "_blank" rel="noopener noreferrer"
+                >
+                    📍{result.locName}
+                </a >
+                <div className="map">
+                    <iframe
+                        title="Google Map"
+                        width="600"
+                        height="450"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                        src={`https://www.google.com/maps/embed/v1/place?&q=${latitude},${longitude}&key=AIzaSyA8kNTT8tbIbt4WGPDZNYDXC8HJX-EcPvs&zoom=17`}
+                    ></iframe>
+                </div>
+            </div>
+            <div className="Image">
+                <UserImages placeId={result?.locIdStr}/>
+            </div>
+        </div>
+        <div className="tag-level">
+            <div className="tag-level-l">
+                <div className="tags">
+                    {/*             <TopRatings results={result} /> */}
+                    {/*             <UserComments results={results}/> */}
+                    {/* {result.top_tags.map((tag, index) => (
+    <span key={index}>{tag}</span>
+  ))} */}
+                </div>
+            </div>
+            <div className="tag-level-r"></div>{" "}
+            {/* Add the .tag-level-r if needed */}
+        </div>
+    </div>
     );
 };
 
