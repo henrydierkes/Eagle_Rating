@@ -7,7 +7,7 @@
 
 /* Container and layout */
 .BookmarkPage .container.profile {
-  max-width: 960px;
+  max-width: 1560px;
   margin: auto;
   padding: 20px;
   background-color: #ffffff; /* White background for the content area */
@@ -19,7 +19,7 @@
 
 /* Profile header */
 .BookmarkPage .profile-heading {
-  border-bottom: 1px solid #dee2e6; /* Light grey border for separation */
+  border-bottom: 1px solid #ffffff; /* Light grey border for separation */
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
@@ -55,7 +55,7 @@
 
 /* Buttons */
 .BookmarkPage .edit-preferences-button {
-  background-color: #007bff;
+  background-image: linear-gradient(to right, #5ea5fcd5, #637afed5); /* Gradient background */
   color: white;
   border: none;
   padding: 8px 16px;
@@ -65,7 +65,23 @@
 }
 
 .BookmarkPage .edit-preferences-button:hover {
-  background-color: #0056b3;
+  background-image: linear-gradient(to right, #5ea5fcd5, #637afed5); /* Gradient background */
+
+}
+
+.BookmarkPage .edit-account-settings-button {
+  background-image: linear-gradient(to right, #5ea5fcd5, #637afed5); /* Gradient background */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.BookmarkPage .edit-account-settings-button {
+  background-image: linear-gradient(to right, #5ea5fcd5, #637afed5); /* Gradient background */
+
 }
 
 /* Modal specific styles */
@@ -147,14 +163,48 @@
   display: block;
 }
 
+/* Carousel Container */
+.BookmarkPage .slider-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Carousel Arrows */
+.BookmarkPage .slider-arrow-next, .BookmarkPage .slider-arrow-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5vw;
+  height: 5vw;
+  min-width: 30px;
+  min-height: 30px;
+  border: none;
+  background-color: #7cc8ff; /* Light blue background */
+  color: black;
+  font-size: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  border: 1px solid rgba(255, 255, 255, 0);
+  margin: 10px;
+}
+
+.BookmarkPage .slider-arrow-next:hover, .BookmarkPage .slider-arrow-prev:hover {
+  background-color: #c9c9c500;
+}
+
 .BookmarkPage .slider-arrow-next {
-  background-color: red;
+  right: 0;
 }
 
 .BookmarkPage .slider-arrow-prev {
-  background-color: green;
+  left: 0;
 }
 
+<<<<<<< HEAD
 .page-title {
   text-align: center; /* Center align the title */
   font-size: 24px; /* Adjust the font size */
@@ -251,3 +301,5 @@
   margin-top: 4px; /* space between main description and this line */
   font-size: 1em;
 }
+=======
+>>>>>>> 91b97a5f5 (bleh)
