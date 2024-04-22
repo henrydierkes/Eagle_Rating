@@ -60,31 +60,30 @@ const PlaceDetails = ({ result }) => {
     return (
         <div className="place-details">
             <div className="header">
-            <div className="header-left">
-                <div className="header-left-l">
-                    <div
-                        className="rating-box-details"
-                        style={{ backgroundColor: ratingColor }}
-                    >
-                        <span className="rating-number-details">{rating}</span>
+                <div className="header-left">
+                    <div className="header-left-l">
+                        <div
+                            className="rating-box-details"
+                            style={{ backgroundColor: ratingColor }}
+                        >
+                            <span className="rating-number-details">{rating}</span>
+                        </div>
+                        <p className="rating-amount">{numRate + " ratings"}</p>
                     </div>
-                    <p className="rating-amount">{numRate + " ratings"}</p>
+                    <div className="header-left-r">
+                        <h1 className="placeName">{title}</h1>
+                        <h4 className="floor">{"Floor " + floor}</h4>
+                    </div>
                 </div>
-                <div className="header-left-r">
-                    <h1 className="placeName">{title}</h1>
-                    <h4 className="floor">{"Floor " + floor}</h4>
+                <div className="header-right">
+                    {/* Adjusted to make RatingBar more prominent */}
+                    <div className="rating-bar-container" style={{ width: "60%", margin: "0 auto", position: "relative", left: "-20%" }}>
+                    <RatingBar result={result} subratings={matchingSubratings} />
+                        <button className="rating-button" onClick={handleAddRatingClick}>
+                            Add Rating
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className="header-right">
-                {/*<div className="rating-bar-container">*/}
-                    <RatingBar result={result} subratings={matchingSubratings} style={{ width: "100%" }} />
-                {/*</div>*/}
-                <div className="rating-button-container">
-                    <button className="rating-buttona" onClick={handleAddRatingClick}>
-                        Add Rating
-                    </button>
-                </div>
-            </div>
         </div>
         <div className="locationAndImage">
             <div className="location">

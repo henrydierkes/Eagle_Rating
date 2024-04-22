@@ -34,18 +34,21 @@
   flex-direction: column;
   align-items: center; /* Center child elements horizontally */
   justify-content: flex-start; /* Adjust alignment as needed */
-  width: 50%; /* Width of the header-right container */
+  width: 100%; /* Width of the header-right container */
   margin-left: 5em;
   padding-top: 1em;
 }
 
 
-.rating-button-container {
-  width: 100%; /* Take full width */
+.rating-button {
+  margin-left: 9%;
+  width: 80%;
   display: flex;
-  justify-content: center; /* Center the button */
-  margin-bottom: 1.5em; /* Space below the button */
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5em;
 }
+
 .header-left-l {
   flex-direction: column;
   margin-left: 2em;
