@@ -63,10 +63,11 @@ const Profile = () => {
         const contentType = response.headers['content-type'];
         if (contentType.includes('image')) {
           // Data received successfully, and it's an image
-          const blob = new Blob([response.data], { type: contentType });
-          const imageUrl = URL.createObjectURL(blob);
-          // Display the image or perform further processing
-          console.log('Image URL:', response.data);
+          const imageUrl = `data:${contentType};base64,${Buffer.from(response.data, 'binary').toString('base64')}`;
+          // Display the image
+          const imgElement = document.createElement('img');
+          imgElement.src = imageUrl;
+          document.body.appendChild(imgElement); // Append the image to the body or to a specific container
         } else {
           console.error('Unexpected content type:', contentType);
         }
@@ -77,6 +78,8 @@ const Profile = () => {
       console.error('Error fetching user profile:', error);
     }
   };
+  
+  
 
   useEffect(() => {
     if (currentUser) {
@@ -200,12 +203,7 @@ const [avatarPreview, setAvatarPreview] = useState(null);
           onChange={handleAvatarChange}
         />
         <label htmlFor="contained-button-file">
-        <Button
-            variant="contained"
-            color="primary"
-            onClick={handleUploadAvatar}
-            style={{ marginTop: '-20px', marginBottom: '20px', background: 'linear-gradient(to right, #5ea5fc, #6379fe)'}} 
-          >
+          <Button variant="contained" color="primary" component="span">
             Upload Avatar
           </Button>
         </label>
