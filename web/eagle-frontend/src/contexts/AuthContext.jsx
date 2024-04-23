@@ -17,8 +17,9 @@ export const AuthProvider = ({ children }) => {
     const email = Cookies.get('email');
     const userId=Cookies.get('userId');
     const username=Cookies.get('username');
+    const bookmarks=Cookies.get('bookmarks')
     if (token && email) {
-      setCurrentUser({ token, email,userId,username});
+      setCurrentUser({ token, email,userId,username, bookmarks});
     }
   }, []);
 
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
     console.log(token);
     const userId = decodedToken.userIdStr;
     let username = decodedToken.username;
+    let bookmarks=decodedToken.bookmarks;
     // If username is null or undefined, set it to the email
     if (!username) {
       username = email;
@@ -36,8 +38,9 @@ export const AuthProvider = ({ children }) => {
     Cookies.set('email', email);
     Cookies.set('userId', userId);
     Cookies.set('username', username)
+    Cookies.set('bookmarks', bookmarks)
     // console.log(userIdStr);
-    setCurrentUser({ token, email, userId,username});
+    setCurrentUser({ token, email, userId,username, bookmarks});
   };
   const updateUsername = (newUsername) => {
     Cookies.set('username', newUsername);

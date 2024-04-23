@@ -73,13 +73,8 @@ public class AuthServiceImpl implements IAuthService {
         mailSender.send(message);
     }
     @Override
-    public String signIn(String usernameOrEmail, String password) {
-        User user = userRepository.findByEmail(usernameOrEmail);
-        if (user == null) {
-            // If user is not found by email, try to find by username
-            user = userRepository.findByUsername(usernameOrEmail);
-        }
-
+    public String signIn(String email, String password) {
+        User user = userRepository.findByEmail(email);
         if (user != null && user.isVerified() && passwordEncoder.matches(password, user.getPassword())) {
             // Only generate token if the user is verified
             System.out.println(jwtUtil.generateToken(user));

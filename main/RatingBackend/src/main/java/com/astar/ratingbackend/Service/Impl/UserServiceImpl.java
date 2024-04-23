@@ -33,15 +33,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void addUser(User user) {
-        if(user.getComments()==null){
-            user.setComments(null);
-        }
         if(user.getCreateDate()==null){
             user.setCreateDate(new Date());
         }
         user.setDeleted(false);
         user.setDeletedDate(null);
-        user.setName(user.getUsername());
+        user.setUsername(user.getUsername());
         user.setRatings(null);
         mongoTemplate.insert(user);
     }

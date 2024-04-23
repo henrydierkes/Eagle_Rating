@@ -48,18 +48,12 @@ public class User implements Serializable {
     @Field("password")
     @ApiModelProperty(value = "password")
     private String password;
-    @Field("name")
-    @ApiModelProperty(value = "name")
-    private String name;
     @Field("avatar")
     @ApiModelProperty(value = "avatar")
     private String avatar;
     @Field("createDate")
     @ApiModelProperty(value = "created Date")
     private Date createDate;
-    @Field("comments")
-    @ApiModelProperty(value = "comments posted")
-    private String[] comments;
     @Field("ratings")
     @ApiModelProperty(value = "ratings posted")
     private String[] ratings;

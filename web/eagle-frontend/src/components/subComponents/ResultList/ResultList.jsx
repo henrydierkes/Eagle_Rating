@@ -6,6 +6,10 @@ import MenuItem from '@mui/material/MenuItem';
 import {useAuth} from "../../../contexts/AuthContext.jsx";
 import bookmarkIcon from '../Misc/bookmark.png';
 import bookmarkHighlightIcon from '../Misc/bookmark highlight.png';
+import axiosConfig from "../../../axiosConfig.jsx";
+import axios from "axios";
+
+
 
 const getRatingColor = (averageRating) => {
     if (averageRating >= 4) {
@@ -16,16 +20,45 @@ const getRatingColor = (averageRating) => {
         return '#F44336';
     }
 };
+const clickBookmarkApi = async (userId, placeId) => {
+    try {
+        const response = await axios.post(`${axiosConfig.baseURL}/api/user/clickBookMark`, {
+            userId,
+            placeId,
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Failed to add or remove bookmark:', error);
+        return null;
+    }
+};
+
 
 const ResultList = ({ results }) => {
     const navigate = useNavigate();
     const [bookmarked, setBookmarked] = useState({});
     const [sortingMethod, setSortingMethod] = useState('highestRating');
     const { currentUser } = useAuth();
-    const toggleBookmark = (index, e) => {
+    const toggleBookmark = async (index, placeId, e) => {
         e.stopPropagation(); // Prevent the click from reaching the result item
-        setBookmarked(prev => ({ ...prev, [index]: !prev[index] }));
+
+        if (!currentUser) {
+            // Handle case where there is no current user (authentication error)
+            return;
+        }
+
+        // Call the backend API
+        const response = await clickBookmarkApi(currentUser.uid, placeId);
+
+        if (response === 'Email verified successfully') {
+            // Update the bookmarked state if the API call was successful
+            setBookmarked(prev => ({ ...prev, [index]: !prev[index] }));
+        } else {
+            console.error('Failed to add or remove bookmark:', response);
+        }
     };
+
 
     const navigateToLocationDetail = (locationId) => {
         navigate(`/ratingpage/${locationId}`);
@@ -88,8 +121,8 @@ const ResultList = ({ results }) => {
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                     </div>
                     {currentUser && (
-                        <div className="highlight-tag" onClick={(e) => toggleBookmark(index, e)}>
-                            {bookmarked[index] ? (
+                        <div className="highlight-tag" onClick={(e) => toggleBookmark(index, result.locIdStr, e)}>
+                            {bookmarks.includes(result.locIdStr) ? (
                                 <img src={bookmarkHighlightIcon} alt="Bookmarked" />
                             ) : (
                                 <img src={bookmarkIcon} alt="Bookmark" />
@@ -98,7 +131,7 @@ const ResultList = ({ results }) => {
                     )}
                     <div>
                         <h3>{result.locName}</h3>
-                        <p className="description">{result.ratingCount + " ratings"}</p>
+                        <p className="description">{result.ratingCount} ratings</p>
                     </div>
                 </div>
             ))}
