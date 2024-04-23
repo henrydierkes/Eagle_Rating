@@ -1,21 +1,18 @@
 package com.astar.ratingbackend.Controller;
 
 import com.astar.ratingbackend.Entity.User;
+import com.astar.ratingbackend.Model.dto.VerificationRequest;
 import com.astar.ratingbackend.Service.IUserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.astar.ratingbackend.Model.dto.VerificationRequest;
+
 import java.io.IOException;
 import java.util.List;
-import java.util.Arrays;
 
 
 /**
@@ -188,6 +185,15 @@ public class UserController {
             return ResponseEntity.ok("Email verified successfully");
         } else {
             return ResponseEntity.badRequest().body("Verification failed. Invalid code or email.");
+        }
+    }
+    @PostMapping("/clickBookMark")
+    public ResponseEntity<String> clickBookMark(@RequestParam String userId, @RequestParam String placeId){
+        boolean isAdded=userService.clickBookMark(userId, placeId);
+        if(isAdded){
+            return ResponseEntity.ok("Email verified successfully");
+        }else{
+            return ResponseEntity.badRequest().body("add failed");
         }
     }
 

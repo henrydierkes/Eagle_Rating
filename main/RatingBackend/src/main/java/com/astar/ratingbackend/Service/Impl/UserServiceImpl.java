@@ -33,15 +33,12 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void addUser(User user) {
-        if(user.getComments()==null){
-            user.setComments(null);
-        }
         if(user.getCreateDate()==null){
             user.setCreateDate(new Date());
         }
         user.setDeleted(false);
         user.setDeletedDate(null);
-        user.setName(user.getUsername());
+        user.setUsername(user.getUsername());
         user.setRatings(null);
         mongoTemplate.insert(user);
     }
@@ -217,6 +214,45 @@ public class UserServiceImpl implements IUserService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public boolean clickBookMark(String userId, String placeId) {
+        // Retrieve the user by their ID
+        User user = findUserById(new ObjectId(userId));
+
+        // Check if user exists
+        if (user == null) {
+            return false;
+        }
+
+        // Get the user's current bookmarks
+        String[] bookmarks = user.getBookmarks();
+
+        if (bookmarks == null) {
+            // If there are no bookmarks yet, initialize the array with the new placeId
+            bookmarks = new String[]{placeId};
+        } else {
+            // Convert the bookmarks array to a list for easier manipulation
+            List<String> bookmarksList = new ArrayList<>(Arrays.asList(bookmarks));
+
+            if (bookmarksList.contains(placeId)) {
+                // The placeId already exists in the bookmarks list, so remove it
+                bookmarksList.remove(placeId);
+            } else {
+                // The placeId does not exist in the bookmarks list, so add it
+                bookmarksList.add(placeId);
+            }
+
+            // Convert the list back to an array
+            bookmarks = bookmarksList.toArray(new String[0]);
+        }
+
+        // Update the user's bookmarks
+        user.setBookmarks(bookmarks);
+        userRepository.save(user);
+
+        return true;
     }
 
 }
