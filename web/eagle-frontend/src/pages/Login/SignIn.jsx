@@ -36,7 +36,7 @@ export default function SignIn() {
       console.log('Login successful:', { email });
       console.log(response.data);
       login(response.data, email); // Update the context with the token
-      navigate('/home');
+      navigate('/');
       // Handle successful login, e.g., redirect to dashboard
     } catch (error) {
       setError('Invalid email or password. Please try again.');
@@ -47,7 +47,7 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const navigateToFrontPage = () => {
-    navigate('/home');
+    navigate('/');
   };
 
   useEffect(() => {

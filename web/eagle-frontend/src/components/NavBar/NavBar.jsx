@@ -17,7 +17,7 @@ const NavBar = () => {
   }, [currentUser]);
 
   const navigateToFrontPage = () => {
-    navigate('/home');
+    navigate('/');
   };
 
   const handleLoginClick = () => {

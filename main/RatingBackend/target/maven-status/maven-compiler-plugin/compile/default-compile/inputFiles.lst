@@ -1,4 +1,5 @@
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Service/Impl/AuthServiceImpl.java
+/Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Entity/AddRatingRequest.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Service/Impl/UserServiceImpl.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Service/util/JwtTokenFilter.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Entity/Place.java
@@ -27,6 +28,7 @@
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Controller/RatingController.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Entity/Comment.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Model/UserRepository.java
+/Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Config/MultipartConfig.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Entity/AddPlaceRequest.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Entity/Rating.java
 /Users/jonathanwang/Desktop/CS/Eagle_Rating/main/RatingBackend/src/main/java/com/astar/ratingbackend/Controller/UserController.java

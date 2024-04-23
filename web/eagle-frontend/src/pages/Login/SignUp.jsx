@@ -57,7 +57,7 @@ export default function SignUp() {
   };
 
   const navigateToFrontPage = () => {
-    navigate('/home');
+    navigate('/');
   };
 
   useEffect(() => {

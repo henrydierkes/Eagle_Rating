@@ -41,7 +41,6 @@ function App() {
           <ScrollToTop />
           <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/Home" element={<Home />} />
               <Route path="/navigation" element={<Navigation />} />
               <Route path="/BookmarkPage" element={<BookmarkPage />} />
               <Route path="/ratingpage/:locId" element={<RatingPage />} />

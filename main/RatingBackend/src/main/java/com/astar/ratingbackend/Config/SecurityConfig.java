@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://www.eagle-rating.com","http://www.eagle-rating.com", "http://13.58.197.108"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://www.eagle-rating.com","http://www.eagle-rating.com", "http://3.14.69.212", "https://3.14.69.212"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);

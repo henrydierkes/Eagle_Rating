@@ -13,9 +13,10 @@ function TrendPlaces() {
     const [trendyPlaces, setTrendyPlaces] = useState([]);
     const [placeImages, setPlaceImages] = useState({});
 
+    // Update the number of slides to show based on the window width
     const updateSlidesToShow = () => {
         const screenWidth = window.innerWidth;
-        let slides = Math.min(Math.max(1, Math.floor(screenWidth / 200)), 6);
+        const slides = Math.min(Math.max(1, Math.floor(screenWidth / 200)), 6);
         setSlidesToShow(slides);
     };
 
@@ -29,41 +30,54 @@ function TrendPlaces() {
 
     // Fetch trendy places and their images
     useEffect(() => {
-        axios.get(`${axiosConfig.baseURL}/api/place/getTrendy`)
-            .then(response => {
+        // Define an async function inside useEffect to handle the async logic
+        const fetchTrendyPlacesAndImages = async () => {
+            try {
+                // Fetch trendy places
+                const response = await axios.get(`${axiosConfig.baseURL}/api/place/getTrendy`);
                 const places = response.data;
                 setTrendyPlaces(places);
 
-                // Fetch images for each place
-                places.forEach(place => {
-                    axios.get(`${axiosConfig.baseURL}/api/place/${place.locIdStr}/images`)
-                        .then(response => {
-                            // Store the images in placeImages state using placeId as the key
-                            setPlaceImages(prevImages => ({
+                // Fetch images for each place in parallel
+                const fetchImagesPromises = places.map(async (place) => {
+                    try {
+                        const imageResponse = await axios.get(`${axiosConfig.baseURL}/api/place/${place.locIdStr}/images`);
+                        if (imageResponse.data.length > 0) {
+                            // Store the first image URL as the cover image for the current place
+                            const firstImageUrl = imageResponse.data[0];
+                            setPlaceImages((prevImages) => ({
                                 ...prevImages,
-                                [place.locIdStr]: response.data
+                                [place.locIdStr]: `${axiosConfig.baseURL}${firstImageUrl}`,
                             }));
-                        })
-                        .catch(error => {
-                            console.error(`Error fetching images for place ${place.locIdStr}:`, error);
-                        });
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching images for place ${place.locIdStr}:`, error);
+                    }
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching trendy places:', error);
-            });
-    }, []);
 
+                // Use Promise.all to wait for all image fetching to complete
+                await Promise.all(fetchImagesPromises);
+            } catch (error) {
+                console.error('Error fetching trendy places:', error);
+            }
+        };
+
+        // Call the async function
+        fetchTrendyPlacesAndImages();
+    }, [axiosConfig.baseURL]);
+
+    // Settings for the carousel
     const settings = {
         dots: false,
         centerMode: true,
         speed: 300,
         infinite: true,
-        slidesToShow: slidesToShow,
+        slidesToShow,
         arrows: false,
         autoplay: false,
     };
 
+    // Render the component
     return (
         <div className="TrendPlaces">
             <div className="buttons">
@@ -76,30 +90,22 @@ function TrendPlaces() {
             </div>
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
-                {trendyPlaces.map(place => {
-    // Determine the image URL from the placeImages state
-    const images = placeImages[place.locIdStr];
-    let imageUrl = 'images/building.jpeg'; // Default image
-    if (images && images.length > 0) {
-        if (images[0] instanceof Blob) {
-            imageUrl = URL.createObjectURL(images[0]);
-        } else {
-            // Assuming images[0] is a path or URL
-            imageUrl = images[0];
-        }
-    }
+                    {trendyPlaces.map(place => {
+                        console.log(place);
+                        // Determine the image URL for the current place
+                        const imageUrl = placeImages[place.locIdStr] || 'images/building.jpeg'; // Default image URL if no image found
 
-    return (
-        <TrendPlace
-            key={place.locIdStr}
-            placeName={place.locName}
-            imageUrl={imageUrl}
-            placeRating={place.averageRating ? place.averageRating.overall.toFixed(1) : "N/A"}
-            locId={place.locIdStr}
-        />
-    );
-})}
-
+                        // Render the TrendPlace component for each place
+                        return (
+                            <TrendPlace
+                                key={place.locIdStr}
+                                placeName={place.locName}
+                                imageUrl={imageUrl}
+                                placeRating={place.averageRating ? place.averageRating.overall.toFixed(1) : "N/A"}
+                                locId={place.locIdStr}
+                            />
+                        );
+                    })}
                 </Slider>
             </div>
         </div>
