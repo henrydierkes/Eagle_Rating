@@ -33,4 +33,5 @@ public interface IUserService {
     boolean uploadAvatar(ObjectId userId, byte[] avatarBytes);
 
     byte[] getAvatar(ObjectId userId);
+    boolean clickBookMark(String userId, String placeId);;
 }

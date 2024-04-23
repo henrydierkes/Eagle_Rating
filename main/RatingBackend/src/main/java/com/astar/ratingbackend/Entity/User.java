@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 import java.util.Base64;
 import java.util.Date;
-import java.util.Arrays;
 
 @Data
 @Document("User")
@@ -67,7 +66,8 @@ public class User implements Serializable {
     @Field("places_added")
     @ApiModelProperty(value = "places added")
     private String[] placesAdded;
-
+    @Field("bookmarks")
+    private String[] bookmarks;
     @Field("isDeleted")
     @ApiModelProperty(value = "isDeleted")
     private boolean isDeleted;
@@ -83,4 +83,5 @@ public class User implements Serializable {
     @Field("isVerified")
     @ApiModelProperty(value = "Verification Status")
     private boolean isVerified = false;
+
 }
