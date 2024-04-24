@@ -26,7 +26,12 @@ Document the project's development timeline, highlighting key milestones and pro
 
 ## Team Members
 
-List all team members with a brief description of their roles and contributions.
+Tuan Vinh: front end
+Henry Dierkes: front end
+Jonathan Wang: back end 
+Wenzhuo Ma: front end, back end
+Tung Dinh: back end 
+
 
 ## Table of Contents
 
@@ -225,7 +230,7 @@ Explain the process for submitting pull requests, including coding standards and
 
 ### Code of Conduct
 
-Emory Honor Code: THIS CODE IS MY OWN WORK, IT WAS WRITTEN WITHOUT CONSULTINGCODE WRITTEN BY OTHER STUDENTS
+Emory Honor Code: THIS CODE IS MY OWN WORK, IT WAS WRITTEN WITHOUT CONSULTINGCODE WRITTEN BY OTHER STUDENTS.
 Own work here means the entirety of the A* team: Tuan Vinh, Henry Dierkes, Jonathan Wang, Wenzhuo Ma, and Tung Dinh.
 
 ## License
@@ -238,11 +243,10 @@ Provide details on the project's license and what it permits others to do with t
 
 ### Credits
 
-Recognize individuals, organizations, or resources that were crucial in the development of the project.
+Team A*: Tuan Vinh (tuan.vinh@emory.edu), Henry Dierkes (henry.dierkes@emory.edu), Jonathan Wang (jonathan.wang@emory.edu), Wenzhuo Ma (max.ma@emory.edu), and Tung Dinh (tung.dinh@emory.edu). As well as Professor Jeffrey Epstein for guiding us through our project. 
 
 ### References
-
-Team A*: Tuan Vinh (tuan.vinh@emory.edu), Henry Dierkes (henry.dierkes@emory.edu), Jonathan Wang (jonathan.wang@emory.edu), Wenzhuo Ma (max.ma@emory.edu), and Tung Dinh (tung.dinh@emory.edu). As well as Professor Jeffrey Epstein for guiding us through our project. 
+ 
 
 ### External Resources
 
