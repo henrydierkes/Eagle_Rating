@@ -269,4 +269,18 @@ public class UserServiceImpl implements IUserService {
         return true;
     }
 
+    @Override
+    public String[] getUserBookmarks(String userId) {
+        try {
+            ObjectId objectId = new ObjectId(userId); // Convert String userId to ObjectId
+            Optional<User> userOptional = userRepository.findById(objectId);
+            return userOptional.map(User::getBookmarks).orElse(null);
+        } catch (IllegalArgumentException e) {
+            // Handle invalid ObjectId format
+            return null;
+        }
+    }
+
+
+
 }

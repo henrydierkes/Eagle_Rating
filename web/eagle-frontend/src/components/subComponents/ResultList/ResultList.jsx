@@ -40,44 +40,45 @@ const ResultList = ({ results }) => {
     const [sortingMethod, setSortingMethod] = useState('highestRating');
     const { currentUser } = useAuth();
 
-    // Initialize bookmarked state
-    const [bookmarked, setBookmarked] = useState(null);
+    const [bookmarked, setBookmarked] = useState([]);
 
-    // When currentUser is not null and bookmarked is null, treat bookmarked as an empty array
+    // Fetch user's bookmarks when currentUser changes
     useEffect(() => {
-        if (currentUser && bookmarked === null) {
-            setBookmarked([]);
-        }
-    }, [currentUser, bookmarked]);
+        const fetchBookmarks = async () => {
+            if (currentUser) {
+                try {
+                    const response = await axios.get(`${axiosConfig.baseURL}/api/user/bookmarks/${currentUser.userId}`);
+                    const c = setBookmarked(response.data || []);
+                    console.log("bookmarks", response.data);
+                } catch (error) {
+                    console.error('Failed to fetch user bookmarks:', error);
+                }
+            }
+        };
+        fetchBookmarks();
+    }, [currentUser]);
 
-    const toggleBookmark = async (index, placeId, e) => {
+    const toggleBookmark = async (placeId, e) => {
         e.stopPropagation(); // Prevent the click from reaching the result item
 
         if (!currentUser) {
             // Handle case where there is no current user (authentication error)
             return;
         }
-        console.log('userId',currentUser.userId);
+
         // Call the backend API
         const response = await clickBookmarkApi(currentUser.userId, placeId);
 
         // Check the response and handle success case
         if (response === 'Email verified successfully' || response.success) {
             setBookmarked((prev) => {
-                // Create a copy of the previous bookmarked state
-                const updatedBookmarks = [...prev];
-
-                // Toggle the bookmark for the place
-                if (updatedBookmarks.includes(placeId)) {
+                if (prev.includes(placeId)) {
                     // If place is already bookmarked, remove it
-                    const index = updatedBookmarks.indexOf(placeId);
-                    updatedBookmarks.splice(index, 1);
+                    return prev.filter((id) => id !== placeId);
                 } else {
                     // If place is not bookmarked, add it
-                    updatedBookmarks.push(placeId);
+                    return [...prev, placeId];
                 }
-
-                return updatedBookmarks;
             });
         } else {
             console.error('Failed to add or remove bookmark:', response);
@@ -147,8 +148,8 @@ const ResultList = ({ results }) => {
                     </div>
 
                     {currentUser && (
-                        <div className="highlight-tag" onClick={(e) => toggleBookmark(index, result.locIdStr, e)}>
-                            {bookmarked && bookmarked.includes(result.locIdStr) ? (
+                        <div className="highlight-tag" onClick={(e) => toggleBookmark(result.locIdStr, e)}>
+                            {bookmarked.includes(result.locIdStr) ? (
                                 <img src={bookmarkHighlightIcon} alt="Bookmarked" />
                             ) : (
                                 <img src={bookmarkIcon} alt="Bookmark" />

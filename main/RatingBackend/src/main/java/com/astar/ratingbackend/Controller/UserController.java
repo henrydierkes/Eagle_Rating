@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -196,6 +197,28 @@ public class UserController {
             return ResponseEntity.badRequest().body("add failed");
         }
     }
+
+    /**
+     * Retrieves the bookmarked places array of a user by user ID.
+     * @param userId The ID of the user whose bookmarks are to be retrieved.
+     * @return ResponseEntity with the bookmarked places array.
+     */
+    @GetMapping("/bookmarks/{userId}")
+    public ResponseEntity<?> getUserBookmarks(@PathVariable String userId) {
+        try {
+            // Retrieve the user's bookmarks array using UserService
+            String[] bookmarks = userService.getUserBookmarks(userId);
+            System.out.println("sigma" + Arrays.toString(bookmarks));
+
+            // Return the bookmarks array
+            return ResponseEntity.ok(bookmarks);
+        } catch (Exception e) {
+            // Handle exceptions appropriately
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get user bookmarks");
+        }
+    }
+
+
 
 //    @PostMapping("/login")
 //    public ResponseEntity<String> userLogin(@RequestParam("email")String email, @RequestParam("password")String password) {

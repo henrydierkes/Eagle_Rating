@@ -178,7 +178,7 @@ const [avatarPreview, setAvatarPreview] = useState(null);
           <Avatar className={classes.avatar}>
             {currentUser && currentUser.avatar ? (
               // If currentUser has an avatar in the database, display it
-              <img src={`data:image/jpeg;base64,${currentUser.avatar}`} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+              <img src={backgroundImage= `url(${imageUrl})`} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
             ) : (
               // If currentUser doesn't have an avatar in the database, display a placeholder
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

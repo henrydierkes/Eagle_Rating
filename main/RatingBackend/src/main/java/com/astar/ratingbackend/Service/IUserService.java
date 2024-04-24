@@ -34,4 +34,6 @@ public interface IUserService {
 
     byte[] getAvatar(ObjectId userId);
     boolean clickBookMark(String userId, String placeId);;
+
+    String[] getUserBookmarks(String userId);
 }
