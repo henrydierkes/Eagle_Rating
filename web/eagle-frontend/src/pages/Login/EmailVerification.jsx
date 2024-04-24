@@ -19,7 +19,7 @@ function EmailVerification() {
 
     try {
       const response = await axios.post(`${axiosConfig.baseURL}/api/user/verify`, { email, code });
-      console.log(response.data);
+      // console.log(response.data);
       setMessage("Verification successful. You can now log in.");
       navigate('/signin'); // Redirect to sign-in page on successful verification
     } catch (error) {

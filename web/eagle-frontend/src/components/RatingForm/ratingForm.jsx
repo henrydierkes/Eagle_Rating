@@ -130,7 +130,7 @@ const RatingForm = () => {
             if (uploadedImages.length > 0) {
                 // Convert uploadedImages to an array if it's not already an array
                 const imagesArray = Array.isArray(uploadedImages) ? uploadedImages : Array.from(uploadedImages);
-                console.log(imagesArray);
+                // console.log(imagesArray);
 
                 // Call the uploadImages function and pass the rating ID, images array, and token
                 await uploadImages(ratingId, imagesArray, token);

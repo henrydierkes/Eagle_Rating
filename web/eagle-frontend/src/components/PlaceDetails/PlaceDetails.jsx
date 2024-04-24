@@ -42,7 +42,7 @@ const PlaceDetails = ({ result }) => {
     // console.log(latitude);
     // find subratings to each category
     const category = result.category; // 例如，这里可能会是 "Library"
-    console.log(result.category + "aaaaaaaaaaaaaaaa")
+    // console.log(result.category + "aaaaaaaaaaaaaaaa")
     const matchingSubratings = SubratingData.categories.find(cat => cat.category === category)?.subratings || {};
     const handleAddRatingClick = () => {
         navigate("/addRating", { state: { placeDetails: result } });

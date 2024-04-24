@@ -48,7 +48,7 @@ function Map({ setLatitude, setLongitude }) {
       markers.push(marker);
       setLatitude(position.lat);
       setLongitude(position.lng);
-      console.log(position.lat);
+      // console.log(position.lat);
     }
 
     // Sets the map on all markers in the array.

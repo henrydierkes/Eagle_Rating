@@ -91,7 +91,7 @@ function TrendPlaces() {
             <div className="SliderContainer">
                 <Slider ref={slider} {...settings}>
                     {trendyPlaces.map(place => {
-                        console.log(place);
+                        // console.log(place);
                         // Determine the image URL for the current place
                         const imageUrl = placeImages[place.locIdStr] || 'images/building.jpeg'; // Default image URL if no image found
 
