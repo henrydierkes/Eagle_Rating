@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ResultList.css';
 import { useNavigate } from "react-router-dom";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import {useAuth} from "../../../contexts/AuthContext.jsx";
+import { useAuth } from "../../../contexts/AuthContext.jsx";
 import bookmarkIcon from '../Misc/bookmark.png';
 import bookmarkHighlightIcon from '../Misc/bookmark highlight.png';
 import axiosConfig from "../../../axiosConfig.jsx";
 import axios from "axios";
-
-
 
 const getRatingColor = (averageRating) => {
     if (averageRating >= 4) {
@@ -20,13 +18,15 @@ const getRatingColor = (averageRating) => {
         return '#F44336';
     }
 };
+
 const clickBookmarkApi = async (userId, placeId) => {
     try {
-        const response = await axios.post(`${axiosConfig.baseURL}/api/user/clickBookMark`, {
-            userId,
-            placeId,
+        const response = await axios.post(`${axiosConfig.baseURL}/api/user/clickBookMark`, null, {
+            params: {
+                userId,
+                placeId,
+            },
         });
-
         return response.data;
     } catch (error) {
         console.error('Failed to add or remove bookmark:', error);
@@ -37,9 +37,19 @@ const clickBookmarkApi = async (userId, placeId) => {
 
 const ResultList = ({ results }) => {
     const navigate = useNavigate();
-    const [bookmarked, setBookmarked] = useState({});
     const [sortingMethod, setSortingMethod] = useState('highestRating');
     const { currentUser } = useAuth();
+
+    // Initialize bookmarked state
+    const [bookmarked, setBookmarked] = useState(null);
+
+    // When currentUser is not null and bookmarked is null, treat bookmarked as an empty array
+    useEffect(() => {
+        if (currentUser && bookmarked === null) {
+            setBookmarked([]);
+        }
+    }, [currentUser, bookmarked]);
+
     const toggleBookmark = async (index, placeId, e) => {
         e.stopPropagation(); // Prevent the click from reaching the result item
 
@@ -47,13 +57,28 @@ const ResultList = ({ results }) => {
             // Handle case where there is no current user (authentication error)
             return;
         }
-
+        console.log('userId',currentUser.userId);
         // Call the backend API
-        const response = await clickBookmarkApi(currentUser.uid, placeId);
+        const response = await clickBookmarkApi(currentUser.userId, placeId);
 
-        if (response === 'Email verified successfully') {
-            // Update the bookmarked state if the API call was successful
-            setBookmarked(prev => ({ ...prev, [index]: !prev[index] }));
+        // Check the response and handle success case
+        if (response === 'Email verified successfully' || response.success) {
+            setBookmarked((prev) => {
+                // Create a copy of the previous bookmarked state
+                const updatedBookmarks = [...prev];
+
+                // Toggle the bookmark for the place
+                if (updatedBookmarks.includes(placeId)) {
+                    // If place is already bookmarked, remove it
+                    const index = updatedBookmarks.indexOf(placeId);
+                    updatedBookmarks.splice(index, 1);
+                } else {
+                    // If place is not bookmarked, add it
+                    updatedBookmarks.push(placeId);
+                }
+
+                return updatedBookmarks;
+            });
         } else {
             console.error('Failed to add or remove bookmark:', response);
         }
@@ -120,9 +145,10 @@ const ResultList = ({ results }) => {
                     <div className="rating-box" style={{ background: getRatingColor(result.averageRating?.overall) }}>
                         <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                     </div>
+
                     {currentUser && (
                         <div className="highlight-tag" onClick={(e) => toggleBookmark(index, result.locIdStr, e)}>
-                            {bookmarks.includes(result.locIdStr) ? (
+                            {bookmarked && bookmarked.includes(result.locIdStr) ? (
                                 <img src={bookmarkHighlightIcon} alt="Bookmarked" />
                             ) : (
                                 <img src={bookmarkIcon} alt="Bookmark" />

@@ -12,7 +12,7 @@ function CategoryItem({ name, imageUrl }) {
     };
 
     const handleClick = () => {
-        console.log("clicked");
+        // console.log("clicked");
         window.location.href = `/navigation?category=${encodeURIComponent(name)}`;
     };
 

@@ -12,9 +12,9 @@ const CommentList = ({ comment, onThumbsClick }) => {
     const [clickStates, setClickStates] = useState({});
     const currentUserId = useAuth().currentUser ? useAuth().currentUser.userId : null;
     const userComment = comment.find(c => c.userId === currentUserId && !c.deleted);
-    console.log(currentUserId)
-    console.log(comment[0])
-    console.log(onThumbsClick)
+    // console.log(currentUserId)
+    // console.log(comment[0])
+    // console.log(onThumbsClick)
     useEffect(() => {
         const fetchUsersInfo = async () => {
             const userIds = comment.map(comment => comment.userId);

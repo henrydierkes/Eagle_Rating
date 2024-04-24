@@ -34,7 +34,7 @@ export default function SignIn() {
         password,
       });
       console.log('Login successful:', { email });
-      console.log(response.data);
+      // console.log(response.data);
       login(response.data, email); // Update the context with the token
       navigate('/');
       // Handle successful login, e.g., redirect to dashboard

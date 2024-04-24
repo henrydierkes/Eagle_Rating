@@ -33,15 +33,29 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void addUser(User user) {
-        if(user.getCreateDate()==null){
+        // Check if createDate is not set, then set it to the current date
+        if (user.getCreateDate() == null) {
             user.setCreateDate(new Date());
         }
+
+        // Ensure the user is not marked as deleted
         user.setDeleted(false);
         user.setDeletedDate(null);
-        user.setUsername(user.getUsername());
-        user.setRatings(null);
+
+        // Initialize ratings if not already initialized
+        if (user.getRatings() == null) {
+            user.setRatings(null);
+        }
+
+        // Initialize bookmarks if not already initialized
+        if (user.getBookmarks() == null) {
+            user.setBookmarks(new String[0]);
+        }
+
+        // Insert the user into the database using mongoTemplate
         mongoTemplate.insert(user);
     }
+
     @Override
     public User findUserById(ObjectId id) {
         Optional<User> userOptional = Optional.ofNullable(mongoTemplate.findById(id, User.class));
