@@ -225,7 +225,8 @@ Explain the process for submitting pull requests, including coding standards and
 
 ### Code of Conduct
 
-Outline the code of conduct that contributors are expected to follow.
+Emory Honor Code: THIS CODE IS MY OWN WORK, IT WAS WRITTEN WITHOUT CONSULTINGCODE WRITTEN BY OTHER STUDENTS
+Own work here means the entirety of the A* team: Tuan Vinh, Henry Dierkes, Jonathan Wang, Wenzhuo Ma, and Tung Dinh.
 
 ## License
 
@@ -241,7 +242,7 @@ Recognize individuals, organizations, or resources that were crucial in the deve
 
 ### References
 
-List academic references, articles, or other projects that were referenced or influential in the development of the project.
+Team A*: Tuan Vinh (tuan.vinh@emory.edu), Henry Dierkes (henry.dierkes@emory.edu), Jonathan Wang (jonathan.wang@emory.edu), Wenzhuo Ma (max.ma@emory.edu), and Tung Dinh (tung.dinh@emory.edu). As well as Professor Jeffrey Epstein for guiding us through our project. 
 
 ### External Resources
 
