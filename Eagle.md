@@ -26,10 +26,10 @@ Document the project's development timeline, highlighting key milestones and pro
 
 ## Team Members
 
-Tuan Vinh: front end
-Henry Dierkes: front end
-Jonathan Wang: back end 
-Wenzhuo Ma: front end, back end
+Tuan Vinh: front end <br>
+Henry Dierkes: front end <br>
+Jonathan Wang: back end <br>
+Wenzhuo Ma: front end, back end <br>
 Tung Dinh: back end 
 
 
