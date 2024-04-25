@@ -7,13 +7,11 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const categories = [
-  { title: 'Library', category: 'Educational' },
   { title: 'Study Space', category: 'Educational' },
+  { title: 'Building', category: 'Facilities' },
   { title: 'Parking Lot', category: 'Facilities' },
   { title: 'Dorm', category: 'Accommodations' },
   { title: 'Bathroom', category: 'Facilities' },
-  { title: 'Building', category: 'Facilities' },
-  { title: 'Classroom', category: 'Educational' },
 ];
 
 function Grouped({ onCategoryChange }) {

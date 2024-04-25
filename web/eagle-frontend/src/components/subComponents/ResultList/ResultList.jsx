@@ -150,15 +150,15 @@ const ResultList = ({ results }) => {
                     {currentUser && (
                         <div className="highlight-tag" onClick={(e) => toggleBookmark(result.locIdStr, e)}>
                             {bookmarked.includes(result.locIdStr) ? (
-                                <img src={bookmarkHighlightIcon} alt="Bookmarked" />
+                                < img src={bookmarkHighlightIcon} alt="Bookmarked" />
                             ) : (
-                                <img src={bookmarkIcon} alt="Bookmark" />
+                                < img src={bookmarkIcon} alt="Bookmark" />
                             )}
                         </div>
                     )}
                     <div>
                         <h3>{result.locName}</h3>
-                        <p className="description">{result.ratingCount} ratings</p>
+                        <p className="description">{result.ratingCount} ratings</p >
                     </div>
                 </div>
             ))}

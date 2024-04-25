@@ -225,11 +225,12 @@ const LocationForm = ({ location }) => {
               onChange={handleCategoryChange}
               label="Select Category"
           >
+            <MenuItem value={"Bathroom"}>Bathroom</MenuItem>
+            <MenuItem value={"Building"}>Building</MenuItem>
             <MenuItem value={"Dorm"}>Dorm</MenuItem>
-            <MenuItem value={"Library"}>Library</MenuItem>
             <MenuItem value={"Parking Lot"}>Parking Lot</MenuItem>
             <MenuItem value={"Study Space"}>Study Space</MenuItem>
-            <MenuItem value={"Bathroom"}>Bathroom</MenuItem>
+
           </Select>
         </FormControl>
         <TextField

@@ -42,7 +42,7 @@ function EditPreferencesModal({ isOpen, onClose }) {
             <div className="modal-background" onClick={onClose}></div>
             <div className="modal-card">
                 <header className="modal-card-head">
-                    <p className="modal-card-title">Edit Preferences</p>
+                    <p className="modal-card-title">Edit Preferences</p >
                     <button className="delete" onClick={onClose} aria-label="close"></button>
                 </header>
                 <section className="modal-card-body">
@@ -89,12 +89,12 @@ function BookmarkPage() {
             const placeInfoPromises = bookmarks.map(bookmarkId =>
                 axios.get(`${axiosConfig.baseURL}/api/place/${bookmarkId}`)
             );
-            
+
             try {
                 const placeInfoResponses = await Promise.all(placeInfoPromises);
                 const placeInfoData = placeInfoResponses.map(response => response.data);
                 console.log("Place Information:", placeInfoData);
-                setPlaceInfoData(placeInfoData); 
+                setPlaceInfoData(placeInfoData);
                 // Handle the retrieved place information here (e.g., set state, display on UI)
             } catch (error) {
                 console.error('Failed to fetch place information:', error);
@@ -146,16 +146,16 @@ function BookmarkPage() {
                     <div className="columns is-multiline">
                         <div className="column is-12">
                             <h1 className="profile-title">Tuan Vinh</h1>
-                            <p className="profile-subtitle">The user's profile bio goes here, limited to ~500 characters.</p>
+                            <p className="profile-subtitle">The user's profile bio goes here, limited to ~500 characters.</p >
                             <button className="edit-preferences-button" onClick={handleOpenModal} style={{ margin: "5px 0" }}>Edit Preferences</button>
                         </div>
                         <div className="column is-6">
-                            <p className="stat-label">Likes</p>
-                            <p className="stat-val">10</p>
+                            <p className="stat-label">Likes</p >
+                            <p className="stat-val">10</p >
                         </div>
                         <div className="column is-6">
-                            <p className="stat-label">Dislikes</p>
-                            <p className="stat-val">5</p>
+                            <p className="stat-label">Dislikes</p >
+                            <p className="stat-val">5</p >
                         </div>
                     </div>
                 </section>
@@ -171,12 +171,12 @@ function BookmarkPage() {
                                 </div>
                                 {currentUser && (
                                     <div className="highlight-tag-wrapper" onClick={(e) => toggleBookmark(result.locIdStr, e)}>
-                                        <img src={bookmarkHighlightIcon} alt="Bookmarked" className="bookmark-highlight" />
+                                        < img src={bookmarkHighlightIcon} alt="Bookmarked" className="bookmark-highlight" />
                                     </div>
                                 )}
                                 <div className="result-content">
                                     <h3>{result.locName}</h3>
-                                    <p className="description">{result.ratingCount} ratings</p>
+                                    <p className="description">{result.ratingCount} ratings</p >
                                 </div>
                             </div>
 
@@ -184,14 +184,14 @@ function BookmarkPage() {
                     </>
                 )}
                 {bookmarks.length === 0 && (
-                    <p>No bookmarks available.</p>
+                    <p>No bookmarks available.</p >
                 )}
             </div>
 
 
             <Footer />
         </div>
-        
+
     );
 }
 
