@@ -42,8 +42,20 @@ function App() {
           <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/navigation" element={<Navigation />} />
-              <Route path="/BookmarkPage" element={<BookmarkPage />} />
               <Route path="/ratingpage/:locId" element={<RatingPage />} />
+              <Route path="/BookmarkPage" element={
+                  <ProtectedRoute>
+                      <BookmarkPage />
+                  </ProtectedRoute>
+              } />
+              {/*<Route path="/profile" element={*/}
+              {/*    <ProtectedRoute>*/}
+              {/*        <Profile />*/}
+              {/*    </ProtectedRoute>*/}
+              {/*} />*/}
+              <Route path="/profile" element={
+                      <Profile />
+              } />
                 <Route path="/addLocation" element={
                   <ProtectedRoute>
                     <AddLocation />
@@ -56,7 +68,7 @@ function App() {
               } />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<SignIn />} />
-              <Route path="/Profile" element={<Profile />} />
+
               <Route path="/verify" element={<EmailVerification />} />
 
           </Routes>
