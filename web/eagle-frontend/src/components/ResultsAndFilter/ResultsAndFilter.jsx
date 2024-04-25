@@ -17,7 +17,6 @@ const ResultsAndFilter = ({ results, tagsParam, onPlaceClick }) => {
         setFilteredResults(updatedFilteredResults);
     };
 
-    // Function to filter results by selected tags
     const handleTagSelect = (tags) => {
         setSelectedTags(tags);
 
@@ -25,7 +24,6 @@ const ResultsAndFilter = ({ results, tagsParam, onPlaceClick }) => {
         const updatedFilteredResults = results.filter(result => {
             // Check if each of the selected tags is represented in the result's tags
             return Object.keys(tags).every(tagName => {
-                // If the tag is selected, check if its value is greater than 0, otherwise return true
                 return !tags[tagName] || (result.tags[tagName] > 0);
             });
         });

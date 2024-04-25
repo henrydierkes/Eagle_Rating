@@ -1,7 +1,10 @@
 .resultsandfilter {
   display: flex;
+  flex-direction: row; /* Default layout for larger screens */
   justify-content: space-between;
-  width: 90%
+  align-items: flex-start; /* Align items at the start of the cross axis */
+  width: 100%;
+  margin: 20px auto;
 }
 
 .resultseparator {
@@ -11,4 +14,20 @@
   margin-top: 2em;
   height: 90vh;
   margin-bottom: 10vh;
+}
+
+@media (max-width: 768px) {
+  .resultsandfilter {
+    flex-direction: column; /* Stack the components vertically on smaller screens */
+    align-items: center; /* Center the components when stacked */
+    width: 91%;
+  }
+
+  .resultseparator {
+    display: none; /* Hide the separator on smaller screens */
+  }
+
+  .resultsandfilter > * {
+    width: 100%; /* Each component takes the full width */
+  }
 }

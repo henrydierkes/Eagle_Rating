@@ -49,7 +49,7 @@ const LocationForm = ({ location }) => {
   const [longitude, setLongitude] = useState(null);
   const [formData, setFormData] = useState({
     placeName: "",
-    buildingName: "",
+    // buildingName: "",
     floor: 1,
     categoryName: "",
     rating: 0,
@@ -155,7 +155,7 @@ const LocationForm = ({ location }) => {
       }, {});
 
       const placeForm = {
-        locName: formData.placeName + '-' + formData.buildingName,
+        locName: formData.placeName,
         category: formData.categoryName,
         floor: formData.floor,
         location: {
@@ -188,7 +188,7 @@ const LocationForm = ({ location }) => {
             // Reset form data after successful submission
             setFormData({
               placeName: '',
-              buildingName: '',
+              // buildingName: '',
               floor: 1,
               categoryName: '',
               rating: 0,
@@ -244,17 +244,17 @@ const LocationForm = ({ location }) => {
             onChange={handleInputChange}
             required
         />
-        <TextField
-            sx={{ mt: 2, mb: 1}}
-            className='building-name'
-            id="outlined-basic"
-            label="Enter Building"
-            variant="outlined"
-            name="buildingName"
-            value={formData.buildingName}
-            onChange={handleInputChange}
-            required
-        />
+        {/*<TextField*/}
+        {/*    sx={{ mt: 2, mb: 1}}*/}
+        {/*    className='building-name'*/}
+        {/*    id="outlined-basic"*/}
+        {/*    label="Enter Building"*/}
+        {/*    variant="outlined"*/}
+        {/*    name="buildingName"*/}
+        {/*    value={formData.buildingName}*/}
+        {/*    onChange={handleInputChange}*/}
+        {/*    required*/}
+        {/*/>*/}
         <div>
           <label>Select Location on Map:</label>
           {/* <Map onLocationSelected={handleLocationSelected} /> */}

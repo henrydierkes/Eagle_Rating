@@ -21,7 +21,6 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
     const [selectedTags, setSelectedTags] = useState({});
 
     // Function to handle click on a rating chip
-    // Function to handle click on a tag chip
     const handleTagClick = (index) => {
         const chipName = chips[index].name;
 
@@ -47,7 +46,6 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
         setChips(newChips);
     };
 
-
     const getRatingColor = (averageRating) => {
         if (averageRating >= 4) {
             return 'rgba(0, 128, 255, 0.7)';
@@ -57,8 +55,6 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
             return '#F44336';
         }
     };
-    
-
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -70,50 +66,48 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
         onRatingChange(newRangeValue);
     };
 
-
-
     return (
         <div className="filter-rating">
-        <h2 className="filterhead">Filter by Overall Rating</h2>
-        <div className="range-slider">
-            <div
-                className="range-slider__value"
-                style={{
-                    backgroundColor: getRatingColor(rangeValue.overall),
-                    position: 'absolute',
-                    left: '45%',
-                    bottom: '100%',
-                    transform: 'translate(-50%, -10px)',
-                    zIndex: 2,
-                }}
-            >
-                {/* Format the range value to always have two decimal places */}
-                {Number(rangeValue.overall).toFixed(1)}
-            </div>
-            <input
-                name="overall"
-                type="range"
-                min="0"
-                max="5.0"
-                step="0.5"
-                value={rangeValue.overall}
-                onChange={handleInputChange}
-                className="range-slider__range"
-            />
-        </div>
-        <Stack direction="row" spacing={1} style={{ marginTop: '10em' }}>
-            {chips.map((chip, index) => (
-                <Chip
-                    key={index}
-                    label={chip.name}
-                    variant={chip.variant}
-                    color="primary"
-                    onClick={() => handleTagClick(index)} // Renamed to handleTagClick
-                    style={{ marginRight: '1.5em' }}
+            <h2 className="filterhead">Filter by Overall Rating</h2>
+            <div className="range-slider">
+                <div
+                    className="range-slider__value"
+                    style={{
+                        backgroundColor: getRatingColor(rangeValue.overall),
+                        position: 'absolute',
+                        left: '45%',
+                        bottom: '100%',
+                        transform: 'translate(-50%, -10px)',
+                        zIndex: 2,
+                    }}
+                >
+                    {/* Format the range value to always have two decimal places */}
+                    {Number(rangeValue.overall).toFixed(1)}
+                </div>
+                <input
+                    name="overall"
+                    type="range"
+                    min="0"
+                    max="5.0"
+                    step="0.5"
+                    value={rangeValue.overall}
+                    onChange={handleInputChange}
+                    className="range-slider__range"
                 />
-            ))}
-        </Stack>
-    </div>
+            </div>
+            <Stack direction="row" spacing={1} style={{ marginTop: '10em' }}>
+                {chips.map((chip, index) => (
+                    <Chip
+                        key={index}
+                        label={chip.name}
+                        variant={chip.variant}
+                        color="primary"
+                        onClick={() => handleTagClick(index)} // Renamed to handleTagClick
+                        style={{ marginRight: '1.5em' }}
+                    />
+                ))}
+            </Stack>
+        </div>
     );
 };
 

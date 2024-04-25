@@ -44,10 +44,10 @@ function TrendPlaces() {
                         const imageResponse = await axios.get(`${axiosConfig.baseURL}/api/place/${place.locIdStr}/images`);
                         if (imageResponse.data.length > 0) {
                             // Store the first image URL as the cover image for the current place
-                            const firstImageUrl = imageResponse.data[0];
+                            const lastImageUrl = imageResponse.data[imageResponse.data.length - 1];
                             setPlaceImages((prevImages) => ({
                                 ...prevImages,
-                                [place.locIdStr]: `${axiosConfig.baseURL}${firstImageUrl}`,
+                                [place.locIdStr]: `${axiosConfig.baseURL}${lastImageUrl}`,
                             }));
                         }
                     } catch (error) {

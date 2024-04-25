@@ -4,7 +4,9 @@
   justify-content: center;
   align-items: center;
   background-color: white;
+  width: 100%; /* Ensure the container takes full width */
 }
+
 
 .load-more-button, .load-all-button {
   padding: 15px 30px;
@@ -19,7 +21,7 @@
   margin-top: 20px;
   margin-bottom: 20px;
   position: relative; /* Add position relative */
-  left: -26%; /* Position 25% from the left */
+  left: -16.5%; /* Position 25% from the left */
   display: inline-block;
 }
 
@@ -30,4 +32,21 @@
 
 .load-more-button:active, .load-all-button:active {
   transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .load-more-button, .load-all-button {
+    padding: 15px 30px;
+    background-image: linear-gradient(to right, #5ea5fc, #6379fe);
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    outline: none;
+    margin: 20px auto; /* Center buttons vertically and use auto margin for horizontal centering */
+    display: block; /* Use block to apply auto margins */
+    left:0;
+  }
 }

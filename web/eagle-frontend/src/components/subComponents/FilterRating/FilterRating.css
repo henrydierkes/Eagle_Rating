@@ -1,23 +1,35 @@
 /* FilterRating.css */
 
 .filter-rating {
+    display: flex;
+    flex-direction: column;
+    order:3;
+    /*margin-left: 2%;*/
     background: white;
-    padding: 7em;
-    margin-right: -5em;
+    align-items: center;
+    padding: 2em;
+    margin-top: 15vh;
+    /*margin-right: -5em;*/
     /*box-shadow: 0 2px 12px rgba(0,0,0,0.1);*/
-    width: 50%;
+    width: 45%;
     max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .filterhead {
+    width: 100%;
     color: #333;
     margin-bottom: 30px;
-    margin-left: -30px;
+    /*margin-left: -30px;*/
     top: 30px;
     text-align: center;
 }
 
 .range-slider {
+    width: 80%;
+    display: flex;
+    justify-content: center; /* Center slider container */
     position: relative;
 }
 
@@ -28,14 +40,13 @@
 }
 
 .range-slider__range {
+    width: 85%; /* Relative width to the parent */
     -webkit-appearance: none;
-    margin-top: 20px;
-    width: 85%;
-    margin: 20px;
     height: 8px;
     border-radius: 5px;
     background: #e9ecef;
     outline: none;
+    cursor: pointer;
 }
 
 .range-slider__range::-webkit-slider-thumb {
@@ -55,8 +66,9 @@
 
 .range-slider__value {
     position: absolute;
-    top: 60px; /* Adjusted to move the box up to create more space between the box and the slider */
+    top: 8vh; /* Adjusted to move the box up to create more space between the box and the slider */
     left: 50%;
+    margin-left: 4%;
     transform: translateX(-50%);
     background-color: #000000; /* Dark background for contrast */
     color: #fff; /* White text for readability */
@@ -64,12 +76,12 @@
     border-radius: 4px;
     font-size: 20px; /* Adjust if you want the text bigger */
     white-space: nowrap;
-    box-shadow: 0 3px 6px rgba(0, 64, 0, 0.3); /* Subtle shadow for depth */
+    box-shadow: 0 2px 4px rgba(0, 64, 0, 0.3); /* Subtle shadow for depth */
     z-index: 2;
     display: flex; /* Added for flexbox layout */
     justify-content: center; /* Centers the content horizontally */
     align-items: center; /* Centers the content vertically */
-    height: 40px; /* Fixed height to better control the size and centering of the content */
+    height: 5vh; /* Fixed height to better control the size and centering of the content */
 }
 
 
@@ -140,9 +152,33 @@ input:checked + .slider:before {
 .disabled label {
     opacity: 0.5;
 }
+.stack {
+    width: 100%; /* Take full width for better control */
+    display: flex;
+    justify-content: center; /* Center the chips */
+    margin-top: 2em;
+}
+.chip {
+    margin: 0 8px; /* Provide some horizontal space between chips */
+}
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .filter-rating {
-        width: calc(100% - 40px);
+        width: 100%; /* Adjust as necessary */
+        /*margin-right: 0; !* Reset the right margin on smaller screens *!*/
+        margin-left: 0;
+        padding: 1em;
+        margin-bottom: 20px; /* Add some spacing below */
+        order:1;
+    }
+
+    .chips-container {
+        justify-content: flex-start; /* Align chips to the start */
+        gap: 5px; /* Reduce the gap on smaller screens */
+    }
+
+    .chip {
+        width: auto; /* Let the chip adjust its width */
+        margin-bottom: 5px; /* Adjust margin as necessary */
     }
 }
