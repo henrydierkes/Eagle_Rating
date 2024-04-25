@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import axiosConfig from "../../axiosConfig.jsx";
@@ -64,6 +65,7 @@ function BookmarkPage() {
     const [placeInfoData, setPlaceInfoData] = useState([]);
     const handleOpenModal = () => setModalOpen(true);
     const handleCloseModal = () => setModalOpen(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (currentUser) {
@@ -138,7 +140,8 @@ function BookmarkPage() {
     return (
         <div className="BookmarkPage">
             <NavBar />
-            <div className="container profile">
+            <h1 className="page-title">Bookmarked Pages</h1> {/* Title added here */}
+            {/* <div className="container profile">
                 <section className="profile-heading">
                     <div className="columns is-multiline">
                         <div className="column is-12">
@@ -156,30 +159,27 @@ function BookmarkPage() {
                         </div>
                     </div>
                 </section>
-            </div>
+            </div> */}
             {isModalOpen && <EditPreferencesModal isOpen={isModalOpen} onClose={handleCloseModal} />}
             <div>
                 {placeInfoData.length > 0 && (
                     <>
                         {placeInfoData.map((result, index) => (
-                            <div key={result.locIdStr || index} className="result-item" onClick={() => navigateToLocationDetail(result.locIdStr)}>
-                                <div className="rating-box" style={{ background: getRatingColor(result.averageRating?.overall) }}>
+                            <div key={result.locIdStr || index} className="result-item-wrapper" onClick={() => navigateToLocationDetail(result.locIdStr)}>
+                                <div className="rating-box-wrapper" style={{ background: getRatingColor(result.averageRating?.overall) }}>
                                     <span className="rating-number">{result.averageRating?.overall.toFixed(1)}</span>
                                 </div>
                                 {currentUser && (
-                                    <div className="highlight-tag" onClick={(e) => toggleBookmark(result.locIdStr, e)}>
-                                        {placeInfoData.includes(result.locIdStr) ? (
-                                            <img src={bookmarkHighlightIcon} alt="Bookmarked" />
-                                        ) : (
-                                            <img src={bookmarkIcon} alt="Bookmark" />
-                                        )}
+                                    <div className="highlight-tag-wrapper" onClick={(e) => toggleBookmark(result.locIdStr, e)}>
+                                        <img src={bookmarkHighlightIcon} alt="Bookmarked" className="bookmark-highlight" />
                                     </div>
                                 )}
-                                <div>
+                                <div className="result-content">
                                     <h3>{result.locName}</h3>
                                     <p className="description">{result.ratingCount} ratings</p>
                                 </div>
                             </div>
+
                         ))}
                     </>
                 )}

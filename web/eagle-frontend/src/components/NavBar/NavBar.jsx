@@ -3,6 +3,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import './NavBar.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext.jsx'; // Adjust the path as needed
+import bookmarkIcon from '../../components/subComponents/Misc/bookmark.png';
 import axios from 'axios';
 
 const NavBar = () => {
@@ -44,6 +45,9 @@ const NavBar = () => {
       <div className="nav-links">
         {currentUser ? (
           <>
+            <a href="/BookmarkPage">
+              <img src={bookmarkIcon} alt="Bookmark" style={{ maxWidth: '3vw', height: '3vh', paddingRight: '.5vw' }}/>
+            </a>
             <a href="/profile" className="user-name" onClick={handleProfileClick}>
               {currentUser.username}
             </a>

@@ -1,6 +1,6 @@
 /* Base styling for the page */
 .BookmarkPage {
-  background-color: #f8f9fa; /* Light grey background for the whole page */
+  background-color: #ffffff; /* Light grey background for the whole page */
 }
 
 /* Styling for the NavBar and Footer might be globally set, so no changes here unless needed */
@@ -153,4 +153,101 @@
 
 .BookmarkPage .slider-arrow-prev {
   background-color: green;
+}
+
+.page-title {
+  text-align: center; /* Center align the title */
+  font-size: 24px; /* Adjust the font size */
+  color: #333; /* Set the color */
+  margin-top: 20px; /* Add some top margin */
+}
+
+
+.result-item-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #cccccc1b;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f5f5f508;
+  width: 90%;
+  transition: transform 0.2s ease;
+  margin-left: 5%;
+}
+
+.result-item-wrapper:hover {
+  transform: scale(1.01);
+}
+
+.result-item-wrapper:active {
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%, 100% {
+      transform: scale(1.0);
+  }
+  50% {
+      transform: scale(1.05);
+  }
+}
+
+.rating-box-wrapper {
+  color: white;
+  padding: 20px 30px;
+  margin-right: 20px;
+  margin-left: 5px;
+  font-weight: bold;
+  border-radius: 5px;
+  font-size: 1.3em;
+}
+
+.rating-box-wrapper .rating-number {
+  font-size: 1.2em;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.highlight-tag-wrapper {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.result-content {
+  flex: 1;
+}
+
+.result-content h3 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.result-content p {
+  margin: 0;
+  color: #e8e5e569;
+  font-size: 1em;
+}
+
+.bookmark,
+.bookmark-highlight {
+  width: 20px;
+  height: auto;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .result-item-wrapper {
+      flex-direction: column;
+      padding: 10px;
+  }
+}
+.result-content .description {
+  font-size: 0.8em;
+  color: #999; /* lighter gray color */
+  margin-top: 4px; /* space between main description and this line */
+  font-size: 1em;
 }
