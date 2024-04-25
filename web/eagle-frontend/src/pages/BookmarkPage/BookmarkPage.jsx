@@ -108,21 +108,26 @@ function BookmarkPage() {
 
     const toggleBookmark = async (placeId, e) => {
         e.stopPropagation(); // Prevent the click from reaching the result item
-
+    
         if (!currentUser) {
             // Handle case where there is no current user (authentication error)
             return;
         }
-
+    
         // Call the backend API
         const response = await clickBookmarkApi(currentUser.userId, placeId);
-
+    
         // Check the response and handle success case
         if (response === 'Email verified successfully' || response.success) {
             setBookmarks((prev) => {
                 if (prev.includes(placeId)) {
                     // If place is already bookmarked, remove it
-                    return prev.filter((id) => id !== placeId);
+                    const updatedBookmarks = prev.filter((id) => id !== placeId);
+                    if (updatedBookmarks.length === 0) {
+                        // If no bookmarks left, reset placeInfoData
+                        setPlaceInfoData([]);
+                    }
+                    return updatedBookmarks;
                 } else {
                     // If place is not bookmarked, add it
                     return [...prev, placeId];
@@ -132,6 +137,7 @@ function BookmarkPage() {
             console.error('Failed to add or remove bookmark:', response);
         }
     };
+    
 
     const navigateToLocationDetail = (locationId) => {
         navigate(`/ratingpage/${locationId}`);
