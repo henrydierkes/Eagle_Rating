@@ -92,7 +92,7 @@ const SearchBar = () => {
             <TextField
               {...params}
               variant="outlined"
-              placeholder="Start typing to look for places..."
+              placeholder="Search for places..."
               onKeyDown={onKeyDown}
               InputProps={{
                 ...params.InputProps,
