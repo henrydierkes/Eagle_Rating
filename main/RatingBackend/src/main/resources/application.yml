@@ -21,7 +21,7 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: eaglerating.astar@gmail.com  # Replace with your Gmail email address
+    username: eaglerating.astar@gmail.com
     password: prpriaikwvedneer
     properties:
       mail:
@@ -30,13 +30,11 @@ spring:
           starttls:
             enable: true
 knife4j:
-  enable: true  #是否开启Swagger
+  enable: true
   cors: true
   basic:
     username: admin
     password: 123
-    enable: true #开启认证
+    enable: true
   setting:
-    # Knife4j默认显示中文(zh-CN),如果开发者想直接显示英文(en-US)，在通过该配置进行设置即可
     language: en-US
-    # 是否启用Host

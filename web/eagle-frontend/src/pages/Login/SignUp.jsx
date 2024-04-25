@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useState } from 'react';
 import {
   Avatar,
   Button,
@@ -17,11 +16,11 @@ import {
   createTheme,
   ThemeProvider,
 } from '@mui/material';
-import './SignUp.css';
-import axiosConfig from "../../axiosConfig.jsx"; // Make sure this imports your CSS with the background styles
+import './SignUp.css'; // Ensure this file contains any additional styles needed for the page
+import axiosConfig from "../../axiosConfig.jsx";
 import Cookies from 'js-cookie';
 
-const defaultTheme = createTheme();
+const defaultTheme = createTheme(); // You can customize this theme to match your app's design
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
@@ -29,6 +28,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
   const isValidEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -44,32 +44,21 @@ export default function SignUp() {
       return; // Stop the form submission
     }
     try {
-      // console.log({ email, password });
       const response = await axios.post(`${axiosConfig.baseURL}/auth/sign-up`, { email, password });
-      console.log('Sign up successful:', response.data);
       Cookies.set('email', email, { expires: 1 }); // Expires in 1 day
-
       navigate('/verify', { state: { email } });
     } catch (error) {
-      console.error('Sign up failed:', error.response.data);
       setError(error.response.data.message);
     }
   };
 
-  const navigateToFrontPage = () => {
-    navigate('/');
-  };
-
   useEffect(() => {
     const root = document.querySelector(":root");
-    
     const handlePointer = (e) => {
       root.style.setProperty("--y", `${e.clientY}px`);
     };
-
     window.addEventListener("pointermove", handlePointer);
     window.addEventListener("pointerdown", handlePointer);
-
     return () => {
       window.removeEventListener("pointermove", handlePointer);
       window.removeEventListener("pointerdown", handlePointer);
@@ -79,21 +68,36 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <div className="SignUp">
-        <div id="bg"></div> {/* Background with blur */}
-        <div id="bg_mask"></div> {/* Mask for focus effect */}
-        <div className="loginHolder">
-        <h1 className="logo button logo-bold" onClick={navigateToFrontPage} style={{ marginTop: '25px', fontSize: '25px', display: 'inline-block' }}>EagleRating</h1>
+        <CssBaseline />
+        <div id="bg"></div>
+        <div id="bg_mask"></div>
         <Container component="main" maxWidth="xs">
-          <CssBaseline />
           <Box
-                  sx={{
-                    marginTop: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-              >
-            <Typography component="h1" variant="h5" className="muititle">
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              boxShadow: 1,
+              width: '100%',
+              maxWidth: '400px',
+              p: 3,
+              position: 'relative',
+            }}
+          >
+            <Typography
+              component="h1"
+              variant="h5"
+              onClick={() => navigate('/')}
+              sx={{ cursor: 'pointer', fontSize: '25px', marginTop: '25px' }}
+              style={{ marginTop: '25px', fontSize: '25px', display: 'inline-block' }}
+              className="logo button logo-bold"
+            >
+              EagleRating
+            </Typography>
+            <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
               Sign Up
             </Typography>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -134,15 +138,20 @@ export default function SignUp() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
               {error && (
-                <Typography variant="body2" color="error">
+                <Typography variant="body2" color="error" sx={{ mt: 2 }}>
                   {error}
                 </Typography>
               )}
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+                sx={{ mt: 2 }}
+              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 2, mb: 2 }}
               >
                 Sign Up
               </Button>
@@ -156,22 +165,7 @@ export default function SignUp() {
             </Box>
           </Box>
         </Container>
-        </div>
       </div>
     </ThemeProvider>
   );
 }
-<Box
-  sx={{
-    marginTop: 8,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: 'white', // Ensures white background
-    padding: 3, // Consistent padding
-    borderRadius: 2, // Consistent border radius
-    
-    width: '100%', // Ensures the Box takes up the width it needs based on its parent (Container maxWidth="xs")
-    maxWidth: 400, // Optional: Ensures the Box does not grow beyond 400px, adjust as needed
-  }}
-></Box>

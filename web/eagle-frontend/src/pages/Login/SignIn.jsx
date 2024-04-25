@@ -69,66 +69,76 @@ export default function SignIn() {
   return (
       <div className="Signin">
         <ThemeProvider theme={defaultTheme}>
-          <div id="bg"></div>
-          <div id="bg_mask"></div>
-          <div className="loginHolder">
-            <h1 className="logo button logo-bold" onClick={navigateToFrontPage} style={{ marginTop: '25px', fontSize: '25px', display: 'inline-block' }}>EagleRating</h1>
+          <div className="Signin">
+            <div id="bg"></div>
+            <div id="bg_mask"></div>
             <Container component="main" maxWidth="xs">
               <CssBaseline />
               <Box
-                  sx={{
-                    marginTop: 3,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
+                sx={{
+                  bgcolor: 'background.paper', // This uses the theme's paper color, which is usually white
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  borderRadius: 2, // This applies a border-radius
+                  boxShadow: 1, // This applies a theme-based shadow
+                  width: '100%', // This ensures the Box fills the Container
+                  maxWidth: '400px', // This restricts the Box's maximum width to 400px
+                  p: 3, // This applies padding within the Box
+                  mt: 8, // This applies margin on top of the Box
+                  position: 'relative' // Added to position the Box
+                }}
               >
-                <Typography component="h1" variant="h5" className='muititle'>
+                <Typography className="logo button logo-bold" component="h1" variant="h5" onClick={navigateToFrontPage} sx={{ marginTop: '25px', fontSize: '25px', cursor: 'pointer' }}  style={{ marginTop: '25px', fontSize: '25px', display: 'inline-block' }}eagle>
+                  EagleRating
+                </Typography>
+                <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
                   Sign In
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                   <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address or Username"
-                      name="email"
-                      autoComplete="email"
-                      autoFocus
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address or Username"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="current-password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   {error && (
-                      <Typography variant="body2" color="error">
-                        {error}
-                      </Typography>
+                    <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+                      {error}
+                    </Typography>
                   )}
                   <FormControlLabel
-                      control={<Checkbox value="remember" color="primary" />}
-                      label="Remember me"
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                    sx={{ mt: 2 }}
                   />
                   <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      sx={{ mt: 3, mb: 2 }}
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
                   >
                     Sign In
                   </Button>
-                  <Grid container>
+                  <Grid container sx={{ mt: 1 }}>
                     <Grid item xs>
                       <Link href="#" variant="body2">
                         Forgot password?
