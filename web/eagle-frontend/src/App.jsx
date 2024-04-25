@@ -44,18 +44,18 @@ function App() {
               <Route path="/navigation" element={<Navigation />} />
               <Route path="/ratingpage/:locId" element={<RatingPage />} />
               <Route path="/BookmarkPage" element={
-                  <ProtectedRoute>
+                  // <ProtectedRoute>
                       <BookmarkPage />
-                  </ProtectedRoute>
+                  // </ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                  // <ProtectedRoute>
+                      <Profile />
+                  // </ProtectedRoute>
               } />
               {/*<Route path="/profile" element={*/}
-              {/*    <ProtectedRoute>*/}
               {/*        <Profile />*/}
-              {/*    </ProtectedRoute>*/}
               {/*} />*/}
-              <Route path="/profile" element={
-                      <Profile />
-              } />
                 <Route path="/addLocation" element={
                   <ProtectedRoute>
                     <AddLocation />
