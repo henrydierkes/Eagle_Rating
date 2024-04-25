@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.6),
   },
   shiftedUpGrid: {
     transform: 'translateY(-16px)',
@@ -49,9 +49,8 @@ const Profile = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [currentUserInitialized, setCurrentUserInitialized] = useState(false);
-
-
-  console.log("sigma", currentUser);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [byteLength, setByteLength] = useState();
 
   const fetchUserProfile = async () => {
     try {
@@ -63,11 +62,9 @@ const Profile = () => {
         const contentType = response.headers['content-type'];
         if (contentType.includes('image')) {
           // Data received successfully, and it's an image
-          const imageUrl = `data:${contentType};base64,${Buffer.from(response.data, 'binary').toString('base64')}`;
-          // Display the image
-          const imgElement = document.createElement('img');
-          imgElement.src = imageUrl;
-          document.body.appendChild(imgElement); // Append the image to the body or to a specific container
+          const imageUrl = URL.createObjectURL(new Blob([response.data], { type: contentType }));
+          setByteLength(response.data.byteLength);
+          setImageUrl(imageUrl); // Set imageUrl state variable
         } else {
           console.error('Unexpected content type:', contentType);
         }
@@ -79,26 +76,24 @@ const Profile = () => {
     }
   };
   
-  
-
   useEffect(() => {
     if (currentUser) {
       fetchUserProfile();
     }
   }, [currentUser]);
 
-const handleAvatarChange = (e) => {
-  const file = e.target.files[0];
-  setAvatar(file);
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    setAvatar(file);
 
-  const reader = new FileReader();
-  reader.onload = (event) => {
-    setAvatarPreview(event.target.result);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setAvatarPreview(event.target.result);
+    };
+    reader.readAsDataURL(file);
   };
-  reader.readAsDataURL(file);
-};
 
-const [avatarPreview, setAvatarPreview] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
   const handleUsernameChange = async () => {
     try {
@@ -167,7 +162,7 @@ const [avatarPreview, setAvatarPreview] = useState(null);
       }, 3000);
     }
   };
-  
+
 
   return (
     <div>
@@ -176,11 +171,11 @@ const [avatarPreview, setAvatarPreview] = useState(null);
         <Grid container alignItems="center" spacing={2} className={classes.shiftedUpGrid}>
           <Grid item>
           <Avatar className={classes.avatar}>
-            {currentUser && currentUser.avatar ? (
-              // If currentUser has an avatar in the database, display it
-              <img src={backgroundImage= `url(${imageUrl})`} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+            {currentUser && byteLength !== 0 ? (
+              // If imageUrl is available and not empty, display the avatar image
+              <img src={imageUrl} alt="Avatar" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
             ) : (
-              // If currentUser doesn't have an avatar in the database, display a placeholder
+              // If imageUrl is not available or empty, display the username
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <span style={{ margin: '15px' }}>
                   {currentUser ? currentUser.username.toUpperCase() : ""}
@@ -284,7 +279,6 @@ const [avatarPreview, setAvatarPreview] = useState(null);
       <Footer />
     </div>
   );
-  
 };
 
 export default Profile;
