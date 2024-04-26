@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
+import java.util.Random;
 
 @Service
 public class AuthServiceImpl implements IAuthService {
@@ -45,7 +45,7 @@ public class AuthServiceImpl implements IAuthService {
 
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        String authCode = UUID.randomUUID().toString();
+        String authCode = generateAuthCode();
         user.setAuthCode(authCode);
         user.setVerified(false); // User needs to verify email to be marked as verified
         // Save the user
@@ -55,6 +55,16 @@ public class AuthServiceImpl implements IAuthService {
         sendVerificationEmail(user.getEmail(), authCode);
 
         return savedUser;
+    }
+    private String generateAuthCode() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder(6);
+        for (int i = 0; i < 3; i++) { // Loop 3 times for three pairs
+            char letter = (char) ('A' + random.nextInt(26)); // Generate random uppercase letter
+            int number = random.nextInt(10); // Generate random digit
+            sb.append(letter).append(number);
+        }
+        return sb.toString();
     }
     private void sendVerificationEmail(String email, String authCode) {
         String subject = "Verify Your Email";

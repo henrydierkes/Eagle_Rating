@@ -128,4 +128,60 @@
 
 .comment-footer button:hover {
   transform: scale(1.2);
+
+
+@media (max-width: 1300px) {
+  .comment {
+    max-width: 100%; /* Adjust the max-width to be responsive */
+    min-width: auto; /* Remove the min-width to allow the comment to shrink */
+    width: 80%; /* This could be any percentage that fits well on the screen */
+    padding: 10px;
+  }
+
+  .profile {
+    align-items: center; /* Center the items in the profile section */
+    text-align: center; /* Center the text within the profile section */
+    margin-left: 0; /* Remove the left margin for centering */
+  }
+
+  .profile-name,
+  .date {
+    margin-top: 0.5em; /* Adjust space between name and date for better visibility */
+  }
+
+  .comment-body {
+    align-items: center; /* Center the comment body content */
+  }
+
+  .comment-footer {
+    justify-content: center; /* Center the buttons in the footer */
+  }
+
+  .comment-rating-box {
+    margin-left: auto; /* Center the rating box */
+    margin-right: auto; /* Center the rating box */
+  }
+
+  .comment-text {
+    margin-left: auto; /* Center the text */
+    margin-right: auto; /* Center the text */
+    width: auto; /* Allow the width to be determined by the content size */
+  }
+
+  /* Make sure the profile picture doesn't get too small on narrow screens */
+  .profile-picture {
+    transform: none;
+    width: 75px; /* Adjust the size to fit better on smaller screens */
+    height: 75px; /* Adjust the size to fit better on smaller screens */
+  }
+
+  /* Adjust the ratings and specific-ratings if they're not responsive */
+  .ratings,
+  .specific-ratings {
+    width: 100%; /* Full width to fill the space available */
+    justify-content: center; /* Center these elements within their container */
+  }
+
+  /* Adjust this further if you have any elements like a side panel that should stack or hide */
 }
+

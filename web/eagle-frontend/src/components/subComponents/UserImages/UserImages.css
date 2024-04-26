@@ -1,59 +1,63 @@
 .user-images {
-  position: absolute; /* Positioning relative to .Image */
-  top: 56%; /* Move the top of .user-images to the vertical center */
-  left: 40%; /* Move the left of .user-images to the horizontal center */
-  transform: translate(
-    -50%,
-    -50%
-  ); /* Center .user-images both vertically and horizontally */
+  display: flex; /* Use flexbox for easy centering */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  position: relative; /* Relative to the nearest positioned ancestor or to the body if none */
+  width: 100%; /* Full width */
+  height: auto; /* Height should be auto to maintain the aspect ratio */
+}
+
+.images-container {
+  position: relative; /* Positioned relative to its normal position */
+  width: 100%; /* Ensures the container takes up the full width */
 }
 
 .images-container img {
-  display: none;  /* Keeps images hidden until they have the 'active' class */
-  width: 550px;   /* Fixed width */
-  height: 448px;  /* Fixed height */
-  object-fit: cover;  /* Ensures the image covers the area, cropping as needed */
-  margin-left: 23em;
+  width: 100%; /* Full width to ensure responsiveness */
+  max-width: 100%; /* Allow the image to expand to the full width of its container */
+  height: auto; /* Height auto to maintain aspect ratio */
+  object-fit: cover; /* Ensures the image covers the area, cropping as needed */
+  display: none; /* Keep images hidden until 'active' */
 }
 
 .images-container img.active {
-  display: block;  /* Makes the active image visible */
+  display: block; /* Makes the active image visible */
+  margin: auto; /* Centers the image horizontally in the flex container */
 }
 
-
 .arrow-btn {
-  padding: 1em;  /* scalable padding */
+  padding: 1em; /* Scalable padding */
   border: none;
   background-color: transparent;
   color: white;
   cursor: pointer;
-  font-size: 2em;  /* Larger font size for better visibility */
+  font-size: 2em; /* Larger font size for better visibility */
   border-radius: 50%;
   transition: all 0.3s ease;
-  width: 1em;  /* Adjust width to be dynamic based on font size */
-  height: 1em;  /* Adjust height to be dynamic based on font size */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute; /* Absolute position to the .images-container */
+  top: 50%; /* Position at the center vertically */
+  transform: translateY(-50%); /* Align center with the middle of the image */
 }
-
-.arrow-btn:hover {
-  background-color: #333333;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  color: #fff;
-}
-
 
 .prev {
-  position: absolute;
-  left: 12em;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 10px; /* Positioned to the left side of the image */
+  z-index: 10;
 }
 
 .next {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 10px; /* Positioned to the right side of the image */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .images-container img {
+    max-width: 100%; /* Remove max width restrictions */
+    width: 100%; /* Image should take the full width of the screen */
+  }
+
+  /* Adjust arrows for smaller screens if needed */
+  .arrow-btn {
+    font-size: 1.5em; /* Smaller arrows on smaller screens */
+    padding: 0.5em; /* Adjust padding accordingly */
+  }
 }

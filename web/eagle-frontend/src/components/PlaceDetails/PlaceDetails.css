@@ -3,19 +3,15 @@
   flex-direction: column;
   justify-content: center;
   background-color: white;
-  margin-top: 1em; /* Increase top margin */
-  margin-left: 1em; /* Increase left margin */
-  margin-right: 8em; /* Increase right margin */
-  width: 100%;
+  margin: 1em; /* Consistent margin around the element */
+  width: calc(100% - 2em);
 }
-.header-left,
+
 .location {
-  width: 50%; 
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Align contents vertically */
-  margin-left: 4.5em; /* Increase left margin */
 }
 
 .header {
@@ -27,15 +23,10 @@
   display: flex;
   flex-direction: row;
   width: 150%;
-  margin-left: 10%;
+
 }
 .header-right {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center child elements horizontally */
-  justify-content: flex-start; /* Adjust alignment as needed */
   width: 100%; /* Width of the header-right container */
-  margin-left: 5em;
   padding-top: 1em;
 }
 
@@ -49,16 +40,7 @@
   margin-bottom: 1.5em;
 }
 
-.header-left-l {
-  flex-direction: column;
-  margin-left: 2em;
-}
-.header-left-r {
-  display: flex;
-  width: 150%;
-  flex-direction: column;
-  white-space: nowrap;
-}
+
 .rating-box-details {
   width: 200px;
   height: 120px;
@@ -103,42 +85,47 @@
 }
 
 .location-link {
-  color: black;       
-  text-decoration: none; 
-  font-weight: normal;   
+  color: black;
+  text-decoration: none;
+  font-weight: normal;
 }
 .location-link:hover,
 .location-link:focus {
     text-decoration: none; /* Ensures there is no underline on hover/focus */
     color: black;         /* Keeps the color black even on hover */
 }
-.location {
-  margin-top: 30px;
-  margin-left: 15em;
-}
-.Image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 1000px;  /* Fixed width */
-  height: 500px;  
-}
-
-.Image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-
-
 
 .locationAndImage {
   display: flex;
-  flex-direction: row;
-  margin-right: 12em;
+  flex-direction: row; /* Default layout for larger screens */
+  justify-content: center; /* Center children */
+  align-items: center; /* Align children vertically */
+  flex-wrap: wrap; /* Allow items to wrap as needed */
+  margin-right: 1em; /* Adjusted to be consistent */
+  margin-left: 1em; /* Added to ensure consistency */
 }
+
+/* Image Styles */
+.Image {
+  flex: 1; /* Allow the image container to grow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1000px; /* Maximum width for large screens */
+  height: auto; /* Height is auto for maintaining aspect ratio */
+  position: relative; /* Context for absolute positioning */
+  margin-left: 5em;
+}
+
+.Image img {
+  width: 100%; /* Full width to ensure responsiveness */
+  max-width: 100%; /* Ensure it doesn't grow beyond its container */
+  height: auto; /* Adjust the height to maintain aspect ratio */
+  object-fit: cover; /* Cover the area without stretching */
+}
+
+
+
 .ratings {
   margin-left: 20px;
   margin-top: -37.5px;
@@ -150,10 +137,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;               
-  width: 100%;             
-  max-width: 100%;  
-  margin-bottom: 2em       
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 2em
 }
 
 .rating-button-containera .rating-buttona {
@@ -206,9 +193,52 @@
   justify-content: center; /* Center contents horizontally */
   align-items: center; /* Center contents vertically */
 }
-@media (max-width: 768px) {
-  .rating-buttona {
-      padding: 0.5em 1em;   
-      font-size: 1em;      
+@media (max-width: 1300px) {
+  .header {
+    flex-direction: column; /* Stack flex items vertically */
+    justify-content: center; /* Center the children (header-left and header-right) horizontally */
+    align-items: center;
   }
+  /* Stack the layout and center align */
+  .locationAndImage {
+    flex-direction: column;
+    align-items: center;
+    margin: 0; /* Remove any right margin that might cause shifting */
+  }
+
+  /* Adjust location block */
+  .location {
+    width: 100%; /* Full width to prevent overlap */
+    margin-top: 1rem; /* Consistent top margin */
+    margin-left: auto; /* Center the block by setting left margin to auto */
+    margin-right: auto; /* Center the block by setting right margin to auto */
+    margin-bottom: 1rem; /* Consistent bottom margin */
+  }
+
+  .Image {
+    width: 100%; /* Take the full width of the container */
+    height: auto; /* Adjust the height to maintain the aspect ratio */
+    margin: 0 auto; /* Center the image horizontally */
+    padding: 0; /* Remove any padding that might interfere */
+  }
+
+  .Image img {
+    max-width: 100%; /* Ensure the image is not wider than its container */
+    height: auto; /* Adjust the height to maintain the aspect ratio */
+
+  }
+  .header-left{
+    width: 100%;
+    margin: 0;
+  }
+  .rating-bar-container {
+    margin: 0 auto; /* Auto margins on left and right for horizontal centering */
+  }
+  .place-details{
+    align-items:center;
+  }
+
 }
+/* After the above media query, you might want to adjust your default styles to be more mobile-friendly and use the media query to scale up for larger screens instead */
+
+

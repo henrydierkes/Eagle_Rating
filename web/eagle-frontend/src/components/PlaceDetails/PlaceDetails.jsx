@@ -71,19 +71,19 @@ const PlaceDetails = ({ result }) => {
                         <p className="rating-amount">{numRate + " ratings"}</p>
                     </div>
                     <div className="header-left-r">
-                        <h1 className="placeName">{title}</h1>
+                    <h1 className="placeName">{title}</h1>
                         <h4 className="floor">{"Floor " + floor}</h4>
                     </div>
                 </div>
-                <div className="header-right">
-                    {/* Adjusted to make RatingBar more prominent */}
-                    <div className="rating-bar-container" style={{ width: "60%", margin: "0 auto", position: "relative", left: "-20%" }}>
-                    <RatingBar result={result} subratings={matchingSubratings} />
-                        <button className="rating-button" onClick={handleAddRatingClick}>
-                            Add Rating
-                        </button>
-                    </div>
-                </div>
+            <div className="header-right">
+              <div className="rating-bar-container" style={{ width: "60%", margin: "0 auto" }}>
+                <RatingBar result={result} subratings={matchingSubratings} />
+                <button className="rating-button" onClick={handleAddRatingClick}>
+                  Add Rating
+                </button>
+              </div>
+            </div>
+
         </div>
         <div className="locationAndImage">
             <div className="location">
