@@ -83,6 +83,10 @@
     align-items: center; /* Centers the content vertically */
     height: 5vh; /* Fixed height to better control the size and centering of the content */
 }
+.space{
+    width: 100%;
+    height: 14vh;
+}
 
 
 
@@ -153,13 +157,16 @@ input:checked + .slider:before {
     opacity: 0.5;
 }
 .stack {
-    width: 100%; /* Take full width for better control */
     display: flex;
+    flex-wrap: wrap; /* Allow chips to wrap to a new line if they don't fit */
     justify-content: center; /* Center the chips */
-    margin-top: 2em;
+    gap: 10px; /* Adjust the gap between chips */
+    width: 100%; /* Full width of the container */
+    margin-top: 10px;
 }
 .chip {
-    margin: 0 8px; /* Provide some horizontal space between chips */
+    margin: 0; /* Reset margin */
+    padding: 5px; /* Adjust padding for chips */
 }
 
 @media (max-width: 768px) {
@@ -171,6 +178,11 @@ input:checked + .slider:before {
         margin-bottom: 20px; /* Add some spacing below */
         order:1;
     }
+    .stack {
+        justify-content: flex-start; /* Align chips to the left */
+        gap: 5px; /* Reduce gap between chips on smaller screens */
+        /*overflow: fh;*/
+    }
 
     .chips-container {
         justify-content: flex-start; /* Align chips to the start */
@@ -181,4 +193,5 @@ input:checked + .slider:before {
         width: auto; /* Let the chip adjust its width */
         margin-bottom: 5px; /* Adjust margin as necessary */
     }
+
 }

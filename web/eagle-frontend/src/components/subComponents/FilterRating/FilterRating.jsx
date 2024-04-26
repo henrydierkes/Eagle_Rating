@@ -95,18 +95,31 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
                     className="range-slider__range"
                 />
             </div>
-            <Stack direction="row" spacing={1} style={{ marginTop: '10em' }}>
+            <div className="space"></div>
+            <Stack
+                direction="row"
+                spacing={1}
+                style={{
+                    marginTop: '2em', // Reduced margin for consistency
+                    maxWidth: '80%', // Set maximum width of the Stack container
+                    flexWrap: 'wrap', // Allow chips to wrap to new lines
+                    justifyContent: 'center' // Center the chips in the Stack
+                }}
+            >
                 {chips.map((chip, index) => (
                     <Chip
                         key={index}
                         label={chip.name}
                         variant={chip.variant}
                         color="primary"
-                        onClick={() => handleTagClick(index)} // Renamed to handleTagClick
-                        style={{ marginRight: '1.5em' }}
+                        onClick={() => handleTagClick(index)} // Handle chip clicks
+                        style={{
+                            margin: '0.5em', // Reduced margin around each chip
+                        }}
                     />
                 ))}
             </Stack>
+
         </div>
     );
 };

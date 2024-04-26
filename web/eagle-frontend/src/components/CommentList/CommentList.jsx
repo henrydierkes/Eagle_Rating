@@ -117,7 +117,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                 <div key={userComment.ratingIdStr || index} className="comment">
                     <div className="comment-header">
                         <div className="comment-rating-box" style={{ backgroundColor: getRatingColor(userComment.overallRating.overall) }}>
-                            <span className="comment-rating-number">{userComment.overallRating.overall}</span>
+                            <span className="comment-rating-number">{userComment.overallRating.overall.toFixed(1)}</span>
                         </div>
                         <div className="profile">
                             <img
