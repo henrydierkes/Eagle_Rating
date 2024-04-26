@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(0.6),
+    padding: theme.spacing(0.2),
   },
   shiftedUpGrid: {
     transform: 'translateY(-16px)',
@@ -63,6 +63,7 @@ const Profile = () => {
         if (contentType.includes('image')) {
           // Data received successfully, and it's an image
           const imageUrl = URL.createObjectURL(new Blob([response.data], { type: contentType }));
+          console.log(imageUrl);
           setByteLength(response.data.byteLength);
           setImageUrl(imageUrl); // Set imageUrl state variable
         } else {
@@ -198,7 +199,8 @@ const Profile = () => {
               onChange={handleAvatarChange}
           />
           <label htmlFor="contained-button-file">
-            <Button variant="contained" color="primary" component="span">
+            <Button variant="contained" color="primary" component="span"
+             style={{ marginTop: '20px', marginBottom: '20px', background: 'linear-gradient(to right, #5ea5fc, #6379fe)'}}>
               Upload Avatar
             </Button>
           </label>
