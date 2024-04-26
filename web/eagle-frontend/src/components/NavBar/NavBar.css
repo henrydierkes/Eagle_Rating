@@ -93,6 +93,8 @@
   color: #333;
   margin-right: 10px; /* Adjust spacing as needed */
 }
+
+
 @media (max-width: 768px) {
   .logo {
     font-size: 15px;

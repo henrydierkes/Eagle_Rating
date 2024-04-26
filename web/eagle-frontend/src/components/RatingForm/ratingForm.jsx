@@ -96,6 +96,8 @@ const RatingForm = () => {
     // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log("Form Data:", formData); // Log formData to see the values
+    
         if (!formData.rating && !formData.subrating1 && !formData.subrating2 && !formData.subrating3) {
             alert('Please provide a rating.');
             return;
@@ -135,7 +137,7 @@ const RatingForm = () => {
                 // Call the uploadImages function and pass the rating ID, images array, and token
                 await uploadImages(ratingId, imagesArray, token);
             }
-            alert('Rating submitted successfully!');
+            alert('Rating submitted successfully! Please wait for verification from our admins!');
             navigate(`/ratingpage/${placeId}`);
         } catch (error) {
             console.error('Error:', error);

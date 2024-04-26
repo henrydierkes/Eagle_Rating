@@ -116,6 +116,7 @@ const ResultList = ({ results }) => {
                 onChange={handleSortingChange}
                 variant="outlined"
                 sx={{
+                    mb: { xs: 2, sm: 3, md: 4 },
                     width: '80%', // Scale to screen width
 
                     '& .MuiOutlinedInput-root': {
