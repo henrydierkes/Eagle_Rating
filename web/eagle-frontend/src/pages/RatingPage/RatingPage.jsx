@@ -146,7 +146,6 @@ function RatingPage() {
         <div className="RatingPage">
             <NavBar />
             <PlaceDetails result={placeDetails} />
-            <hr className="divider" />
             <CommentFilter comments={placeComments} onSortChange={handleSortChange} />
             <CommentList comment={placeComments} onThumbsClick={onThumbsClick} />
             <Footer />

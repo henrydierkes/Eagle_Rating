@@ -139,11 +139,7 @@
     padding: 10px;
   }
 
-  .profile {
-    align-items: center; /* Center the items in the profile section */
-    text-align: center; /* Center the text within the profile section */
-    margin-left: 0; /* Remove the left margin for centering */
-  }
+
 
   .profile-name,
   .date {

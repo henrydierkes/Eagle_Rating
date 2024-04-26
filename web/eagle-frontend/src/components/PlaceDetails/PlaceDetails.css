@@ -4,7 +4,7 @@
   justify-content: center;
   background-color: white;
   margin: 1em; /* Consistent margin around the element */
-  width: calc(100% - 2em);
+  width:100%;
 }
 
 .location {
@@ -201,19 +201,14 @@
   }
   /* Stack the layout and center align */
   .locationAndImage {
+    max-width:100%;
     flex-direction: column;
     align-items: center;
     margin: 0; /* Remove any right margin that might cause shifting */
   }
 
   /* Adjust location block */
-  .location {
-    width: 100%; /* Full width to prevent overlap */
-    margin-top: 1rem; /* Consistent top margin */
-    margin-left: auto; /* Center the block by setting left margin to auto */
-    margin-right: auto; /* Center the block by setting right margin to auto */
-    margin-bottom: 1rem; /* Consistent bottom margin */
-  }
+
 
   .Image {
     width: 100%; /* Take the full width of the container */
@@ -221,7 +216,9 @@
     margin: 0 auto; /* Center the image horizontally */
     padding: 0; /* Remove any padding that might interfere */
   }
-
+.location{
+    margin-bottom: 2em;
+}
   .Image img {
     max-width: 100%; /* Ensure the image is not wider than its container */
     height: auto; /* Adjust the height to maintain the aspect ratio */
@@ -237,7 +234,13 @@
   .place-details{
     align-items:center;
   }
+    .map iframe {
 
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      border: 0;
+    }
 }
 /* After the above media query, you might want to adjust your default styles to be more mobile-friendly and use the media query to scale up for larger screens instead */
 

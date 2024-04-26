@@ -1,13 +1,1 @@
-.RatingPage {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-  }
-  
-  .divider {
-    margin-top: 14%; /* Adjust spacing above the divider */
-    border-top: 1px solid #ddd; /* Light gray divider line */
-  }
-  
+
