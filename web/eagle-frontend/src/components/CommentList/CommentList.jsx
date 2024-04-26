@@ -178,13 +178,13 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         <p className="date">{new Date(userComment.date).toLocaleDateString()}</p>
                     </div>
                     <div className="comment-body">
-                        <p className="comment-text" style={{ textAlign: 'center' }}>{userComment.comment}</p>
+                        <p className="comment-text" style={{ textAlign: 'center'}}>{userComment.comment}</p>
                     </div>
                     <div className="comment-footer">
                         <button
                             className="upvote"
                             onClick={() => handleThumbsClickLocal(userComment.ratingIdStr || index, 'upvote')}
-                            style={{ color: userComment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit' }}
+                            style={{ color: userComment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit', marginRight: '5em'}}
                         >
                             <ThumbUpIcon />
                             <span>{userComment.likeNum}</span>
@@ -192,13 +192,10 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         <button
                             className="downvote"
                             onClick={() => handleThumbsClickLocal(userComment.ratingIdStr || index, 'downvote')}
-                            style={{ color: userComment.dislikes.includes(currentUserId) ? 'red' : 'inherit' }}
+                            style={{ color: userComment.dislikes.includes(currentUserId) ? 'red' : 'inherit', marginRight: '5em'}}
                         >
                             <ThumbDownIcon />
                             <span>{userComment.dislikeNum}</span>
-                        </button>
-                        <button className="share">
-                            <ShareIcon />
                         </button>
                     </div>
                 </div>
@@ -230,21 +227,18 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         <button
                             className="upvote"
                             onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'upvote')}
-                            style={{ color: comment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit' }}
+                            style={{ color: comment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit', marginRight: '5em' }}
                         >
-                            <ThumbUpIcon sx={{ marginTop: '-5px', marginLeft: '5px', marginRight: '10px' }} />
+                            <ThumbUpIcon />
                             <span>{comment.likeNum}</span>
                         </button>
                         <button
                             className="downvote"
                             onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'downvote')}
-                            style={{ color: comment.dislikes.includes(currentUserId) ? 'red' : 'inherit' }}
+                            style={{ color: comment.dislikes.includes(currentUserId) ? 'red' : 'inherit' , marginRight: '5em'}}
                         >
-                            <ThumbDownIcon sx={{ marginTop: '-5px', marginLeft: '5px', marginRight: '10px' }} />
+                            <ThumbDownIcon  />
                             <span>{comment.dislikeNum}</span>
-                        </button>
-                        <button className="share">
-                        <ShareIcon sx={{ marginTop: '-5px', marginLeft: '5px' }} />
                         </button>
                     </div>
                 </div>
