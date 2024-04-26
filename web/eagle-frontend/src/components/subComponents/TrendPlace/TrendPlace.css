@@ -45,7 +45,7 @@
 
 .Name h2 {
   margin: 0;
-  font-size: calc(2vw + 1vh + .5vmin);
+  font-size: calc(1vw + 1vh + .5vmin);
   color: white;
   text-align: left;
 }

@@ -300,10 +300,16 @@ const LocationForm = ({ location }) => {
                     aria-label="rating type"
                     sx={{ mb: 1 }}
                 >
-                  <ToggleButton value="total" aria-label="left aligned" sx={{ width: '15.5rem' }} >
+                  <ToggleButton value="total" aria-label="left aligned" sx={{width: {
+                xs: '9rem', // 100% width on extra small screens (phones)
+                sm: '15.5rem' }}}>
                     Total Rating
                   </ToggleButton>
-                  <ToggleButton value="sub" aria-label="centered" sx={{ width: '15.5rem' }}>
+                  <ToggleButton value="sub" aria-label="centered" sx={{width: {
+                xs: '9.5rem', // 100% width on extra small screens (phones)
+                sm: '15.5rem' // fixed width on small screens and up
+            }}}>
+
                     Subrating
                   </ToggleButton>
                 </ToggleButtonGroup>

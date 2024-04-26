@@ -10,12 +10,13 @@
 }
 .header-left,
 .location {
-  width: 50%; 
+  width: 35%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Align contents vertically */
   margin-left: 4.5em; /* Increase left margin */
+
 }
 
 .header {
@@ -26,7 +27,7 @@
 .header-left {
   display: flex;
   flex-direction: row;
-  width: 150%;
+  width: 170%;
   margin-left: 10%;
 }
 .header-right {
@@ -60,13 +61,13 @@
   white-space: nowrap;
 }
 .rating-box-details {
-  width: 200px;
-  height: 120px;
+  width: 72.5%;
+  height: 38%;
   color: white;
-  padding: 12px 16px;
-  margin-right: 2em;
+  padding: 5% 7%;
+  margin-right: 4em;
   margin-left: 1em;
-  margin-top: 15px;
+  margin-top: 5%;
   font-weight: bold;
   border-radius: 15px;
   font-size: 1.3em;
@@ -82,9 +83,9 @@
 
 .placeName {
   color: black;
-  margin-top: 20px;
-  margin-bottom: -14px;
-  font-size: 50px;
+  margin-top: 4%;
+  margin-bottom: -2%;
+  font-size: 4vh;
 }
 
 .building {
@@ -98,7 +99,7 @@
 }
 
 .rating-amount {
-  margin-top: 10px;
+  margin-top: 4%;
   margin-left: 6.5em;
 }
 
@@ -113,7 +114,7 @@
     color: black;         /* Keeps the color black even on hover */
 }
 .location {
-  margin-top: 30px;
+  margin-top: 2%;
   margin-left: 15em;
 }
 .Image {
@@ -121,8 +122,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 1000px;  /* Fixed width */
-  height: 500px;  
+  width: 180%;  /* Fixed width */
+  height: 56.8vh;
 }
 
 .Image img {
@@ -138,10 +139,11 @@
   display: flex;
   flex-direction: row;
   margin-right: 12em;
+  width: 100%;
 }
 .ratings {
-  margin-left: 20px;
-  margin-top: -37.5px;
+  margin-left: 6%;
+  margin-top: -10%;
 }
 
 
@@ -207,6 +209,44 @@
   align-items: center; /* Center contents vertically */
 }
 @media (max-width: 768px) {
+  .header-left {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    margin-left: 10%;
+  }
+  .header-left-r {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    white-space: nowrap;
+  }
+  .rating-box-details {
+    width: 25%;
+    height: 20%;
+    color: white;
+    padding: 5% 7%;
+    margin-right: 4em;
+    margin-left: 1em;
+    margin-top: 5%;
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 1.3em;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  .rating-number-details {
+    font-size: 2em;
+    font-weight: 800;
+    color: #ffffff;
+  }
+  .placeName {
+    color: black;
+    margin-top: 4%;
+    margin-bottom: -2%;
+    font-size: 5vh;
+  }
   .rating-buttona {
       padding: 0.5em 1em;   
       font-size: 1em;      

@@ -1,23 +1,26 @@
 .user-images {
   position: absolute; /* Positioning relative to .Image */
-  top: 56%; /* Move the top of .user-images to the vertical center */
-  left: 40%; /* Move the left of .user-images to the horizontal center */
+  top: 31.5vh; /* Move the top of .user-images to the vertical center */
+  /*left: 40%; !* Move the left of .user-images to the horizontal center *!*/
+  right:0;
   transform: translate(
     -50%,
     -50%
   ); /* Center .user-images both vertically and horizontally */
+
 }
 
 .images-container img {
   display: none;  /* Keeps images hidden until they have the 'active' class */
-  width: 550px;   /* Fixed width */
-  height: 448px;  /* Fixed height */
+  width: 100%;   /* Fixed width */
+  height: 52vh;  /* Fixed height */
   object-fit: cover;  /* Ensures the image covers the area, cropping as needed */
   margin-left: 23em;
 }
 
 .images-container img.active {
   display: block;  /* Makes the active image visible */
+  width: 100%;
 }
 
 
@@ -46,14 +49,14 @@
 
 .prev {
   position: absolute;
-  left: 12em;
+  left: 40%;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .next {
   position: absolute;
-  right: 10px;
+  right: 2%;
   top: 50%;
   transform: translateY(-50%);
 }

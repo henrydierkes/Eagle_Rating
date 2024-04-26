@@ -116,8 +116,8 @@ const ResultList = ({ results }) => {
                 onChange={handleSortingChange}
                 variant="outlined"
                 sx={{
-                    width: '105.5%', // Scale to screen width
-                    margin: '20px 10px 20px 0px', // Center horizontally and add margin on the bottom
+                    width: '80%', // Scale to screen width
+
                     '& .MuiOutlinedInput-root': {
                         borderRadius: '5px',
                         backgroundColor: '#fff',
@@ -156,7 +156,7 @@ const ResultList = ({ results }) => {
                             )}
                         </div>
                     )}
-                    <div>
+                    <div className="Desc">
                         <h3>{result.locName}</h3>
                         <p className="description">{result.ratingCount} ratings</p >
                     </div>
