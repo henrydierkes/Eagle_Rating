@@ -147,6 +147,10 @@
 .contact-form input[type="submit"]:active {
   transform: scale(0.95); /* Slight decrease in size to simulate a press effect */
 }
+.result-list .MuiSelect-root {
+  width: 50%; /* Set width to 50% */
+  margin-left: 0; /* Set left margin to 20px, adjust as needed */
+}
 
 @media (max-width: 768px) {
   .footer {
@@ -200,25 +204,70 @@
   transform: scale(0.98); /* Slight decrease in size on active to simulate a press effect */
   opacity: 1;
 }
+/*.space{*/
+/*  height: 0.1vh;*/
+/*}*/
 .highlight-tag img {
   width: 20px; /* Adjust as needed */
   height: auto;
   cursor: pointer;
 }
 @media (max-width: 768px) {
+  /* Adjusting .result-list for smaller screens */
   .result-list {
-    margin-left:0;
+    margin-left: 0;
   }
+
+  /* Adjusting .result-item for smaller screens */
   .result-item {
-      flex-direction: column;
-      padding: 10px;
-      width: 100%
-      /*order:1;/*/
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    padding: 10px;
+    width: 100%;
   }
+
+  /* Adjusting the .rating-box position and margin for smaller screens */
   .result-item .rating-box {
-    position:absolute;
-    left:10%;
-    margin-left: 0px;
+    position: absolute;
+    left: 10%;
+    margin-left: 0;
   }
+  .result-item p {
+    text-align: left; /* Aligns the text to the left */
+    color: #555; /* Darker text color for better readability */
+    font-size: 0.9em; /* Adjust font size as needed */
+  }
+
+  /* Adjusting the .Desc div for smaller screens */
+  /* Adjusting the .Desc div for better alignment */
+  .Desc {
+    text-align: left; /* Ensures all content within .Desc is left-aligned */
+    margin-left: 40%; /* Adds margin to the left for spacing */
+    margin-right: 20px; /* Optional: Adjust right margin for spacing */
+    margin-top: 0; /* Ensure no top margin for better alignment */
+  }
+
+  /* Adjusting the h3 element within .Desc */
+  .Desc h3 {
+    margin: 0; /* Remove default margins for h3 */
+    font-size: 1em; /* Slightly increase font size for emphasis */
+    /* Ensure the text is left-aligned */
+    text-align: left;
+    /* Optional: Additional styles for the h3 element */
+  }
+
+  /* Adjusting the description paragraph within .Desc */
+  .Desc p.description {
+    margin: 0; /* Remove default margins */
+    font-size: 0.9em; /* Increase font size slightly */
+    color: #555; /* Darker text color for better readability */
+  }
+  .result-list .MuiSelect-root {
+    width: 50%; /* Set the width of the Select component to 50% */
+    margin-left: 10px; /* Adjust the left margin to 10px (or other desired value) */
+  }
+
+
 }
 
