@@ -223,8 +223,9 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: left;
-    padding: 10px;
-    width: 100%;
+    margin-left: 1px;
+    height: 70px;
+    width: 90%;
   }
 
   /* Adjusting the .rating-box position and margin for smaller screens */
