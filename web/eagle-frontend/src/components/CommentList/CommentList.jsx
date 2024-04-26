@@ -27,9 +27,8 @@ const CommentList = ({ comment, onThumbsClick }) => {
     const [clickStates, setClickStates] = useState({});
     const { currentUser } = useAuth();
     const currentUserId = useAuth().currentUser ? useAuth().currentUser.userId : null;
-    const userComment = comment.find(c => c.userId === currentUserId && !c.deleted);
-    const [byteLength, setByteLength] = useState();
-    const [imageUrl, setImageUrl] = useState(null);
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editedText, setEditedText] = useState("");
     // console.log(currentUserId)
     // console.log(comment[0])
     // console.log(onThumbsClick)
@@ -93,6 +92,28 @@ const CommentList = ({ comment, onThumbsClick }) => {
         fetchUsersInfo();
     }, [comment]);
     
+    const handleEditClick = (commentId, currentText) => {
+        setEditingCommentId(commentId);
+        setEditedText(currentText);
+    };
+
+    const handleCancelEdit = () => {
+        setEditingCommentId(null);
+        setEditedText("");
+    };
+
+    const handleSaveEdit = async (commentId) => {
+        try {
+            await axios.post(`${axiosConfig.baseURL}/api/comment/update`, {
+                ratingIdStr: commentId,
+                newCommentText: editedText,
+            });
+            // Update the comment locally or refetch comments list
+            handleCancelEdit();
+        } catch (error) {
+            console.error('Failed to update comment:', error);
+        }
+    };
 
 
     const handleThumbsClickLocal = (commentId, type) => {
@@ -148,6 +169,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                                 className="profile-picture"
                                 src={usersInfo[userComment.userId]?.avatar}
                                 alt={`Avatar of ${usersInfo[userComment.userId]?.username}`}
+                                style={{ borderRadius: '50%' }}
                             />
                             <p className="profile-name">
                                 {usersInfo[userComment.userId]?.username}
@@ -184,7 +206,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                 <div key={comment.ratingIdStr || index} className="comment">
                     <div className="comment-header">
                         <div className="comment-rating-box" style={{ backgroundColor: getRatingColor(comment.overallRating.overall) }}>
-                            <span className="comment-rating-number">{comment.overallRating.overall}</span>
+                            <span className="comment-rating-number">{comment.overallRating.overall.toFixed(1)}</span>
                         </div>
                         <div className="profile">
                             <img
