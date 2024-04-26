@@ -46,7 +46,7 @@ const NavBar = () => {
         {currentUser ? (
           <>
             <a href="/BookmarkPage">
-              <img src={bookmarkIcon} alt="Bookmark" style={{ maxWidth: '3vw', height: '3vh', paddingRight: '.5vw' }}/>
+              <img src={bookmarkIcon} alt="Bookmark" style={{ maxWidth: '2em', height: '3vh', paddingRight: '.5vw' }}/>
             </a>
             <a href="/profile" className="user-name" onClick={handleProfileClick}>
               {currentUser.username}

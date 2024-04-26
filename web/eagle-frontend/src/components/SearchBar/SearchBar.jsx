@@ -27,7 +27,7 @@ function Grouped({ onCategoryChange }) {
       groupBy={(option) => option.category}
       getOptionLabel={(option) => option.title}
       onChange={onCategoryChange}
-      sx={{ width: '100%', maxWidth: '100%', mr: '1em' }}
+      sx={{ width: '100%', maxWidth: '100%', mr: { xs: '0', sm: '1em' } }}
       renderInput={(params) => <TextField {...params} label="Select Category" fullWidth />}
     />
   );
@@ -69,7 +69,6 @@ const SearchBar = () => {
           queryParams += `category=${selectedCategory.title}`;
         }
       } else {
-        // No input or category selected, return all places
         queryParams = '';
       }
       navigate(`/navigation?${queryParams}`);
@@ -81,8 +80,8 @@ const SearchBar = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: isMobile ? '0.5rem' : '1rem', padding: isMobile ? '0 10px' : '0', width: '100%' }}>
-      <div className="search-bar" style={{ width: '500%', maxWidth: '500%' }}>
+    <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center', justifyContent: 'center', gap: isMobile ? '0.5rem' : '1rem', padding: isMobile ? '0.5rem' : '0', width: '100%' }}>
+      <div className={isMobile ? "mobile-search-bar" : "search-bar"} style={{ width: isMobile ? '100%' : '500%', maxWidth: isMobile ? '500px' : '500%' }}>
         <Autocomplete
           freeSolo
           id="search-bar"

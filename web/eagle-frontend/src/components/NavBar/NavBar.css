@@ -28,7 +28,6 @@
   right: 0;
   bottom: 0;
   color: rgba(0, 128, 255, 0.9);
-
   clip-path: polygon(0% 45%, 16% 44%, 33% 50%, 54% 60%, 70% 61%, 84% 59%, 100% 52%, 100% 100%, 0% 100%);
   animation: animateShine 4s ease-in-out infinite;
 }
@@ -48,16 +47,7 @@
 
 .nav-links {
   display: flex;
-  white-space: nowrap; /* Prevents wrapping of child elements */
-}
-@media (max-width: 768px) { /* This will only apply when the window is 768 pixels or less */
-  .nav-links {
-    flex-wrap: nowrap; /* Makes it so buttons don't wrap on smaller screens */
-  }
-  .login-btn, .signup-btn {
-    padding: 5px 10px; /* Adjust the padding to make the buttons smaller, 5px on top and bottom and 10px on left and right*/
-    font-size: 0.8rem; /* Adjust font size to make text smaller, 80% of parent's size*/
-  }
+  white-space: nowrap;
 }
 
 .login-btn, .signup-btn {
@@ -69,7 +59,7 @@
   cursor: pointer;
   transition: transform 0.2s ease;
 }
-.signup-btn{
+.signup-btn {
   margin-right: 20px;
 }
 .login-btn {
@@ -103,4 +93,37 @@
   color: #333;
   margin-right: 10px; /* Adjust spacing as needed */
 }
-
+@media (max-width: 768px) {
+  .logo {
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .nav-links {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 140px;
+    padding: 0;
+    margin: 0;
+  }
+  .login-btn, .signup-btn {
+    white-space: nowrap;
+    height: 3.5vh;
+    padding: 5px 15px;
+    border: none;
+    background-color: #f2f2f2;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .signup-btn {
+    margin-right: 100px;
+    border: none;
+    padding: 5px;
+  }
+  .search-bar {
+    display: none; /* Hide the desktop search bar on small screens */
+  }
+  .mobile-search-bar {
+    display: block; /* Show the mobile search bar on small screens */
+  }
+}

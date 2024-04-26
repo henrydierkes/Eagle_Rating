@@ -23,6 +23,7 @@
 .university-title {
   margin: 0;
   font-size: 3rem; /* Large font size for the title */
+  text-align: center; /* Center the text horizontally */
 }
 .choose-campus-btn {
   margin-top: 1rem;

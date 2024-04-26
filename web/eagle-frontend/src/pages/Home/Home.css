@@ -18,6 +18,9 @@ body {
   min-height: 100vh; /* Ensures the .Home container takes up at least the full viewport height */
   min-width: 100%;
 }
-/* @media screen { 
-  
-} */
+@media (max-width: 768px) {
+  body {
+    width: 100%; /* Set body width to 100% */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+  }
+}

@@ -1,13 +1,13 @@
 .Category {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 99%;
   padding-bottom: 5vh;
   background-color: rgb(255, 255, 255);
 /*  need to standardize*/
 }
 .Category .title {
-  width: 100%;
+  width: 80%;
   text-align: left; /* Align the title to the left */
   margin-left: 20px;
   margin-top: 20px;
