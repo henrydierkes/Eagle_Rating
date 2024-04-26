@@ -139,7 +139,11 @@ public class PlaceServiceImpl implements IPlaceService {
      * @return A list of all places.
      */
     public List<Place> getAllPlaces() {
-        return this.mongoTemplate.findAll(Place.class);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("verified").is(true));
+
+        // Use the mongoTemplate to find places matching the query
+        return this.mongoTemplate.find(query, Place.class);
     }
 
     /**
