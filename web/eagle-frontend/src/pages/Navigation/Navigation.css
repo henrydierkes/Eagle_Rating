@@ -9,7 +9,7 @@
 
 
 .load-more-button, .load-all-button {
-  padding: 6% 12%;
+  padding: 2% 4%;
   background-image: linear-gradient(to right, #5ea5fc, #6379fe);
   border: none;
   border-radius: 5px;
@@ -18,8 +18,8 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
   outline: none;
-  margin-top: 6%;
-  margin-bottom: 6%;
+  margin-top: 1%;
+  margin-bottom: 2%;
   position: relative; /* Add position relative */
   left: -16.5%; /* Position 25% from the left */
   display: inline-block;

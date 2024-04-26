@@ -171,7 +171,7 @@ input:checked + .slider:before {
 
 @media (max-width: 768px) {
     .filter-rating {
-        width: 100%; /* Adjust as necessary */
+        width: 90%; /* Adjust as necessary */
         /*margin-right: 0; !* Reset the right margin on smaller screens *!*/
         margin-left: 0;
         padding: 1em;

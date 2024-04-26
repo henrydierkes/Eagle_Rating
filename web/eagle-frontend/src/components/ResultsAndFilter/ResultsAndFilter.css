@@ -3,8 +3,8 @@
   flex-direction: row; /* Default layout for larger screens */
   justify-content: space-between;
   align-items: flex-start; /* Align items at the start of the cross axis */
-  width: 100%;
-  margin: 20px auto;
+  width: 90%;
+  margin: 10% auto;
 }
 
 .resultseparator {
