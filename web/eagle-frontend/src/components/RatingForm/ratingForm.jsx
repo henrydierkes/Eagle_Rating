@@ -94,14 +94,14 @@ const RatingForm = () => {
     };
 
     // Handle form submission
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        console.log("Form Data:", formData); // Log formData to see the values
-    
-        if (!formData.rating && !formData.subrating1 && !formData.subrating2 && !formData.subrating3) {
-            alert('Please provide a rating.');
-            return;
-        }
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Form Data:", formData); // Log formData to see the values
+
+    if (!formData.rating && !formData.subrating1 && !formData.subrating2 && !formData.subrating3) {
+        alert('Please provide a rating.');
+        return;
+    }
 
         setIsLoading(true);
         setSubmissionError('');
