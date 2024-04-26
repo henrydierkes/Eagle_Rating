@@ -178,7 +178,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         <p className="date">{new Date(userComment.date).toLocaleDateString()}</p>
                     </div>
                     <div className="comment-body">
-                        <p className="comment-text" style={{ textAlign: 'center'}}>{userComment.comment}</p>
+                        <p className="comment-text" style={{ textAlign: 'center' }}>{userComment.comment}</p>
                     </div>
                     <div className="comment-footer">
                         <button

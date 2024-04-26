@@ -22,7 +22,7 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  max-width: 1250px;
+  max-width: 1000px;
   min-width: 1000px;
 }
 
@@ -129,7 +129,7 @@
 
 .comment-footer button:hover {
   transform: scale(1.2);
-
+}
 
 @media (max-width: 1300px) {
   .comment {
@@ -148,6 +148,7 @@
 
   .comment-body {
     align-items: center; /* Center the comment body content */
+    max-width: 400px;
   }
 
   .comment-footer {
