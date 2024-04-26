@@ -253,12 +253,20 @@ const RatingForm = () => {
                         }
                     }}
                     aria-label="rating type"
-                    sx={{mb: 1}}
+                    sx={{
+                        mb: { xs: 1, sm: 2, md: 3 }
+                      }}
                 >
-                    <ToggleButton value="total" aria-label="total" sx={{width: '15.5rem'}}>
+                    <ToggleButton value="total" aria-label="total" sx={{width: {
+                xs: '9rem', // 100% width on extra small screens (phones)
+                sm: '15.5rem' // fixed width on small screens and up
+            }}}>
                         Total Rating
                     </ToggleButton>
-                    <ToggleButton value="sub" aria-label="sub" sx={{width: '15.5rem'}}>
+                    <ToggleButton value="sub" aria-label="sub" sx={{width: {
+                xs: '9.5rem', // 100% width on extra small screens (phones)
+                sm: '15.5rem' // fixed width on small screens and up
+            }}}>
                         Subrating
                     </ToggleButton>
                 </ToggleButtonGroup>
