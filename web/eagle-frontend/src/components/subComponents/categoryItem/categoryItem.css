@@ -24,7 +24,7 @@
 .CategoryItem .Name h2 {
   color: white;
   text-align: left;
-  font-size: calc(2vw + 1vh + .5vmin); /* Responsive font size based on viewport */
+  font-size: calc(1.5vw + 1vh + .5vmin); /* Responsive font size based on viewport */
 }
 .Overlay {
   position: absolute;

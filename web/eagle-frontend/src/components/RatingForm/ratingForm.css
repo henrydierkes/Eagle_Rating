@@ -98,4 +98,24 @@
 /* Styling for checkboxes */
 .MuiCheckbox-root {
   padding: 0;
+} 
+@media (max-width: 600px) {
+  .rating-form {
+    max-width: 300px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .submit-button {
+    height: 3em;
+    max-width: 300px;
+  }
+
+  .upload-label {
+    padding: 10px;
+  }
+
+  .upload-images span {
+    font-size: 1em;
+  }
 }

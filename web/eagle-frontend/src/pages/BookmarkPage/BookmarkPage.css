@@ -39,6 +39,7 @@
 .BookmarkPage .column {
   padding: 10px;
   margin-top: 10px;
+
 }
 
 .BookmarkPage .stat-label {
@@ -172,7 +173,7 @@
   padding: 20px;
   margin-bottom: 20px;
   background-color: #f5f5f508;
-  width: 90%;
+  width: 85%;
   transition: transform 0.2s ease;
   margin-left: 5%;
 }
@@ -241,8 +242,8 @@
 
 @media (max-width: 768px) {
   .result-item-wrapper {
-      flex-direction: column;
       padding: 10px;
+      max-width: 350px;
   }
 }
 .result-content .description {

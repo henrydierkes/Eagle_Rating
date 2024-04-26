@@ -94,12 +94,14 @@ const RatingForm = () => {
     };
 
     // Handle form submission
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!formData.rating && !formData.subrating1 && !formData.subrating2 && !formData.subrating3) {
-            alert('Please provide a rating.');
-            return;
-        }
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Form Data:", formData); // Log formData to see the values
+
+    if (!formData.rating && !formData.subrating1 && !formData.subrating2 && !formData.subrating3) {
+        alert('Please provide a rating.');
+        return;
+    }
 
         setIsLoading(true);
         setSubmissionError('');
@@ -135,7 +137,7 @@ const RatingForm = () => {
                 // Call the uploadImages function and pass the rating ID, images array, and token
                 await uploadImages(ratingId, imagesArray, token);
             }
-            alert('Rating submitted successfully!');
+            alert('Rating submitted successfully! Please wait for verification from our admins!');
             navigate(`/ratingpage/${placeId}`);
         } catch (error) {
             console.error('Error:', error);
@@ -253,12 +255,20 @@ const RatingForm = () => {
                         }
                     }}
                     aria-label="rating type"
-                    sx={{mb: 1}}
+                    sx={{
+                        mb: { xs: 1, sm: 2, md: 3 }
+                      }}
                 >
-                    <ToggleButton value="total" aria-label="total" sx={{width: '15.5rem'}}>
+                    <ToggleButton value="total" aria-label="total" sx={{width: {
+                xs: '9rem', // 100% width on extra small screens (phones)
+                sm: '15.5rem' // fixed width on small screens and up
+            }}}>
                         Total Rating
                     </ToggleButton>
-                    <ToggleButton value="sub" aria-label="sub" sx={{width: '15.5rem'}}>
+                    <ToggleButton value="sub" aria-label="sub" sx={{width: {
+                xs: '9.5rem', // 100% width on extra small screens (phones)
+                sm: '15.5rem' // fixed width on small screens and up
+            }}}>
                         Subrating
                     </ToggleButton>
                 </ToggleButtonGroup>

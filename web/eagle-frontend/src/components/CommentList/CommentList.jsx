@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import ShareIcon from '@mui/icons-material/Share';
@@ -7,68 +9,90 @@ import './CommentList.css';
 import axiosConfig from "../../axiosConfig.jsx";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 
+const useStyles = makeStyles((theme) => ({
+    avatar: {
+      width: theme.spacing(10),
+      height: theme.spacing(10),
+      marginBottom: theme.spacing(5),
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: theme.spacing(0.2),
+    }
+  }));
+
 const CommentList = ({ comment, onThumbsClick }) => {
+    const classes = useStyles();
     const [usersInfo, setUsersInfo] = useState({});
     const [clickStates, setClickStates] = useState({});
+    const { currentUser } = useAuth();
     const currentUserId = useAuth().currentUser ? useAuth().currentUser.userId : null;
     const userComment = comment.find(c => c.userId === currentUserId && !c.deleted);
+    const [byteLength, setByteLength] = useState();
+    const [imageUrl, setImageUrl] = useState(null);
     // console.log(currentUserId)
     // console.log(comment[0])
     // console.log(onThumbsClick)
+
     useEffect(() => {
         const fetchUsersInfo = async () => {
             const userIds = comment.map(comment => comment.userId);
-            const userInfoPromises = userIds.map(userId =>
-                axios.get(`${axiosConfig.baseURL}/api/user/get?userID=${userId}`)
-            );
-
             try {
-                const userInfoResponses = await Promise.all(userInfoPromises);
-                const newUsersInfo = userInfoResponses.reduce((acc, response, index) => {
+                const userInfoResponses = await Promise.all(
+                    userIds.map(userId =>
+                        axios.get(`${axiosConfig.baseURL}/api/user/get?userID=${userId}`)
+                    )
+                );
+    
+                const avatarPromises = userInfoResponses.map(async (response) => {
                     const user = response.data;
-                    let username = 'deactivated_user';
-                    let avatar = '/images/deactivated-avatar.png';
-                    if (user && !user.isDeleted) {
-                        username = user.username || user.email;
-                        avatar = user.avatar || '/images/default-avatar.jpg';
+                    try {
+                        const avatarResponse = await axios.get(`${axiosConfig.baseURL}/api/user/avatar/${user.userIdStr}`, {
+                            responseType: 'arraybuffer'
+                        });
+                
+                        // Only set the custom avatar URL if the request was successful and the content type is an image.
+                        if (avatarResponse.status === 200 && avatarResponse.headers['content-type'].includes('image') && avatarResponse.data.byteLength !== 0) {
+                            console.log(avatarResponse);
+                            return {
+                                userId: user.userIdStr,
+                                username: user.username || user.email || 'deactivated_user',
+                                avatar: URL.createObjectURL(new Blob([avatarResponse.data], { type: avatarResponse.headers['content-type'] }))
+                            };
+                        } else {
+                            throw new Error('Avatar not found or invalid content type'); // Trigger the catch block to use default avatar.
+                        }
+                    } catch (error) {
+                        console.error('Error fetching avatar or avatar not provided:', error);
+                        return {
+                            userId: user.userIdStr,
+                            username: user.username || user.email || 'deactivated_user',
+                            avatar: '/images/default-avatar.jpg' // Default avatar used here.
+                        };
                     }
-                    acc[userIds[index]] = {
-                        username: username,
-                        avatar: avatar
+                });
+                
+                const usersAvatars = await Promise.all(avatarPromises);
+                const newUsersInfo = usersAvatars.reduce((acc, userInfo) => {
+                    acc[userInfo.userId] = {
+                        username: userInfo.username,
+                        avatar: userInfo.avatar // This will be the default avatar if the fetching failed.
                     };
-                    
                     return acc;
                 }, {});
+                
+                setUsersInfo(newUsersInfo);
+                
+    
                 setUsersInfo(newUsersInfo);
             } catch (error) {
                 console.error('Error fetching user info:', error);
             }
         };
-
+    
         fetchUsersInfo();
-
-        const handleScroll = (event) => {
-            const commentText = event.target;
-            const comment = commentText.parentElement;
-            if (commentText.scrollHeight - commentText.scrollTop === commentText.clientHeight) {
-                comment.style.height = commentText.scrollHeight + 'px';
-            }
-        };
-
-        const commentElements = document.querySelectorAll('.comment');
-
-        commentElements.forEach((comment) => {
-            const commentText = comment.querySelector('.comment-text');
-            commentText.addEventListener('scroll', handleScroll);
-        });
-
-        return () => {
-            commentElements.forEach((comment) => {
-                const commentText = comment.querySelector('.comment-text');
-                commentText.removeEventListener('scroll', handleScroll);
-            });
-        };
     }, [comment]);
+    
 
 
     const handleThumbsClickLocal = (commentId, type) => {
@@ -117,7 +141,7 @@ const CommentList = ({ comment, onThumbsClick }) => {
                 <div key={userComment.ratingIdStr || index} className="comment">
                     <div className="comment-header">
                         <div className="comment-rating-box" style={{ backgroundColor: getRatingColor(userComment.overallRating.overall) }}>
-                            <span className="comment-rating-number">{userComment.overallRating.overall}</span>
+                            <span className="comment-rating-number">{userComment.overallRating.overall.toFixed(1)}</span>
                         </div>
                         <div className="profile">
                             <img
@@ -132,13 +156,13 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         <p className="date">{new Date(userComment.date).toLocaleDateString()}</p>
                     </div>
                     <div className="comment-body">
-                        <p className="comment-text" style={{ textAlign: 'center' }}>{userComment.comment}</p>
+                        <p className="comment-text" style={{ textAlign: 'center'}}>{userComment.comment}</p>
                     </div>
                     <div className="comment-footer">
                         <button
                             className="upvote"
                             onClick={() => handleThumbsClickLocal(userComment.ratingIdStr || index, 'upvote')}
-                            style={{ color: userComment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit' }}
+                            style={{ color: userComment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit', marginRight: '5em'}}
                         >
                             <ThumbUpIcon />
                             <span>{userComment.likeNum}</span>
@@ -146,13 +170,10 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         <button
                             className="downvote"
                             onClick={() => handleThumbsClickLocal(userComment.ratingIdStr || index, 'downvote')}
-                            style={{ color: userComment.dislikes.includes(currentUserId) ? 'red' : 'inherit' }}
+                            style={{ color: userComment.dislikes.includes(currentUserId) ? 'red' : 'inherit', marginRight: '5em'}}
                         >
                             <ThumbDownIcon />
                             <span>{userComment.dislikeNum}</span>
-                        </button>
-                        <button className="share">
-                            <ShareIcon />
                         </button>
                     </div>
                 </div>
@@ -184,21 +205,18 @@ const CommentList = ({ comment, onThumbsClick }) => {
                         <button
                             className="upvote"
                             onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'upvote')}
-                            style={{ color: comment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit' }}
+                            style={{ color: comment.likes.includes(currentUserId) ? '#6B87FF' : 'inherit', marginRight: '5em' }}
                         >
-                            <ThumbUpIcon sx={{ marginTop: '-5px', marginLeft: '5px', marginRight: '10px' }} />
+                            <ThumbUpIcon />
                             <span>{comment.likeNum}</span>
                         </button>
                         <button
                             className="downvote"
                             onClick={() => handleThumbsClickLocal(comment.ratingIdStr || index, 'downvote')}
-                            style={{ color: comment.dislikes.includes(currentUserId) ? 'red' : 'inherit' }}
+                            style={{ color: comment.dislikes.includes(currentUserId) ? 'red' : 'inherit' , marginRight: '5em'}}
                         >
-                            <ThumbDownIcon sx={{ marginTop: '-5px', marginLeft: '5px', marginRight: '10px' }} />
+                            <ThumbDownIcon  />
                             <span>{comment.dislikeNum}</span>
-                        </button>
-                        <button className="share">
-                        <ShareIcon sx={{ marginTop: '-5px', marginLeft: '5px' }} />
                         </button>
                     </div>
                 </div>
