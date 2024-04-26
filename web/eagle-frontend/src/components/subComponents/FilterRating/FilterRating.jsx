@@ -77,7 +77,7 @@ const FilterRating = ({ onRatingChange, onTagSelect }) => {
                         position: 'absolute',
                         left: '45%',
                         bottom: '100%',
-                        transform: 'translate(-50%, -10px)',
+                        transform: 'translate(-50%, -50%)',
                         zIndex: 2,
                     }}
                 >
