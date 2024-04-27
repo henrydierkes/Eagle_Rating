@@ -13,8 +13,10 @@ The purpose of this platform is to enhance the campus experience for Emory Unive
 The primary users of this project are Emory University students seeking to explore and rate campus facilities. Additionally, university administrators can utilize the platform to gather student feedback and identify areas for improvement.
 
 ### Deployment 
-Tablet / Computer Users: You can visit our link at [https://www.eagle-rating.com](https://www.eagle-rating.com)
+Tablet / Computer Users: You can visit our link at [https://www.eagle-rating.com](https://www.eagle-rating.com) 
+
 IOS Users: You could add as a short cut [here](https://www.icloud.com/shortcuts/df98e8a40aa148d28f45f94756af97b7)
+
 We have DEMO videos [here]
 
 ### Key Features
