@@ -15,21 +15,22 @@
 - [Miscellaneous](#Miscellaneous)
   
 ## Getting Started
-Although you do not need to log in to access Eagle Rating and see the ratings of their favorite places, adding a place or adding a rating does require you to log in. You can access Eagle Rating through your web browser or any of your mobile device as Eagle Rating's design is responsive to different phone screens. 
+Although you do not need to log in to view ratings on Eagle Rating, adding a place or a rating requires you to log in. You can access Eagle Rating through your web browser or on any mobile device, as its design is responsive to different screen sizes.
 
 ### Creating an Account
-1. Go to the [Eagle Rating website](https://www.eagle-rating.com) or you can enter https://www.eagle-rating.com into your search bar.
+1. Visit the [Eagle Rating website](https://www.eagle-rating.com) or enter `https://www.eagle-rating.com` in your search bar.
 2. Click on `Sign Up`.
-3. Fill in your Emory Email Address, Password, and Confirm your Password.
+3. Fill in your Emory Email Address, choose a Password, and confirm your Password.
    
-   ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/f9dcc14c-7466-4550-9a3e-5ddf4c22ac9a)
+   ![Sign Up Form](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/f9dcc14c-7466-4550-9a3e-5ddf4c22ac9a)
    
-5. After you clicked the `Sign Up` button, we will send you a verification code through the Emory Email Address that you have previously entered.
+4. Click the `Sign Up` button, and we will send a verification code to your Emory Email Address.
    
-   ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/a6e1e0b9-1645-4ead-87f1-83cac759d2b5)
+   ![Email Verification](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/a6e1e0b9-1645-4ead-87f1-83cac759d2b5)
    
-6. Copy that that code into the input box.
-7. Congratulations! 🎉 You are now an Eagle Rater. 
+5. Enter the verification code in the input box provided.
+6. Congratulations! 🎉 You are now an Eagle Rater.
+
 
 ### Logging in
 1. After you click the `Sign Up` button, you will be immediately prompted to `Sign In`.
