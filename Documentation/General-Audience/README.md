@@ -1,4 +1,4 @@
-# Welcome to EagleRating! Embark on Your Journey to Becoming an Eagle Rater! 
+# Welcome to EagleRating! Embark on Your Journey to Becoming an Eagle Rater! 🦅 
 
 
 ## Table of Contents
