@@ -12,7 +12,6 @@
   - [Adding Ratings to a Place](#Adding-Ratings-to-a-Place)
   - [Adding a New Place](#Adding-a-New-Place)
 - [Support and Feedback](#support-and-feedback)
-- [Miscellaneous](#Miscellaneous)
   
 ## Getting Started
 Although you do not need to log in to view ratings on Eagle Rating, adding a place or a rating requires you to log in. You can access Eagle Rating through your web browser or on any mobile device, as its design is responsive to different screen sizes.
@@ -143,13 +142,6 @@ You can also reach out to the A* star team for assistance or providing feedback 
 We will receive an email as such, and we will try our best to respond to you within 2 business days (does not apply when one of our team members is taking their final exams).
 
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/b40909ea-5271-46fc-a10d-ae8f6d0d4c1b)
-
-## Authors
-- Tuan Vinh (tuan.vinh@emory.edu)
-- Henry Dierkes (henry.dierkes@emory.edu)
-- Jonathan Wang (jonathan.wang@emory.edu)
-- Wenzhuo (Max) Ma (max.ma@emory.edu)
-- Tung Dinh (tung.dinh@emory.edu)
 
 ## We thank you for using Eagle Rating! 
 
