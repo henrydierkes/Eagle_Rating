@@ -10,16 +10,6 @@
   - [Finding Professors](#finding-professors)
 - [Support and Feedback](#support-and-feedback)
 
-  
-### Key Features
-
-- **Search Functionality:** Users can search for campus places by name and category.
-- **Rating System:** Students can rate places they have visited, with the ability to update their ratings.
-- **Trending Places:** The platform highlights trending locations based on average star ratings.
-- **User Comments:** Each place features user comments that provide additional context and opinions.
-- **Image Uploads:** Users can upload images of places to offer visual insights.
-- **Account Management:** Features include sign-up, login, and Emory email verification.
-- **Content Management:** Users can suggest new places, which are subject to periodic verification by the system.
 
 ### Production Log
 
