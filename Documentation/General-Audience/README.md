@@ -1,4 +1,4 @@
-# Project Name
+# Welcome to EagleRating! Embark on Your Journey to Becoming an Eagle Rater! 
 
 ## Introduction
 
