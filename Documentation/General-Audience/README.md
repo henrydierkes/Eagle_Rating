@@ -11,7 +11,7 @@
 
 ## Getting Started
 ### Creating an Account
-1. Go to the [Eagle Rating website] (https://www.eagle-rating.com) 
+1. Go to the [Eagle Rating website](https://www.eagle-rating.com)
 2. Click on `Sign Up`
 3. Fill in your Emory Email Address, Password, and Confirm your Password.
    
