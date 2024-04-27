@@ -21,3 +21,4 @@ The primary users of this project are Emory University students seeking to explo
 - **Image Uploads:** Users can upload images of places to offer visual insights.
 - **Account Management:** Features include sign-up, login, and Emory email verification.
 - **Content Management:** Users can suggest new places, which are subject to periodic verification by the system.
+
