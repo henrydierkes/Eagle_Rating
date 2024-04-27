@@ -147,7 +147,7 @@ mail service settings.
 >
 > hibernate.ddl-auto: Specifies the database schema update strategy.
 >
-> datasource: Configures the MySQL database connection details.
+> datasource: Configures the MongoDB database connection details.
 
 -   Mail Configuration:
 
