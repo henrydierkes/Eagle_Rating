@@ -25,14 +25,6 @@
 
 Document the project's development timeline, highlighting key milestones and progress updates.
 
-## Team Members
-
-Tuan Vinh: front end <br>
-Henry Dierkes: front end <br>
-Jonathan Wang: back end <br>
-Wenzhuo Ma: front end, back end <br>
-Tung Dinh: back end 
-
 ### Installation Instructions
 
 This guide covers the installation process for both the backend and frontend components of the project. Follow these steps to set up and run the application.
@@ -231,17 +223,20 @@ Explain the process for submitting pull requests, including coding standards and
 Emory Honor Code: THIS CODE IS MY OWN WORK, IT WAS WRITTEN WITHOUT CONSULTINGCODE WRITTEN BY OTHER STUDENTS.
 Own work here means the entirety of the A* team: Tuan Vinh, Henry Dierkes, Jonathan Wang, Wenzhuo Ma, and Tung Dinh.
 
-## License
+## License Information
 
-### License Information
-
-Provide details on the project's license and what it permits others to do with the software.
+## Authors
+- Tuan Vinh (tuan.vinh@emory.edu)
+- Henry Dierkes (henry.dierkes@emory.edu)
+- Jonathan Wang (jonathan.wang@emory.edu)
+- Wenzhuo (Max) Ma (max.ma@emory.edu)
+- Tung Dinh (tung.dinh@emory.edu)
 
 ## Acknowledgments
 
 ### Credits
 
-Team A*: Tuan Vinh (tuan.vinh@emory.edu), Henry Dierkes (henry.dierkes@emory.edu), Jonathan Wang (jonathan.wang@emory.edu), Wenzhuo Ma (max.ma@emory.edu), and Tung Dinh (tung.dinh@emory.edu). As well as Professor Jeffrey Epstein for guiding us through our project. 
+We (Team A*) want to thank Professor Jeffrey Epstein for guiding us through our project. 
 
 ### References
  
