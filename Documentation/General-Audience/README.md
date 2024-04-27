@@ -27,7 +27,7 @@
 
 ### Setting up profile
 - Profile setup/ customization is only available to users that have logged into the system. It can be accessed when the user clicks their username/ Emory Email Addressed that is shown immediately upon user login.
-  ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/a68ed851-5ecf-406c-a3d9-ba96a417103d)
+  
 You can now upload an avatar of your choosing (please wait a couple of seconds for this function!), change your username, or change your password.
 
 ## Getting Started
