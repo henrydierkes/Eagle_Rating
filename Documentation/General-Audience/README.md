@@ -1,5 +1,16 @@
 # Welcome to EagleRating! Embark on Your Journey to Becoming an Eagle Rater! 
 
+
+## Table of Contents
+- [Getting Started](#getting-started)
+  - [Creating an Account](#creating-an-account)
+  - [Logging in](#logging-in)
+  - [Resetting password](#resetting-password)
+  - [Adding research statement](#adding-research-statement)
+  - [Finding Professors](#finding-professors)
+- [Support and Feedback](#support-and-feedback)
+
+  
 ## Introduction
 
 This project introduces a comprehensive platform designed for Emory University students to rate and discover places on campus. It addresses the need for a centralized, user-friendly repository of campus locations, ranging from dining areas to study rooms, based on real student feedback.
