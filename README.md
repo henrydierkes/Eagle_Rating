@@ -37,4 +37,6 @@ We have DEMO videos [here]
 - Tung Dinh (tung.dinh@emory.edu)
 
 ### Acknowledgements 
-
+* [Emory Official Website](https://www.emory.edu/home/index.html)
+* [Emory CS Department Website](https://computerscience.emory.edu/index.html)
+We would like to thank Professor Jeffrey Epstein for guiding us with our project for the entire semester in developing Eagle Rating.
