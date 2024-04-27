@@ -14,20 +14,27 @@
 1. Go to [the Eagle Rating website] (https://www.eagle-rating.com)
 2. Click on 'Sign Up'
 3. Fill in your Emory Email Address, Password, and Confirm your Password.
+   
    ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/f9dcc14c-7466-4550-9a3e-5ddf4c22ac9a)
-4. After you clicked the 'Sign Up' button, we will send you a verification code through the Emory Email Address that you have previously entered.
+   
+5. After you clicked the 'Sign Up' button, we will send you a verification code through the Emory Email Address that you have previously entered.
+   
    ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/a6e1e0b9-1645-4ead-87f1-83cac759d2b5)
-5. Copy that that code into the input box.
-6. Congratulation! 🎉 You are now an Eagle Rater. 
+   
+6. Copy that that code into the input box.
+7. Congratulation! 🎉 You are now an Eagle Rater. 
 
 ### Logging in
 1. After you click the 'Sign Up' button, you will be immediately prompted to Sign In.
 2. Enter your credentials.
+   
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/ff13ecc7-5d28-4464-9d25-cc7675c1741c)
 
 ### Setting up profile
 - Profile setup/ customization is only available to users that have logged into the system. It can be accessed when the user clicks their username/ Emory Email Addressed that is shown immediately upon user login.
-  
+
+  ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/69ae07b1-ed8c-467a-9ffe-600060ebb32e)
+
 You can now upload an avatar of your choosing (please wait a couple of seconds for this function!), change your username, or change your password.
 
 ## Getting Started
