@@ -108,13 +108,14 @@ After performing a search, you'll be directed to the navigation page, where you 
    ![EagleRating Navigation Page](./assets/navigation.png "EagleRating Navigation Page")
 
 2. **Filtering by Rating**: You can filter the results based on the overall rating by adjusting the slider provided. Once you dragged the filter, the place be shown will only be greater or equal to the filtered rating you set.
+3. **Filtering by Tag**: You can filter the results based on tags. If you want a specific tag to be present on you place, you can click the tag to add it to the querying criteria. If you want to remove a tag, simply unclick the selected tag.
 
-3. **Sorting Results**: Sort the search results by selecting an option from the 'Sort by' dropdown menu, such as 'Highest Rating'.
+4. **Sorting Results**: Sort the search results by selecting an option from the 'Sort by' dropdown menu, such as 'Highest Rating'.
 
-4. **Selecting a Location**: Click on a location to see detailed information, including reviews and photos posted by other students, or to rate a place.
-5. **Bookmarking a Location**: If you come across a location you’d like to save for quick access later, you can bookmark it by clicking the bookmark icon on the location card.
+5. **Selecting a Location**: Click on a location to see detailed information, including reviews and photos posted by other students, or to rate a place.
+6. **Bookmarking a Location**: If you come across a location you’d like to save for quick access later, you can bookmark it by clicking the bookmark icon on the location card.
 
-6. **Accessing Bookmarked Locations**: To view all your bookmarked locations, navigate to the bookmark page from the hovered bar on top. This page will display a list of your saved locations for easy reference.
+7. **Accessing Bookmarked Locations**: To view all your bookmarked locations, navigate to the bookmark page from the hovered bar on top. This page will display a list of your saved locations for easy reference.
 
    ![Bookmarked Locations](./assets/bookmarks.png "Bookmarked Locations")
 #### Place Detail Page
