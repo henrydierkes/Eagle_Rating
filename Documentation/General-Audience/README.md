@@ -5,7 +5,7 @@
 - [Getting Started](#getting-started)
   - [Creating an Account](#creating-an-account)
   - [Logging in](#logging-in)
-  - [Adding research statement](#adding-research-statement)
+  - [Home Page](#Home-Page)
   - [Finding Professors](#finding-professors)
 - [Support and Feedback](#support-and-feedback)
 
@@ -35,93 +35,22 @@
 
   ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/69ae07b1-ed8c-467a-9ffe-600060ebb32e)
 
-You can now upload an avatar of your choosing (please wait a couple of seconds for this function!), change your username, or change your password.
+1. **Uploading an Avatar**: Personalize your account by uploading an avatar. Click on the 'UPLOAD AVATAR' button and select an image file from your device to set it as your profile picture.
 
-## Functionalities
-### Home Page
+   ![Profile Avatar Upload](./assets/ProfileAvatar.png "Profile Avatar Upload")
 
-### Search for Place
-### Rate a Place
-### Like/Dislike a Rating
-### Add a Place
-### Bookmark Places
+2. **Changing Your Username**: If you wish to change your username, enter the new username in the designated field and click 'CHANGE USERNAME'. Remember, your username must be unique and adhere to the platform's guidelines.
 
-### Contact Support and Provide Feedback
-You can also reach out to the A* star team for assistance or providing feedback through the footer at every page. After submitting your request, there will be a text prompt at the top indicating that you have successfully sent an email to us! 
+3. **Updating Your Password**: For security reasons, it's good practice to update your password regularly. To change your password, enter the new password, confirm it, and then click 'CHANGE PASSWORD' to complete the update.
 
-![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/0d477216-9b6a-4ed9-9d24-6e98e787d8db)
-
-We will receive an email as such, and we will try our best to respond to you within 2 business days (does not apply when one of our team members is taking their final exams).
-
-![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/b40909ea-5271-46fc-a10d-ae8f6d0d4c1b)
-
-
-
-
-## Authors
-- Tuan Vinh (tuan.vinh@emory.edu)
-- Henry Dierkes (henry.dierkes@emory.edu)
-- Jonathan Wang (jonathan.wang@emory.edu)
-- Wenzhuo (Max) Ma (max.ma@emory.edu)
-- Tung Dinh (tung.dinh@emory.edu)
-
-
-### Production Log
-
-Document the project's development timeline, highlighting key milestones and progress updates.
-
-### Installation Instructions
-
-This guide covers the installation process for both the backend and frontend components of the project. Follow these steps to set up and run the application.
-
-#### Prerequisites
-
-Before you begin, ensure you have the following tools installed on your system:
-
-- **Java JDK 11 or higher:** Download and install from [Oracle's JDK download page](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
-- **Node.js 14.x or higher:** Download and install from [Node.js official website](https://nodejs.org/en/download/).
-- **npm:** Normally installed with Node.js.
-- **Maven:** Download and install from [Apache Maven Project](https://maven.apache.org/download.cgi).
-- **Git:** Download and install from [Git SCM](https://git-scm.com/downloads).
-- **An IDE of your choice:** Such as IntelliJ IDEA for Java or Visual Studio Code for JavaScript.
-
-#### Backend Installation (Java Spring Boot)
-
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/henrydierkes/Eagle_Rating.git
-   cd Eagle_Rating/main/RatingBackend/src/main/java/com.astar.ratingbackend
-2. **Install Maven Dependencies:**
-   Execute the following command to install the project dependencies with Maven:
-   ```bash
-   mvn clean install
-3. **Run the Backend:**
-   Use Maven to start the Spring Boot application with the following command:
-   ```bash
-   mvn spring-boot:run
-
-#### Frontend Installation (React with Vite)
-
-1. **Navigate to the Frontend Directory:**
-   ```bash
-   cd Eagle_Rating/main/web/eagle-frontend
-
-2. **Install npm Dependencies:**
-   Execute the following command to install the project dependencies with Maven:
-   ```bash
-   npm install --legacy-peer-deps
-3. **Start the Frontend Development Server:**
-   Use Maven to start the Spring Boot application with the following command:
-   ```bash
-   npm run dev
-### How to Use the Software
+   ![Profile Settings](./assets/ProfileSettings.png "Profile Settings")
 
 #### Home Page
 
 When you first visit the EagleRating platform, you'll be greeted by the home page. Here's how to get started:
 
 1. **Using the Search Bar**: At the top of the home page, you will find a search bar. You can type the name of the place or select a category from the dropdown to begin your search.
-   ![EagleRating Home Page](./assets/HomePage1.png "EagleRating Home Page")
+
 2. **Selecting a Trending Place**: Click on any of the trending place cards to get detailed information, including user reviews and a gallery of images uploaded by students.
    ![EagleRating Home Page](./assets/HomePage2.png "EagleRating Home Page")
 3. **Accessing Categories**: Click on any category to view a filtered list of places within that category. This makes it easier to find specific types of locations on campus.
@@ -193,98 +122,24 @@ If you find a spot on campus that's not listed on EagleRating, you can add it yo
    ![Add Place Form](./assets/AddPlace.png "Add Place Form")
 
 4. **Awaiting Verification**: After submission, the new place will undergo verification by the platform administrators. It will be visible to all users once verified.
-#### Managing Your Profile
 
-Your profile page is the hub for personalizing your EagleRating experience. Here you can update your profile details, change your password, and customize your avatar.
+### Contact Support and Provide Feedback
+You can also reach out to the A* star team for assistance or providing feedback through the footer at every page. After submitting your request, there will be a text prompt at the top indicating that you have successfully sent an email to us! 
 
-1. **Uploading an Avatar**: Personalize your account by uploading an avatar. Click on the 'UPLOAD AVATAR' button and select an image file from your device to set it as your profile picture.
+![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/0d477216-9b6a-4ed9-9d24-6e98e787d8db)
 
-   ![Profile Avatar Upload](./assets/ProfileAvatar.png "Profile Avatar Upload")
+We will receive an email as such, and we will try our best to respond to you within 2 business days (does not apply when one of our team members is taking their final exams).
 
-2. **Changing Your Username**: If you wish to change your username, enter the new username in the designated field and click 'CHANGE USERNAME'. Remember, your username must be unique and adhere to the platform's guidelines.
-
-3. **Updating Your Password**: For security reasons, it's good practice to update your password regularly. To change your password, enter the new password, confirm it, and then click 'CHANGE PASSWORD' to complete the update.
-
-   ![Profile Settings](./assets/ProfileSettings.png "Profile Settings")
-
-### Troubleshooting and FAQs
-
-List common issues that users might encounter and their solutions, along with frequently asked questions.
-
-## Technical Documentation
-
-### System Architecture
-
-Describe the overall architecture of the system, including major components and their interactions.
-
-### Codebase Overview
-
-Offer a high-level overview of the structure of the codebase, including key modules and classes.
-
-### API Documentation
-
-Provide detailed documentation of the APIs, including parameters, return types, and example calls.
-
-## Development
-
-### Development Environment Setup
-
-Instructions on setting up the development environment, including required software and tools.
-
-### Build Instructions
-
-Explain how to build the software from source, including any build scripts or automation used.
-
-### Testing Procedures
-
-Describe the testing strategy, including how to run tests and report issues.
-
-## Deployment
-
-### Deployment Procedures
-
-Step-by-step guide to deploying the software in a production environment.
-
-### Server Requirements
-
-Specify the hardware and software requirements needed to deploy and run the software effectively.
-
-### Configuration Files
-
-Detail important configuration files, their location, and how to modify them for different environments.
-
-## Contributing
-
-### How to Contribute
-
-Guidelines for external contributors who wish to contribute to the project, including contact information.
-
-### Pull Request Process
-
-Explain the process for submitting pull requests, including coding standards and review requirements.
-
-### Code of Conduct
-
-Emory Honor Code: THIS CODE IS MY OWN WORK, IT WAS WRITTEN WITHOUT CONSULTINGCODE WRITTEN BY OTHER STUDENTS.
-Own work here means the entirety of the A* team: Tuan Vinh, Henry Dierkes, Jonathan Wang, Wenzhuo Ma, and Tung Dinh.
-
-## License Information
+![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/b40909ea-5271-46fc-a10d-ae8f6d0d4c1b)
 
 
-## Acknowledgments
 
-### Credits
 
-We (Team A*) want to thank Professor Jeffrey Epstein for guiding us through our project. 
+## Authors
+- Tuan Vinh (tuan.vinh@emory.edu)
+- Henry Dierkes (henry.dierkes@emory.edu)
+- Jonathan Wang (jonathan.wang@emory.edu)
+- Wenzhuo (Max) Ma (max.ma@emory.edu)
+- Tung Dinh (tung.dinh@emory.edu)
 
-### References
- 
-
-### External Resources
-
-Link to external resources, tutorials, or other documentation that supports the project.
-
-## Appendices
-
-Include detailed appendices if needed, such as full database schemas, additional code snippets, or extensive data tables.
 
