@@ -11,7 +11,7 @@
 
 ## Getting Started
 ### Creating an Account
-1. Go to the Eagle Rating website (https://www.eagle-rating.com)
+1. Go to the [https://www.eagle-rating.com] (https://www.eagle-rating.com) 
 2. Click on `Sign Up`
 3. Fill in your Emory Email Address, Password, and Confirm your Password.
    
@@ -37,13 +37,10 @@
 
 1. **Uploading an Avatar**: Personalize your account by uploading an avatar. Click on the 'UPLOAD AVATAR' button and select an image file from your device to set it as your profile picture.
 
-   ![Profile Avatar Upload](./assets/ProfileAvatar.png "Profile Avatar Upload")
-
 2. **Changing Your Username**: If you wish to change your username, enter the new username in the designated field and click 'CHANGE USERNAME'. Remember, your username must be unique and adhere to the platform's guidelines.
 
 3. **Updating Your Password**: For security reasons, it's good practice to update your password regularly. To change your password, enter the new password, confirm it, and then click 'CHANGE PASSWORD' to complete the update.
 
-   ![Profile Settings](./assets/ProfileSettings.png "Profile Settings")
 
 #### Home Page
 
