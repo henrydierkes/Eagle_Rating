@@ -59,3 +59,65 @@ There are two MongoDB databases: `Forum` and `myDatabase`.
    - `isDeleted`: An indicator of soft delete: whether the place is deleted softly.
    - `isVerified`: Whether this user is verified.
 
+3. **Programs**
+   - `_id`: Unique identifier for each program.
+   - `netid`: Netid of the program creator.
+   - `programId`: Unique identifier for each program. (linked to `Applications` collection).
+   - `programData`: Description or content of the program.
+   - `programDate`: Creation date of the program.
+   - `collectionName`: Name of the collection ("Programs").
+
+4. **Replies**
+   - `_id`: Unique identifier.
+   - `collectionName`: Name of the collection ("Replies").
+   - `netid`: Netid of the person replying.
+   - `replycontent`: Content of the reply.
+   - `replydate`: Date of the reply.
+   - `replyid`: Unique identifier for the reply.
+   - `postid`: Identifier for the post being replied to (linked to `Threads` collection).
+
+5. **Threads**
+   - `_id`: Unique identifier.
+   - `netid`: Netid of the thread creator.
+   - `postid`: Unique identifier for each post.
+   - `postData`: Content of the post.
+   - `postDate`: Date of the post creation.
+   - `collectionName`: Name of the collection ("Threads").
+   - `visibility`: Access level of the thread. Public is available to all users, including guests. Protected is available to professors only. Private is available to user only.
+
+6. **Users**
+   - `_id`: Unique identifier.
+   - `collectionName`: Name of the collection ("Users"). This just simplifies the lookup.
+   - `name`: Name of the user.
+   - `role`: Role of the user (e.g., Student).
+   - `email`: Email address.
+   - `year`: Academic year.
+   - `major`: Major subject.
+   - `courses`: List of courses taken.
+   - `bio`: Short biography.
+   - `netId`: Netid of the user. This is the key that is used across the database. 
+
+## Database: myDatabase
+
+1. **contactCollection**
+   - `field1`: Name
+   - `field2`: Email of the person initiating the request.
+   - `field3`: Subject of the query
+   - `field4`: The content of the query.
+
+2. **myCollection**
+   - `field1`: netid (case sensitive)
+   - `field2`: hashed password
+   - `status`: whether the verified or not. A new user may not get that attribute at all, and that's thanks to mongodb we can extend the visibility fast.
+
+3. **news**
+   - `id, title, author, date, description, imageUrl`: static fields for the news information. This is a learning stage at which we create this database to understand the logic of fetching new data from an online connection.
+
+4. **verify**
+   - Stores verification codes.
+   - Key Attributes:
+     - `_id`: Unique identifier.
+     - `user`: Username or user identifier.
+     - `code`: Verification code.
+   - Operational Logic:
+     - When a matching code is found, the relevant document in the `verify` collection is deleted, completing the verification process. When that wasn't deleted, it reminds the user to check for the verification code until it is completed. This prevents possible spams and misuse of our precious `email.js` database. 

@@ -54,6 +54,7 @@ public class PlaceServiceImpl implements IPlaceService {
      * @return The saved Place entity.
      */
     public Place addPlace(Place place) {
+        // Set default values for unspecified fields
         if(place.getCampus()==null){
             place.setCampus("Emory-Main");
         }
@@ -74,6 +75,7 @@ public class PlaceServiceImpl implements IPlaceService {
         }
         place.setDeleted(false);
         place.setDeletedDate(null);
+        // Save the place using the MongoTemplate and return the saved entity
         return this.mongoTemplate.save(place);
 
     }
@@ -83,10 +85,12 @@ public class PlaceServiceImpl implements IPlaceService {
      * @return An Optional containing the found Place or empty if not found.
      */
     public Optional<Place> findById(ObjectId id) {
+        // Find place by ID using MongoTemplate
         return Optional.ofNullable(this.mongoTemplate.findById(id, Place.class));
     }
 
     public Place verifyPlace(String id){
+        // Find place by ID and set "verified" attribute to true
         Optional<Place> optionalPlace = findById(new ObjectId(id));
         if(optionalPlace.isPresent()){
             Place place=optionalPlace.get();

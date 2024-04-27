@@ -42,13 +42,13 @@
 
 
 .rating-box-details {
-  width: 200px;
-  height: 120px;
+  width: 75%;
+  height: 15vh;
   color: white;
   padding: 12px 16px;
   margin-right: 2em;
   margin-left: 1em;
-  margin-top: 15px;
+  margin-top: 7%;
   font-weight: bold;
   border-radius: 15px;
   font-size: 1.3em;
@@ -64,13 +64,13 @@
 
 .placeName {
   color: black;
-  margin-top: 20px;
-  margin-bottom: -14px;
-  font-size: 50px;
+  margin-top: 6%;
+  margin-bottom: -2%;
+  font-size: 3em;
 }
 
 .building {
-  margin-bottom: -20px;
+  margin-bottom: -6%;
 }
 
 .rating-number-details {
@@ -81,7 +81,7 @@
 
 .rating-amount {
   margin-top: 10px;
-  margin-left: 6.5em;
+  margin-left: 40%;
 }
 
 .location-link {
@@ -228,6 +228,12 @@
     width: 100%;
     margin: 0;
   }
+  .header-left-l{
+    width: 40%;
+  }
+  .header-left-r{
+    width: 60%;
+  }
   .rating-bar-container {
     margin: 0 auto; /* Auto margins on left and right for horizontal centering */
   }
@@ -241,7 +247,35 @@
       aspect-ratio: 4 / 3;
       border: 0;
     }
+  .placeName {
+    color: black;
+    margin-top: 6%;
+    margin-bottom: -2%;
+    /*margin-left:2%;*/
+    font-size: 2em;
+  }
+  .rating-box-details {
+    width: 60%;
+    height: 13vh;
+    color: white;
+    padding: 12px 13px;
+    margin-right: 2em;
+    margin-left: 1em;
+    margin-top: 7%;
+    font-weight: bold;
+    border-radius: 15px;
+    font-size: 1.3em;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  .rating-number-details {
+    font-size: 2em;
+    font-weight: 800;
+    color: #ffffff;
+  }
 }
+
 /* After the above media query, you might want to adjust your default styles to be more mobile-friendly and use the media query to scale up for larger screens instead */
 
 

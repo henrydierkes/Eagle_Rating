@@ -46,6 +46,7 @@ public class RatingServiceImpl implements IRatingService {
         // Check if the rating exists
         Optional<Rating> optionalRating = ratingRepository.findById(new ObjectId(ratingId));
         if (optionalRating.isPresent()) {
+            // Return the found rating if it exists
             return optionalRating.get();
         } else {
             throw new IllegalArgumentException("Rating with ID " + ratingId + " does not exist.");
@@ -67,6 +68,7 @@ public class RatingServiceImpl implements IRatingService {
                 validRatingIds.add(ratingId);
             }
         }
+        // Check if the user has already rated the same place
         for (String ratingId : validRatingIds) {
             Optional<Rating> existingRating = getRateById(new ObjectId(ratingId));
             if (existingRating.isPresent() && existingRating.get().getPlaceId().equals(placeId)) {
@@ -78,11 +80,13 @@ public class RatingServiceImpl implements IRatingService {
 
     @Override
     public Rating addLike(String userID, String ratingId, boolean like) {
+        // Validate the rating and retrieve the user entity
         Optional<Rating> optionalRating = getRateById(new ObjectId(ratingId));
         if (optionalRating.isPresent()) {
             Rating rating = optionalRating.get();
             Set<String> likes = rating.getLikes();
             Set<String> dislikes = rating.getDislikes();
+            // Update the rating's like or dislike based on the 'like' parameter
             if (like) {
                 if (dislikes.contains(userID)) {
                     // If the user previously disliked the rating, remove the dislike
@@ -128,7 +132,7 @@ public class RatingServiceImpl implements IRatingService {
                 throw new IllegalArgumentException("Invalid rating ID");
             }
 
-            // Process and save the images
+            // Upload each image and store the file ID in the list
             List<String> imageIds = new ArrayList<>();
             for (MultipartFile image : images) {
                 if (!image.isEmpty()) {
@@ -444,17 +448,21 @@ public class RatingServiceImpl implements IRatingService {
             //add here
         return commonRatings;
     }
-
+    // Filters ratings based on criteria and retrieves the results
+    @Override
     public List<Rating> getRatingByFilter(Rating.OverallRating overallRating, int floor) {
         if (overallRating == null && floor == -1) {
+            //go to get ALL rating if param are not present
             return getAllRatings();
         }
 
         if (overallRating == null) {
+            // go to by Floor if only floor is present
             return new ArrayList<>(getRatingsByFloor(floor));
         }
 
         if (floor == -1) {
+            //go for overallrating instead
             return getRatingsByOverallRating(overallRating);
         }
 
