@@ -105,8 +105,18 @@ This directory contains service classes that handle business logic:
 - Services contain methods for managing entities and other business operations.
 - Examples of services include `UserService` and `PlaceService`.
 - Services interact with repositories to perform CRUD operations on entities.
-<https://unitask-backend-docs.netlify.app/>
 
+
+### 2.1.1.6 RatingBackendApplication
+
+This directory contains the main application class that serves as the entry point for your application:
+
+- `RatingBackendApplication.java`: Contains the `main` method that starts the application.
+    - Initializes the Spring Boot application.
+    - Sets up the application context, including beans and configurations.
+    - Handles application startup tasks such as database connections and scheduling tasks.
+  
+<https://unitask-backend-docs.netlify.app/>
 **2.1.2 resources**
 
 the src/main/resources directory is a standard Maven project structure
