@@ -9,7 +9,7 @@
   - [Navigation Page](#Navigation-Page)
   - [Place Detail Page](#Place-Detail-Page)
   - [Adding Ratings to a Place](#Adding-Ratings-to-a-Place)
-  - [Adding a New Place](#Adding a New Place)
+  - [Adding a New Place](#Adding-a-New-Place)
 - [Support and Feedback](#support-and-feedback)
 
 ## Getting Started
