@@ -66,6 +66,45 @@ main functionality of the application are placed here.
 The detailed explanation for all the classes and functions are in this
 link:
 
+### 2.1.1.1 Config
+
+This directory contains Java files for different configurations in your application:
+
+- `CorsConfig.java`: Configures Cross-Origin Resource Sharing (CORS) settings for your application.
+- `SecurityConfig.java`: Configures security settings such as authentication and authorization.
+- `MultipartFileConfig.java`: Configures file upload settings, including limits and allowed types.
+- `SwaggerConfig.java`: Configures Swagger UI for API documentation and testing.
+
+### 2.1.1.2 Controller
+
+This directory contains REST controllers that define the API endpoints:
+
+- REST controllers handle HTTP requests, such as CRUD operations for entities.
+- Controllers typically interact with services to handle business logic and return responses.
+
+### 2.1.1.3 Entity
+
+This directory contains entity classes that represent data models mapped to database tables:
+
+- Entities often use JPA annotations for mapping fields to database columns.
+- Example entities might include `User`, `Place`, or `Rating`.
+
+### 2.1.1.4 Model
+
+This directory contains model classes representing data structures used in your application:
+
+- **DTOs**: Data Transfer Objects (DTOs) are used for efficient data communication.
+    - For example, `AuthRequest.java` and `VerificationRequest.java` for transferring user data, respectively.
+- **MongoDB Repository**: Includes interfaces that extend MongoDB repository classes for database operations.
+    - For example, `UserRepository.java` and `PlaceRepository.java` for interacting with the database.
+
+### 2.1.1.5 Service
+
+This directory contains service classes that handle business logic:
+
+- Services contain methods for managing entities and other business operations.
+- Examples of services include `UserService` and `PlaceService`.
+- Services interact with repositories to perform CRUD operations on entities.
 <https://unitask-backend-docs.netlify.app/>
 
 **2.1.2 resources**
