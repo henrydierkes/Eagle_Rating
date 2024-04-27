@@ -3,6 +3,7 @@
 
 ## Table of Contents
 - [Getting Started](#getting-started)
+- [Functionalities](#Functionalities)
   - [Creating an Account](#creating-an-account)
   - [Logging in](#logging-in)
   - [Home Page](#Home-Page)
@@ -44,7 +45,7 @@
 
 3. **Updating Your Password**: For security reasons, it's good practice to update your password regularly. To change your password, enter the new password, confirm it, and then click 'CHANGE PASSWORD' to complete the update.
 
-
+## Functionalities
 ## Home Page
 
 When you first visit the EagleRating platform, you'll be greeted by the home page. Here's how to get started:
