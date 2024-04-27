@@ -151,6 +151,6 @@ We will receive an email as such, and we will try our best to respond to you wit
 - Wenzhuo (Max) Ma (max.ma@emory.edu)
 - Tung Dinh (tung.dinh@emory.edu)
 
-### Thank you for using Eagle Rating! 
+## We thank you for using Eagle Rating! 
 
 
