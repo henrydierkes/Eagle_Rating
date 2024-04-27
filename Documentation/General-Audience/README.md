@@ -37,7 +37,32 @@
 
 You can now upload an avatar of your choosing (please wait a couple of seconds for this function!), change your username, or change your password.
 
-## Getting Started
+## Functionalities
+### Home Page
+
+### Search for Place
+### Rate a Place
+### Like/Dislike a Rating
+### Add a Place/Location
+
+### Contact Support and Provide Feedback
+You can also reach out to the A* star team for assistance or providing feedback through the footer at every page. After submitting your request, there will be a text prompt at the top indicating that you have successfully sent an email to us! 
+
+![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/0d477216-9b6a-4ed9-9d24-6e98e787d8db)
+
+We will receive an email as such, and we will try our best to respond to you within 2 business days (does not apply when one of our team members is taking their final exams).
+
+![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/b40909ea-5271-46fc-a10d-ae8f6d0d4c1b)
+
+
+
+
+## Authors
+- Tuan Vinh (tuan.vinh@emory.edu)
+- Henry Dierkes (henry.dierkes@emory.edu)
+- Jonathan Wang (jonathan.wang@emory.edu)
+- Wenzhuo (Max) Ma (max.ma@emory.edu)
+- Tung Dinh (tung.dinh@emory.edu)
 
 
 ### Production Log
@@ -244,12 +269,6 @@ Own work here means the entirety of the A* team: Tuan Vinh, Henry Dierkes, Jonat
 
 ## License Information
 
-## Authors
-- Tuan Vinh (tuan.vinh@emory.edu)
-- Henry Dierkes (henry.dierkes@emory.edu)
-- Jonathan Wang (jonathan.wang@emory.edu)
-- Wenzhuo (Max) Ma (max.ma@emory.edu)
-- Tung Dinh (tung.dinh@emory.edu)
 
 ## Acknowledgments
 
