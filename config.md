@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project introduces a comprehensive platform designed for Emory University students to rate and discover places on campus. It addresses the need for a centralized, user-friendly repository of campus locations, ranging from dining areas to study rooms, based on real student feedback. For the documentation of Eagle Rating, please refer to [this link](https://github.com/henrydierkes/Eagle_Rating/tree/master/Documentation)
+This project introduces a comprehensive platform designed for Emory University students to rate and discover places on campus. It addresses the need for a centralized, user-friendly repository of campus locations, ranging from dining areas to study rooms, based on real student feedback. For the documentation of Eagle Rating, please refer to [this link].(https://github.com/henrydierkes/Eagle_Rating/tree/master/Documentation)
 
 ### Purpose
 
