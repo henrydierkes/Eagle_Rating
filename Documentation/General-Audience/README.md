@@ -25,7 +25,7 @@
 7. Congratulation! 🎉 You are now an Eagle Rater. 
 
 ### Logging in
-1. After you click the `Sign Up` button, you will be immediately prompted to Sign In.
+1. After you click the `Sign Up` button, you will be immediately prompted to `Sign In`.
 2. Enter your credentials.
    
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/ff13ecc7-5d28-4464-9d25-cc7675c1741c)
