@@ -4,11 +4,14 @@ This documentation provides an overview of the APIs available in the backend of 
 
 ## User APIs
 
-The `user.md` file contains the documentation for the User APIs. These APIs allow you to manage user-related operations within the application. The operations include creating new users, retrieving user details, updating user information, and deleting users.
+The `[user.md](https://github.com/henrydierkes/Eagle_Rating/tree/master/Documentation/Technical/Backend/api/user.md
+)` file contains the documentation for the User APIs. These APIs allow you to manage user-related operations within the application. The operations include creating new users, retrieving user details, updating user information, and deleting users.
+[user.md](https://github.com/henrydierkes/Eagle_Rating/tree/master/Documentation/Technical/Backend/api/user.md
+)
 
 ## Place APIs
 
-The `place.md` file provides the documentation for the Place APIs. These APIs allow you to manage place-related operations within the application. The operations include creating new places, retrieving place details, updating place information, and deleting places.
+The `[place.md](https://github.com/henrydierkes/Eagle_Rating/tree/master/Documentation/Technical/Backend/api/user.md` file provides the documentation for the Place APIs. These APIs allow you to manage place-related operations within the application. The operations include creating new places, retrieving place details, updating place information, and deleting places.
 
 ## Rating APIs
 
