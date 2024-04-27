@@ -14,19 +14,19 @@ hasn't been run and tested on any other system.
 
 **Versions:**
 
-Spring boot: 2.7.16
+Spring boot: 2.6.4
 
-Maven: 3.6.3
+Maven: 3.10.1
 
-JDK: 17
+JDK: 19
 
 **Tools:**
 
 IntelliJ IDEA Ultimate.
 
-MySQL Workbench for tables viewing.
+MongoDB Campus for tables viewing.
 
-Postman for APIs testing.
+Postman and swagger-ui for APIs testing.
 
 1.  **.mvn/wrapper**
 
@@ -57,7 +57,7 @@ directory is part of the standard Maven project structure and is used to
 separate the main source code of the application from other resources
 and configurations.
 
-**2.1.1 java/com/teamone/unitask**
+**2.1.1 java/com/aster/ratingbackend**
 
 This directory contains the main Java source code of the Spring Boot
 application. All the Java classes, packages, and code related to the
@@ -118,13 +118,8 @@ mail service settings.
 > Defines custom application properties such as JWT secret and
 > expiration time.
 
-The database used for this project is a MySQL database created on the
-Microsoft Azure service.
+The database used for this project is a MongoDB database created on MongoDB Atlas Database
 
-2.1.2.2 static and template folder
-
-These two folders come with the spring intializr and are not used in
-this project.
 
 2.  **Test**
 
@@ -136,49 +131,42 @@ resources.
 the .gitignore file is used to specify files and directories that should
 be ignored by Git, the version control system.
 
-4.  **mvnw and mvnw.cmd**
 
-The mvnw script, along with the associated mvnw.cmd for Windows, is part
-of the Maven Wrapper mechanism. The Maven Wrapper is a convenient way to
-ensure that the build tool Maven is included with your project and is
-used consistently across different environments, regardless of whether
-Maven is installed locally.
-
-5.  **pom.xml**
+4.  **pom.xml**
 
 This file configures all the dependencies used for the backend
 implementation.
 
 A full list of dependencies used are listed here:
 
--   Spring Boot Starter Data JPA
-
--   Spring Boot Starter Mail
-
--   Spring Boot Starter Security
+-   Spring Boot Starter Data MongoDB
 
 -   Spring Boot Starter Web
 
--   Spring Boot Starter Validation
+-   Spring Boot Starter Security
 
--   Jackson Databind
+-   Commons FileUpload (version 1.4)
 
--   Java JWT (JSON Web Token) API
+-   Knife4j Spring Boot Starter (version 2.0.8)
 
--   Java JWT Implementation
+-   Spring Boot DevTools (optional, scope: runtime)
 
--   Java JWT Jackson Integration
+-   Project Lombok (optional)
 
--   MySQL Connector/J
+-   Spring Boot Starter Test (scope: test)
 
--   Project Lombok
+-   Java JWT (JSON Web Token) API (version 3.18.2)
 
--   Spring Boot Starter Test
+-   Jackson Datatype JSR310
 
--   Spring Security Test
+-   Spring Boot Starter Mail
+
+-   Apache HttpClient (version 4.5.13)
+
+-   Fluent HC (version 4.5.13)
 
 6.  **system.properties**
 
 This file is for the backend deployment use. It configures the version
 of java JDK this backend implementation is using. For this
-implementation, the java version used is 17.
+implementation, the java version used is 19.
