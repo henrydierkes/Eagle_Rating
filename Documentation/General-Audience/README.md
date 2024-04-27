@@ -43,13 +43,6 @@ Jonathan Wang: back end <br>
 Wenzhuo Ma: front end, back end <br>
 Tung Dinh: back end 
 
-
-## Table of Contents
-
-(Automatic or manual Table of Contents linking to sections below.)
-
-## User Guide
-
 ### Installation Instructions
 
 This guide covers the installation process for both the backend and frontend components of the project. Follow these steps to set up and run the application.
