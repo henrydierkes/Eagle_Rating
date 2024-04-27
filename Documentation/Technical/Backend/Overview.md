@@ -8,7 +8,7 @@ been run on a Windows system for the test purpose. The implementation
 hasn't been run and tested on any other system.
 
 > [!IMPORTANT]
-> The detailed technical Api of JavaDoc for this project is in API folder: [https://github.com/henrydierkes/Eagle_Rating/Documentation/Technical/Backend/api](https://github.com/henrydierkes/Eagle_Rating/tree/master/Documentation/Technical/Backend/api
+> The detailed technical Api of JavaDoc for this project is in API folder: [API_DOCUMENT](https://github.com/henrydierkes/Eagle_Rating/tree/master/Documentation/Technical/Backend/api
 )
 > which contains more detailed implementation of api we provided.
 
