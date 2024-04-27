@@ -38,9 +38,11 @@ public class RatingController {
      */
     @GetMapping("/getAll")
     public List<Rating> getAllRating(@RequestParam(required = false) Boolean desc){
+        // If 'desc' parameter is set to true, retrieve ratings in descending order
         if(desc!=null&&desc){
             return ratingService.getAllRatingsDesc();
         }
+        // Otherwise, retrieve ratings in the default order
         return ratingService.getAllRatings();
     }
 
@@ -53,15 +55,21 @@ public class RatingController {
     @GetMapping("/get")
     public ResponseEntity<Rating> getRatingById(@RequestParam String ratingId){
         try {
+            // Convert the rating ID to an ObjectId and attempt to retrieve the rating
             ObjectId objectId = new ObjectId(ratingId);
             Optional<Rating> rating = ratingService.getRateById(objectId);
+
+            // If the rating is found, return it in a successful response
             return rating.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
+            // Return a bad request response if the provided ID format is invalid
             return ResponseEntity.badRequest().build(); // Invalid ObjectId format
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Other errors
+            // Return an internal server error response for other exceptions
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @PostMapping("/like")
     public ResponseEntity<Rating> likeRating(@RequestParam("userId") String userId, @RequestParam("ratingId") String ratingId, boolean like){
         try {
@@ -77,10 +85,13 @@ public class RatingController {
             return ResponseEntity.badRequest().build();
         }
     }
+    // Checks if a user has liked a specific rating
     @GetMapping("/isLike")
     public int isLike(@RequestParam("userId") String userId, @RequestParam("ratingId") String ratingId){
+        // Call the service method to check if the user liked the rating and return the result
         return ratingService.isLike(userId, ratingId);
     }
+
 
     /**
      * Deletes a specific rating by its ID.
@@ -89,11 +100,13 @@ public class RatingController {
      */
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteRatingById(@RequestParam String ratingId, @RequestParam(required = false) Boolean trueDelete) {
-        if(trueDelete==null){
-            trueDelete=true;
+        // If 'trueDelete' parameter is not provided, default to true
+        if(trueDelete == null){
+            trueDelete = true;
         }
-        return ratingService.deleteRating(ratingId,trueDelete);
 
+        // Call the service method to delete the rating and return the response
+        return ratingService.deleteRating(ratingId, trueDelete);
     }
 
     /**
@@ -127,9 +140,13 @@ public class RatingController {
     @PostMapping("/uploadImage")
     public ResponseEntity<String> uploadImage(@RequestParam String ratingId, @RequestParam MultipartFile[] images) {
         try {
+            // Call the service method to upload the images
             ratingService.uploadImage(ratingId, images);
+
+            // Return a successful response message
             return ResponseEntity.ok("Images uploaded successfully!");
         } catch (Exception e) {
+            // Return an internal server error response for exceptions
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload images: " + e.getMessage());
         }
     }
@@ -141,6 +158,7 @@ public class RatingController {
      */
     @PostMapping("/filter")
     public List<Rating> getRatingByFilter(@RequestBody CommentFilterRequest commentFilterRequest) {
+        // Retrieve and return ratings that match the filter criteria
         Rating.OverallRating overallRating = commentFilterRequest.getOverallRating();
         int floor = commentFilterRequest.getFloor() != null ? commentFilterRequest.getFloor() : -1;
         return ratingService.getRatingByFilter(overallRating, floor);
@@ -149,12 +167,13 @@ public class RatingController {
     public ResponseEntity<?> userHasRated(
             @RequestParam("userId") String userId,
             @RequestParam("placeId") String placeId) {
+        // Check if the user has rated the place and return the response
         Optional<Rating> ratingOpt = ratingService.findUserRatingForPlace(userId, placeId);
         if (ratingOpt.isPresent()) {
-            // Return the found Rating object
+            // Return the found rating if the user has rated the place
             return ResponseEntity.ok(ratingOpt.get());
         } else {
-            // Return false or some indication that the user hasn't rated
+            // Return false or some indication that the user hasn't rated the place
             return ResponseEntity.ok(false);
         }
     }
