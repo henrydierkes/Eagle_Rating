@@ -111,7 +111,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 1000px; /* Maximum width for large screens */
+  max-width: 700px; /* Maximum width for large screens */
   height: auto; /* Height is auto for maintaining aspect ratio */
   position: relative; /* Context for absolute positioning */
   margin-left: 5em;

@@ -20,7 +20,11 @@ const UserImages = ({placeId}) => {
     // ];
     const fetchImageUrls = async () => {
         try {
-            const response = await axios.get(`/api/place/${placeId}/images`, axiosConfig);
+            const config = {
+                ...axiosConfig,
+                timeout: 30000, // Set the timeout to 30 seconds (30000 milliseconds)
+            };
+            const response = await axios.get(`/api/place/${placeId}/images`, config);
             console.log('Response:', response);
             if (response.status !== 200) {
                 throw new Error('Failed to fetch image URLs');
