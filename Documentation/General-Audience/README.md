@@ -6,7 +6,10 @@
   - [Creating an Account](#creating-an-account)
   - [Logging in](#logging-in)
   - [Home Page](#Home-Page)
-  - [Finding Professors](#finding-professors)
+  - [Navigation Page](#Navigation-Page)
+  - [Place Detail Page](#Place-Detail-Page)
+  - [Adding Ratings to a Place](#Adding-Ratings-to-a-Place)
+  - [Adding a New Place](#Adding a New Place)
 - [Support and Feedback](#support-and-feedback)
 
 ## Getting Started
@@ -42,7 +45,7 @@
 3. **Updating Your Password**: For security reasons, it's good practice to update your password regularly. To change your password, enter the new password, confirm it, and then click 'CHANGE PASSWORD' to complete the update.
 
 
-#### Home Page
+## Home Page
 
 When you first visit the EagleRating platform, you'll be greeted by the home page. Here's how to get started:
 
@@ -61,7 +64,7 @@ When you first visit the EagleRating platform, you'll be greeted by the home pag
 
 7. **Adding a Location**: If you want to add a new location to the platform, click the 'Add Location' button. This is available on both the home page and the navigation page
 
-#### Navigation Page
+## Navigation Page
 
 After performing a search, you'll be directed to the navigation page, where you can see the list of results.
 
@@ -81,7 +84,7 @@ After performing a search, you'll be directed to the navigation page, where you 
 
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/3f4f29af-87e7-44a2-afc4-8fc9a701e5de)
 
-#### Place Detail Page
+## Place Detail Page
 
 The Place Detail Page provides you with comprehensive information about a specific location on campus.
 
@@ -98,7 +101,7 @@ The Place Detail Page provides you with comprehensive information about a specif
 5. **Gallery and Comments**: Navigate through the gallery of images uploaded by users and read comments to get more insights about the place. You can sort the comments by recency and popularity.
 6. **Link to Google Map**: You can link to Google Map by clicking the blue link above the map.
    
-#### Adding Ratings to a Place
+## Adding Ratings to a Place
 
 When you've had an experience with a place on campus that you'd like to share, the EagleRating platform allows you to easily add a rating.
 
@@ -112,7 +115,7 @@ When you've had an experience with a place on campus that you'd like to share, t
 
 5. **Submitting Your Rating**: Once you've filled out the form, click 'Submit' to add your rating to the place. If you have previously rated the place, you can decide whether to replace your previous rating or not.
 
-#### Adding a New Place
+## Adding a New Place
 
 If you find a spot on campus that's not listed on EagleRating, you can add it yourself.
 
