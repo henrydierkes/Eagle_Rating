@@ -12,8 +12,11 @@
   - [Adding Ratings to a Place](#Adding-Ratings-to-a-Place)
   - [Adding a New Place](#Adding-a-New-Place)
 - [Support and Feedback](#support-and-feedback)
-
+- [Miscellaneous](#Miscellaneous)
+  
 ## Getting Started
+Although you do not need to log in to access Eagle Rating and see the ratings of their favorite places, adding a place or adding a rating does require you to log in. You can access Eagle Rating through your web browser or any of your mobile device as Eagle Rating's design is responsive to different phone screens. 
+
 ### Creating an Account
 1. Go to the [Eagle Rating website](https://www.eagle-rating.com) or you can enter https://www.eagle-rating.com into your search bar.
 2. Click on `Sign Up`.
@@ -140,14 +143,13 @@ We will receive an email as such, and we will try our best to respond to you wit
 
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/b40909ea-5271-46fc-a10d-ae8f6d0d4c1b)
 
-
-
-
 ## Authors
 - Tuan Vinh (tuan.vinh@emory.edu)
 - Henry Dierkes (henry.dierkes@emory.edu)
 - Jonathan Wang (jonathan.wang@emory.edu)
 - Wenzhuo (Max) Ma (max.ma@emory.edu)
 - Tung Dinh (tung.dinh@emory.edu)
+
+### Thank you for using Eagle Rating! 
 
 
