@@ -51,3 +51,10 @@ The `RatingPage` is the main page for displaying place details, comments, and ra
 
 - **Image Viewing**:
     - Users can view images related to the place, uploaded by other users, providing a visual understanding of the place.
+
+
+## Usage
+
+- Import the `LocationForm` component into your application and include it in the desired page layout.
+- Users can interact with the form to add a new location, providing data such as ratings, tags, comments, and images.
+- Upon form submission, the data is sent to the backend API for processing and storage.
