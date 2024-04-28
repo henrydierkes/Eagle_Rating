@@ -33,7 +33,7 @@ The `AddRating` page is structured in a straightforward layout that consists of 
 ## Page Interaction Flow
 1. **Navigate to AddRating Page**:
    - Users arrive at the `AddRating` page and see the `NavBar` at the top.
-   - 
+   
 2. **Provide Ratings**:
     - The user can provide an overall rating or specific sub-ratings based on the selected category.
     - Ratings may include aspects such as cleanliness, accessibility, safety, and other relevant criteria.
@@ -75,7 +75,7 @@ This page structure ensures a seamless and user-friendly experience for submitti
 - `Select`: A Material-UI component for selecting tags.
 - `FormControl`, `InputLabel`, `OutlinedInput`, `MenuItem`, `Checkbox`: Material-UI components for handling tag selection.
 
-##  Methodas
+##  Methods
 
 - **handleRatingChange(name, newValue)**:
     - **Purpose**: Updates the form data state with the new rating value.
