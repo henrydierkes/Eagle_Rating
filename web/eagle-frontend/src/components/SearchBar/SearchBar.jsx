@@ -102,7 +102,9 @@ const SearchBar = () => {
           )}
         />
       </div>
-      <Grouped onCategoryChange={onCategoryChange} />
+      <Grouped 
+      onCategoryChange={onCategoryChange} 
+      onKeyDown={onKeyDown}/>
     </div>
   );
 };

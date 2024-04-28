@@ -139,8 +139,8 @@ function BookmarkPage() {
     };
     
 
-    const navigateToLocationDetail = (locationId) => {
-        navigate(`/ratingpage/${locationId}`);
+    const navigateToLocationDetail = (placeId) => {
+        navigate(`/ratingpage/${placeId}`);
     };
 
     return (
@@ -166,7 +166,7 @@ function BookmarkPage() {
                     </div>
                 </section>
             </div> */}
-            {isModalOpen && <EditPreferencesModal isOpen={isModalOpen} onClose={handleCloseModal} />}
+            {/* {isModalOpen && <EditPreferencesModal isOpen={isModalOpen} onClose={handleCloseModal} />} */}
             <div>
                 {placeInfoData.length > 0 && (
                     <>

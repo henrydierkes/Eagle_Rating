@@ -1,12 +1,10 @@
 # MongoDB Database Structure Documentation
 
-There are two MongoDB databases: `Forum` and `myDatabase`.
-
 ## Database: EagleRating
 
 ## Rationale for the Database Chosen
 
-1. **Schema Flexibility**: As a NoSQL database, MongoDB allows for easier adjustments and evolution of the database structure as the application grows or changes. This flexibility is taken advantage of by our team for `Programs`, `Threads`, and `Replies`, as we do see change in data structures. 
+1. **Schema Flexibility**: As a NoSQL database, MongoDB allows for easier adjustments and evolution of the database structure as the application grows or changes. This flexibility is taken advantage of by our team for `Place`, `Rating`, and `User`, as we do see change in data structures. 
 
 2. **Prevention of SQL Injection**: MongoDB uses BSON (Binary JSON) for data storage and doesn't interpret query input as a part of the code. This feature inherently reduces the risk of SQL injection attacks, which are more prevalent in SQL databases like MySQL. 
 

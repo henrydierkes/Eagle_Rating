@@ -16,6 +16,9 @@
 ## Getting Started
 Although you do not need to log in to view ratings on Eagle Rating, adding a place or a rating requires you to log in. You can access Eagle Rating through your web browser or on any mobile device, as its design is responsive to different screen sizes.
 
+![output-onlinegiftools](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/8bd2f745-58f1-4ab9-94bf-3ecdfc8f69c6)
+
+
 ### Creating an Account
 1. Visit the [Eagle Rating website](https://www.eagle-rating.com) or enter `https://www.eagle-rating.com` in your search bar.
 2. Click on `Sign Up`.
@@ -115,7 +118,7 @@ When you've had an experience with a place on campus that you'd like to share, t
 
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/6ae43bed-87a0-49de-802d-e43442c249c3)
 
-4. **Adding Comments and Images**: Share more about your experience by typing a comment and uploading images that represent your experience.
+4. **Adding Comments and Images**: Share more about your experience by typing a comment and uploading images that represent your experience. You can either upload the image by browsing your folders, or if you are on mobile, you can directly use the Camera App to take a picture and upload the image.
 
 5. **Submitting Your Rating**: Once you've filled out the form, click 'Submit' to add your rating to the place. If you have previously rated the place, you can decide whether to replace your previous rating or not.
 

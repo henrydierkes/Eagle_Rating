@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
@@ -37,6 +38,9 @@ const tags = [
   'Charging Ports',
   'Quiet Space',
   'Water Fountain',
+  'Busy', 
+  'Quiet', 
+  'Parking Space'
 ];
 
 const toggleRatingVisibility = () => {
@@ -47,6 +51,7 @@ const LocationForm = ({ location }) => {
   const { currentUser } = useAuth();
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     placeName: "",
     // buildingName: "",
@@ -200,6 +205,8 @@ const LocationForm = ({ location }) => {
               uploadedImages: [],
               selectedLocation: null,
             });
+            alert('Location submitted successfully! Please wait for verification from our admins!');
+            navigate(`/`);
             // Here, you might want to navigate to another page or give the user feedback
           })
           .catch(error => {

@@ -103,26 +103,29 @@
   }
   .nav-links {
     display: flex;
-    justify-content: flex-start;
-    max-width: 140px;
+    flex-direction: column; /* Change to column layout */
+    align-items: center; /* Center the buttons horizontally */
     padding: 0;
     margin: 0;
   }
   .login-btn, .signup-btn {
     white-space: nowrap;
+    width: 100%; /* Make both buttons take up 100% width */
     height: 3.5vh;
     padding: 5px 15px;
+    margin-top: 10px; /* Add margin between the buttons */
     border: none;
     background-color: #f2f2f2;
     cursor: pointer;
     transition: transform 0.2s ease;
   }
   .signup-btn {
-    margin-top: 50px;
-    margin-right: 100px;
-    margin-left: -85px;
-    border: none;
-    padding: 5px;
+    margin-top: 10px; /* Adjust margin between the buttons */
+    margin-right: 10px; /* Move the sign-up button to the right */
+  }
+  .login-btn {
+    margin-top: 10px; /* Adjust margin between the buttons */
+    margin-left: -10px; /* Move the login button to the left */
   }
   .search-bar {
     display: none; /* Hide the desktop search bar on small screens */
@@ -130,4 +133,8 @@
   .mobile-search-bar {
     display: block; /* Show the mobile search bar on small screens */
   }
+  .separator {
+    display: none;
+  }
+  
 }
