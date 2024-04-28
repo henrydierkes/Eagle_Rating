@@ -120,7 +120,9 @@ When you've had an experience with a place on campus that you'd like to share, t
 
 3. **Adding Comments and Images**: Share more about your experience by typing a comment and uploading images that represent your experience. You can either upload the image by browsing your folders, or if you are on mobile, you can directly use the Camera App to take a picture and upload the image.
 
-![ezgif com-video-to-gif-converter](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/4ea89543-813d-4ed7-a13c-4e346667706d)
+<p align="center">
+  <img src="https://github.com/henrydierkes/Eagle_Rating/assets/101287371/4ea89543-813d-4ed7-a13c-4e346667706d" alt="ezgif.com-video-to-gif-converter">
+</p>
 
 4. **Submitting Your Rating**: Once you've filled out the form, click 'Submit' to add your rating to the place. If you have previously rated the place, you can decide whether to replace your previous rating or not.
 
