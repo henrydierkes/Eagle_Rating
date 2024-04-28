@@ -20,15 +20,54 @@ The `AddLocation` page is designed to allow users to add new locations with asso
 
 3. **Footer**:
     - The `Footer` component is placed at the bottom of the page and may contain additional information or links.
+   
+## Page Interaction Flow
 
+1. **Navigate to AddLocation Page**:
+    - The user navigates to the `AddLocation` page via the navigation bar or a link within the application.
+
+2. **Select Category**:
+    - The user selects a category for the location from a dropdown list.
+    - Possible categories may include Bathroom, Building, Dorm, Parking Lot, or Study Space.
+
+3. **Input Place Name and Select Location**:
+    - The user inputs the name of the place in the designated text field.
+    - The user can also select the location on a map using the `Map` component.
+
+4. **Input Floor Number** (if applicable):
+    - If the location has a specific floor, the user can input the floor number in the designated text field.
+
+5. **Provide Ratings**:
+    - The user can provide an overall rating or specific subratings based on the selected category.
+    - Ratings may include aspects such as cleanliness, accessibility, safety, and other relevant criteria.
+
+6. **Select Tags**:
+    - The user can select predefined tags that describe the location, experience, or characteristics.
+    - Tags may include options such as water fountain, charging port, quiet zone, etc.
+
+7. **Add Comments**:
+    - The user can input comments about the location to provide additional context and feedback.
+
+8. **Upload Images**:
+    - The user can upload one or more images related to the location.
+    - Images can be in various formats such as JPG or PNG.
+
+9. **Review and Submit Form**:
+    - The user reviews the entered information and ensures it is accurate and complete.
+    - The user clicks the "Submit" button to submit the form data to the backend API.
+
+10. **Form Submission and Feedback**:
+    - The form data is sent to the backend API for processing and storage. The added Place will be verified by the administrator and then shown on the website.
 ## Functionality
 
 - **Overall and Subratings**: Users can provide an overall rating or specific subratings (e.g. cleanliness, accessibility) based on the category selected.
 - **Tag Selection**: Users can select predefined tags that best describe their experience with the location.
 - **Comments**: Users can share comments providing more context and feedback on the location.
 - **Image Upload**: Users can upload multiple images of the location.
-- **Form Submission**: Users can submit the form to save their rating, comments, tags, and images.
+- **Form Submission**: Users can submit the form to save their ratings, comments, tags, and images.
 
+
+# LocationForm
 ## Methods
 
 - **handleInputChange**:
