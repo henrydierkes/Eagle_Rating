@@ -137,7 +137,7 @@ const handleSubmit = async (event) => {
                 // Call the uploadImages function and pass the rating ID, images array, and token
                 await uploadImages(ratingId, imagesArray, token);
             }
-            alert('Rating submitted successfully! Please wait for verification from our admins!');
+            alert('Rating submitted successfully!');
             navigate(`/ratingpage/${placeId}`);
         } catch (error) {
             console.error('Error:', error);

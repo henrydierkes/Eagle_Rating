@@ -94,7 +94,7 @@ public class AuthServiceImpl implements IAuthService {
             if (user != null && !user.isVerified()) {
                 throw new BadCredentialsException("User is not verified.");
             } else {
-                throw new BadCredentialsException("Invalid username/email or password supplied");
+                throw new BadCredentialsException("Invalid email or password supplied");
             }
         }
     }
