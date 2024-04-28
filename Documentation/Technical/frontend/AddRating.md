@@ -1,8 +1,48 @@
 # AddRating Page
-- `NavBar`: A navigation bar that is included at the top of the form.
-- `Footer`: A footer included at the bottom of the form.
-- `RatingForm`:a React-based form that provides a user interface for submitting ratings and reviews for a specific place. It is designed to interact with an API to submit user-generated ratings, comments, tags, and images associated with a particular location.
-- RatingForm will be introduced below
+
+## AddRating Page Structure
+
+The `RatingForm` page is structured in a straightforward layout that consists of a navigation bar, the main form, and a footer. Here's an outline of the page structure and the key components:
+
+## Page Layout
+
+1. **Navigation Bar**
+    - `NavBar`: At the top of the page, the navigation bar component provides navigation options and links to other parts of the application.
+
+2. **Main Content: Rating Form**
+    - The `RatingForm` component encompasses the entire main content of the page. It includes:
+    
+        - **Rating Selection**: Users can select between providing an overall rating or specific subratings (e.g. cleanliness, accessibility).
+        - **Tag Selection**: Users can choose from predefined tags to categorize their experience (e.g. water fountain, charging port).
+        - **Commenting**: A text field for users to input comments about the place they are rating.
+        - **Image Upload**: An area for users to upload multiple images related to the place.
+        - **Form Submission**: A submit button to send the rating, comments, tags, and images to the backend API.
+    
+    - **Form Elements**:
+        - `ToggleButtonGroup`: Allows users to toggle between overall rating and subrating options.
+        - `Rating`: Material-UI component for capturing user ratings (either overall or specific subratings).
+        - `TextField`: Material-UI component for entering user comments.
+        - `FormControl`, `Select`, `InputLabel`, `MenuItem`, `Checkbox`: Material-UI components for handling tag selection.
+        - `OutlinedInput`: Material-UI component for handling tag inputs.
+        - `Upload Input`: Allows users to select and upload image files.
+
+3. **Footer**
+    - `Footer`: At the bottom of the page, the footer component may include links or additional information about the application.
+
+## Page Interaction Flow
+
+1. Users arrive at the `RatingForm` page and see the `NavBar` at the top.
+2. In the `RatingForm` section, users can:
+    - Choose to provide an overall rating or specific subratings.
+    - Select tags to categorize their experience.
+    - Add comments about the place.
+    - Upload images related to the place.
+3. After completing the form, users can submit their input using the submit button.
+4. The `Footer` is displayed at the bottom of the page for additional information.
+
+This page structure ensures a seamless and user-friendly experience for submitting ratings and reviews for a specific place.
+
+# RatingForm
 ## Functionalities
 
 - **Rating Selection**: Users can choose between providing an overall rating or specific subratings for various aspects of the place.
