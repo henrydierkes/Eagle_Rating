@@ -1,7 +1,5 @@
 # MongoDB Database Structure Documentation
 
-There are two MongoDB databases: `Forum` and `myDatabase`.
-
 ## Database: EagleRating
 
 ## Rationale for the Database Chosen
