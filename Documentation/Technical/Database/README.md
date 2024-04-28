@@ -8,7 +8,7 @@
 
 2. **Prevention of SQL Injection**: MongoDB uses BSON (Binary JSON) for data storage and doesn't interpret query input as a part of the code. This feature inherently reduces the risk of SQL injection attacks, which are more prevalent in SQL databases like MySQL. 
 
-3. **Better Handling of Unstructured Text**: MongoDB excels in storing unstructured text data, such as the content in `postData`, `programData`, and `applicationData`. It allows for efficient storage, retrieval, and querying of large text blocks.
+3. **Better Handling of Unstructured Text**: MongoDB excels in storing unstructured text data. It allows for efficient storage, retrieval, and querying of large text blocks.
 
 ### Collections and Their Key Attributes
 
