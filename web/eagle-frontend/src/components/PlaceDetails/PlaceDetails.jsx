@@ -26,7 +26,7 @@ const goToPage = () => {};
 
 
 const PlaceDetails = ({ result }) => {
-
+    console.log(result);
     const navigate = useNavigate();
     const rawRating = result?.averageRating?.overall;
     const rating = rawRating ? rawRating.toFixed(1) : 'N/A';
@@ -75,16 +75,18 @@ const PlaceDetails = ({ result }) => {
                         <h4 className="floor">{"Floor " + floor}</h4>
                     </div>
                 </div>
-            <div className="header-right">
-              <div className="rating-bar-container" style={{ width: "60%", margin: "0 auto" }}>
-                <RatingBar result={result} subratings={matchingSubratings} />
-                <button className="rating-button" onClick={handleAddRatingClick}>
-                  Add Rating
-                </button>
+              <div className="header-right">
+                  <div className="rating-bar-container" style={{ width: "60%", margin: "0 auto" }}>
+                    <RatingBar result={result} subratings={matchingSubratings} />
+                    <button className="rating-button" onClick={handleAddRatingClick}>
+                      Add Rating
+                    </button>
               </div>
             </div>
-
         </div>
+          <div className="tags">
+              <TopRatings results={result} />
+          </div>
         <div className="locationAndImage">
             <div className="location">
                 <a
@@ -108,19 +110,6 @@ const PlaceDetails = ({ result }) => {
             <div className="Image">
                 <UserImages placeId={result?.locIdStr}/>
             </div>
-        </div>
-        <div className="tag-level">
-            <div className="tag-level-l">
-                <div className="tags">
-                    {/*             <TopRatings results={result} /> */}
-                    {/*             <UserComments results={results}/> */}
-                    {/* {result.top_tags.map((tag, index) => (
-    <span key={index}>{tag}</span>
-  ))} */}
-                </div>
-            </div>
-            <div className="tag-level-r"></div>{" "}
-            {/* Add the .tag-level-r if needed */}
         </div>
     </div>
     );

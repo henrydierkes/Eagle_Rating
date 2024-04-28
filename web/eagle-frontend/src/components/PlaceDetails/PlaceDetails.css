@@ -183,16 +183,7 @@
   opacity: 0.9; /* Slight transparency change */
 }
 
-.tag-level {
-  width: 100%;
-  display: flex;
-}
-.tag-level-l {
-  width: 50%;
-  display: flex;
-  justify-content: center; /* Center contents horizontally */
-  align-items: center; /* Center contents vertically */
-}
+
 @media (max-width: 1300px) {
   .header {
     flex-direction: column; /* Stack flex items vertically */

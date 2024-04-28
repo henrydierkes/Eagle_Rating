@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import "./TopRatings.css";
 
 const TopRatings = ({ results }) => {
-  const { top_tags } = results[0];
-
+  const { tags } = results;
+  console.log(tags);
   const navigate = useNavigate();
-
+const tagNames = Object.keys(tags);
   return (
     <div className="top-ratings">
       <h2 className="top-tags-name">Top Tags:</h2>
       <div className="tag-list">
-        {top_tags.map((tag, index) => (
+        {tagNames.map((tagName, index) => (
           <span key={index} className="tag">
-            {tag}
+            {tagName}
           </span>
         ))}
       </div>
