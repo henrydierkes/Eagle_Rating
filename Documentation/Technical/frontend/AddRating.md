@@ -1,8 +1,9 @@
 # AddRating Page
+The `AddRating` page is designed to allow users to add new ratings for existing locations with associated data such as overall and sub-ratings, comments, and tags. This page facilitates the process of collecting detailed feedback about a specific location, enabling users to share their experiences and provide valuable insights for others.
 
 ## AddRating Page Structure
 
-The `RatingForm` page is structured in a straightforward layout that consists of a navigation bar, the main form, and a footer. Here's an outline of the page structure and the key components:
+The `AddRating` page is structured in a straightforward layout that consists of a navigation bar, the main form, and a footer. Here's an outline of the page structure and the key components:
 
 ## Page Layout
 
@@ -30,15 +31,29 @@ The `RatingForm` page is structured in a straightforward layout that consists of
     - `Footer`: At the bottom of the page, the footer component may include links or additional information about the application.
 
 ## Page Interaction Flow
+1. **Navigate to AddRating Page**:
+   - Users arrive at the `AddRating` page and see the `NavBar` at the top.
+   - 
+2. **Provide Ratings**:
+    - The user can provide an overall rating or specific sub-ratings based on the selected category.
+    - Ratings may include aspects such as cleanliness, accessibility, safety, and other relevant criteria.
 
-1. Users arrive at the `RatingForm` page and see the `NavBar` at the top.
-2. In the `RatingForm` section, users can:
-    - Choose to provide an overall rating or specific subratings.
-    - Select tags to categorize their experience.
-    - Add comments about the place.
-    - Upload images related to the place.
-3. After completing the form, users can submit their input using the submit button.
-4. The `Footer` is displayed at the bottom of the page for additional information.
+3. **Select Tags**:
+    - The user can select predefined tags that describe the location, experience, or characteristics.
+    - Tags may include options such as water fountain, charging port, quiet zone, etc.
+
+4. **Add Comments**:
+    - The user can input comments about the location to provide additional context and feedback.
+
+5. **Upload Images**:
+    - The user can upload one or more images related to the location.
+    - Images can be in various formats such as JPG or PNG.
+
+6. **Review and Submit Form**:
+    - The user reviews the entered information and ensures it is accurate and complete.
+    - The user clicks the "Submit" button to submit the form data to the backend API.
+7. **Form Submission and Feedback**:
+   - The user reviews will be posted and receive feedback from other users.
 
 This page structure ensures a seamless and user-friendly experience for submitting ratings and reviews for a specific place.
 
@@ -108,3 +123,8 @@ This page structure ensures a seamless and user-friendly experience for submitti
 - `js-cookie` for handling authentication cookies.
 - Other dependencies such as `useAuth`, `SubratingData`, and relevant styles and assets.
 
+## Usage
+
+- Import the `RatingForm` component into your application and include it in the desired page layout.
+- Users can interact with the form to add a new rating for a place, providing data such as ratings, tags, comments, and images.
+- Upon form submission, the data is sent to the backend API for processing and storage.
