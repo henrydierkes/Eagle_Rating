@@ -75,45 +75,45 @@ This page structure ensures a seamless and user-friendly experience for submitti
 - `Select`: A Material-UI component for selecting tags.
 - `FormControl`, `InputLabel`, `OutlinedInput`, `MenuItem`, `Checkbox`: Material-UI components for handling tag selection.
 
-## Functions
+##  Methodas
 
-### `handleRatingChange(name, newValue)`
-- **Purpose**: Updates the form data state with the new rating value.
-- **Input**: `name` (string) - The name of the rating field; `newValue` (number) - The new value of the rating.
+- **handleRatingChange(name, newValue)**:
+    - **Purpose**: Updates the form data state with the new rating value.
+    - **Input**: `name` (string) - The name of the rating field; `newValue` (number) - The new value of the rating.
 
-### `handleImageChange(event)`
-- **Purpose**: Manages uploaded images, validating file size and updating the state with allowed files.
-- **Input**: `event` - The file selection event.
+- **handleImageChange(event)**
+    - **Purpose**: Manages uploaded images, validating file size and updating the state with allowed files.
+    - **Input**: `event` - The file selection event.
 
-### `handleTagsChange(event)`
-- **Purpose**: Handles changes in the selected tags and updates the state.
-- **Input**: `event` - The tag selection event.
+- **`handleTagsChange(event)`**
+    - **Purpose**: Handles changes in the selected tags and updates the state.
+    - **Input**: `event` - The tag selection event.
 
-### `handleSubmit(event)`
-- **Purpose**: Manages form submission, including validation and sending data to the backend API.
-- **Input**: `event` - The form submission event.
+- **`handleSubmit(event)`**
+    - **Purpose**: Manages form submission, including validation and sending data to the backend API.
+    - **Input**: `event` - The form submission event.
 
-### `createRatingRequest()`
-- **Purpose**: Creates a rating request object from the form data.
-- **Output**: An object containing the rating request data.
+- **`createRatingRequest()`**
+    - **Purpose**: Creates a rating request object from the form data.
+    - **Output**: An object containing the rating request data.
 
-### `checkExistingRating(token)`
-- **Purpose**: Checks if the user has already rated the place.
-- **Input**: `token` (string) - Authentication token.
-- **Output**: Returns the existing rating ID if it exists, otherwise null.
+- **`checkExistingRating(token)`**
+    - **Purpose**: Checks if the user has already rated the place.
+    - **Input**: `token` (string) - Authentication token.
+    - **Output**: Returns the existing rating ID if it exists, otherwise null.
 
-### `deleteExistingRating(token, ratingId)`
-- **Purpose**: Deletes an existing rating for a given place.
-- **Input**: `token` (string) - Authentication token; `ratingId` (string) - ID of the existing rating.
+- **`deleteExistingRating(token, ratingId)`**
+    - **Purpose**: Deletes an existing rating for a given place.
+    - **Input**: `token` (string) - Authentication token; `ratingId` (string) - ID of the existing rating.
 
-### `submitRating(token, ratingRequest)`
-- **Purpose**: Submits the rating request data to the backend API.
-- **Input**: `token` (string) - Authentication token; `ratingRequest` (object) - Rating request data.
-- **Output**: Returns the ID of the newly submitted rating.
+- **`submitRating(token, ratingRequest)`**
+    - **Purpose**: Submits the rating request data to the backend API.
+    - **Input**: `token` (string) - Authentication token; `ratingRequest` (object) - Rating request data.
+    - **Output**: Returns the ID of the newly submitted rating.
 
-### `uploadImages(ratingId, images, token)`
-- **Purpose**: Uploads images associated with the rating to the backend API.
-- **Input**: `ratingId` (string) - ID of the rating; `images` (array) - Array of image files; `token` (string) - Authentication token.
+- **`uploadImages(ratingId, images, token)`**
+    - **Purpose**: Uploads images associated with the rating to the backend API.
+    - **Input**: `ratingId` (string) - ID of the rating; `images` (array) - Array of image files; `token` (string) - Authentication token.
 
 ## Dependencies
 
