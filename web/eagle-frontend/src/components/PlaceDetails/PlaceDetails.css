@@ -68,6 +68,12 @@
   margin-bottom: -2%;
   font-size: 3em;
 }
+.bookmark-tag {
+  max-width: 30px;
+}
+.bookmark-tag img {
+  max-width: 30px;
+}
 
 .building {
   margin-bottom: -6%;

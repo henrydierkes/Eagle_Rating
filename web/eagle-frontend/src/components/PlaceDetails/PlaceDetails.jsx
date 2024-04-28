@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import "./PlaceDetails.css";
 import RatingBar from "../subComponents/RatingBar/RatingBar.jsx";
 import TopRatings from "../subComponents/TopRatings/TopRatings.jsx";
 import UserImages from "../subComponents/UserImages/UserImages.jsx";
 import UserComments from "../subComponents/UserComments/UserComments.jsx";
 import { useNavigate } from "react-router-dom";
+import bookmarkIcon from '../subComponents/Misc/bookmark.png';
+import bookmarkHighlightIcon from '../subComponents/Misc/bookmark highlight.png';
+import axiosConfig from "../../axiosConfig.jsx";
+import axios from "axios";
 //import subrating
 import SubratingData from "../../../public/jsons/Subrating.json";
 
@@ -23,11 +28,27 @@ const getRatingColor = (rating) => {
 };
 const goToPage = () => {};
 
+const clickBookmarkApi = async (userId, placeId) => {
+    try {
+        const response = await axios.post(`${axiosConfig.baseURL}/api/user/clickBookMark`, null, {
+            params: {
+                userId,
+                placeId,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to add or remove bookmark:', error);
+        return null;
+    }
+};
 
 
 const PlaceDetails = ({ result }) => {
 
     const navigate = useNavigate();
+    const { currentUser } = useAuth();
+    const [bookmarked, setBookmarked] = useState([]);
     const rawRating = result?.averageRating?.overall;
     const rating = rawRating ? rawRating.toFixed(1) : 'N/A';
     const ratingColor = getRatingColor(rawRating ?? 0);
@@ -41,14 +62,11 @@ const PlaceDetails = ({ result }) => {
     // console.log(longitude);
     // console.log(latitude);
     // find subratings to each category
-    const category = result.category; // 例如，这里可能会是 "Library"
-    // console.log(result.category + "aaaaaaaaaaaaaaaa")
+    const category = result.category;
     const matchingSubratings = SubratingData.categories.find(cat => cat.category === category)?.subratings || {};
     const handleAddRatingClick = () => {
         navigate("/addRating", { state: { placeDetails: result } });
     };
-
-//   const result = results[0]; // This is very important because results.rating can't read a whole array, it needs to read an item in the array
 
     // Function to generate Google Maps URL with latitude and longitude
     const getGoogleMapsUrl = (latitude, longitude) => {
@@ -56,6 +74,33 @@ const PlaceDetails = ({ result }) => {
     };
     // console.log(result);
 
+    const toggleBookmark = async (placeId, e) => {
+        console.log("placeId",placeId)
+        e.stopPropagation(); // Prevent the click from reaching the result item
+
+        if (!currentUser) {
+            // Handle case where there is no current user (authentication error)
+            return;
+        }
+
+        // Call the backend API
+        const response = await clickBookmarkApi(currentUser.userId, placeId);
+
+        // Check the response and handle success case
+        if (response === 'Email verified successfully' || response.success) {
+            setBookmarked((prev) => {
+                if (prev.includes(placeId)) {
+                    // If place is already bookmarked, remove it
+                    return prev.filter((id) => id !== placeId);
+                } else {
+                    // If place is not bookmarked, add it
+                    return [...prev, placeId];
+                }
+            });
+        } else {
+            console.error('Failed to add or remove bookmark:', response);
+        }
+    };
 
     return (
         <div className="place-details">
@@ -73,6 +118,13 @@ const PlaceDetails = ({ result }) => {
                     <div className="header-left-r">
                     <h1 className="placeName">{title}</h1>
                         <h4 className="floor">{"Floor " + floor}</h4>
+                        <div className="bookmark-tag" onClick={(e) => toggleBookmark(result.locIdStr, e)}>
+                            {bookmarked.includes(result.locIdStr) ? (
+                                < img src={bookmarkHighlightIcon} alt="Bookmarked" />
+                            ) : (
+                                < img src={bookmarkIcon} alt="Bookmark" />
+                            )}
+                        </div>
                     </div>
                 </div>
             <div className="header-right">
