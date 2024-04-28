@@ -32,13 +32,13 @@ The `AddLocation` page is designed to allow users to add new locations with asso
 
 3. **Input Place Name and Select Location**:
     - The user inputs the name of the place in the designated text field.
-    - The user can also select the location on a map using the `Map` component.
+    - The user need to select the location on a map using the `Map` component.
 
 4. **Input Floor Number** (if applicable):
     - If the location has a specific floor, the user can input the floor number in the designated text field.
 
 5. **Provide Ratings**:
-    - The user can provide an overall rating or specific subratings based on the selected category.
+    - The user can provide an overall rating or specific sub-ratings based on the selected category.
     - Ratings may include aspects such as cleanliness, accessibility, safety, and other relevant criteria.
 
 6. **Select Tags**:
@@ -59,7 +59,9 @@ The `AddLocation` page is designed to allow users to add new locations with asso
 10. **Form Submission and Feedback**:
     - The form data is sent to the backend API for processing and storage. The added Place will be verified by the administrator and then shown on the website.
 ## Functionality
-
+- **Category Selection**: Users need to provide a category of the place they want to add.
+- **Name Input**: Users need to input the location they want to add.
+- **Location Selection**: Users need to select the location on the embedded Google Map.
 - **Overall and Subratings**: Users can provide an overall rating or specific subratings (e.g. cleanliness, accessibility) based on the category selected.
 - **Tag Selection**: Users can select predefined tags that best describe their experience with the location.
 - **Comments**: Users can share comments providing more context and feedback on the location.
