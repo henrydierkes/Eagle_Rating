@@ -1,22 +1,36 @@
 # AddLocation
 
-The `AddLocation` page is designed to allow users to add new locations with associated data such as category, name, ratings, tags, comments, and images. This page facilitates the process of collecting detailed information about a specific location, enabling users to share their experiences and provide valuable feedback for others.
+The `AddLocation` page is designed to allow users to add new locations with associated data such as category, name, ratings, tags, comments, and images. This page facilitates the process of collecting detailed information about a specific location, enabling users to share their experiences and provide valuable feedback to others.
+
+## AddLocation Page Structure
+
+The `AddLocation` page is structured in a straightforward layout that consists of a navigation bar, the main form, and a footer. Here's an outline of the page structure and the key components:
 
 ## Page Structure
 
 1. **Navigation Bar**:
     - The `NavBar` component is located at the top of the page and provides navigation options for users.
 
-2. **LocationForm**:
+2. **Main Content: LocationForm**:
     - The primary section of the page consists of the `LocationForm` component, which encompasses the main content of the page and includes:
         - **Category Selection**: Users can select a category for the location, such as Bathroom, Building, Dorm, Parking Lot, or Study Space.
-        - **Place Name and Location Selection**: Users can input the name of the place and select its location on a map using the `Map` component.
+        - **Place Name and Location Selection**: Users can input the location's name and select its location on a map using the `Map` component.
         - **Floor Number**: Users can input the floor number of the place if applicable.
-        - **Ratings**: Users can provide an overall rating or specific subratings (e.g. cleanliness, accessibility) based on the category selected.
+        - **Ratings**: Users can provide an overall rating or specific sub-ratings (e.g. cleanliness, accessibility) based on the category selected.
         - **Tag Selection**: Users can choose tags to categorize their experience or the characteristics of the place.
         - **Comments**: Users can add comments about the location, sharing additional details and feedback.
         - **Image Upload**: Users can upload one or more images related to the place.
         - **Form Submission**: A button allows users to submit the data entered in the form.
+    - **Form Elements**:
+        - `TextField`:A Material-UI component for entering the location's name, floor number (if applicable), and user comment.
+        - `AutoComplete`: Used for selecting the category of the location from a predefined list of categories.
+        - `Map`: An interactive map interface that allows users to select and mark the location's geographic position.
+        - `ToggleButtonGroup`: Allows users to toggle between overall rating and sub-ratings options.
+        - `Rating`: Material-UI component for capturing user ratings (either overall or specific sub-ratings).
+        - `FormControl`, `Select`, `InputLabel`, `MenuItem`, `Checkbox`: Material-UI components for handling tag selection and creating a dropdown list of available tags.
+        - `OutlinedInput`: Used for handling tag inputs and managing the selected tags.
+        - `Upload Input`: Allows users to select and upload image files for the location.
+
 
 3. **Footer**:
     - The `Footer` component is placed at the bottom of the page and may contain additional information or links.
@@ -58,7 +72,27 @@ The `AddLocation` page is designed to allow users to add new locations with asso
 
 10. **Form Submission and Feedback**:
     - The form data is sent to the backend API for processing and storage. The added Place will be verified by the administrator and then shown on the website.
+   
+This page structure ensures a seamless and user-friendly experience for adding a specific place.
+
+## Included Components
+
+- `NavBar`: A navigation bar that is included at the top of the page.
+- `Footer`: A footer included at the bottom of the page.
+- `TextField`: A Material-UI component for inputting the name of the location and the floor number.
+- `Autocomplete`: Material-UI component for selecting a category from a predefined list.
+- `Map`: An interactive map interface that allows users to select and mark the location's geographic position.
+- `ToggleButtonGroup`: Allows users to toggle between overall rating and subrating options.
+- `Rating`: Material-UI component for capturing user ratings (either overall or specific sub-ratings).
+- `TextField`: Material-UI component for entering user comments.
+- `FormControl`, `Select`, `InputLabel`, `MenuItem`, `Checkbox`: Material-UI components for handling tag selection and creating a dropdown list of available tags.
+- `OutlinedInput`: Material-UI component for handling tag inputs and managing selected tags.
+- `Upload Input`: Allows users to select and upload image files related to the location.
+
+  
+# RatingForm
 ## Functionality
+
 - **Category Selection**: Users need to provide a category of the place they want to add.
 - **Name Input**: Users need to input the location they want to add.
 - **Location Selection**: Users need to select the location on the embedded Google Map.
@@ -69,7 +103,6 @@ The `AddLocation` page is designed to allow users to add new locations with asso
 - **Form Submission**: Users can submit the form to save their ratings, comments, tags, and images.
 
 
-# LocationForm
 ## Methods
 
 - **handleInputChange**:
@@ -102,6 +135,16 @@ The `AddLocation` page is designed to allow users to add new locations with asso
     - **Input**: A form submission event object.
     - **Output**: Sends a POST request to the backend API with the prepared form data, and handles success or error responses.
 
+## Dependencies
+- `React` and related hooks (`useState`, `useEffect`).
+- `@mui/material` components for form inputs and styling (`TextField`, `Select`, `MenuItem`, `InputLabel`, `FormControl`, `Checkbox`, `Button`).
+- `react-router-dom` for navigation and route management.
+- `axios` for making API requests.
+- `Google Maps` API or similar library for location selection on a map.
+- `js-cookie` for handling authentication cookies.
+- Other dependencies such as useAuth, LocationData, and relevant styles and assets.
+
+  
 ## Usage
 
 - Import the `LocationForm` component into your application and include it in the desired page layout.
