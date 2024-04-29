@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import "./PlaceDetails.css";
 import RatingBar from "../subComponents/RatingBar/RatingBar.jsx";
@@ -67,6 +67,21 @@ const PlaceDetails = ({ result }) => {
     const handleAddRatingClick = () => {
         navigate("/addRating", { state: { placeDetails: result } });
     };
+    useEffect(() => {
+        const fetchBookmarks = async () => {
+            if (currentUser) {
+                try {
+                    const response = await axios.get(`${axiosConfig.baseURL}/api/user/bookmarks/${currentUser.userId}`);
+                    const c = setBookmarked(response.data || []);
+                    console.log("bookmarks", response.data);
+                } catch (error) {
+                    console.error('Failed to fetch user bookmarks:', error);
+                }
+            }
+        };
+        fetchBookmarks();
+    }, [currentUser]);
+
 
     // Function to generate Google Maps URL with latitude and longitude
     const getGoogleMapsUrl = (latitude, longitude) => {
