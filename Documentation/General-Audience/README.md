@@ -61,15 +61,15 @@ When you first visit the EagleRating platform, you'll be greeted by the home pag
 
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/112fe942-757e-48ea-8889-b63d998c8777)
 
-4. **Accessing Categories**: Click on any category to view a filtered list of places within that category. This makes it easier to find specific types of locations on campus.
+3. **Accessing Categories**: Click on any category to view a filtered list of places within that category. This makes it easier to find specific types of locations on campus.
    
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/fb560aa5-b802-4172-9339-48b43b074a17)
 
-5. **View Bookmarked place** If you have bookmarked a few places on our websites, you can click on the small bookmark icon beside your username on the search bar. This function will only be available once you log in.
+4. **View Bookmarked place** If you have bookmarked a few places on our websites, you can click on the small bookmark icon beside your username on the search bar. This function will only be available once you log in.
 
    <img width="1800" alt="Screenshot 2024-04-27 at 12 58 12" src="https://github.com/henrydierkes/Eagle_Rating/assets/101287371/9dca6847-c0da-44e2-aadb-27683df99f20">
 
-7. **Adding a Location**: If you want to add a new location to the platform, click the 'Add Location' button. This is available on both the home page and the navigation page
+5. **Adding a Location**: If you want to add a new location to the platform, click the 'Add Location' button. This is available on both the home page and the navigation page
 
 ## Navigation Page
 
@@ -105,8 +105,8 @@ The Place Detail Page provides you with comprehensive information about a specif
    
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/e0e76f81-635a-4a3c-aa2b-26e0c194d3e4)
 
-5. **Gallery and Comments**: Navigate through the gallery of images uploaded by users and read comments to get more insights about the place. You can sort the comments by recency and popularity.
-6. **Link to Google Map**: You can link to Google Map by clicking the blue link above the map.
+4. **Gallery and Comments**: Navigate through the gallery of images uploaded by users and read comments to get more insights about the place. You can sort the comments by recency and popularity.
+5. **Link to Google Map**: You can link to Google Map by clicking the blue link above the map.
    
 ## Adding Ratings to a Place
 
@@ -114,13 +114,17 @@ When you've had an experience with a place on campus that you'd like to share, t
 
 1. **Initiating a Rating**: On the Place Detail Page, click the 'Add Rating' button to start the process.
 
-3. **Completing the Rating Form**: Provide an overall star rating and, if applicable, sub-ratings for different aspects like "Clean", "Amenities", and "Quiet Level". You can also include tags for specific features such as "Charging Port" or "Water Fountain".
+2. **Completing the Rating Form**: Provide an overall star rating and, if applicable, sub-ratings for different aspects like "Clean", "Amenities", and "Quiet Level". You can also include tags for specific features such as "Charging Port" or "Water Fountain".
 
 ![image](https://github.com/henrydierkes/Eagle_Rating/assets/101287371/6ae43bed-87a0-49de-802d-e43442c249c3)
 
-4. **Adding Comments and Images**: Share more about your experience by typing a comment and uploading images that represent your experience. You can either upload the image by browsing your folders, or if you are on mobile, you can directly use the Camera App to take a picture and upload the image.
+3. **Adding Comments and Images**: Share more about your experience by typing a comment and uploading images that represent your experience. You can either upload the image by browsing your folders, or if you are on mobile, you can directly use the Camera App to take a picture and upload the image.
 
-5. **Submitting Your Rating**: Once you've filled out the form, click 'Submit' to add your rating to the place. If you have previously rated the place, you can decide whether to replace your previous rating or not.
+<p align="center">
+  <img src="https://github.com/henrydierkes/Eagle_Rating/assets/101287371/4ea89543-813d-4ed7-a13c-4e346667706d" alt="ezgif.com-video-to-gif-converter">
+</p>
+
+4. **Submitting Your Rating**: Once you've filled out the form, click 'Submit' to add your rating to the place. If you have previously rated the place, you can decide whether to replace your previous rating or not.
 
 ## Adding a New Place
 
