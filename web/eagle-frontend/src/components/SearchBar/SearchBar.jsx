@@ -57,22 +57,26 @@ const SearchBar = () => {
     }
   };
 
-  const onKeyDown = (event) => {
+  const onTextFieldKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      let queryParams = '';
-      if (inputValue.trim() || selectedCategory) {
-        if (inputValue.trim()) {
-          queryParams += `locName=${inputValue.trim()}&`;
-        }
-        if (selectedCategory) {
-          queryParams += `category=${selectedCategory.title}`;
-        }
-      } else {
-        queryParams = '';
-      }
-      navigate(`/navigation?${queryParams}`);
+      search();
     }
+  };
+
+  const search = () => {
+    let queryParams = '';
+    if (inputValue.trim() || selectedCategory) {
+      if (inputValue.trim()) {
+        queryParams += `locName=${inputValue.trim()}&`;
+      }
+      if (selectedCategory) {
+        queryParams += `category=${selectedCategory.title}`;
+      }
+    } else {
+      queryParams = '';
+    }
+    navigate(`/navigation?${queryParams}`);
   };
 
   const onCategoryChange = (event, newValue) => {
@@ -92,10 +96,15 @@ const SearchBar = () => {
               {...params}
               variant="outlined"
               placeholder="Search for places..."
-              onKeyDown={onKeyDown}
+              onKeyDown={onTextFieldKeyDown} // Attach onKeyDown directly to TextField
               InputProps={{
                 ...params.InputProps,
-                endAdornment: <SearchIcon />,
+                endAdornment: (
+                  <SearchIcon
+                    onClick={search} // Call the search function when the icon is clicked
+                    style={{ cursor: 'pointer' }} // Change cursor to pointer to indicate clickability
+                  />
+                ),
               }}
               fullWidth
             />
@@ -103,8 +112,8 @@ const SearchBar = () => {
         />
       </div>
       <Grouped 
-      onCategoryChange={onCategoryChange} 
-      onKeyDown={onKeyDown}/>
+        onCategoryChange={onCategoryChange} 
+      />
     </div>
   );
 };
