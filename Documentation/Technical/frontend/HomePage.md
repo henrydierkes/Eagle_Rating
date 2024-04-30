@@ -18,7 +18,7 @@ The Home Page presents a welcoming interface that allows users to navigate throu
         - `CategoryCard`: Represents different categories like buildings, study spaces, parking lots, dorms, and bathrooms.
 
 3. **Footer**
-    - `Footer`: Provides additional navigation and information about EagleRating, typically including contact information, social media links, and legal disclaimers.
+    - `Footer`: Provides additional navigation and information about EagleRating, including contact information, social media links, and legal disclaimers.
 
 ## Interaction Flow
 
