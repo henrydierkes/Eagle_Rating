@@ -15,13 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.Base64;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     private MongoTemplate mongoTemplate;

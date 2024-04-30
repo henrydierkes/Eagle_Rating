@@ -5,14 +5,20 @@ import com.astar.ratingbackend.Model.UserRepository;
 import com.astar.ratingbackend.Service.IAuthService;
 import com.astar.ratingbackend.Service.IUserService;
 import com.astar.ratingbackend.Service.util.JwtUtil;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.security.SecureRandom;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 @Service
@@ -25,6 +31,8 @@ public class AuthServiceImpl implements IAuthService {
     private final JwtUtil jwtUtil;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
@@ -98,5 +106,75 @@ public class AuthServiceImpl implements IAuthService {
             }
         }
     }
+    private void sendRandomPasswordEmail(String email, String randomPassword) {
+        String subject = "Your New Password";
+        String senderName = "Eagle Rating";
+        String mailContent = "Dear User, ";
+        mailContent += "Your new password is: " + randomPassword + ". ";
+        mailContent += "Please change your password as soon as possible.";
+        mailContent += " Thank you, " + senderName + ".";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("eaglerating.astar@gmail.com");
+        message.setTo(email);
+        message.setSubject(subject);
+        message.setText(mailContent);
+
+        mailSender.send(message);
+    }
+
+    // Helper method to generate a random password
+    private String generateRandomPassword(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        Random random = new SecureRandom();
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            password.append(characters.charAt(index));
+        }
+
+        return password.toString();
+    }
+    @Override
+    public void resetPassword(String email) {
+        try {
+            // Retrieve user by email
+            User user = userService.getUserByEmail(email);
+
+            // Check if user is found
+            if (user == null) {
+                throw new NoSuchElementException("User with email " + email + " not found.");
+            }
+            // Retrieve user's ID
+            ObjectId id = user.getUserId();
+
+            // Generate a random temporary password
+            String tempPassword = generateRandomPassword(8);
+
+            // Encode the temporary password using the password encoder
+            String encodedTempPassword = passwordEncoder.encode(tempPassword);
+
+            // Create a query to find the user by their ID
+            Query query = new Query(Criteria.where("_id").is(id));
+
+            // Update the user's password with the encoded temporary password
+            Update update = Update.update("password", encodedTempPassword);
+
+            // Execute the update query to reset the password in the database
+            mongoTemplate.updateFirst(query, update, User.class);
+
+            // Send the temporary password to the user's email
+            sendRandomPasswordEmail(email, tempPassword);
+        } catch (NoSuchElementException e) {
+            // Handle case where user email is not found
+            throw new IllegalArgumentException("User with email " + email + " does not exist.");
+        } catch (Exception e) {
+            // Handle any other exceptions
+            throw new IllegalArgumentException("An error occurred while resetting the password: " + e.getMessage());
+        }
+    }
+
+
 }
 
