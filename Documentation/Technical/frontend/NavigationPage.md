@@ -19,7 +19,7 @@ The Navigation Page provides a user-friendly interface that allows users to sort
         - `FeatureFilter`: Offers tags for users to select or deselect to filter locations by features such as 'Water Fountain' or 'Charging Port'.
 
 3. **Footer**
-    - `Footer`: Contains additional links and information about the EagleRating platform, often including terms of service, privacy policy, and contact information.
+    - `Footer`: Contains additional links and information about the EagleRating platform, including terms of service, privacy policy, and contact information.
 
 ## Interaction Flow
 
@@ -72,5 +72,3 @@ The Navigation Page provides a user-friendly interface that allows users to sort
 - The Navigation Page is accessed from the Home Page when users wish to search for specific locations, sort, or apply filters.
 - Users interact with the `ResultList` and `FilterRating` components to refine their search and navigate to the detailed pages of locations.
 - Updates to the list of results are dynamically rendered based on user interactions with the sorting and filtering options.
-
-Ensure this documentation is kept up-to-date with any changes to the Navigation Page structure or functionality to aid in development and maintenance.
