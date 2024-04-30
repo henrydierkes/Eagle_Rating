@@ -85,6 +85,14 @@ const Profile = () => {
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
+    
+    // Check if file size exceeds the limit (in bytes)
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSizeInBytes) {
+      setError("File size exceeds the limit (5MB). Please upload a smaller image.");
+      return;
+    }
+  
     setAvatar(file);
 
     const reader = new FileReader();
