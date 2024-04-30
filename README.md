@@ -19,7 +19,7 @@ Tablet / Computer Users: You can visit our link at [https://www.eagle-rating.com
 
 IOS Users: You could add as a short cut [here](https://www.icloud.com/shortcuts/df98e8a40aa148d28f45f94756af97b7)
 
-We have DEMO videos [here]
+We have DEMO videos [here](https://www.youtube.com/watch?v=HOGxLKmG0ss). We recommend watching it in 1080p✨.
 
 ### Key Features
 

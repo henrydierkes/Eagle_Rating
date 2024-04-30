@@ -19,7 +19,7 @@ The `RatingPage` is the main page for displaying place details, comments, and ra
 - **CommentList**: Lists all comments related to the place, with functionalities to upvote or downvote, and edit comments for logged-in users.
 
 ### 4. Footer:
-- **Footer**: Placed at the bottom of the page, it may include additional links or information about the application.
+- **Footer**: Placed at the bottom of the page, including additional links or information about the application.
 
 ## RatingPage Interaction Flow
 
@@ -43,7 +43,9 @@ The `RatingPage` is the main page for displaying place details, comments, and ra
 
 - **Place Details and Ratings**:
     - **Comprehensive Display**: Show detailed information about the place including location, ratings, and user-generated images.
-    - **Ratings Breakdown**: Users can view overall and specific subratings which give insight into different aspects of the place like accessibility.
+    - **Ratings Breakdown**: Users can view overall and specific sub-ratings which give insight into different aspects of the place like accessibility.
+    - **Map Display**: Users can click into the link of the place and be re-directed to Google Map, or view the place directly in embeded google map.
+    - **BookMark**: Users can bookmark the place.
 
 - **User Engagement with Comments**:
     - **Comment Sorting**: Users can sort comments to find the most relevant, recent, or popular ones.

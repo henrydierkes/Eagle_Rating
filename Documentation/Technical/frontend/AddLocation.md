@@ -33,7 +33,7 @@ The `AddLocation` page is structured in a straightforward layout that consists o
 
 
 3. **Footer**:
-    - The `Footer` component is placed at the bottom of the page and may contain additional information or links.
+    - The `Footer` component is placed at the bottom of the page and contains additional information or links.
    
 ## Page Interaction Flow
 

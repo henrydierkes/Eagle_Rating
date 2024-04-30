@@ -28,7 +28,7 @@ The `AddRating` page is structured in a straightforward layout that consists of 
         - `Upload Input`: Allows users to select and upload image files.
 
 3. **Footer**
-    - `Footer`: At the bottom of the page, the footer component may include links or additional information about the application.
+    - `Footer`: At the bottom of the page, the footer component includes links and additional information about the application.
 
 ## Page Interaction Flow
 1. **Navigate to AddRating Page**:

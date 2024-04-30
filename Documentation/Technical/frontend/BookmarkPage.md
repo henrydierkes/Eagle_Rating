@@ -20,7 +20,7 @@ The `Bookmark` page is structured in a straightforward layout that consists of a
         - `Place description box`: The bookmarked pages' place description boxes that are located in the bookmark page have full functionality similar to the ones in the navigation page. They can have their bookmarked status removed, removing them from the bookmark page, and they can be clicked which takes the user to that respective rating page. 
 
 3. **Footer**
-    - `Footer`: At the bottom of the page, the footer component may include links or additional information about the application.
+    - `Footer`: At the bottom of the page, the footer component includes links or additional information about the application.
 
 ## Page Interaction Flow
 1. **Navigate to Bookmark Page**:
