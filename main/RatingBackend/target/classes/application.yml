@@ -14,7 +14,7 @@ server:
 spring:
   data:
     mongodb:
-      uri: "mongodb+srv://henry:eaglerating12345@cluster0.7cjsxez.mongodb.net/EagleRating"
+      uri: ${mongo_DB_uri}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
