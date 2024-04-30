@@ -14,117 +14,54 @@ The `Profile` page is structured in a straightforward layout that consists of a 
     - The Update Section encompasses the entire main content of the page. It includes:
     
         - **Avatar and Username**: Users can see their avatar and username. 
-        - **Update Avatar**: Users can upload an image 
-        - **Commenting**: A text field for users to input comments about the place they are rating.
-        - **Image Upload**: An area for users to upload multiple images related to the place.
-        - **Form Submission**: A submit button to send the rating, comments, tags, and images to the backend API.
+        - **Change Avatar**: Users can upload an image less than 5 megabytes and use it as their avatar that appears next to their name in comments they make. 
+        - **Change Username**: Users can change their username here and this will be what appears as their name in comments. 
+        - **Change Password**: Users can change their password here. 
     
     - **Form Elements**:
-        - `ToggleButtonGroup`: Allows users to toggle between overall rating and subrating options.
-        - `Rating`: Material-UI component for capturing user ratings (either overall or specific subratings).
-        - `TextField`: Material-UI component for entering user comments.
-        - `FormControl`, `Select`, `InputLabel`, `MenuItem`, `Checkbox`: Material-UI components for handling tag selection.
-        - `OutlinedInput`: Material-UI component for handling tag inputs.
-        - `Upload Input`: Allows users to select and upload image files.
+        - `Upload Avatar`: Allows users to upload and avatar and see a small preview. 
+        - `Save Avatar`: This saves the avatar into the database under the user. 
+        - `Change Username`: If the above text box is filled in then this button will put what is in that text box into the user's username. 
+        - `Change Password`: If the above two text boxes are the same then this button will change the user's password to that. 
 
 3. **Footer**
     - `Footer`: At the bottom of the page, the footer component includes links and additional information about the application.
 
 ## Page Interaction Flow
 1. **Navigate to Profile Page**:
-   - Users arrive at the `Profile` page and see the `NavBar` at the top.
+   - Users arrive at the `Profile` page by clicking their name in the top left of the `NavBar`.
    
-2. **Provide Ratings**:
-    - The user can provide an overall rating or specific sub-ratings based on the selected category.
-    - Ratings may include aspects such as cleanliness, accessibility, safety, and other relevant criteria.
+2. **Update Information**:
+    - The users can update any information about their profile from this page. 
 
-3. **Select Tags**:
-    - The user can select predefined tags that describe the location, experience, or characteristics.
-    - Tags may include options such as water fountain, charging port, quiet zone, etc.
-
-4. **Add Comments**:
-    - The user can input comments about the location to provide additional context and feedback.
-
-5. **Upload Images**:
-    - The user can upload one or more images related to the location.
-    - Images can be in various formats such as JPG or PNG.
-
-6. **Review and Submit Form**:
-    - The user reviews the entered information and ensures it is accurate and complete.
-    - The user clicks the "Submit" button to submit the form data to the backend API.
-7. **Form Submission and Feedback**:
-   - The user reviews will be posted and receive feedback from other users.
-
-This page structure ensures a seamless and user-friendly experience for submitting ratings and reviews for a specific place.
-
-# RatingForm
-## Functionalities
-
-- **Rating Selection**: Users can choose between providing an overall rating or specific subratings for various aspects of the place.
-- **Tag Selection**: Users can select from predefined tags to categorize their experience.
-- **Commenting**: Users can add text comments about their experience.
-- **Image Upload**: Users can upload multiple images related to the place they are rating.
-- **Form Submission**: Users can submit their ratings, tags, comments, and images via a form.
-
-## Included Components
-
-- `NavBar`: A navigation bar that is included at the top of the form.
-- `Footer`: A footer included at the bottom of the form.
-- `Rating`: A Material-UI component for capturing user ratings.
-- `TextField`: A Material-UI component for inputting user comments.
-- `Select`: A Material-UI component for selecting tags.
-- `FormControl`, `InputLabel`, `OutlinedInput`, `MenuItem`, `Checkbox`: Material-UI components for handling tag selection.
+This page structure ensures a seamless and user-friendly experience for updating your profile information.
 
 ##  Methods
 
-- **handleRatingChange(name, newValue)**:
-    - **Purpose**: Updates the form data state with the new rating value.
-    - **Input**: `name` (string) - The name of the rating field; `newValue` (number) - The new value of the rating.
+- **fetchUserProfile()**:
+    - **Purpose**: Gathers relevant information for the page to display, such as the user's avatar. 
 
-- **handleImageChange(event)**
-    - **Purpose**: Manages uploaded images, validating file size and updating the state with allowed files.
+- **handleAvatarChange(event)**
+    - **Purpose**: Manages uploaded avatar, validating file size and updating the state with allowed files.
     - **Input**: `event` - The file selection event.
 
-- **handleTagsChange(event)**
-    - **Purpose**: Handles changes in the selected tags and updates the state.
-    - **Input**: `event` - The tag selection event.
+- **handleUsernameChange()**
+    - **Purpose**: To update the user's username with their new username. 
 
-- **handleSubmit(event)**
-    - **Purpose**: Manages form submission, including validation and sending data to the backend API.
-    - **Input**: `event` - The form submission event.
+- **handlePasswordChange()**
+    - **Purpose**: To update the user's password with their new username. 
 
-- **createRatingRequest()**
-    - **Purpose**: Creates a rating request object from the form data.
-    - **Output**: An object containing the rating request data.
-
-- **checkExistingRating(token)**
-    - **Purpose**: Checks if the user has already rated the place.
-    - **Input**: `token` (string) - Authentication token.
-    - **Output**: Returns the existing rating ID if it exists, otherwise null.
-
-- **deleteExistingRating(token, ratingId)**
-    - **Purpose**: Deletes an existing rating for a given place.
-    - **Input**: `token` (string) - Authentication token; `ratingId` (string) - ID of the existing rating.
-
-- **submitRating(token, ratingRequest)**
-    - **Purpose**: Submits the rating request data to the backend API.
-    - **Input**: `token` (string) - Authentication token; `ratingRequest` (object) - Rating request data.
-    - **Output**: Returns the ID of the newly submitted rating.
-
-- **uploadImages(ratingId, images, token)**
-    - **Purpose**: Uploads images associated with the rating to the backend API.
-    - **Input**: `ratingId` (string) - ID of the rating; `images` (array) - Array of image files; `token` (string) - Authentication token.
+- **handleUploadAvatar()**
+    - **Purpose**: Uploads the avatar to the backend so it can be sent to the database, then refreshes the page so the new avatar can be shown. 
 
 ## Dependencies
 
-- `React` and related hooks (`useState`, `useNavigate`, `useLocation`).
+- `React` and related hooks (`useState`, `useNavigate`).
 - `axios` for API requests.
 - `@mui/material` components for form inputs and styling.
-- `js-cookie` for handling authentication cookies.
-- Other dependencies such as `useAuth`, `SubratingData`, and relevant styles and assets.
+- Other dependencies such as `useAuth` and relevant styles and assets.
 
 ## Usage
 
-- Import the `RatingForm` component into your application and include it in the desired page layout.
-- Users can interact with the form to add a new rating for a place, providing data such as ratings, tags, comments, and images.
-- Upon form submission, the data is sent to the backend API for processing and storage.
+- Users can interact with the page to change their avatar, username, and password. 
+- Upon clicking one of the submission buttons, the relevant data is sent to the backend API for processing and storage.

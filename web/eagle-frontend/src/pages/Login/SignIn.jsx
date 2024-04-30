@@ -24,17 +24,15 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
+  const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-
-      // console.log('Request data:', { email, password });
       const response = await axios.post(`${axiosConfig.baseURL}/auth/sign-in`, {
         email,
         password,
       });
-      console.log('Login successful:', { email });
-      // console.log(response.data);
       login(response.data, email); // Update the context with the token
       navigate('/');
       // Handle successful login, e.g., redirect to dashboard
@@ -44,7 +42,9 @@ export default function SignIn() {
     }
   };
 
-  const navigate = useNavigate();
+  const handleForgotPassword = async () => {
+    navigate('/forgotPassword');
+  };
 
   const navigateToFrontPage = () => {
     navigate('/');
@@ -76,17 +76,17 @@ export default function SignIn() {
               <CssBaseline />
               <Box
                 sx={{
-                  bgcolor: 'background.paper', // This uses the theme's paper color, which is usually white
+                  bgcolor: 'background.paper',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  borderRadius: 2, // This applies a border-radius
-                  boxShadow: 1, // This applies a theme-based shadow
-                  width: '100%', // This ensures the Box fills the Container
-                  maxWidth: '400px', // This restricts the Box's maximum width to 400px
-                  p: 3, // This applies padding within the Box
-                  mt: 8, // This applies margin on top of the Box
-                  position: 'relative' // Added to position the Box
+                  borderRadius: 2,
+                  boxShadow: 1,
+                  width: '100%',
+                  maxWidth: '400px',
+                  p: 3,
+                  mt: 8,
+                  position: 'relative'
                 }}
               >
                 <Typography className="logo button logo-bold" component="h1" variant="h5" onClick={navigateToFrontPage} sx={{ marginTop: '25px', fontSize: '25px', cursor: 'pointer' }}  style={{ marginTop: '25px', fontSize: '25px', display: 'inline-block' }}eagle>
@@ -140,8 +140,8 @@ export default function SignIn() {
                   </Button>
                   <Grid container sx={{ mt: 1 }}>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
-                        Forgot password?
+                      <Link component={RouterLink} to="/forgotPassword" variant="body2">
+                        {"Forgot password?"}
                       </Link>
                     </Grid>
                     <Grid item>

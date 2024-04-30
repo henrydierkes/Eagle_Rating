@@ -17,6 +17,7 @@ import EmailVerification from './pages/Login/EmailVerification.jsx'; // Adjust t
  
 
 import SmoothScroll from 'smooth-scroll';
+import ForgotPassword from './pages/Login/ForgotPassword.jsx';
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -70,6 +71,7 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
 
               <Route path="/verify" element={<EmailVerification />} />
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
 
           </Routes>
         </Router>
